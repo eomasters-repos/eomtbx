@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <name>EOMasters Toolbox for SNAP</name>
+    <url>https://www.eomasters.org</url>
+
+    <groupId>org.eomasters</groupId>
+    <artifactId>eomtbx</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>nbm</packaging>
+
+
+    <properties>
+        <snap.version>10-SNAPSHOT</snap.version>
+        <javahelp.version>2.0.05</javahelp.version>
+        <maven.compiler.source>11</maven.compiler.source>
+        <maven.compiler.target>11</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.netbeans.utilities</groupId>
+                <artifactId>nbm-maven-plugin</artifactId>
+                <version>4.4</version>
+                <extensions>true</extensions>
+                <dependencies>
+                    <dependency>
+                        <groupId>javax.help</groupId>
+                        <artifactId>javahelp</artifactId>
+                        <version>${javahelp.version}</version>
+                    </dependency>
+                </dependencies>
+                <configuration>
+                    <requiresRestart>true</requiresRestart>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+    <repositories>
+        <repository>
+            <id>snap-repo-public</id>
+            <name>Public Maven Repository for SNAP</name>
+            <url>https://nexus.snap-ci.ovh/repository/snap-maven-public/</url>
+            <releases>
+                <enabled>true</enabled>
+                <checksumPolicy>warn</checksumPolicy>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+                <checksumPolicy>warn</checksumPolicy>
+            </snapshots>
+        </repository>
+    </repositories>
+
+    <developers>
+        <developer>
+            <id>marco</id>
+            <name>Marco Peters</name>
+            <email>marco@eomasters.org</email>
+            <organization>EOMasters</organization>
+        </developer>
+    </developers>
+
+</project>

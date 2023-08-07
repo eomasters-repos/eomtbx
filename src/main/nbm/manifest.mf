@@ -1,0 +1,9 @@
+Manifest-Version: 1.0
+OpenIDE-Module-Java-Dependencies: Java > 11
+OpenIDE-Module-Display-Category: Community Plugins
+OpenIDE-Module-Long-Description: <p>EOMasters Toolbox for SNAP providing different tools to ease the daily work.</p>
+ <p><b>Vendor: </b>EOMasters</p>
+ <p><b>Web: </b><a href="https://www.eomasters.org">www.eomasters.org</a></p>
+ <p><b>Contact address: </b> <a href="mailto:info@eomasters.org">info@eomasters.org</a></p>
+ <p><b>Copyright:</b> (C) 2023 Marco Peters</p>
+ <p><b>License:</b> http://www.gnu.org/licenses/gpl.html</p>
