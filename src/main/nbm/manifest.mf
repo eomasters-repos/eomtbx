@@ -1,6 +1,8 @@
 Manifest-Version: 1.0
+AutoUpdate-Show-In-Client: true
+AutoUpdate-Essential-Module: false
 OpenIDE-Module-Java-Dependencies: Java > 11
-OpenIDE-Module-Display-Category: Community Plugins
+OpenIDE-Module-Display-Category: EOMasters
 OpenIDE-Module-Long-Description: <p>EOMasters Toolbox for SNAP providing different tools to ease the daily work.</p>
  <p><b>Vendor: </b>EOMasters</p>
  <p><b>Web: </b><a href="https://www.eomasters.org">www.eomasters.org</a></p>
