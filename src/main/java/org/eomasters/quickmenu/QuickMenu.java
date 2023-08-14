@@ -2,12 +2,10 @@ package org.eomasters.quickmenu;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import javax.swing.*;
 import javax.swing.event.ListDataEvent;
 import javax.swing.event.ListDataListener;
 
-import org.esa.snap.rcp.util.Dialogs;
 import org.openide.awt.ActionID;
 import org.openide.awt.ActionReference;
 import org.openide.awt.ActionRegistration;
@@ -28,7 +26,7 @@ import org.openide.util.actions.Presenter;
 })
 public class QuickMenu extends AbstractAction
     implements Presenter.Toolbar, Presenter.Menu, DynamicMenuContent {
-  private static DynamicMenu dynamicMenu;
+  private static DynamicJMenu dynamicMenu;
   private final ListModel<JMenuItem> menuModel;
 
   public QuickMenu() {
@@ -49,7 +47,7 @@ public class QuickMenu extends AbstractAction
         updateMenu();
       }
     });
-    dynamicMenu = new DynamicMenu(Bundle.CTL_QuickMenuActionMenuText(), menuModel);
+    dynamicMenu = new DynamicJMenu(Bundle.CTL_QuickMenuActionMenuText(), menuModel);
   }
 
   private void updateMenu() {

@@ -28,12 +28,12 @@ public class DynMenu extends AbstractAction
     implements Presenter.Toolbar, Presenter.Menu, DynamicMenuContent {
   private static int NUM_QUICK_ACTIONS = 1;
   private final ClickListener clickListener = new ClickListener();
-  private static DynamicMenu dynamicMenu;
-  private final DefaultListModel<JMenuItem> menuItems;
+  private static DynamicJMenu dynamicMenu;
+  private final DefaultListModel<JMenuItem> menuModel;
 
   public DynMenu() {
-    menuItems = new DefaultListModel<>();
-    dynamicMenu = new DynamicMenu(Bundle.CTL_DynMenuActionMenuText(), menuItems);
+    menuModel = new DefaultListModel<>();
+    dynamicMenu = new DynamicJMenu(Bundle.CTL_DynMenuActionMenuText(), menuModel);
   }
 
   @Override
@@ -67,11 +67,11 @@ public class DynMenu extends AbstractAction
   }
 
   private void updateMenuItems() {
-    menuItems.clear();
+    menuModel.clear();
     for (int i = 0; i < NUM_QUICK_ACTIONS; i++) {
       JMenuItem menuItem = new JMenuItem("Dyn Item " + i);
       menuItem.addActionListener(clickListener);
-      menuItems.add(i, menuItem);
+      menuModel.add(i, menuItem);
     }
     NUM_QUICK_ACTIONS++;
   }

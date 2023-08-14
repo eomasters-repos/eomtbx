@@ -6,11 +6,11 @@ import javax.swing.*;
 import javax.swing.event.ListDataEvent;
 import javax.swing.event.ListDataListener;
 
-public class DynamicMenu extends JMenu implements DynamicMenuContent {
+public class DynamicJMenu extends JMenu implements DynamicMenuContent {
 
   private final ListModel<JMenuItem> menuItems;
 
-  public DynamicMenu(String dynamicMenu, ListModel<JMenuItem> menuItems) {
+  public DynamicJMenu(String dynamicMenu, ListModel<JMenuItem> menuItems) {
     super(dynamicMenu);
     this.menuItems = menuItems;
     updateMenu();
