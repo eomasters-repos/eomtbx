@@ -25,7 +25,7 @@ import java.awt.event.ActionListener;
   "CTL_DynMenuActionMenuText=Dyn Menu",
 })
 public class DynMenu extends AbstractAction
-    implements Presenter.Toolbar, Presenter.Menu, DynamicMenuContent {
+    implements Presenter.Toolbar, Presenter.Menu {
   private static int NUM_QUICK_ACTIONS = 1;
   private final ClickListener clickListener = new ClickListener();
   private static DynamicJMenu dynamicMenu;
@@ -49,16 +49,6 @@ public class DynMenu extends AbstractAction
   @Override
   public void actionPerformed(ActionEvent e) {
     // do nothing
-  }
-
-  @Override
-  public JComponent[] getMenuPresenters() {
-    return new JComponent[] {this.getMenuPresenter()};
-  }
-
-  @Override
-  public JComponent[] synchMenuPresenters(JComponent[] items) {
-    return new JComponent[] {this.getMenuPresenter()};
   }
 
   private JMenu createMenu() {
