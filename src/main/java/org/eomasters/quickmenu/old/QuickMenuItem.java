@@ -1,4 +1,4 @@
-package org.eomasters.quickmenu;
+package org.eomasters.quickmenu.old;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;

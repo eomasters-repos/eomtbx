@@ -3,7 +3,7 @@ package org.eomasters.quickmenu;
 import javax.swing.*;
 import java.awt.*;
 
-class Util {
+public class Util {
   public static String getPath(JMenuItem menuItem) {
     Component element = menuItem.getParent();
     StringBuilder path = new StringBuilder();
