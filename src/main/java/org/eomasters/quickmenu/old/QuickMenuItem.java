@@ -3,35 +3,36 @@ package org.eomasters.quickmenu.old;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.Objects;
+import javax.swing.*;
 import javax.swing.event.EventListenerList;
 
-class QuickMenuItem {
-  private final String text;
+public class QuickMenuItem {
+  private final String displayName;
   private final String path;
   private long clicks;
   EventListenerList listenerList = new EventListenerList();
 
-  public QuickMenuItem(String path, String text) {
-    this.text = text;
+  public QuickMenuItem(String path, String displayName) {
+    this.displayName = displayName;
     this.path = path;
     clicks = 0;
   }
 
-  String getText() {
-    return text;
+  public String getDisplayName() {
+    return displayName;
   }
 
-  String getPath() {
+  public String getPath() {
     return path;
   }
 
-  void incrementClicks() {
+  public void incrementClicks() {
     clicks++;
     PropertyChangeEvent clicksEvent = new PropertyChangeEvent(this, "clicks", clicks - 1, clicks);
     listenerList.getListeners(PropertyChangeListener.class)[0].propertyChange(clicksEvent);
   }
 
-  long getClicks() {
+  public long getClicks() {
     return clicks;
   }
 
@@ -52,11 +53,15 @@ class QuickMenuItem {
     if (this == o) return true;
     if (o == null || getClass() != o.getClass()) return false;
     QuickMenuItem that = (QuickMenuItem) o;
-    return Objects.equals(text, that.text) && Objects.equals(path, that.path);
+    return Objects.equals(displayName, that.displayName) && Objects.equals(path, that.path);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(text, path);
+    return Objects.hash(displayName, path);
+  }
+
+  public JMenuItem getJMenuItem() {
+    return new JMenuItem(getDisplayName());
   }
 }

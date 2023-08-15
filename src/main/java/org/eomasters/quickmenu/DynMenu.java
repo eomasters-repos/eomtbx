@@ -9,6 +9,8 @@ import org.openide.util.NbBundle;
 import org.openide.util.actions.Presenter;
 
 import javax.swing.*;
+import javax.swing.event.MenuEvent;
+import javax.swing.event.MenuListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

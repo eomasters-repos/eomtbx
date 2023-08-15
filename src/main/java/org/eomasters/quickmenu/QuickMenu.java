@@ -3,7 +3,16 @@ package org.eomasters.quickmenu;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
+import java.util.ArrayList;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledFuture;
+import java.util.concurrent.TimeUnit;
+import java.util.stream.Stream;
 import javax.swing.*;
+import org.eomasters.quickmenu.old.QuickMenuItem;
 import org.esa.snap.rcp.util.Dialogs;
 import org.openide.awt.ActionID;
 import org.openide.awt.ActionReference;
@@ -14,25 +23,55 @@ import org.openide.util.actions.Presenter;
 
 @ActionID(category = "Other", id = "EOM_QuickMenu")
 @ActionRegistration(
-        displayName = "#CTL_QuickMenuActionName",
-        menuText = "#CTL_QuickMenuActionMenuText",
-        lazy = false)
+    displayName = "#CTL_QuickMenuActionName",
+    menuText = "#CTL_QuickMenuActionMenuText",
+    lazy = false)
 // File is 100, Edit is 200, Tools is 600
-@ActionReference(path = "Menu", position = 590)
+@ActionReference(path = "Menu", position = 580)
 @NbBundle.Messages({
-        "CTL_QuickMenuActionName=Quick Menu",
-        "CTL_QuickMenuActionMenuText=Quick Menu",
+  "CTL_QuickMenuActionName=Quick Menu",
+  "CTL_QuickMenuActionMenuText=Quick Menu",
 })
-public class QuickMenu extends AbstractAction
-    implements Presenter.Toolbar, Presenter.Menu, DynamicMenuContent {
-  private static int NUM_QUICK_ACTIONS = 1;
-  private final ClickListener clickListener = new ClickListener();
-  private static DynamicJMenu dynamicMenu;
-  private final DefaultListModel<JMenuItem> menuModel;
+public class QuickMenu extends AbstractAction implements Presenter.Toolbar, Presenter.Menu {
+  private static DynamicJMenu dynamicJMenu;
+  private final QuickMenuModel menuModel;
+
+  int numCalls = 0;
 
   public QuickMenu() {
-    menuModel = new DefaultListModel<>();
-    dynamicMenu = new DynamicJMenu(Bundle.CTL_QuickMenuActionMenuText(), menuModel);
+    SnapMenuAccessor snapMenuAccessor = new SnapMenuAccessor();
+    ArrayList<QuickMenuItem> menuItems = snapMenuAccessor.getMenuItems();
+    menuModel = new QuickMenuModel(menuItems);
+    dynamicJMenu = new DynamicJMenu(Bundle.CTL_QuickMenuActionMenuText(), menuModel);
+    //    ScheduledExecutorService scheduledExecutorService = Executors.newScheduledThreadPool(1);
+    //    scheduledExecutorService.scheduleAtFixedRate(
+    //        () -> {
+    //          numCalls++;
+    //          JMenuBar jMenuBar = SnapMenuAccessor.getJMenuBar();
+    //          if (jMenuBar != null) {
+    //            System.out.println("jMenuBar = " + jMenuBar);
+    //            SnapMenuAccessor menuAccessor = new SnapMenuAccessor();
+    //            menuAccessor.addListenersToMenu(menuItems,jMenuBar);
+    //            scheduledExecutorService.shutdown();
+    //          } else {
+    //            System.out.println("numCalls = " + numCalls);
+    //          }
+    //        },
+    //        500,
+    //        1000,
+    //        TimeUnit.MILLISECONDS);
+    dynamicJMenu.addMouseListener(
+        new java.awt.event.MouseAdapter() {
+          public void mouseClicked(java.awt.event.MouseEvent evt) {
+            JMenuBar jMenuBar = SnapMenuAccessor.getJMenuBar();
+            if (jMenuBar != null) {
+              System.out.println("jMenuBar = " + jMenuBar);
+              SnapMenuAccessor menuAccessor = new SnapMenuAccessor();
+              menuAccessor.addListenersToMenu(menuItems, jMenuBar);
+              dynamicJMenu.removeMouseListener(this);
+            }
+          }
+        });
   }
 
   @Override
@@ -47,38 +86,28 @@ public class QuickMenu extends AbstractAction
 
   @Override
   public void actionPerformed(ActionEvent e) {
+    System.out.println("e = " + e);
     // do nothing
-  }
-
-  @Override
-  public JComponent[] getMenuPresenters() {
-    return new JComponent[] {this.getMenuPresenter()};
-  }
-
-  @Override
-  public JComponent[] synchMenuPresenters(JComponent[] items) {
-    return new JComponent[] {this.getMenuPresenter()};
   }
 
   private JMenu createMenu() {
     updateMenuItems();
-    return dynamicMenu;
+    return dynamicJMenu;
   }
 
   private void updateMenuItems() {
-    menuModel.clear();
-    for (int i = 0; i < NUM_QUICK_ACTIONS; i++) {
-      JMenuItem menuItem = new JMenuItem("Dyn Item " + i);
-      menuItem.addActionListener(clickListener);
-      menuModel.add(i, menuItem);
+    dynamicJMenu.removeAll();
+    for (int i = 0; i < menuModel.getSize(); i++) {
+      JMenuItem elementAt = menuModel.getElementAt(i);
+      elementAt.addActionListener(new ClickListener());
+      dynamicJMenu.add(elementAt);
     }
-    NUM_QUICK_ACTIONS++;
   }
 
   private class ClickListener implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
-      Dialogs.showInformation("Clicked: " + e.getActionCommand());
+      //        Dialogs.showInformation("Clicked: " + e.getActionCommand());
       updateMenuItems();
     }
   }

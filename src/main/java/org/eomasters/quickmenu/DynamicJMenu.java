@@ -5,6 +5,7 @@ import org.openide.awt.DynamicMenuContent;
 import javax.swing.*;
 import javax.swing.event.ListDataEvent;
 import javax.swing.event.ListDataListener;
+import javax.swing.event.MenuListener;
 
 public class DynamicJMenu extends JMenu implements DynamicMenuContent {
 

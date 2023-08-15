@@ -1,15 +1,15 @@
-package org.eomasters.quickmenu.old;
+package org.eomasters.quickmenu;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 import java.util.prefs.Preferences;
 import javax.swing.*;
-
-import org.eomasters.quickmenu.Util;
+import org.eomasters.quickmenu.old.QuickMenuItem;
 import org.esa.snap.rcp.SnapApp;
-import org.esa.snap.ui.UIUtils;
 
-public class QuickMenuModel extends javax.swing.AbstractListModel<javax.swing.JMenuItem> {
+public class QuickMenuModel extends AbstractListModel<JMenuItem> {
   private static final int DEFAULT_NUM_QUICK_ACTIONS = 5;
   private static final String PREFERENCE_KEY_NUM_QUICK_ACTIONS = "org.eomasters.NumQuickActions";
 
@@ -22,37 +22,31 @@ public class QuickMenuModel extends javax.swing.AbstractListModel<javax.swing.JM
   public QuickMenuModel(ArrayList<QuickMenuItem> menuItems) {
     this.menuItems = menuItems;
     this.menuItems.sort(
-            Comparator.comparingLong(
-                    QuickMenuItem::getClicks)); // TODO move to back ground task
+        Comparator.comparingLong(QuickMenuItem::getClicks)); // TODO move to back ground task
     addAutoSortListenerTo(menuItems);
   }
 
   @Override
   public int getSize() {
     final Preferences preference = SnapApp.getDefault().getPreferences();
-    int maxActions = preference.getInt(PREFERENCE_KEY_NUM_QUICK_ACTIONS, DEFAULT_NUM_QUICK_ACTIONS);
-    int numElements = 0;
-    for (int i = 0; i < maxActions; i++) {
-      QuickMenuItem quickMenuItem = menuItems.get(i);
-      if(quickMenuItem.getClicks() > 0) {
-        numElements++;
-      }else {
-        break;
-      }
-    }
-    return numElements;
+    return preference.getInt(PREFERENCE_KEY_NUM_QUICK_ACTIONS, DEFAULT_NUM_QUICK_ACTIONS);
+    //    int numElements = 0;
+    //    for (int i = 0; i < maxActions; i++) {
+    //      QuickMenuItem quickMenuItem = menuItems.get(i);
+    //      if(quickMenuItem.getClicks() > 0) {
+    //        numElements++;
+    //      }else {
+    //        break;
+    //      }
+    //    }
+    //    return numElements;
   }
 
   @Override
   public JMenuItem getElementAt(int index) {
     QuickMenuItem quickMenuItem = menuItems.get(index);
-    return findMenuItem(quickMenuItem, getJMenuBar());
-  }
-
-  private static JMenuBar getJMenuBar() {
-    SnapApp snapApp = SnapApp.getDefault();
-    JFrame rootJFrame = UIUtils.getRootJFrame(snapApp.getMainFrame());
-    return rootJFrame.getJMenuBar();
+    return new JMenuItem(quickMenuItem.getDisplayName());
+//    return findMenuItem(quickMenuItem, SnapMenuAccessor.getJMenuBar());
   }
 
   private void addAutoSortListenerTo(ArrayList<QuickMenuItem> quickMenuItems) {
@@ -89,5 +83,4 @@ public class QuickMenuModel extends javax.swing.AbstractListModel<javax.swing.JM
     }
     return null;
   }
-
 }
