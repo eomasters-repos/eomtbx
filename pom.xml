@@ -4,8 +4,10 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <name>EOMasters Toolbox for SNAP</name>
+    <name>EOMTBX</name>
+    <description>EOMasters Toolbox for SNAP</description>
     <url>https://www.eomasters.org</url>
+    <inceptionYear>2023</inceptionYear>
 
     <groupId>org.eomasters</groupId>
     <artifactId>eomtbx</artifactId>
@@ -103,8 +105,39 @@
         </dependency>
     </dependencies>
 
+
     <build>
         <plugins>
+            <plugin>
+                <!-- https://mycila.carbou.me/license-maven-plugin -->
+                <groupId>com.mycila</groupId>
+                <artifactId>license-maven-plugin</artifactId>
+                <version>4.2</version>
+                <configuration>
+                    <properties>
+                        <owner>Marco Peters</owner>
+                        <email>marco@eomasters.org</email>
+                    </properties>
+                    <licenseSets>
+                        <licenseSet>
+                            <header>${basedir}/mvnaux/file_header.txt</header>
+                            <includes>
+                                <include>**/*.java</include>
+                            </includes>
+                        </licenseSet>
+                    </licenseSets>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>UpdateHeaders</id>
+                        <phase>process-sources</phase>
+                        <goals>
+                            <goal>format</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-checkstyle-plugin</artifactId>
@@ -117,7 +150,7 @@
                     </dependency>
                 </dependencies>
                 <configuration>
-                    <configLocation>google_checks.xml</configLocation>
+                    <configLocation>${basedir}/mvnaux/google_checks.xml</configLocation>
                     <includeTestSourceDirectory>true</includeTestSourceDirectory>
                     <consoleOutput>true</consoleOutput>
                     <failsOnError>true</failsOnError>
