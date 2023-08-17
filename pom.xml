@@ -6,8 +6,12 @@
 
   <name>EOMTBX</name>
   <description>EOMasters Toolbox for SNAP</description>
-  <url>https://www.eomasters.org</url>
+  <url>https://www.eomasters.org/sw/EOMTBX</url>
   <inceptionYear>2023</inceptionYear>
+  <organization>
+    <name>EOMasters</name>
+    <url>https://www.eomasters.org</url>
+  </organization>
 
   <groupId>org.eomasters</groupId>
   <artifactId>eomtbx</artifactId>
@@ -123,15 +127,13 @@
           <version>3.1.2</version>
         </plugin>
         <plugin>
+          <artifactId>license-maven-plugin</artifactId>
+          <version>2.2.0</version>
+        </plugin>
+        <plugin>
           <groupId>org.apache.netbeans.utilities</groupId>
           <artifactId>nbm-maven-plugin</artifactId>
           <version>4.4</version>
-        </plugin>
-        <plugin>
-          <!-- https://mycila.carbou.me/license-maven-plugin -->
-          <groupId>com.mycila</groupId>
-          <artifactId>license-maven-plugin</artifactId>
-          <version>4.2</version>
         </plugin>
         <plugin>
           <groupId>org.jacoco</groupId>
@@ -148,31 +150,36 @@
 
     <plugins>
       <plugin>
-        <groupId>com.mycila</groupId>
+        <!-- use mvn license:remove-file-header to remove the header  and regenerate it-->
         <artifactId>license-maven-plugin</artifactId>
         <configuration>
-          <properties>
-            <owner>Marco Peters</owner>
-            <email>marco@eomasters.org</email>
-          </properties>
-          <licenseSets>
-            <licenseSet>
-              <header>${basedir}/mvnaux/file_header.txt</header>
-              <includes>
-                <include>**/*.java</include>
-              </includes>
-            </licenseSet>
-          </licenseSets>
+          <licenseName>gpl_v3</licenseName>
+          <copyrightOwners>Marco Peters</copyrightOwners>
+          <includes>
+            <include>**/*.java</include>
+          </includes>
         </configuration>
         <executions>
           <execution>
             <id>UpdateHeaders</id>
             <phase>process-sources</phase>
             <goals>
-              <goal>format</goal>
+              <goal>update-file-header</goal>
             </goals>
+            <configuration>
+              <addJavaLicenseAfterPackage>false</addJavaLicenseAfterPackage>
+              <emptyLineAfterHeader>true</emptyLineAfterHeader>
+              <canUpdateDescription>false</canUpdateDescription>
+              <canUpdateCopyright>true</canUpdateCopyright>
+              <processStartTag>========================LICENSE_START=================================</processStartTag>
+              <processEndTag>=========================LICENSE_END==================================</processEndTag>
+              <sectionDelimiter>======================================================================
+              </sectionDelimiter>
+              <descriptionTemplate>${basedir}/mvnaux/file_header_description.txt</descriptionTemplate>
+            </configuration>
           </execution>
         </executions>
+
       </plugin>
 
       <plugin>
@@ -236,7 +243,7 @@
           <homePageUrl>https://www.eomasters.org</homePageUrl>
           <licenseName>GPL 3</licenseName>
           <licenseFile>${project.basedir}/LICENSE.html</licenseFile>
-          <requiresRestart>true</requiresRestart>  <!--todo - necessary?-->
+          <requiresRestart>true</requiresRestart>
           <keystore>${project.basedir}/keystore/key.ks</keystore>
           <keystorealias>snap</keystorealias>
           <keystorepassword>snap-123</keystorepassword>
