@@ -14,6 +14,10 @@
     To suppress certain violations please review suppression filters.
 
     Authors: Max Vetrenko, Ruslan Diachenko, Roman Ivanov.
+
+    MODIFICATIONS by Marco Peters:
+    * changed max line length to 120
+    * Do not require empty line between package and file header (license plugin cant do).
  -->
 
 <module name="Checker">
