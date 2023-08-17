@@ -127,6 +127,7 @@
           <version>3.1.2</version>
         </plugin>
         <plugin>
+          <groupId>org.codehaus.mojo</groupId>
           <artifactId>license-maven-plugin</artifactId>
           <version>2.2.0</version>
         </plugin>
@@ -151,6 +152,7 @@
     <plugins>
       <plugin>
         <!-- use mvn license:remove-file-header to remove the header  and regenerate it-->
+        <groupId>org.codehaus.mojo</groupId>
         <artifactId>license-maven-plugin</artifactId>
         <configuration>
           <licenseName>gpl_v3</licenseName>
