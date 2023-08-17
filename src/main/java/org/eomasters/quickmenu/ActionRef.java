@@ -23,13 +23,7 @@
 
 package org.eomasters.quickmenu;
 
-import java.io.IOException;
 import java.util.Objects;
-import javax.swing.Action;
-import org.openide.cookies.InstanceCookie;
-import org.openide.filesystems.FileObject;
-import org.openide.filesystems.FileUtil;
-import org.openide.loaders.DataObject;
 
 public class ActionRef {
 
@@ -51,10 +45,6 @@ public class ActionRef {
     this.actionName = actionName;
   }
 
-  public String getActionName() {
-    return actionName;
-  }
-
   public String getDisplayName() {
     return displayName;
   }
@@ -69,27 +59,6 @@ public class ActionRef {
 
   public long getClicks() {
     return clicks;
-  }
-
-  public Action getAction() throws Exception {
-    try {
-      FileObject configFile = FileUtil.getConfigFile(getFullPath());
-      DataObject dob = DataObject.find(configFile);
-      InstanceCookie ic = dob.getLookup().lookup(InstanceCookie.class);
-      if (ic != null) {
-        Object instance = ic.instanceCreate();
-        if (instance instanceof Action) {
-          return ((Action) instance);
-        }
-      }
-      throw new Exception("No Action found for " + getFullPath());
-    } catch (IOException | ClassNotFoundException e) {
-      throw new Exception("No Action found for " + getFullPath(), e);
-    }
-  }
-
-  private String getFullPath() {
-    return getPath() + "/" + getActionName();
   }
 
   @Override

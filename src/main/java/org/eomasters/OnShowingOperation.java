@@ -21,17 +21,18 @@
  * =========================LICENSE_END==================================
  */
 
-package org.eomasters.quickmenu;
+package org.eomasters;
 
-import org.openide.modules.OnStart;
 
-@OnStart
-public class OnStartOperation implements Runnable {
+import org.eomasters.quickmenu.QuickMenu;
+import org.openide.windows.OnShowing;
+
+@OnShowing
+public class OnShowingOperation implements Runnable {
 
   @Override
   public void run() {
-    new Thread(() -> {
-      QuickMenu.getInstance().setup();
-    }).start();
+    new Thread(() -> QuickMenu.getInstance().init()).start();
   }
+
 }

@@ -21,42 +21,16 @@
  * =========================LICENSE_END==================================
  */
 
-package org.eomasters.quickmenu;
+package org.eomasters;
 
+import org.eomasters.quickmenu.QuickMenu;
+import org.openide.modules.OnStart;
 
-import java.awt.event.MouseEvent;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.MenuElement;
-import javax.swing.event.MouseInputAdapter;
-import org.openide.windows.OnShowing;
-
-@OnShowing
-public class OnShowingOperation implements Runnable {
-
-  private static void addClickCounterAdderListenerToMenuBar() {
-    JMenuBar menuBar = SnapMenuAccessor.getMenuBar();
-    MenuElement[] subElements = menuBar.getSubElements();
-    for (MenuElement subElement : subElements) {
-      if (subElement instanceof JMenuItem) {
-        JMenuItem menuItem = (JMenuItem) subElement;
-        menuItem.addMouseListener(new ClickCounterAdderListener());
-      }
-    }
-  }
+@OnStart
+public class OnStartOperation implements Runnable {
 
   @Override
   public void run() {
-    addClickCounterAdderListenerToMenuBar();
-  }
-
-  private static class ClickCounterAdderListener extends MouseInputAdapter {
-
-    @Override
-    public void mouseClicked(MouseEvent e) {
-      JMenuItem menuItem = (JMenuItem) e.getSource();
-      SnapMenuAccessor.addListenersToMenuItems(QuickMenu.getInstance().getActionReferences(), menuItem);
-      menuItem.removeMouseListener(this);
-    }
+    new Thread(() -> QuickMenu.getInstance().start()).start();
   }
 }
