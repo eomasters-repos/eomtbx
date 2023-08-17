@@ -23,44 +23,15 @@
 
 package org.eomasters.quickmenu;
 
+import org.openide.modules.OnStart;
 
-import java.util.Comparator;
-import java.util.List;
+@OnStart
+public class OnStartOperation implements Runnable {
 
-public class QuickMenu {
-
-  private List<ActionRef> actionReferences;
-
-  public static QuickMenu getInstance() {
-    return InstanceHolder.INSTANCE;
-  }
-
-  public List<ActionRef> getActionReferences() {
-    ensureSetup();
-    // keeping the list sorted keeps the sorting fast
-    actionReferences.sort(Comparator.comparing(ActionRef::getClicks).reversed());
-    return actionReferences;
-  }
-
-  public void setup() {
-    if (isSetup()) {
-      throw new IllegalStateException("QuickMenu already setup");
-    }
-    actionReferences = MenuActionAccessor.collect(new String[]{"Quick Menu", "Dyn Menu", "Reopen Product"});
-  }
-
-  private boolean isSetup() {
-    return actionReferences != null;
-  }
-
-  private void ensureSetup() {
-    if (!isSetup()) {
-      throw new IllegalStateException("QuickMenu not setup");
-    }
-  }
-
-  private static class InstanceHolder {
-
-    private static final QuickMenu INSTANCE = new QuickMenu();
+  @Override
+  public void run() {
+    new Thread(() -> {
+      QuickMenu.getInstance().setup();
+    }).start();
   }
 }

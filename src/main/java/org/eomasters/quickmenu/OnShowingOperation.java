@@ -24,43 +24,39 @@
 package org.eomasters.quickmenu;
 
 
-import java.util.Comparator;
-import java.util.List;
+import java.awt.event.MouseEvent;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.MenuElement;
+import javax.swing.event.MouseInputAdapter;
+import org.openide.windows.OnShowing;
 
-public class QuickMenu {
+@OnShowing
+public class OnShowingOperation implements Runnable {
 
-  private List<ActionRef> actionReferences;
-
-  public static QuickMenu getInstance() {
-    return InstanceHolder.INSTANCE;
-  }
-
-  public List<ActionRef> getActionReferences() {
-    ensureSetup();
-    // keeping the list sorted keeps the sorting fast
-    actionReferences.sort(Comparator.comparing(ActionRef::getClicks).reversed());
-    return actionReferences;
-  }
-
-  public void setup() {
-    if (isSetup()) {
-      throw new IllegalStateException("QuickMenu already setup");
-    }
-    actionReferences = MenuActionAccessor.collect(new String[]{"Quick Menu", "Dyn Menu", "Reopen Product"});
-  }
-
-  private boolean isSetup() {
-    return actionReferences != null;
-  }
-
-  private void ensureSetup() {
-    if (!isSetup()) {
-      throw new IllegalStateException("QuickMenu not setup");
+  private static void addClickCounterAdderListenerToMenuBar() {
+    JMenuBar menuBar = SnapMenuAccessor.getMenuBar();
+    MenuElement[] subElements = menuBar.getSubElements();
+    for (MenuElement subElement : subElements) {
+      if (subElement instanceof JMenuItem) {
+        JMenuItem menuItem = (JMenuItem) subElement;
+        menuItem.addMouseListener(new ClickCounterAdderListener());
+      }
     }
   }
 
-  private static class InstanceHolder {
+  @Override
+  public void run() {
+    addClickCounterAdderListenerToMenuBar();
+  }
 
-    private static final QuickMenu INSTANCE = new QuickMenu();
+  private static class ClickCounterAdderListener extends MouseInputAdapter {
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
+      JMenuItem menuItem = (JMenuItem) e.getSource();
+      SnapMenuAccessor.addListenersToMenuItems(QuickMenu.getInstance().getActionReferences(), menuItem);
+      menuItem.removeMouseListener(this);
+    }
   }
 }
