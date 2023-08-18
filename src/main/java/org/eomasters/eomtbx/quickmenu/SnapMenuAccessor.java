@@ -45,7 +45,6 @@ public class SnapMenuAccessor {
     for (MenuElement subElement : subElements) {
       if (subElement instanceof JMenuItem) {
         JMenuItem menuItem = (JMenuItem) subElement;
-        System.out.println("AddingClickCounterAdder to menuItem = " + menuItem.getText());
         menuItem.addMouseListener(new TemporaryClickCounterAdder());
       }
     }

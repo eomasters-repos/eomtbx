@@ -45,8 +45,7 @@ public class QuickMenu {
     if (isStarted()) {
       throw new IllegalStateException("QuickMenu already started");
     }
-    actionReferences = Collections.synchronizedList(
-        ActionRefCollector.collect(new String[]{"Quick Menu", "Dyn Menu", "Reopen Product"}));
+    actionReferences = Collections.synchronizedList(ActionRefCollector.collect());
   }
 
   private boolean isStarted() {
@@ -63,8 +62,6 @@ public class QuickMenu {
     actionRef.incrementClicks();
     // keeping the list sorted keeps the sorting fast
     actionReferences.sort(Comparator.comparing(ActionRef::getClicks).reversed());
-    // System.out.println("Sorted:");
-    // actionReferences.stream().limit(10).forEachOrdered(actionRef1 -> System.out.println("Elem = " + actionRef1));;
   }
 
   private static class InstanceHolder {

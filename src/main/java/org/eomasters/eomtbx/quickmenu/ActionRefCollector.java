@@ -25,29 +25,29 @@ package org.eomasters.eomtbx.quickmenu;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+import org.eomasters.utils.ErrorHandler;
 import org.openide.filesystems.FileObject;
 import org.openide.filesystems.FileUtil;
 
 class ActionRefCollector {
 
-  private static final String[] EXCLUDED_ITEM_NAMES = {"separator", "spacer", "master-help"};
+  private static final String[] EXCLUDE_ACTION_IDS = {"separator", "spacer", "master-help"};
+  public static final String[] EXCLUDE_ELEMENTS_CONTAINING = {"Quick Menu", "Reopen Product"};
 
-  static ArrayList<ActionRef> collect(String[] excludeElementsContaining) {
-    return doCollect(new ArrayList<>(), FileUtil.getConfigFile("Menu"), excludeElementsContaining);
+  static List<ActionRef> collect() {
+    return doCollect(new ArrayList<>(), FileUtil.getConfigFile("Menu"));
   }
 
-  private static ArrayList<ActionRef> doCollect(
-      ArrayList<ActionRef> actionRefs,
-      FileObject menuFolder,
-      String[] excludeElementsContaining) {
+  private static List<ActionRef> doCollect(ArrayList<ActionRef> actionRefs, FileObject menuFolder) {
     String path = menuFolder.getPath() + "/";
     for (FileObject fileObject : menuFolder.getChildren()) {
       try {
         if (fileObject.isFolder()) {
-          doCollect(actionRefs, fileObject, excludeElementsContaining);
+          doCollect(actionRefs, fileObject);
         } else {
           String actionId = fileObject.getName();
-          if (shallExclude(EXCLUDED_ITEM_NAMES, actionId.toLowerCase())) {
+          if (shallExclude(EXCLUDE_ACTION_IDS, actionId.toLowerCase())) {
             continue;
           }
           Object originalFileObject = fileObject.getAttribute("originalFile");
@@ -63,7 +63,7 @@ class ActionRefCollector {
           if (displayName == null || displayName.isBlank()) {
             continue;
           }
-          if (shallExclude(excludeElementsContaining, path + "/" + displayName)) {
+          if (shallExclude(EXCLUDE_ELEMENTS_CONTAINING, path + "/" + displayName)) {
             continue;
           }
           actionRefs.stream().
@@ -74,10 +74,7 @@ class ActionRefCollector {
 
         }
       } catch (Exception e) {
-        // it is important that now exception is thrown here
-        // we need to catch and handle
-        // TODO: handle
-        throw new RuntimeException(e);
+        ErrorHandler.handle("Error while collecting actions for " + QuickMenuAction.QUICK_MENU_NAME, e);
       }
     }
     return actionRefs;
