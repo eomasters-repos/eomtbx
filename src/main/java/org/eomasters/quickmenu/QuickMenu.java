@@ -48,7 +48,7 @@ public class QuickMenu {
       throw new IllegalStateException("QuickMenu already started");
     }
     actionReferences = Collections.synchronizedList(
-        MenuActionAccessor.collect(new String[]{"Quick Menu", "Dyn Menu", "Reopen Product"}));
+        ActionRefCollector.collect(new String[]{"Quick Menu", "Dyn Menu", "Reopen Product"}));
   }
 
   private boolean isStarted() {

@@ -28,7 +28,7 @@ import java.util.Arrays;
 import org.openide.filesystems.FileObject;
 import org.openide.filesystems.FileUtil;
 
-class MenuActionAccessor {
+class ActionRefCollector {
 
   private static final String[] EXCLUDED_ITEM_NAMES = {"separator", "spacer", "master-help"};
 
