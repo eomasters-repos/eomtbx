@@ -61,7 +61,7 @@ public class SnapMenuAccessor {
     for (MenuElement subElement : subElements) {
       if (subElement instanceof JMenuItem) {
         JMenuItem menuItem = (JMenuItem) subElement;
-        menuItem.addMouseListener(new ClickCounterAdderListener());
+        menuItem.addMouseListener(new TemporaryClickCounterAdder());
       }
     }
   }
@@ -128,7 +128,7 @@ public class SnapMenuAccessor {
     return actionRef.getDisplayName().equals(text) && actionRef.getPath().equals(path);
   }
 
-  private static class ClickCounterAdderListener extends MouseInputAdapter {
+  private static class TemporaryClickCounterAdder extends MouseInputAdapter {
 
     @Override
     public void mouseClicked(MouseEvent e) {
