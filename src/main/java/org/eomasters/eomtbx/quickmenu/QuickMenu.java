@@ -21,7 +21,7 @@
  * =========================LICENSE_END==================================
  */
 
-package org.eomasters.quickmenu;
+package org.eomasters.eomtbx.quickmenu;
 
 
 import java.util.Collections;

@@ -21,10 +21,10 @@
  * =========================LICENSE_END==================================
  */
 
-package org.eomasters;
+package org.eomasters.eomtbx;
 
-import org.eomasters.quickmenu.QuickMenu;
-import org.eomasters.quickmenu.SnapMenuAccessor;
+import org.eomasters.eomtbx.quickmenu.QuickMenu;
+import org.eomasters.eomtbx.quickmenu.SnapMenuAccessor;
 import org.openide.modules.OnStart;
 import org.openide.windows.OnShowing;
 

@@ -21,7 +21,7 @@
  * =========================LICENSE_END==================================
  */
 
-package org.eomasters.quickmenu;
+package org.eomasters.eomtbx.quickmenu;
 
 import java.awt.Component;
 import java.awt.event.ActionEvent;
@@ -50,7 +50,7 @@ public class QuickMenuAction extends AbstractAction implements Presenter.Toolbar
 
   public static final String QUICK_MENU_NAME = "Quick Menu";
   private static final int DEFAULT_NUM_QUICK_ACTIONS = 5;
-  private static final String PREFERENCE_KEY_NUM_QUICK_ACTIONS = "org.eomasters.quickmenu.NumActions";
+  private static final String PREFERENCE_KEY_NUM_QUICK_ACTIONS = "org.eomasters.eomtbx.quickmenu.NumActions";
   public static final String[] SPECIAL_GROUPS = {"Export", "Import"};
 
   private final JMenu menu;
