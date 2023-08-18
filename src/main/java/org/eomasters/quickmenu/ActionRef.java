@@ -23,33 +23,38 @@
 
 package org.eomasters.quickmenu;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class ActionRef {
 
   private final String actionId;
-  private final MenuRef menuRef;
+  private final List<MenuRef> menuRefs;
   private long clicks = 0;
 
   public ActionRef(String actionId, MenuRef menuRef) {
     this.actionId = actionId;
-    this.menuRef = menuRef;
+    this.menuRefs = new ArrayList<>();
+    menuRefs.add(menuRef);
   }
 
-  public ActionRef(String actionId, String path, String displayName) {
-    this(actionId, new MenuRef(path, replaceShortCutIndicator(displayName)));
-  }
-
-  private static String replaceShortCutIndicator(String displayName) {
-    return displayName.replaceAll("&", "");
+  public String getActionId() {
+    return actionId;
   }
 
   public MenuRef getMenuRef() {
-    return menuRef;
+    return menuRefs.get(0);
+  }
+  public List<MenuRef> getMenuRefs() {
+    return menuRefs;
+  }
+
+  public void addMenuRef(MenuRef menuRef) {
+    menuRefs.add(menuRef);
   }
 
   public void incrementClicks() {
-    System.out.println("Clicked = " + this);
     clicks++;
   }
 
@@ -59,8 +64,11 @@ public class ActionRef {
 
   @Override
   public String toString() {
-    return String.format("ActionRef{displayName='%s', path='%s', clicks=%d, actionName='%s'}",
-        getMenuRef().getText(), getMenuRef().getPath(), clicks, actionId);
+    return "ActionRef{" +
+        "actionId='" + actionId + '\'' +
+        ", clicks=" + clicks +
+        ", menuRefs=" + menuRefs +
+        '}';
   }
 
   @Override
@@ -72,12 +80,13 @@ public class ActionRef {
       return false;
     }
     ActionRef actionRef = (ActionRef) o;
-    return Objects.equals(getMenuRef(), actionRef.getMenuRef())
+    return Objects.equals(getMenuRefs(), actionRef.getMenuRefs())
         && Objects.equals(actionId, actionRef.actionId);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(getMenuRef(), actionId);
+    return Objects.hash(getMenuRefs(), actionId);
   }
+
 }

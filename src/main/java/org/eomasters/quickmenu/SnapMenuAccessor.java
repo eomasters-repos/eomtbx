@@ -60,11 +60,9 @@ public class SnapMenuAccessor {
       if (parent instanceof JMenuItem) {
         JMenuItem menuItem = (JMenuItem) parent;
         String text = menuItem.getText();
-        if (actionRef.getMenuRef().getText().equals(text)) {
-          String path = getPath(menuItem);
-          if (actionRef.getMenuRef().getPath().equals(path)) {
-            return menuItem;
-          }
+        String path = getPath(menuItem);
+        if (actionRef.getMenuRefs().contains(new MenuRef(path, text))) {
+          return menuItem;
         }
       }
     }
@@ -115,8 +113,9 @@ public class SnapMenuAccessor {
         JMenuItem menuItem = (JMenuItem) parent;
         String text = menuItem.getText();
         String path = getPath(menuItem);
+        MenuRef menuRef = new MenuRef(path, text);
         actionRefs.stream()
-            .filter(actionRef -> actionRefMatches(actionRef, text, path))
+            .filter(actionRef -> actionRef.getMenuRefs().contains(menuRef))
             .findFirst().
             ifPresent(actionRef -> menuItem.addActionListener(new ClickCounter(actionRef)));
       }
@@ -127,11 +126,6 @@ public class SnapMenuAccessor {
     }
   }
 
-
-  private static boolean actionRefMatches(ActionRef actionRef, String text, String path) {
-    MenuRef menuRef = actionRef.getMenuRef();
-    return menuRef.getText().equals(text) && menuRef.getPath().equals(path);
-  }
 
   private static class TemporaryClickCounterAdder extends MouseInputAdapter {
 

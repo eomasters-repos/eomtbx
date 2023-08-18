@@ -37,14 +37,14 @@ class ActionRefCollector {
   }
 
   private static ArrayList<ActionRef> doCollect(
-      ArrayList<ActionRef> quickMenuItems,
+      ArrayList<ActionRef> actionRefs,
       FileObject menuFolder,
       String[] excludeElementsContaining) {
     String path = menuFolder.getPath() + "/";
     for (FileObject fileObject : menuFolder.getChildren()) {
       try {
         if (fileObject.isFolder()) {
-          doCollect(quickMenuItems, fileObject, excludeElementsContaining);
+          doCollect(actionRefs, fileObject, excludeElementsContaining);
         } else {
           String actionId = fileObject.getName();
           if (shallExclude(EXCLUDED_ITEM_NAMES, actionId.toLowerCase())) {
@@ -66,17 +66,21 @@ class ActionRefCollector {
           if (shallExclude(excludeElementsContaining, path + "/" + displayName)) {
             continue;
           }
+          actionRefs.stream().
+              filter(aref -> aref.getActionId().equals(actionId))
+              .findAny().
+              ifPresentOrElse(ref -> ref.addMenuRef(new MenuRef(path, displayName)),
+                  () -> actionRefs.add(new ActionRef(actionId, new MenuRef(path, displayName))));
 
-          ActionRef aref = new ActionRef(actionId, path, displayName);
-          quickMenuItems.add(aref);
         }
       } catch (Exception e) {
         // it is important that now exception is thrown here
         // we need to catch and handle
+        // TODO: handle
         throw new RuntimeException(e);
       }
     }
-    return quickMenuItems;
+    return actionRefs;
   }
 
   private static boolean shallExclude(String[] excludeElementsContaining, String fullPath) {

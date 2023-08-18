@@ -51,6 +51,7 @@ public class QuickMenuAction extends AbstractAction implements Presenter.Toolbar
   public static final String QUICK_MENU_NAME = "Quick Menu";
   private static final int DEFAULT_NUM_QUICK_ACTIONS = 5;
   private static final String PREFERENCE_KEY_NUM_QUICK_ACTIONS = "org.eomasters.quickmenu.NumActions";
+  public static final String[] SPECIAL_GROUPS = {"Export", "Import"};
 
   private final JMenu menu;
 
@@ -80,20 +81,7 @@ public class QuickMenuAction extends AbstractAction implements Presenter.Toolbar
       menuItem.setEnabled(false);
       menu.add(menuItem);
     } else {
-      actions.forEach(
-          actionRef -> {
-            // using the original menu item will trigger the action to increase the click counter
-            // this is intended, otherwise menu items within the quick menu would not be counted
-            // TODO: move to SnapMenuAccessor
-            JMenuItem origMenuItem = SnapMenuAccessor.findMenuItem(actionRef);
-            if (origMenuItem != null) {
-              JMenuItem menuItem = new JMenuItem(actionRef.getMenuRef().getText());
-              menuItem.setToolTipText(origMenuItem.getToolTipText());
-              menuItem.setIcon(origMenuItem.getIcon());
-              menuItem.addActionListener(e -> origMenuItem.doClick());
-              menu.add(menuItem);
-            }
-          });
+      actions.forEach(actionRef -> addMenuItemToMenu(actionRef, menu));
     }
     return menu;
   }
@@ -105,6 +93,37 @@ public class QuickMenuAction extends AbstractAction implements Presenter.Toolbar
 
   @Override
   public void actionPerformed(ActionEvent ignored) {
+  }
+
+  private void addMenuItemToMenu(ActionRef actionRef, JMenu menu) {
+    // using the original menu item will trigger the action to increase the click counter
+    // this is intended, otherwise menu items within the quick menu would not be counted
+    JMenuItem origMenuItem = SnapMenuAccessor.findMenuItem(actionRef);
+    if (origMenuItem != null) {
+      menu.add(createMenuItem(actionRef, origMenuItem));
+    }
+  }
+
+  private static JMenuItem createMenuItem(ActionRef actionRef, JMenuItem origMenuItem) {
+    JMenuItem menuItem = new JMenuItem(getEnhancedText(actionRef));
+    menuItem.setToolTipText(origMenuItem.getToolTipText());
+    menuItem.setIcon(origMenuItem.getIcon());
+    menuItem.addActionListener(e -> origMenuItem.doClick());
+    return menuItem;
+  }
+
+  private static String getEnhancedText(ActionRef actionRef) {
+    List<MenuRef> menuRefs = actionRef.getMenuRefs();
+    String text = actionRef.getMenuRef().getText();
+    for (MenuRef menuRef : menuRefs) {
+      String path = menuRef.getPath();
+      for (String specialGroup : SPECIAL_GROUPS) {
+        if (path.contains(specialGroup)) {
+          return String.format("%s (%s)", text, specialGroup);
+        }
+      }
+    }
+    return text;
   }
 
   private class MenuUpdater extends MouseInputAdapter {
