@@ -58,13 +58,7 @@ public class QuickMenuAction extends AbstractAction implements Presenter.Toolbar
 
   public QuickMenuAction() {
     menu = new JMenu(Bundle.CTL_QuickMenuActionName());
-    menu.addMouseListener(
-        new MouseInputAdapter() {
-          @Override
-          public void mouseEntered(MouseEvent e) {
-            updateMenu();
-          }
-        });
+    menu.addMouseListener(new MenuUpdater());
   }
 
   @Override
@@ -92,6 +86,7 @@ public class QuickMenuAction extends AbstractAction implements Presenter.Toolbar
           actionRef -> {
             // using the original menu item will trigger the action to increase the click counter
             // this is intended, otherwise menu items within the quick menu would not be counted
+            // TODO: move to SnapMenuAccessor
             JMenuItem origMenuItem = SnapMenuAccessor.findMenuItem(actionRef);
             if (origMenuItem != null) {
               JMenuItem menuItem = new JMenuItem(actionRef.getDisplayName());
@@ -112,5 +107,13 @@ public class QuickMenuAction extends AbstractAction implements Presenter.Toolbar
 
   @Override
   public void actionPerformed(ActionEvent ignored) {
+  }
+
+  private class MenuUpdater extends MouseInputAdapter {
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+      updateMenu();
+    }
   }
 }

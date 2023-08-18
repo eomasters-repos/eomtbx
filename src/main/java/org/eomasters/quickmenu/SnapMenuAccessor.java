@@ -24,6 +24,7 @@
 package org.eomasters.quickmenu;
 
 import java.awt.Component;
+import java.awt.event.MouseEvent;
 import java.util.List;
 import java.util.Optional;
 import javax.swing.JFrame;
@@ -31,10 +32,11 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import javax.swing.MenuElement;
+import javax.swing.event.MouseInputAdapter;
 import org.esa.snap.rcp.SnapApp;
 import org.esa.snap.ui.UIUtils;
 
-class SnapMenuAccessor {
+public class SnapMenuAccessor {
 
   public static void addListenersToMenuItems(List<ActionRef> actionRefs, MenuElement parent) {
     if (parent.getSubElements().length == 0) {
@@ -42,17 +44,25 @@ class SnapMenuAccessor {
         JMenuItem menuItem = (JMenuItem) parent;
         String text = menuItem.getText();
         String path = getPath(menuItem);
-        Optional<ActionRef> optional =
-            actionRefs.stream()
-                .filter(actionRef -> actionRefMatches(actionRef, text, path))
-                .findFirst();
-        optional.ifPresent(
-            actionRef -> menuItem.addActionListener(e -> actionRef.incrementClicks()));
+        Optional<ActionRef> optional = actionRefs.stream().filter(actionRef -> actionRefMatches(actionRef, text, path))
+            .findFirst();
+        optional.ifPresent(actionRef -> menuItem.addActionListener(e -> actionRef.incrementClicks()));
       }
     }
     MenuElement[] subElements = parent.getSubElements();
     for (MenuElement subElement : subElements) {
       addListenersToMenuItems(actionRefs, subElement);
+    }
+  }
+
+  public static void initClickCounter() {
+    JMenuBar menuBar = getMenuBar();
+    MenuElement[] subElements = menuBar.getSubElements();
+    for (MenuElement subElement : subElements) {
+      if (subElement instanceof JMenuItem) {
+        JMenuItem menuItem = (JMenuItem) subElement;
+        menuItem.addMouseListener(new ClickCounterAdderListener());
+      }
     }
   }
 
@@ -116,5 +126,15 @@ class SnapMenuAccessor {
 
   private static boolean actionRefMatches(ActionRef actionRef, String text, String path) {
     return actionRef.getDisplayName().equals(text) && actionRef.getPath().equals(path);
+  }
+
+  private static class ClickCounterAdderListener extends MouseInputAdapter {
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
+      JMenuItem menuItem = (JMenuItem) e.getSource();
+      addListenersToMenuItems(QuickMenu.getInstance().getActionReferences(), menuItem);
+      menuItem.removeMouseListener(this);
+    }
   }
 }

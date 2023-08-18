@@ -24,13 +24,9 @@
 package org.eomasters.quickmenu;
 
 
-import java.awt.event.MouseEvent;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.MenuElement;
-import javax.swing.event.MouseInputAdapter;
 
 public class QuickMenu {
 
@@ -51,19 +47,8 @@ public class QuickMenu {
     if (isStarted()) {
       throw new IllegalStateException("QuickMenu already started");
     }
-    actionReferences = MenuActionAccessor.collect(new String[]{"Quick Menu", "Dyn Menu", "Reopen Product"});
-  }
-
-  public void init() {
-    ensureStarted();
-    JMenuBar menuBar = SnapMenuAccessor.getMenuBar();
-    MenuElement[] subElements = menuBar.getSubElements();
-    for (MenuElement subElement : subElements) {
-      if (subElement instanceof JMenuItem) {
-        JMenuItem menuItem = (JMenuItem) subElement;
-        menuItem.addMouseListener(new ClickCounterAdderListener());
-      }
-    }
+    actionReferences = Collections.synchronizedList(
+        MenuActionAccessor.collect(new String[]{"Quick Menu", "Dyn Menu", "Reopen Product"}));
   }
 
   private boolean isStarted() {
@@ -73,16 +58,6 @@ public class QuickMenu {
   private void ensureStarted() {
     if (!isStarted()) {
       throw new IllegalStateException("QuickMenu not started");
-    }
-  }
-
-  private static class ClickCounterAdderListener extends MouseInputAdapter {
-
-    @Override
-    public void mouseClicked(MouseEvent e) {
-      JMenuItem menuItem = (JMenuItem) e.getSource();
-      SnapMenuAccessor.addListenersToMenuItems(QuickMenu.getInstance().getActionReferences(), menuItem);
-      menuItem.removeMouseListener(this);
     }
   }
 

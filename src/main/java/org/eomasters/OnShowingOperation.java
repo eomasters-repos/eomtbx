@@ -24,7 +24,7 @@
 package org.eomasters;
 
 
-import org.eomasters.quickmenu.QuickMenu;
+import org.eomasters.quickmenu.SnapMenuAccessor;
 import org.openide.windows.OnShowing;
 
 @OnShowing
@@ -32,7 +32,7 @@ public class OnShowingOperation implements Runnable {
 
   @Override
   public void run() {
-    new Thread(() -> QuickMenu.getInstance().init()).start();
+    new Thread(SnapMenuAccessor::initClickCounter).start();
   }
 
 }
