@@ -177,7 +177,7 @@
               <processEndTag>=========================LICENSE_END==================================</processEndTag>
               <sectionDelimiter>======================================================================
               </sectionDelimiter>
-              <descriptionTemplate>${basedir}/mvnaux/file_header_description.txt</descriptionTemplate>
+              <descriptionTemplate>.mvn/file_header_description.txt</descriptionTemplate>
             </configuration>
           </execution>
         </executions>
@@ -194,7 +194,7 @@
           </dependency>
         </dependencies>
         <configuration>
-          <configLocation>${basedir}/mvnaux/google_checks.xml</configLocation>
+          <configLocation>.mvn/google_checks.xml</configLocation>
           <includeTestSourceDirectory>true</includeTestSourceDirectory>
           <consoleOutput>true</consoleOutput>
           <failsOnError>true</failsOnError>
