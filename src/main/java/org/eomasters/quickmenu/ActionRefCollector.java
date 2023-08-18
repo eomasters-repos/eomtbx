@@ -46,8 +46,8 @@ class ActionRefCollector {
         if (fileObject.isFolder()) {
           doCollect(quickMenuItems, fileObject, excludeElementsContaining);
         } else {
-          String actionName = fileObject.getName();
-          if (shallExclude(EXCLUDED_ITEM_NAMES, actionName.toLowerCase())) {
+          String actionId = fileObject.getName();
+          if (shallExclude(EXCLUDED_ITEM_NAMES, actionId.toLowerCase())) {
             continue;
           }
           Object originalFileObject = fileObject.getAttribute("originalFile");
@@ -67,8 +67,7 @@ class ActionRefCollector {
             continue;
           }
 
-          ActionRef aref = new ActionRef(path, displayName);
-          aref.setActionName(actionName);
+          ActionRef aref = new ActionRef(actionId, path, displayName);
           quickMenuItems.add(aref);
         }
       } catch (Exception e) {

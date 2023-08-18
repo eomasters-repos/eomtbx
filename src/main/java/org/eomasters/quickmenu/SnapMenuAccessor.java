@@ -24,9 +24,10 @@
 package org.eomasters.quickmenu;
 
 import java.awt.Component;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.util.List;
-import java.util.Optional;
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -38,29 +39,13 @@ import org.esa.snap.ui.UIUtils;
 
 public class SnapMenuAccessor {
 
-  public static void addClickCounter(List<ActionRef> actionRefs, MenuElement parent) {
-    if (parent.getSubElements().length == 0) {
-      if (parent instanceof JMenuItem) {
-        JMenuItem menuItem = (JMenuItem) parent;
-        String text = menuItem.getText();
-        String path = getPath(menuItem);
-        Optional<ActionRef> optional = actionRefs.stream().filter(actionRef -> actionRefMatches(actionRef, text, path))
-            .findFirst();
-        optional.ifPresent(actionRef -> menuItem.addActionListener(e -> actionRef.incrementClicks()));
-      }
-    }
-    MenuElement[] subElements = parent.getSubElements();
-    for (MenuElement subElement : subElements) {
-      addClickCounter(actionRefs, subElement);
-    }
-  }
-
   public static void initClickCounter() {
     JMenuBar menuBar = getMenuBar();
     MenuElement[] subElements = menuBar.getSubElements();
     for (MenuElement subElement : subElements) {
       if (subElement instanceof JMenuItem) {
         JMenuItem menuItem = (JMenuItem) subElement;
+        System.out.println("AddingClickCounterAdder to menuItem = " + menuItem.getText());
         menuItem.addMouseListener(new TemporaryClickCounterAdder());
       }
     }
@@ -75,9 +60,9 @@ public class SnapMenuAccessor {
       if (parent instanceof JMenuItem) {
         JMenuItem menuItem = (JMenuItem) parent;
         String text = menuItem.getText();
-        if (actionRef.getDisplayName().equals(text)) {
+        if (actionRef.getMenuRef().getText().equals(text)) {
           String path = getPath(menuItem);
-          if (actionRef.getPath().equals(path)) {
+          if (actionRef.getMenuRef().getPath().equals(path)) {
             return menuItem;
           }
         }
@@ -124,17 +109,52 @@ public class SnapMenuAccessor {
     return path.toString();
   }
 
+  private static void addClickCounter(List<ActionRef> actionRefs, MenuElement parent) {
+    if (parent.getSubElements().length == 0) {
+      if (parent instanceof JMenuItem) {
+        JMenuItem menuItem = (JMenuItem) parent;
+        String text = menuItem.getText();
+        String path = getPath(menuItem);
+        actionRefs.stream()
+            .filter(actionRef -> actionRefMatches(actionRef, text, path))
+            .findFirst().
+            ifPresent(actionRef -> menuItem.addActionListener(new ClickCounter(actionRef)));
+      }
+    }
+    MenuElement[] subElements = parent.getSubElements();
+    for (MenuElement subElement : subElements) {
+      addClickCounter(actionRefs, subElement);
+    }
+  }
+
+
   private static boolean actionRefMatches(ActionRef actionRef, String text, String path) {
-    return actionRef.getDisplayName().equals(text) && actionRef.getPath().equals(path);
+    MenuRef menuRef = actionRef.getMenuRef();
+    return menuRef.getText().equals(text) && menuRef.getPath().equals(path);
   }
 
   private static class TemporaryClickCounterAdder extends MouseInputAdapter {
 
     @Override
-    public void mouseClicked(MouseEvent e) {
+    public void mouseEntered(MouseEvent e) {
       JMenuItem menuItem = (JMenuItem) e.getSource();
       addClickCounter(QuickMenu.getInstance().getActionReferences(), menuItem);
       menuItem.removeMouseListener(this);
+    }
+
+  }
+
+  private static class ClickCounter implements ActionListener {
+
+    private final ActionRef actionRef;
+
+    public ClickCounter(ActionRef actionRef) {
+      this.actionRef = actionRef;
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+      QuickMenu.getInstance().actionRefClicked(actionRef);
     }
   }
 }

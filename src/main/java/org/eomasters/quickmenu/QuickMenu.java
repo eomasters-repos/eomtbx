@@ -38,8 +38,6 @@ public class QuickMenu {
 
   public List<ActionRef> getActionReferences() {
     ensureStarted();
-    // keeping the list sorted keeps the sorting fast
-    actionReferences.sort(Comparator.comparing(ActionRef::getClicks).reversed());
     return actionReferences;
   }
 
@@ -59,6 +57,14 @@ public class QuickMenu {
     if (!isStarted()) {
       throw new IllegalStateException("QuickMenu not started");
     }
+  }
+
+  public void actionRefClicked(ActionRef actionRef) {
+    actionRef.incrementClicks();
+    // keeping the list sorted keeps the sorting fast
+    actionReferences.sort(Comparator.comparing(ActionRef::getClicks).reversed());
+    // System.out.println("Sorted:");
+    // actionReferences.stream().limit(10).forEachOrdered(actionRef1 -> System.out.println("Elem = " + actionRef1));;
   }
 
   private static class InstanceHolder {

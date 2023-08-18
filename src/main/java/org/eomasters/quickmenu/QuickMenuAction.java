@@ -26,7 +26,6 @@ package org.eomasters.quickmenu;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
-import java.util.Comparator;
 import java.util.List;
 import java.util.prefs.Preferences;
 import java.util.stream.Collectors;
@@ -46,11 +45,10 @@ import org.openide.util.actions.Presenter;
 @ActionRegistration(displayName = "#CTL_QuickMenuActionName", lazy = false)
 // File is 100, Edit is 200, Tools is 600
 @ActionReference(path = "Menu", position = 580)
-@NbBundle.Messages({
-    "CTL_QuickMenuActionName=Quick Menu",
-})
+@NbBundle.Messages({"CTL_QuickMenuActionName=" + QuickMenuAction.QUICK_MENU_NAME})
 public class QuickMenuAction extends AbstractAction implements Presenter.Toolbar, Presenter.Menu {
 
+  public static final String QUICK_MENU_NAME = "Quick Menu";
   private static final int DEFAULT_NUM_QUICK_ACTIONS = 5;
   private static final String PREFERENCE_KEY_NUM_QUICK_ACTIONS = "org.eomasters.quickmenu.NumActions";
 
@@ -73,10 +71,10 @@ public class QuickMenuAction extends AbstractAction implements Presenter.Toolbar
     Stream<ActionRef> limit =
         refs.stream()
             .filter(ref -> ref.getClicks() > 0)
-            .sorted(Comparator.comparingLong(ActionRef::getClicks).reversed())
             .limit(maxActions);
-    menu.removeAll();
     List<ActionRef> actions = limit.collect(Collectors.toList());
+
+    menu.removeAll();
     if (actions.isEmpty()) {
       JMenuItem menuItem = new JMenuItem("<No Quick Actions yet");
       menuItem.setEnabled(false);
@@ -89,7 +87,7 @@ public class QuickMenuAction extends AbstractAction implements Presenter.Toolbar
             // TODO: move to SnapMenuAccessor
             JMenuItem origMenuItem = SnapMenuAccessor.findMenuItem(actionRef);
             if (origMenuItem != null) {
-              JMenuItem menuItem = new JMenuItem(actionRef.getDisplayName());
+              JMenuItem menuItem = new JMenuItem(actionRef.getMenuRef().getText());
               menuItem.setToolTipText(origMenuItem.getToolTipText());
               menuItem.setIcon(origMenuItem.getIcon());
               menuItem.addActionListener(e -> origMenuItem.doClick());

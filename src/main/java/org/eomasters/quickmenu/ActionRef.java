@@ -27,38 +27,40 @@ import java.util.Objects;
 
 public class ActionRef {
 
-  private final String displayName;
-  private final String path;
+  private final String actionId;
+  private final MenuRef menuRef;
   private long clicks = 0;
-  private String actionName;
 
-  public ActionRef(String path, String displayName) {
-    this.path = path;
-    this.displayName = replaceShortCutIndicator(displayName);
+  public ActionRef(String actionId, MenuRef menuRef) {
+    this.actionId = actionId;
+    this.menuRef = menuRef;
+  }
+
+  public ActionRef(String actionId, String path, String displayName) {
+    this(actionId, new MenuRef(path, replaceShortCutIndicator(displayName)));
   }
 
   private static String replaceShortCutIndicator(String displayName) {
     return displayName.replaceAll("&", "");
   }
 
-  public void setActionName(String actionName) {
-    this.actionName = actionName;
-  }
-
-  public String getDisplayName() {
-    return displayName;
-  }
-
-  public String getPath() {
-    return path;
+  public MenuRef getMenuRef() {
+    return menuRef;
   }
 
   public void incrementClicks() {
+    System.out.println("Clicked = " + this);
     clicks++;
   }
 
   public long getClicks() {
     return clicks;
+  }
+
+  @Override
+  public String toString() {
+    return String.format("ActionRef{displayName='%s', path='%s', clicks=%d, actionName='%s'}",
+        getMenuRef().getText(), getMenuRef().getPath(), clicks, actionId);
   }
 
   @Override
@@ -70,14 +72,12 @@ public class ActionRef {
       return false;
     }
     ActionRef actionRef = (ActionRef) o;
-    return Objects.equals(displayName, actionRef.displayName)
-        && Objects.equals(path, actionRef.path)
-        && Objects.equals(actionName, actionRef.actionName);
+    return Objects.equals(getMenuRef(), actionRef.getMenuRef())
+        && Objects.equals(actionId, actionRef.actionId);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(displayName, path, actionName);
+    return Objects.hash(getMenuRef(), actionId);
   }
-
 }

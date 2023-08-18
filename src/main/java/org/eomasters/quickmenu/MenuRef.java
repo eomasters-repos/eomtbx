@@ -9,43 +9,55 @@
  * it under the terms of the GNU General Public License as
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
- *
+ * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- *
+ * 
  * You should have received a copy of the GNU General Public
  * License along with this program.  If not, see
  * <http://www.gnu.org/licenses/gpl-3.0.html>.
  * =========================LICENSE_END==================================
  */
 
-package org.eomasters;
+package org.eomasters.quickmenu;
 
-import org.eomasters.quickmenu.QuickMenu;
-import org.eomasters.quickmenu.SnapMenuAccessor;
-import org.openide.modules.OnStart;
-import org.openide.windows.OnShowing;
+import java.util.Objects;
 
-public class Init {
+public class MenuRef {
 
-  @OnStart
-  public static class OnStartOperation implements Runnable {
+  private final String path;
+  private final String text;
 
-    @Override
-    public void run() {
-      new Thread(() -> QuickMenu.getInstance().start()).start();
-    }
+  public MenuRef(String path, String text) {
+    this.path = path;
+    this.text = text;
   }
 
-  @OnShowing
-  public static class OnShowingOperation implements Runnable {
+  public String getPath() {
+    return path;
+  }
 
-    @Override
-    public void run() {
-      new Thread(SnapMenuAccessor::initClickCounter).start();
+  public String getText() {
+    return text;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
     }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    MenuRef menuRef = (MenuRef) o;
+    return Objects.equals(getPath(), menuRef.getPath()) && Objects.equals(getText(),
+        menuRef.getText());
+  }
 
+  @Override
+  public int hashCode() {
+    return Objects.hash(getPath(), getText());
   }
 }
