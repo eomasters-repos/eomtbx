@@ -38,7 +38,7 @@ import org.esa.snap.ui.UIUtils;
 
 public class SnapMenuAccessor {
 
-  public static void addListenersToMenuItems(List<ActionRef> actionRefs, MenuElement parent) {
+  public static void addClickCounter(List<ActionRef> actionRefs, MenuElement parent) {
     if (parent.getSubElements().length == 0) {
       if (parent instanceof JMenuItem) {
         JMenuItem menuItem = (JMenuItem) parent;
@@ -51,7 +51,7 @@ public class SnapMenuAccessor {
     }
     MenuElement[] subElements = parent.getSubElements();
     for (MenuElement subElement : subElements) {
-      addListenersToMenuItems(actionRefs, subElement);
+      addClickCounter(actionRefs, subElement);
     }
   }
 
@@ -133,7 +133,7 @@ public class SnapMenuAccessor {
     @Override
     public void mouseClicked(MouseEvent e) {
       JMenuItem menuItem = (JMenuItem) e.getSource();
-      addListenersToMenuItems(QuickMenu.getInstance().getActionReferences(), menuItem);
+      addClickCounter(QuickMenu.getInstance().getActionReferences(), menuItem);
       menuItem.removeMouseListener(this);
     }
   }

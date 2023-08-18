@@ -9,12 +9,12 @@
  * it under the terms of the GNU General Public License as
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
- *
+ * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- *
+ * 
  * You should have received a copy of the GNU General Public
  * License along with this program.  If not, see
  * <http://www.gnu.org/licenses/gpl-3.0.html>.
@@ -23,16 +23,29 @@
 
 package org.eomasters;
 
-
+import org.eomasters.quickmenu.QuickMenu;
 import org.eomasters.quickmenu.SnapMenuAccessor;
+import org.openide.modules.OnStart;
 import org.openide.windows.OnShowing;
 
-@OnShowing
-public class OnShowingOperation implements Runnable {
+public class Init {
 
-  @Override
-  public void run() {
-    new Thread(SnapMenuAccessor::initClickCounter).start();
+  @OnStart
+  public static class OnStartOperation implements Runnable {
+
+    @Override
+    public void run() {
+      new Thread(() -> QuickMenu.getInstance().start()).start();
+    }
   }
 
+  @OnShowing
+  public static class OnShowingOperation implements Runnable {
+
+    @Override
+    public void run() {
+      new Thread(SnapMenuAccessor::initClickCounter).start();
+    }
+
+  }
 }
