@@ -32,10 +32,10 @@ import org.openide.windows.OnShowing;
 
 public class EomToolbox {
 
-  public final String TOOLBOX_ID = "eomtbx";
+  public static final String TOOLBOX_ID = "eomtbx";
 
   public static Preferences getPreferences() {
-    return Config.instance("eomtbx").preferences();
+    return Config.instance(TOOLBOX_ID).preferences();
   }
   @OnStart
   public static class OnStartOperation implements Runnable {
