@@ -82,6 +82,11 @@
     </dependency>
     <dependency>
       <groupId>org.netbeans.api</groupId>
+      <artifactId>org-openide-util-lookup</artifactId>
+      <version>RELEASE113</version>
+    </dependency>
+    <dependency>
+      <groupId>org.netbeans.api</groupId>
       <artifactId>org-openide-util-ui</artifactId>
       <version>RELEASE113</version>
     </dependency>
@@ -94,6 +99,17 @@
       <groupId>org.netbeans.api</groupId>
       <artifactId>org-openide-windows</artifactId>
       <version>RELEASE113</version>
+    </dependency>
+    <dependency>
+      <groupId>org.netbeans.api</groupId>
+      <artifactId>org-netbeans-modules-options-api</artifactId>
+      <version>RELEASE113</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.miglayout</groupId>
+      <artifactId>miglayout-swing</artifactId>
+      <version>11.1</version>
     </dependency>
 
     <dependency>

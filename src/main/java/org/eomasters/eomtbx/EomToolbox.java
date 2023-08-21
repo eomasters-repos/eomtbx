@@ -23,13 +23,20 @@
 
 package org.eomasters.eomtbx;
 
+import java.util.prefs.Preferences;
 import org.eomasters.eomtbx.quickmenu.QuickMenu;
 import org.eomasters.eomtbx.quickmenu.SnapMenuAccessor;
+import org.esa.snap.runtime.Config;
 import org.openide.modules.OnStart;
 import org.openide.windows.OnShowing;
 
-public class Init {
+public class EomToolbox {
 
+  public final String TOOLBOX_ID = "eomtbx";
+
+  public static Preferences getPreferences() {
+    return Config.instance("eomtbx").preferences();
+  }
   @OnStart
   public static class OnStartOperation implements Runnable {
 
@@ -48,4 +55,5 @@ public class Init {
     }
 
   }
+
 }

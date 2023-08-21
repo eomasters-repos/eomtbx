@@ -27,14 +27,12 @@ import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
 import java.util.List;
-import java.util.prefs.Preferences;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import javax.swing.AbstractAction;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.event.MouseInputAdapter;
-import org.esa.snap.rcp.SnapApp;
 import org.openide.awt.ActionID;
 import org.openide.awt.ActionReference;
 import org.openide.awt.ActionRegistration;
@@ -49,8 +47,6 @@ import org.openide.util.actions.Presenter;
 public class QuickMenuAction extends AbstractAction implements Presenter.Toolbar, Presenter.Menu {
 
   public static final String QUICK_MENU_NAME = "Quick Menu";
-  private static final int DEFAULT_NUM_QUICK_ACTIONS = 5;
-  private static final String PREFERENCE_KEY_NUM_QUICK_ACTIONS = "org.eomasters.eomtbx.quickmenu.NumActions";
   public static final String[] SPECIAL_GROUPS = {"Export", "Import"};
 
   private final JMenu menu;
@@ -67,8 +63,7 @@ public class QuickMenuAction extends AbstractAction implements Presenter.Toolbar
 
   private JMenu updateMenu() {
     List<ActionRef> refs = QuickMenu.getInstance().getActionReferences();
-    final Preferences preference = SnapApp.getDefault().getPreferences();
-    int maxActions = preference.getInt(PREFERENCE_KEY_NUM_QUICK_ACTIONS, DEFAULT_NUM_QUICK_ACTIONS);
+    int maxActions = QuickMenuOptions.load().numActions;
     Stream<ActionRef> limit =
         refs.stream()
             .filter(ref -> ref.getClicks() > 0)
