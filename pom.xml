@@ -256,7 +256,7 @@
           <licenseName>GPL 3</licenseName>
           <licenseFile>${project.basedir}/LICENSE.html</licenseFile>
           <requiresRestart>true</requiresRestart>
-          <keystore>${project.basedir}/keystore/key.ks</keystore>
+          <keystore>${project.basedir}/resources/keystore/eomtbx.ks</keystore>
           <keystorealias>snap</keystorealias>
           <keystorepassword>snap-123</keystorepassword>
           <sourceManifestFile>${project.basedir}/src/main/nbm/manifest.mf</sourceManifestFile>
