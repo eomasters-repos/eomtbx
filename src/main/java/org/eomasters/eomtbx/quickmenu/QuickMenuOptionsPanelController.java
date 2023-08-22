@@ -34,7 +34,7 @@ import javax.swing.border.TitledBorder;
 import net.miginfocom.swing.MigLayout;
 import org.eomasters.eomtbx.EomToolbox;
 import org.eomasters.eomtbx.preferences.PropertyChangeOptionsPanelController;
-import org.eomasters.utils.ErrorHandler;
+import org.eomasters.eomtbx.utils.ErrorHandler;
 import org.openide.util.HelpCtx;
 import org.openide.util.Lookup;
 

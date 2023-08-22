@@ -21,7 +21,7 @@
  * =========================LICENSE_END==================================
  */
 
-package org.eomasters.utils;
+package org.eomasters.eomtbx.utils;
 
 import java.awt.Desktop;
 import java.awt.GridLayout;

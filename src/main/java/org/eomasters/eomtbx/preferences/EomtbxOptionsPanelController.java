@@ -40,7 +40,7 @@ import net.miginfocom.swing.MigLayout;
 import org.eomasters.eomtbx.EomToolbox;
 import org.eomasters.eomtbx.icons.Icons;
 import org.eomasters.eomtbx.quickmenu.QuickMenuOptionsPanelController;
-import org.eomasters.utils.ErrorHandler;
+import org.eomasters.eomtbx.utils.ErrorHandler;
 import org.netbeans.spi.options.OptionsPanelController;
 import org.openide.util.HelpCtx;
 import org.openide.util.Lookup;
@@ -49,7 +49,7 @@ import org.openide.util.Lookup;
 @OptionsPanelController.TopLevelRegistration(
     id = "EOMTBX",
     categoryName = "EOMTBX",
-    iconBase = "org/eomasters/eomtbx/preferences/eomtbx-logo_trans_32.png",
+    iconBase = "org/eomasters/eomtbx/icons/Eomtbx_48.png",
     keywordsCategory = "EOMTBX",
     keywords = "EOMTBX, EOMASTERS, Toolbox",
     position = 9000

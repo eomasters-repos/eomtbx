@@ -31,6 +31,7 @@ public class Icon {
   public final ImageIcon s16;
   public final ImageIcon s24;
   public final ImageIcon s32;
+  public final ImageIcon s48;
 
   private final String name;
 
@@ -39,6 +40,7 @@ public class Icon {
     s16 = createIcon(16);
     s24 = createIcon(24);
     s32 = createIcon(32);
+    s48 = createIcon(48);
   }
 
   private ImageIcon createIcon(int size) {

@@ -25,6 +25,7 @@ package org.eomasters.eomtbx.icons;
 
 public final class Icons {
 
+  public static final Icon EOMTBX = new Icon("eomtbx");
   public static final Icon IMPORT = new Icon("Import");
   public static final Icon EXPORT = new Icon("Export");
 
