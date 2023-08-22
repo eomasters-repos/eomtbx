@@ -9,12 +9,12 @@
  * it under the terms of the GNU General Public License as
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public
  * License along with this program.  If not, see
  * <http://www.gnu.org/licenses/gpl-3.0.html>.
@@ -25,16 +25,20 @@ package org.eomasters.eomtbx.preferences;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.IOException;
 import java.util.List;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
+import javax.swing.JButton;
 import javax.swing.JComponent;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingUtilities;
 import net.miginfocom.swing.MigLayout;
 import org.eomasters.eomtbx.EomToolbox;
+import org.eomasters.eomtbx.icons.Icons;
 import org.eomasters.eomtbx.quickmenu.QuickMenuOptionsPanelController;
 import org.eomasters.utils.ErrorHandler;
 import org.netbeans.spi.options.OptionsPanelController;
@@ -98,10 +102,13 @@ public class EomtbxOptionsPanelController extends PropertyChangeOptionsPanelCont
   @Override
   public JComponent getComponent(Lookup lookup) {
     if (mainPanel == null) {
-      MigLayout layout = new MigLayout("fillx");
+      MigLayout layout = new MigLayout("fillx, gapy 5");
       JPanel prefPanel = new JPanel(layout);
+      JPanel generalPanel = createGeneralPanel();
+      prefPanel.add(generalPanel, "growx, wrap");
+
       for (OptionsPanelController subController : subControllers) {
-        prefPanel.add(subController.getComponent(Lookup.getDefault()), "wrap, growx, gapy 5");
+        prefPanel.add(subController.getComponent(Lookup.getDefault()), "growx, wrap");
       }
       prefPanel.add(new JPanel(), "pushy, grow, wrap");
 
@@ -111,6 +118,36 @@ public class EomtbxOptionsPanelController extends PropertyChangeOptionsPanelCont
       mainPanel = scrollPane;
     }
     return mainPanel;
+  }
+
+  private static JPanel createGeneralPanel() {
+    JPanel eomtbxPanel = new JPanel(new MigLayout("gap 5, insets 5"));
+    eomtbxPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("EOMTBX General Options"));
+    eomtbxPanel.add(new JLabel("Import/Export options:"), "gapright 10");
+    JButton importButton = new JButton("Import", Icons.IMPORT.s24);
+    JButton exportButton = new JButton("Export", Icons.EXPORT.s24);
+    eomtbxPanel.add(importButton);
+    eomtbxPanel.add(exportButton, "wrap");
+
+    importButton.addActionListener(e -> {
+      try {
+        // Todo - use a file chooser
+        EomToolbox.importPreferences(System.in);
+      } catch (IOException ex) {
+        ErrorHandler.handle("Could not import preferences", ex);
+      }
+    });
+
+    exportButton.addActionListener(e -> {
+      try {
+        // Todo - use a file chooser
+        EomToolbox.exportPreferences(System.out);
+      } catch (IOException ex) {
+        ErrorHandler.handle("Could not export preferences", ex);
+      }
+    });
+
+    return eomtbxPanel;
   }
 
   @Override

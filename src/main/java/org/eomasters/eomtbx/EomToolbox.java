@@ -23,6 +23,11 @@
 
 package org.eomasters.eomtbx;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.PrintStream;
+import java.util.prefs.BackingStoreException;
+import java.util.prefs.InvalidPreferencesFormatException;
 import java.util.prefs.Preferences;
 import org.eomasters.eomtbx.quickmenu.QuickMenu;
 import org.eomasters.eomtbx.quickmenu.SnapMenuAccessor;
@@ -37,6 +42,23 @@ public class EomToolbox {
   public static Preferences getPreferences() {
     return Config.instance(TOOLBOX_ID).preferences();
   }
+
+  public static void exportPreferences(PrintStream out) throws IOException {
+    try {
+      getPreferences().exportSubtree(out);
+    } catch (BackingStoreException e) {
+      throw new IOException(e);
+    }
+  }
+
+  public static void importPreferences(InputStream in) throws IOException {
+    try {
+      Preferences.importPreferences(in);
+    } catch (InvalidPreferencesFormatException e) {
+      throw new RuntimeException(e);
+    }
+  }
+
   @OnStart
   public static class OnStartOperation implements Runnable {
 

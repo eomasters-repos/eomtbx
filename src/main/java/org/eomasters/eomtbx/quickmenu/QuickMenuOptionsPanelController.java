@@ -9,12 +9,12 @@
  * it under the terms of the GNU General Public License as
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public
  * License along with this program.  If not, see
  * <http://www.gnu.org/licenses/gpl-3.0.html>.
@@ -91,7 +91,7 @@ public class QuickMenuOptionsPanelController extends PropertyChangeOptionsPanelC
 
   @Override
   public boolean isChanged() {
-    if(currentOptions == null) {
+    if (currentOptions == null) {
       return false;
     }
     return !currentOptions.equals(backup);
@@ -104,7 +104,7 @@ public class QuickMenuOptionsPanelController extends PropertyChangeOptionsPanelC
       mainPanel = new JPanel(mainLayout);
       mainPanel.setBorder(new TitledBorder("Quick Menu"));
 
-      JLabel label = new JLabel("Number of actions displayed (5-10): ");
+      JLabel label = new JLabel("Number of actions displayed (5-10):");
       numActionsModel = new SpinnerNumberModel(QuickMenuOptions.DEFAULT_NUM_QUICK_ACTIONS, 5, 10, 1);
       JSpinner spinner = new JSpinner(numActionsModel);
       spinner.addChangeListener(e -> {
@@ -113,7 +113,7 @@ public class QuickMenuOptionsPanelController extends PropertyChangeOptionsPanelC
       });
       MigLayout qmLayout = new MigLayout();
       JPanel numActionsOptionPanel = new JPanel(qmLayout);
-      numActionsOptionPanel.add(label);
+      numActionsOptionPanel.add(label, "gapright 10");
       numActionsOptionPanel.add(spinner);
 
       mainPanel.add(numActionsOptionPanel);
