@@ -27,12 +27,14 @@ import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
 import java.util.List;
+import java.util.prefs.Preferences;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import javax.swing.AbstractAction;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.event.MouseInputAdapter;
+import org.eomasters.eomtbx.EomToolbox;
 import org.openide.awt.ActionID;
 import org.openide.awt.ActionReference;
 import org.openide.awt.ActionRegistration;
@@ -50,10 +52,17 @@ public class QuickMenuAction extends AbstractAction implements Presenter.Toolbar
   public static final String[] SPECIAL_GROUPS = {"Export", "Import"};
 
   private final JMenu menu;
+  private int numActions;
 
   public QuickMenuAction() {
     menu = new JMenu(Bundle.CTL_QuickMenuActionName());
     menu.addMouseListener(new MenuUpdater());
+    Preferences preferences = EomToolbox.getPreferences();
+    preferences.addPreferenceChangeListener(evt -> {
+      if (evt.getKey().equals(QuickMenuOptions.PREFERENCE_KEY_NUM_QUICK_ACTIONS)) {
+        this.numActions = Integer.parseInt(evt.getNewValue());
+      }
+    });
   }
 
   @Override
@@ -63,11 +72,10 @@ public class QuickMenuAction extends AbstractAction implements Presenter.Toolbar
 
   private JMenu updateMenu() {
     List<ActionRef> refs = QuickMenu.getInstance().getActionReferences();
-    int maxActions = QuickMenuOptions.load().numActions;
     Stream<ActionRef> limit =
         refs.stream()
             .filter(ref -> ref.getClicks() > 0)
-            .limit(maxActions);
+            .limit(numActions);
     List<ActionRef> actions = limit.collect(Collectors.toList());
 
     menu.removeAll();

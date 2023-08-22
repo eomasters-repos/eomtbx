@@ -58,7 +58,7 @@ public class QuickMenuOptionsPanelController extends PropertyChangeOptionsPanelC
     } else {
       currentOptions = backup.clone();
     }
-    numActionsModel.setValue(currentOptions.numActions);
+    numActionsModel.setValue(currentOptions.getNumActions());
   }
 
   @Override
@@ -66,6 +66,7 @@ public class QuickMenuOptionsPanelController extends PropertyChangeOptionsPanelC
     QuickMenuOptions.putToPreferences(currentOptions);
     backup = currentOptions.clone();
     storePreferences();
+    fireChange();
   }
 
   private static void storePreferences() {
@@ -79,20 +80,20 @@ public class QuickMenuOptionsPanelController extends PropertyChangeOptionsPanelC
 
   @Override
   public void cancel() {
-    // reset the options
-    firePropertyChange(QuickMenuOptions.PREFERENCE_KEY_NUM_QUICK_ACTIONS, backup.numActions, currentOptions.numActions);
     currentOptions = backup.clone();
+    fireChange();
   }
 
   @Override
   public boolean isValid() {
-    // validate the options
-    // currently always valid
     return true;
   }
 
   @Override
   public boolean isChanged() {
+    if(currentOptions == null) {
+      return false;
+    }
     return !currentOptions.equals(backup);
   }
 
@@ -106,11 +107,14 @@ public class QuickMenuOptionsPanelController extends PropertyChangeOptionsPanelC
       JLabel label = new JLabel("Number of actions displayed (5-10): ");
       numActionsModel = new SpinnerNumberModel(QuickMenuOptions.DEFAULT_NUM_QUICK_ACTIONS, 5, 10, 1);
       JSpinner spinner = new JSpinner(numActionsModel);
-      spinner.addChangeListener(e -> currentOptions.numActions = (Integer) spinner.getValue());
+      spinner.addChangeListener(e -> {
+        currentOptions.setNumActions((Integer) spinner.getValue());
+        fireChange();
+      });
       MigLayout qmLayout = new MigLayout();
       JPanel numActionsOptionPanel = new JPanel(qmLayout);
-      numActionsOptionPanel.add(label, "align right");
-      numActionsOptionPanel.add(spinner, "align left");
+      numActionsOptionPanel.add(label);
+      numActionsOptionPanel.add(spinner);
 
       mainPanel.add(numActionsOptionPanel);
     }

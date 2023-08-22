@@ -23,6 +23,7 @@
 
 package org.eomasters.eomtbx.preferences;
 
+import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.List;
 import java.util.prefs.BackingStoreException;
@@ -54,26 +55,22 @@ public class EomtbxOptionsPanelController extends PropertyChangeOptionsPanelCont
   public static final String HID_EOMTBX_OPTIONS = "hid_eomtbx.options";
   private final List<OptionsPanelController> subControllers;
   private JComponent mainPanel;
-  private boolean changed;
 
   public EomtbxOptionsPanelController() {
-    subControllers = List.of(new QuickMenuOptionsPanelController());
+    QuickMenuOptionsPanelController quickMenuController = new QuickMenuOptionsPanelController();
+    PropertyChangeDelegate propertyChangeDelegate = new PropertyChangeDelegate();
+    quickMenuController.addPropertyChangeListener(propertyChangeDelegate);
+    subControllers = List.of(quickMenuController);
   }
 
   @Override
   public void update() {
-    SwingUtilities.invokeLater(() -> {
-      subControllers.forEach(OptionsPanelController::update);
-      changed = false;
-    });
+    SwingUtilities.invokeLater(() -> subControllers.forEach(OptionsPanelController::update));
   }
 
   @Override
   public void applyChanges() {
-    SwingUtilities.invokeLater(() -> {
-      subControllers.forEach(OptionsPanelController::applyChanges);
-      changed = false;
-    });
+    SwingUtilities.invokeLater(() -> subControllers.forEach(OptionsPanelController::applyChanges));
     try {
       Preferences preferences = EomToolbox.getPreferences();
       preferences.flush();
@@ -95,7 +92,7 @@ public class EomtbxOptionsPanelController extends PropertyChangeOptionsPanelCont
 
   @Override
   public boolean isChanged() {
-    return changed;
+    return subControllers.stream().anyMatch(OptionsPanelController::isChanged);
   }
 
   @Override
@@ -137,15 +134,11 @@ public class EomtbxOptionsPanelController extends PropertyChangeOptionsPanelCont
     }
   }
 
-  // todo - Probably not needed
-  private void changed() {
-    if (!changed) {
-      changed = true;
-      firePropertyChange(OptionsPanelController.PROP_CHANGED, false, true);
+  private class PropertyChangeDelegate implements PropertyChangeListener {
+
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+      firePropertyChange(evt.getPropertyName(), evt.getOldValue(), evt.getNewValue());
     }
-    firePropertyChange(OptionsPanelController.PROP_VALID, null, null);
   }
-
-
-
 }

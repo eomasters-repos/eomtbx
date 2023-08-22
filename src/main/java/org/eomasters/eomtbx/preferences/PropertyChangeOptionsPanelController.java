@@ -30,6 +30,7 @@ import org.netbeans.spi.options.OptionsPanelController;
 public abstract class PropertyChangeOptionsPanelController extends OptionsPanelController {
 
   private final PropertyChangeSupport pcs = new PropertyChangeSupport(this);
+  private boolean changed;
 
   protected void firePropertyChange(String propChanged, boolean oldValue, boolean newValue) {
     pcs.firePropertyChange(propChanged, oldValue, newValue);
@@ -51,5 +52,13 @@ public abstract class PropertyChangeOptionsPanelController extends OptionsPanelC
   @Override
   public void removePropertyChangeListener(PropertyChangeListener propertyChangeListener) {
     pcs.addPropertyChangeListener(propertyChangeListener);
+  }
+
+
+  protected void fireChange() {
+    if (isChanged()) {
+      firePropertyChange(OptionsPanelController.PROP_CHANGED, false, true);
+    }
+    firePropertyChange(OptionsPanelController.PROP_VALID, null, null);
   }
 }
