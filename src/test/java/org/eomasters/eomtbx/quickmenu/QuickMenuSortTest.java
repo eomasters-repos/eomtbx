@@ -9,12 +9,12 @@
  * it under the terms of the GNU General Public License as
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
- *
+ * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- *
+ * 
  * You should have received a copy of the GNU General Public
  * License along with this program.  If not, see
  * <http://www.gnu.org/licenses/gpl-3.0.html>.
@@ -23,52 +23,28 @@
 
 package org.eomasters.eomtbx.quickmenu;
 
-import java.util.Objects;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class MenuRef {
+import org.junit.jupiter.api.Test;
 
-  private final String path;
-  private final String text;
+public class QuickMenuSortTest {
 
-  public MenuRef(String path, String text) {
-    this.path = path;
-    this.text = removeShortCutIndicator(text);
-  }
 
-  public String getPath() {
-    return path;
-  }
+    @Test
+    public void testActionRefClicked() {
+        QuickMenu quickMenu = new QuickMenu();
+        quickMenu.start();
 
-  public String getText() {
-    return text;
-  }
+        ActionRef actionRef1 = new ActionRef("action1", new MenuRef("path1", "Text 1"));
+        ActionRef actionRef2 = new ActionRef("action2", new MenuRef("path2", "Text 2"));
+        quickMenu.getActionReferences().add(actionRef1);
+        quickMenu.getActionReferences().add(actionRef2);
 
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) {
-      return true;
+        actionRef1.incrementClicks();
+
+        quickMenu.sort();
+
+        assertEquals(1, actionRef1.getClicks());
+        assertEquals(0, actionRef2.getClicks());
     }
-    if (o == null || getClass() != o.getClass()) {
-      return false;
-    }
-    MenuRef other = (MenuRef) o;
-    return Objects.equals(this.getPath(), other.getPath()) &&
-        Objects.equals(this.getText(), other.getText());
-  }
-
-  static String removeShortCutIndicator(String displayName) {
-    return displayName.replaceAll("&", "");
-  }
-
-  @Override
-  public int hashCode() {
-    return Objects.hash(getPath(), getText());
-  }
-
-  @Override
-  public String toString() {
-    return path + text;
-  }
-
-
 }

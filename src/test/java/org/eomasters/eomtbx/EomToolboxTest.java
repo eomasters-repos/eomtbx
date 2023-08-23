@@ -27,6 +27,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
@@ -34,6 +35,17 @@ import java.util.prefs.Preferences;
 import org.junit.jupiter.api.Test;
 
 class EomToolboxTest {
+
+  @Test
+  void exportPreferences() throws Exception {
+    Preferences eomtbxPreferences = EomToolbox.getPreferences();
+    eomtbxPreferences.putInt("quickMenu.numActions", 7);
+    eomtbxPreferences.flush();
+    ByteArrayOutputStream out = new ByteArrayOutputStream();
+    EomToolbox.exportPreferences(out);
+    String xml = out.toString(StandardCharsets.UTF_8);
+    assertTrue(xml.contains("quickMenu.numActions"));
+  }
 
   @Test
   void importPreferences() throws Exception {

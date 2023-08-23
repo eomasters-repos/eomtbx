@@ -147,7 +147,8 @@ public class SnapMenuAccessor {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-      QuickMenu.getInstance().actionRefClicked(actionRef);
+      actionRef.incrementClicks();
+      QuickMenu.getInstance().sort();
     }
   }
 }

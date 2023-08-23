@@ -39,7 +39,7 @@ class ActionRefCollector {
     return doCollect(new ArrayList<>(), FileUtil.getConfigFile("Menu"));
   }
 
-  private static List<ActionRef> doCollect(ArrayList<ActionRef> actionRefs, FileObject menuFolder) {
+  static List<ActionRef> doCollect(ArrayList<ActionRef> actionRefs, FileObject menuFolder) {
     String path = menuFolder.getPath() + "/";
     for (FileObject fileObject : menuFolder.getChildren()) {
       try {

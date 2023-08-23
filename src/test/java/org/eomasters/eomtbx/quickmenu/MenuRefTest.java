@@ -9,12 +9,12 @@
  * it under the terms of the GNU General Public License as
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
- *
+ * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- *
+ * 
  * You should have received a copy of the GNU General Public
  * License along with this program.  If not, see
  * <http://www.gnu.org/licenses/gpl-3.0.html>.
@@ -23,52 +23,42 @@
 
 package org.eomasters.eomtbx.quickmenu;
 
-import java.util.Objects;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class MenuRef {
+import org.junit.jupiter.api.Test;
 
-  private final String path;
-  private final String text;
+public class MenuRefTest {
 
-  public MenuRef(String path, String text) {
-    this.path = path;
-    this.text = removeShortCutIndicator(text);
-  }
+    @Test
+    public void testGetPath() {
+        MenuRef menuRef = new MenuRef("path/to/menu", "Menu Text");
 
-  public String getPath() {
-    return path;
-  }
-
-  public String getText() {
-    return text;
-  }
-
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) {
-      return true;
+        assertEquals("path/to/menu", menuRef.getPath());
     }
-    if (o == null || getClass() != o.getClass()) {
-      return false;
+
+    @Test
+    public void testGetText() {
+        MenuRef menuRef = new MenuRef("path/to/menu", "Menu &Text");
+
+        assertEquals("Menu Text", menuRef.getText());
     }
-    MenuRef other = (MenuRef) o;
-    return Objects.equals(this.getPath(), other.getPath()) &&
-        Objects.equals(this.getText(), other.getText());
-  }
 
-  static String removeShortCutIndicator(String displayName) {
-    return displayName.replaceAll("&", "");
-  }
+    @Test
+    public void testEqualsAndHashCode() {
+        MenuRef menuRef1 = new MenuRef("path/to/menu", "Menu Text");
+        MenuRef menuRef2 = new MenuRef("path/to/menu", "Menu Text");
 
-  @Override
-  public int hashCode() {
-    return Objects.hash(getPath(), getText());
-  }
+        assertEquals(menuRef1, menuRef2);
+        assertEquals(menuRef1.hashCode(), menuRef2.hashCode());
+    }
 
-  @Override
-  public String toString() {
-    return path + text;
-  }
+    @Test
+    public void testRemoveShortCutIndicator() {
+        String inputText = "Menu &Text";
+        String expectedOutput = "Menu Text";
 
+        String result = MenuRef.removeShortCutIndicator(inputText);
 
+        assertEquals(expectedOutput, result);
+    }
 }

@@ -36,6 +36,9 @@ public class QuickMenu {
     return InstanceHolder.INSTANCE;
   }
 
+  QuickMenu() {
+  }
+
   public List<ActionRef> getActionReferences() {
     ensureStarted();
     return actionReferences;
@@ -48,7 +51,7 @@ public class QuickMenu {
     actionReferences = Collections.synchronizedList(ActionRefCollector.collect());
   }
 
-  private boolean isStarted() {
+  boolean isStarted() {
     return actionReferences != null;
   }
 
@@ -58,9 +61,7 @@ public class QuickMenu {
     }
   }
 
-  public void actionRefClicked(ActionRef actionRef) {
-    actionRef.incrementClicks();
-    // keeping the list sorted keeps the sorting fast
+  public void sort() {
     actionReferences.sort(Comparator.comparing(ActionRef::getClicks).reversed());
   }
 
