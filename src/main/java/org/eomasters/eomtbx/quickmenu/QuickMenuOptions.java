@@ -26,23 +26,20 @@ package org.eomasters.eomtbx.quickmenu;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.prefs.Preferences;
-import org.eomasters.eomtbx.EomToolbox;
 
-public class QuickMenuOptions implements Cloneable {
+/**
+ * Options for the QuickMenu.
+ */
+class QuickMenuOptions implements Cloneable {
 
   public static final String PREFERENCE_KEY_NUM_QUICK_ACTIONS = "quickMenu.numActions";
   public static final int DEFAULT_NUM_QUICK_ACTIONS = 5;
   private final Preferences preferences;
   private AtomicInteger numActions = new AtomicInteger(DEFAULT_NUM_QUICK_ACTIONS);
 
-
-  public static QuickMenuOptions load() {
-    return new QuickMenuOptions(EomToolbox.getPreferences());
-  }
-
-  private QuickMenuOptions(Preferences preferences) {
+  QuickMenuOptions(Preferences preferences) {
     this.preferences = preferences;
-   setNumActions(this.preferences.getInt(QuickMenuOptions.PREFERENCE_KEY_NUM_QUICK_ACTIONS,
+    setNumActions(this.preferences.getInt(QuickMenuOptions.PREFERENCE_KEY_NUM_QUICK_ACTIONS,
         QuickMenuOptions.DEFAULT_NUM_QUICK_ACTIONS));
   }
 

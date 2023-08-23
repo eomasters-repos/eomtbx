@@ -51,6 +51,9 @@ import org.netbeans.spi.options.OptionsPanelController;
 import org.openide.util.HelpCtx;
 import org.openide.util.Lookup;
 
+/**
+ * Controller for the EOMTBX options panel. Allows to change the preferences for the EOMTBX.
+ */
 @SuppressWarnings("unused")
 @OptionsPanelController.TopLevelRegistration(
     id = "EOMTBX",
@@ -70,6 +73,9 @@ public class EomtbxOptionsPanelController extends PropertyChangeOptionsPanelCont
   private final Preferences preferences = EomToolbox.getPreferences();
   private JComponent mainPanel;
 
+  /**
+   * Creates a new EomtbxOptionsPanelController.
+   */
   public EomtbxOptionsPanelController() {
     SubControllerChangeDelegate propertyChangeDelegate = new SubControllerChangeDelegate();
 

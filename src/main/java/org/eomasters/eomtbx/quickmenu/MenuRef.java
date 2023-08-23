@@ -25,20 +25,39 @@ package org.eomasters.eomtbx.quickmenu;
 
 import java.util.Objects;
 
+/**
+ * Reference to a menu item.
+ */
 public class MenuRef {
 
   private final String path;
   private final String text;
 
+  /**
+   * Creates a new MenuRef with the given path and text.
+   *
+   * @param path the path
+   * @param text the text
+   */
   public MenuRef(String path, String text) {
     this.path = path;
     this.text = removeShortCutIndicator(text);
   }
 
+  /**
+   * Returns the path.
+   *
+   * @return the path
+   */
   public String getPath() {
     return path;
   }
 
+  /**
+   * Returns the text.
+   *
+   * @return the text
+   */
   public String getText() {
     return text;
   }
@@ -52,8 +71,8 @@ public class MenuRef {
       return false;
     }
     MenuRef other = (MenuRef) o;
-    return Objects.equals(this.getPath(), other.getPath()) &&
-        Objects.equals(this.getText(), other.getText());
+    return Objects.equals(this.getPath(), other.getPath())
+        && Objects.equals(this.getText(), other.getText());
   }
 
   static String removeShortCutIndicator(String displayName) {

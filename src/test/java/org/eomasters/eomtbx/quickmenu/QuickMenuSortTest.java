@@ -29,7 +29,6 @@ import org.junit.jupiter.api.Test;
 
 public class QuickMenuSortTest {
 
-
     @Test
     public void testActionRefClicked() {
         QuickMenu quickMenu = new QuickMenu();

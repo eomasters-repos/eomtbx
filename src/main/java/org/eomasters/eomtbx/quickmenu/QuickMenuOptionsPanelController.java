@@ -38,6 +38,9 @@ import org.eomasters.eomtbx.utils.ErrorHandler;
 import org.openide.util.HelpCtx;
 import org.openide.util.Lookup;
 
+/**
+ * Controller for the QuickMenu options panel. Allows to change the preferences for the QuickMenu.
+ */
 public class QuickMenuOptionsPanelController extends PropertyChangeOptionsPanelController {
 
   public static final String HID_EOMTBX_QUICKMENU = "HID_EOMTBX_QUICKMENU";
@@ -46,13 +49,9 @@ public class QuickMenuOptionsPanelController extends PropertyChangeOptionsPanelC
   private QuickMenuOptions backup;
   private SpinnerNumberModel numActionsModel;
 
-
-  public QuickMenuOptionsPanelController() {
-  }
-
   @Override
   public void update() {
-    currentOptions = QuickMenuOptions.load();
+    currentOptions = new QuickMenuOptions(EomToolbox.getPreferences());
     backup = currentOptions.clone();
     numActionsModel.setValue(currentOptions.getNumActions());
     fireChange();
@@ -63,16 +62,6 @@ public class QuickMenuOptionsPanelController extends PropertyChangeOptionsPanelC
     storePreferences();
     backup = currentOptions.clone();
     fireChange();
-  }
-
-  private void storePreferences() {
-    Preferences preferences = EomToolbox.getPreferences();
-    QuickMenuOptions.putToPreferences(currentOptions, EomToolbox.getPreferences());
-    try {
-      preferences.flush();
-    } catch (BackingStoreException e) {
-      ErrorHandler.handle("Could not store QuickMenu options", e);
-    }
   }
 
   @Override
@@ -124,4 +113,13 @@ public class QuickMenuOptionsPanelController extends PropertyChangeOptionsPanelC
     return new HelpCtx(HID_EOMTBX_QUICKMENU);
   }
 
+  private void storePreferences() {
+    Preferences preferences = EomToolbox.getPreferences();
+    QuickMenuOptions.putToPreferences(currentOptions, EomToolbox.getPreferences());
+    try {
+      preferences.flush();
+    } catch (BackingStoreException e) {
+      ErrorHandler.handle("Could not store QuickMenu options", e);
+    }
+  }
 }

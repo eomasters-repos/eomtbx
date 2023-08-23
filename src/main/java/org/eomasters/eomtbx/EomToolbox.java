@@ -37,7 +37,6 @@ import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 import org.eomasters.eomtbx.quickmenu.QuickMenu;
-import org.eomasters.eomtbx.quickmenu.SnapMenuAccessor;
 import org.esa.snap.rcp.SnapApp;
 import org.esa.snap.runtime.Config;
 import org.openide.modules.OnStart;
@@ -48,15 +47,32 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
+/**
+ * The EOM-Toolbox. Provides general static methods for the EOMTBX.
+ */
 public class EomToolbox {
 
+  /**
+   * The ID of the EOM-Toolbox.
+   */
   public static final String TOOLBOX_ID = "eomtbx";
   private static final Preferences preferences = Config.instance(TOOLBOX_ID).preferences();
 
+  /**
+   * Returns the preferences of the EOM-Toolbox.
+   *
+   * @return the preferences
+   */
   public static Preferences getPreferences() {
     return preferences;
   }
 
+  /**
+   * Exports the preferences of the EOM-Toolbox.
+   *
+   * @param out the output stream
+   * @throws IOException if an I/O error occurs
+   */
   public static void exportPreferences(OutputStream out) throws IOException {
     try {
       getPreferences().exportSubtree(new PrintStream(out));
@@ -65,11 +81,16 @@ public class EomToolbox {
     }
   }
 
+  /**
+   * Imports the preferences of the EOM-Toolbox.
+   *
+   * @param in the input stream
+   * @throws IOException if an I/O error occurs
+   */
   public static void importPreferences(InputStream in) throws IOException {
     // Preferences.importPreferences(in); is not working
-    Document document = loadDocument(in);
-    XPathFactory xPathfactory = XPathFactory.newInstance();
-    XPath xpath = xPathfactory.newXPath();
+    Document document = loadPreferencesDocument(in);
+    XPath xpath = XPathFactory.newInstance().newXPath();
     String snapName = SnapApp.getDefault().getInstanceName().toLowerCase();
     String expression = String.format("/preferences/root[@type='system']/node[@name='%s']/node[@name='%s']/map/entry",
         snapName, TOOLBOX_ID);
@@ -91,7 +112,7 @@ public class EomToolbox {
 
   }
 
-  private static Document loadDocument(InputStream in) throws IOException {
+  private static Document loadPreferencesDocument(InputStream in) throws IOException {
     DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
     dbf.setIgnoringElementContentWhitespace(true);
     dbf.setIgnoringComments(true);
@@ -103,6 +124,9 @@ public class EomToolbox {
     }
   }
 
+  /**
+   * Invoked when the application is started. Not intended to be called by clients.
+   */
   @OnStart
   public static class OnStartOperation implements Runnable {
 
@@ -112,12 +136,15 @@ public class EomToolbox {
     }
   }
 
+  /**
+   * Invoked when the GUI is shown. Not intended to be called by clients.
+   */
   @OnShowing
   public static class OnShowingOperation implements Runnable {
 
     @Override
     public void run() {
-      new Thread(SnapMenuAccessor::initClickCounter).start();
+      new Thread(ClickCounter::initMenuItemClickCounter).start();
     }
 
   }

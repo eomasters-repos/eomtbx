@@ -27,48 +27,83 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * Represents an action in the QuickMenu. It holds the original actionId and a list of MenuRefs also it counts the
+ * clicks.
+ */
 public class ActionRef {
 
   private final String actionId;
   private final List<MenuRef> menuRefs;
   private long clicks = 0;
 
+  /**
+   * Creates a new ActionRef with the given actionId and menuRef.
+   *
+   * @param actionId the actionId
+   * @param menuRef  the menuRef
+   */
   public ActionRef(String actionId, MenuRef menuRef) {
     this.actionId = actionId;
     this.menuRefs = new ArrayList<>();
     menuRefs.add(menuRef);
   }
 
+  /**
+   * Returns the actionId.
+   *
+   * @return the actionId
+   */
   public String getActionId() {
     return actionId;
   }
 
+  /**
+   * Returns the first MenuRef.
+   *
+   * @return the first MenuRef
+   */
   public MenuRef getMenuRef() {
     return menuRefs.get(0);
   }
+
+  /**
+   * Returns the list of MenuRefs.
+   *
+   * @return the list of MenuRefs
+   */
   public List<MenuRef> getMenuRefs() {
     return menuRefs;
   }
 
+  /**
+   * Adds a MenuRef to the list of MenuRefs.
+   *
+   * @param menuRef the MenuRef to add
+   */
   public void addMenuRef(MenuRef menuRef) {
     menuRefs.add(menuRef);
   }
 
+  /**
+   * Increments the click counter by one.
+   */
   public void incrementClicks() {
     clicks++;
   }
 
+  /**
+   * Returns the click counter.
+   *
+   * @return the number of clicks
+   */
   public long getClicks() {
     return clicks;
   }
 
   @Override
   public String toString() {
-    return "ActionRef{" +
-        "actionId='" + actionId + '\'' +
-        ", clicks=" + clicks +
-        ", menuRefs=" + menuRefs +
-        '}';
+    return String.format("ActionRef{actionId='%s', clicks=%d, menuRefs=%s}", actionId, clicks, menuRefs);
   }
 
   @Override

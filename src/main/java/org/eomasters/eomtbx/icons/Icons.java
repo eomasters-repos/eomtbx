@@ -23,10 +23,22 @@
 
 package org.eomasters.eomtbx.icons;
 
+/**
+ * Eases access to the icons used within the EOMTBX.
+ */
 public final class Icons {
 
+  /**
+   * The EOMTBX icon.
+   */
   public static final Icon EOMTBX = new Icon("Eomtbx");
+  /**
+   * An icon for the import action.
+   */
   public static final Icon IMPORT = new Icon("Import");
+  /**
+   * An icon for the export action.
+   */
   public static final Icon EXPORT = new Icon("Export");
 
   private Icons() {

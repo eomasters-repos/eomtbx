@@ -30,6 +30,9 @@ import org.eomasters.eomtbx.utils.ErrorHandler;
 import org.openide.filesystems.FileObject;
 import org.openide.filesystems.FileUtil;
 
+/**
+ * Collects all actions and their menu references from the NetBeans FileSystem.
+ */
 class ActionRefCollector {
 
   private static final String[] EXCLUDE_ACTION_IDS = {"separator", "spacer", "master-help"};
@@ -66,10 +69,10 @@ class ActionRefCollector {
           if (shallExclude(EXCLUDE_ELEMENTS_CONTAINING, path + "/" + displayName)) {
             continue;
           }
-          actionRefs.stream().
-              filter(aref -> aref.getActionId().equals(actionId))
-              .findAny().
-              ifPresentOrElse(ref -> ref.addMenuRef(new MenuRef(path, displayName)),
+          actionRefs.stream()
+              .filter(aref -> aref.getActionId().equals(actionId))
+              .findAny()
+              .ifPresentOrElse(ref -> ref.addMenuRef(new MenuRef(path, displayName)),
                   () -> actionRefs.add(new ActionRef(actionId, new MenuRef(path, displayName))));
 
         }

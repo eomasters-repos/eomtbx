@@ -27,16 +27,14 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import org.netbeans.spi.options.OptionsPanelController;
 
+/**
+ * An OptionsPanelController which supports property change events.
+ */
 public abstract class PropertyChangeOptionsPanelController extends OptionsPanelController {
 
   private final PropertyChangeSupport pcs = new PropertyChangeSupport(this);
-  private boolean changed;
 
   protected void firePropertyChange(String propChanged, boolean oldValue, boolean newValue) {
-    pcs.firePropertyChange(propChanged, oldValue, newValue);
-  }
-
-  private void firePropertyChange(String propChanged, int oldValue, int newValue) {
     pcs.firePropertyChange(propChanged, oldValue, newValue);
   }
 

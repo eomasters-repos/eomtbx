@@ -41,6 +41,9 @@ import org.openide.awt.ActionRegistration;
 import org.openide.util.NbBundle;
 import org.openide.util.actions.Presenter;
 
+/**
+ * The class inserts the QuickMenu into the menu bar.
+ */
 @ActionID(category = "Other", id = "EOM_QuickMenu")
 @ActionRegistration(displayName = "#CTL_QuickMenuActionName", lazy = false)
 // File is 100, Edit is 200, Tools is 600
@@ -54,15 +57,24 @@ public class QuickMenuAction extends AbstractAction implements Presenter.Toolbar
   private final JMenu menu;
   private int numActions;
 
+  /**
+   * Creates a new QuickMenuAction.
+   */
   public QuickMenuAction() {
     menu = new JMenu(Bundle.CTL_QuickMenuActionName());
     menu.addMouseListener(new MenuUpdater());
     Preferences preferences = EomToolbox.getPreferences();
     preferences.addPreferenceChangeListener(evt -> {
       if (evt.getKey().equals(QuickMenuOptions.PREFERENCE_KEY_NUM_QUICK_ACTIONS)) {
-        this.numActions = Integer.parseInt(evt.getNewValue());
+        setNumActions(Integer.parseInt(evt.getNewValue()));
       }
     });
+    setNumActions(preferences.getInt(QuickMenuOptions.PREFERENCE_KEY_NUM_QUICK_ACTIONS,
+        QuickMenuOptions.DEFAULT_NUM_QUICK_ACTIONS));
+  }
+
+  private void setNumActions(int num) {
+    numActions = num;
   }
 
   @Override
