@@ -52,25 +52,22 @@ public class QuickMenuOptionsPanelController extends PropertyChangeOptionsPanelC
 
   @Override
   public void update() {
-    if (currentOptions == null) {
-      currentOptions = QuickMenuOptions.load();
-      backup = currentOptions.clone();
-    } else {
-      currentOptions = backup.clone();
-    }
+    currentOptions = QuickMenuOptions.load();
+    backup = currentOptions.clone();
     numActionsModel.setValue(currentOptions.getNumActions());
+    fireChange();
   }
 
   @Override
   public void applyChanges() {
-    QuickMenuOptions.putToPreferences(currentOptions);
-    backup = currentOptions.clone();
     storePreferences();
+    backup = currentOptions.clone();
     fireChange();
   }
 
-  private static void storePreferences() {
-    Preferences preferences = EomToolbox.getPreferences(); // todo - use only node?
+  private void storePreferences() {
+    Preferences preferences = EomToolbox.getPreferences();
+    QuickMenuOptions.putToPreferences(currentOptions, EomToolbox.getPreferences());
     try {
       preferences.flush();
     } catch (BackingStoreException e) {
@@ -81,6 +78,7 @@ public class QuickMenuOptionsPanelController extends PropertyChangeOptionsPanelC
   @Override
   public void cancel() {
     currentOptions = backup.clone();
+    update();
     fireChange();
   }
 

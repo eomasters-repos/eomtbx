@@ -30,17 +30,20 @@ import org.eomasters.eomtbx.EomToolbox;
 
 public class QuickMenuOptions implements Cloneable {
 
-  public static final String PREFERENCE_KEY_NUM_QUICK_ACTIONS = "quickmenu/NumActions";
+  public static final String PREFERENCE_KEY_NUM_QUICK_ACTIONS = "quickMenu.numActions";
   public static final int DEFAULT_NUM_QUICK_ACTIONS = 5;
-  private AtomicInteger numActions;
+  private final Preferences preferences;
+  private AtomicInteger numActions = new AtomicInteger(DEFAULT_NUM_QUICK_ACTIONS);
 
 
   public static QuickMenuOptions load() {
-    Preferences preferences = EomToolbox.getPreferences();
-    int numActions = preferences.getInt(QuickMenuOptions.PREFERENCE_KEY_NUM_QUICK_ACTIONS,
-        QuickMenuOptions.DEFAULT_NUM_QUICK_ACTIONS);
+    return new QuickMenuOptions(EomToolbox.getPreferences());
+  }
 
-    return new QuickMenuOptions(numActions);
+  private QuickMenuOptions(Preferences preferences) {
+    this.preferences = preferences;
+   setNumActions(this.preferences.getInt(QuickMenuOptions.PREFERENCE_KEY_NUM_QUICK_ACTIONS,
+        QuickMenuOptions.DEFAULT_NUM_QUICK_ACTIONS));
   }
 
   public void setNumActions(int value) {
@@ -51,15 +54,11 @@ public class QuickMenuOptions implements Cloneable {
     return numActions.get();
   }
 
-  public static void putToPreferences(QuickMenuOptions currentOptions) {
-    Preferences preferences = EomToolbox.getPreferences();
+  public static void putToPreferences(QuickMenuOptions currentOptions, Preferences preferences) {
     preferences.put(QuickMenuOptions.PREFERENCE_KEY_NUM_QUICK_ACTIONS,
         Integer.toString(currentOptions.numActions.get()));
   }
 
-  private QuickMenuOptions(int numActions) {
-    this.numActions = new AtomicInteger(numActions);
-  }
 
   @Override
   public boolean equals(Object o) {
@@ -83,7 +82,7 @@ public class QuickMenuOptions implements Cloneable {
     try {
       clone = (QuickMenuOptions) super.clone();
     } catch (CloneNotSupportedException e) {
-      return new QuickMenuOptions(this.numActions.get());
+      return new QuickMenuOptions(preferences);
     }
     clone.numActions = new AtomicInteger(this.numActions.get());
     return clone;
