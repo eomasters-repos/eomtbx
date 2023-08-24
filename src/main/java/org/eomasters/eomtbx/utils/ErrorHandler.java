@@ -23,20 +23,14 @@
 
 package org.eomasters.eomtbx.utils;
 
-import java.awt.Desktop;
-import java.awt.GridLayout;
-import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
+import java.awt.BorderLayout;
+import java.awt.Container;
 import java.util.logging.Level;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
+import javax.swing.JDialog;
+import javax.swing.JFrame;
+import javax.swing.SwingUtilities;
 import org.esa.snap.core.util.SystemUtils;
-import org.esa.snap.rcp.util.Dialogs;
-import org.esa.snap.tango.TangoIcons;
-import org.openide.awt.NotificationDisplayer;
 
 /**
  * Handles errors.
@@ -56,42 +50,65 @@ public class ErrorHandler {
       return;
     }
 
+    JDialog dialog = new JDialog();
+    dialog.setTitle("Error");
+    dialog.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+    dialog.setSize(400, 300);
+    dialog.setLocationRelativeTo(null);
+    dialog.setVisible(true);
+
+
     // todo - think about how this dialog should look like
     // create report file containing system properties and installed/active plugins and stacktrace
     // attach to mail
-    Dialogs.showError("Error", message);
-    JButton mailButton = new JButton("Report by Mail");
-    mailButton.addActionListener(e -> {
-      try {
-        Desktop.getDesktop().mail(new URI("mailto:issues@eomasters.org"));
-      } catch (URISyntaxException | IOException e1) {
-        SystemUtils.LOG.log(Level.SEVERE, message, e1);
-      }
-    });
-    JButton forumButton = new JButton("Report in Forum");
-    forumButton.addActionListener(e -> {
-      try {
-        Desktop.getDesktop().mail(new URI("https://www.eomasters.org/forum"));
-      } catch (URISyntaxException | IOException e1) {
-        SystemUtils.LOG.log(Level.SEVERE, message, e1);
-      }
-    });
-
-    JPanel panel = new JPanel(new GridLayout(2, 1, 5, 5));
-    panel.add(mailButton);
-    panel.add(forumButton);
-    ImageIcon icon = TangoIcons.status_dialog_error(TangoIcons.Res.R16);
-    JLabel balloonDetails = new JLabel(message);
-    NotificationDisplayer.getDefault().notify("Error",
-        icon,
-        balloonDetails,
-        panel,
-        NotificationDisplayer.Priority.HIGH,
-        NotificationDisplayer.Category.ERROR);
+    // Dialogs.showError("Error", message);
+    // JButton mailButton = new JButton("Report by Mail");
+    // mailButton.addActionListener(e -> {
+    //   try {
+    //     Desktop.getDesktop().mail(new URI("mailto:issues@eomasters.org"));
+    //   } catch (URISyntaxException | IOException e1) {
+    //     SystemUtils.LOG.log(Level.SEVERE, message, e1);
+    //   }
+    // });
+    // JButton forumButton = new JButton("Report in Forum");
+    // forumButton.addActionListener(e -> {
+    //   try {
+    //     Desktop.getDesktop().mail(new URI("https://www.eomasters.org/forum"));
+    //   } catch (URISyntaxException | IOException e1) {
+    //     SystemUtils.LOG.log(Level.SEVERE, message, e1);
+    //   }
+    // });
+    //
+    // JPanel panel = new JPanel(new GridLayout(2, 1, 5, 5));
+    // panel.add(mailButton);
+    // panel.add(forumButton);
+    // ImageIcon icon = TangoIcons.status_dialog_error(TangoIcons.Res.R16);
+    // JLabel balloonDetails = new JLabel(message);
+    // NotificationDisplayer.getDefault().notify("Error",
+    //     icon,
+    //     balloonDetails,
+    //     panel,
+    //     NotificationDisplayer.Priority.HIGH,
+    //     NotificationDisplayer.Category.ERROR);
   }
 
   private static boolean isHeadless() {
     return System.getProperty("java.awt.headless", "false").equals("true");
   }
 
+
+  public static void main(String[] args) {
+    SwingUtilities.invokeLater(() -> {
+      JFrame window = new JFrame("Test ErrorHandler");
+      window.setSize(400, 300);
+      Container container = window.getContentPane();
+      container.setLayout(new BorderLayout());
+      JButton openErrorHandler = new JButton("Open ErrorHandler");
+      openErrorHandler.addActionListener(e -> {
+        ErrorHandler.handle("Test", new Exception("Test"));
+      });
+      container.add(openErrorHandler);
+      window.setVisible(true);
+    });
+  }
 }
