@@ -24,7 +24,9 @@
 package org.eomasters.eomtbx.quickmenu;
 
 import java.awt.Component;
+import java.awt.Container;
 import javax.swing.JFrame;
+import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
@@ -74,23 +76,36 @@ public class SnapMenuAccessor {
         if (!text.isBlank()) {
           path.insert(0, text + "/");
         }
-      }
-      if (element instanceof JPopupMenu) {
+        element = element.getParent();
+      } else if (element instanceof JPopupMenu) {
         JPopupMenu popupMenu = (JPopupMenu) element;
         element = popupMenu.getInvoker();
-      } else {
-        element = element.getParent();
-      }
-      if (element instanceof JMenuBar) {
+      } else if (element instanceof JMenuBar) {
         path.insert(0, "Menu/");
         break;
       }
+
     }
     return path.toString();
   }
 
   private static JMenuItem doFindMenuItem(ActionRef actionRef, MenuElement parent) {
-    if (parent.getSubElements().length == 0) {
+    if (parent instanceof Container) {
+      Component[] subComponents;
+      if(parent instanceof JMenu) {
+        JMenu subMenu = (JMenu) parent;
+        subComponents = subMenu.getMenuComponents();
+      } else {
+        subComponents = ((Container) parent).getComponents();
+      }
+      for (Component subComponent : subComponents) {
+        if (subComponent instanceof MenuElement) {
+          JMenuItem found = doFindMenuItem(actionRef, (MenuElement) subComponent);
+          if (found != null) {
+            return found;
+          }
+        }
+      }
       if (parent instanceof JMenuItem) {
         JMenuItem menuItem = (JMenuItem) parent;
         String text = menuItem.getText();
@@ -98,13 +113,6 @@ public class SnapMenuAccessor {
         if (actionRef.getMenuRefs().contains(new MenuRef(path, text))) {
           return menuItem;
         }
-      }
-    }
-    MenuElement[] subElements = parent.getSubElements();
-    for (MenuElement subElement : subElements) {
-      JMenuItem menuItem = doFindMenuItem(actionRef, subElement);
-      if (menuItem != null) {
-        return menuItem;
       }
     }
     return null;

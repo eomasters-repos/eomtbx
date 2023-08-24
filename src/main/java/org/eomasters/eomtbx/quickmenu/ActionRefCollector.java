@@ -26,6 +26,7 @@ package org.eomasters.eomtbx.quickmenu;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import org.eomasters.eomtbx.quickmenu.gui.QuickMenuAction;
 import org.eomasters.eomtbx.utils.ErrorHandler;
 import org.openide.filesystems.FileObject;
 import org.openide.filesystems.FileUtil;

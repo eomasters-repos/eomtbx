@@ -21,7 +21,7 @@
  * =========================LICENSE_END==================================
  */
 
-package org.eomasters.eomtbx.quickmenu;
+package org.eomasters.eomtbx.quickmenu.gui;
 
 import java.awt.Component;
 import java.awt.event.ActionEvent;
@@ -35,6 +35,10 @@ import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.event.MouseInputAdapter;
 import org.eomasters.eomtbx.EomToolbox;
+import org.eomasters.eomtbx.quickmenu.ActionRef;
+import org.eomasters.eomtbx.quickmenu.MenuRef;
+import org.eomasters.eomtbx.quickmenu.QuickMenu;
+import org.eomasters.eomtbx.quickmenu.SnapMenuAccessor;
 import org.openide.awt.ActionID;
 import org.openide.awt.ActionReference;
 import org.openide.awt.ActionRegistration;

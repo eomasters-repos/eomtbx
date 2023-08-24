@@ -21,7 +21,7 @@
  * =========================LICENSE_END==================================
  */
 
-package org.eomasters.eomtbx.quickmenu;
+package org.eomasters.eomtbx.quickmenu.gui;
 
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;

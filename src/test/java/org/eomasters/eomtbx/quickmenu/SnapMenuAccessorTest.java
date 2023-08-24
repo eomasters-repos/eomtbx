@@ -24,32 +24,74 @@
 package org.eomasters.eomtbx.quickmenu;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertSame;
 
+import javax.swing.JFrame;
+import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
+import org.esa.snap.rcp.SnapApp;
+import org.esa.snap.ui.UIUtils;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 class SnapMenuAccessorTest {
 
-  @Test
-  void getPath() {
-    JMenuBar menuBar = new JMenuBar();
+  private static JMenuBar menuBar;
+  private static JMenuItem subset;
+  private static JMenuItem reproject;
+  private static JMenuItem resample;
+  private static JMenuItem histogram;
+
+  @BeforeAll
+  static void beforeAll() {
+    menuBar = new JMenuBar();
+    JMenu subMenu = new JMenu("View");
+    menuBar.add(subMenu);
+    subMenu.add(new JMenuItem("Information"));
+    histogram = new JMenuItem("Histogram");
+    subMenu.add(histogram);
     JMenuItem raster = new JMenuItem("Raster");
     menuBar.add(raster);
     JPopupMenu rasterPopup = new JPopupMenu("Raster");
+    raster.add(rasterPopup);
     rasterPopup.setInvoker(raster);
-    JMenuItem subset = new JMenuItem("Subset");
+    subset = new JMenuItem("Subset");
     rasterPopup.add(subset);
     JMenuItem geometric = new JMenuItem("Geometric");
     rasterPopup.add(geometric);
-    JMenuItem reproject = new JMenuItem("Reproject");
+    reproject = new JMenuItem("Reproject");
     geometric.add(reproject);
-    JMenuItem resample = new JMenuItem("Resample");
+    resample = new JMenuItem("Resample");
     geometric.add(resample);
+  }
 
+  @Test
+  void getMenuBar() {
+    SnapApp snapApp = SnapApp.getDefault();
+    JFrame rootFrame = UIUtils.getRootJFrame(snapApp.getMainFrame());
+    rootFrame.setJMenuBar(menuBar);
+
+    assertSame(menuBar, SnapMenuAccessor.getMenuBar());
+  }
+
+  @Test
+  void findItem() {
+    SnapApp snapApp = SnapApp.getDefault();
+    JFrame rootFrame = UIUtils.getRootJFrame(snapApp.getMainFrame());
+    rootFrame.setJMenuBar(menuBar);
+
+    assertSame(subset, SnapMenuAccessor.findMenuItem(new ActionRef("subset", new MenuRef("Menu/Raster/", "Subset"))));
+    assertSame(resample, SnapMenuAccessor.findMenuItem(new ActionRef("resample", new MenuRef("Menu/Raster/Geometric/", "Resample"))));
+    assertSame(histogram, SnapMenuAccessor.findMenuItem(new ActionRef("histogram", new MenuRef("Menu/View/", "Histogram"))));
+  }
+
+  @Test
+  void getPath() {
     assertEquals("Menu/Raster/", SnapMenuAccessor.getPath(subset));
     assertEquals("Menu/Raster/Geometric/", SnapMenuAccessor.getPath(reproject));
     assertEquals("Menu/Raster/Geometric/", SnapMenuAccessor.getPath(resample));
+    assertEquals("Menu/View/", SnapMenuAccessor.getPath(histogram));
   }
 }

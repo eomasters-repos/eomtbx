@@ -44,7 +44,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import net.miginfocom.swing.MigLayout;
 import org.eomasters.eomtbx.EomToolbox;
 import org.eomasters.eomtbx.icons.Icons;
-import org.eomasters.eomtbx.quickmenu.QuickMenuOptionsPanelController;
+import org.eomasters.eomtbx.quickmenu.gui.QuickMenuOptionsPanelController;
 import org.eomasters.eomtbx.utils.ErrorHandler;
 import org.esa.snap.rcp.util.Dialogs;
 import org.netbeans.spi.options.OptionsPanelController;

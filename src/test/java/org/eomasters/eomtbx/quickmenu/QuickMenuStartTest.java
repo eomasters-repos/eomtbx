@@ -43,7 +43,7 @@ public class QuickMenuStartTest {
 
     @Test
     public void testGetInstance() {
-        assertNotNull(quickMenu);
+        assertNotNull(QuickMenu.getInstance());
     }
 
     @Test
