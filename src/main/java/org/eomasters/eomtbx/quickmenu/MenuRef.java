@@ -86,7 +86,7 @@ public class MenuRef {
 
   @Override
   public String toString() {
-    return path + text;
+    return String.format("%s/%s", path, text);
   }
 
 

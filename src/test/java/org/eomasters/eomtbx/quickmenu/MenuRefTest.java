@@ -66,4 +66,11 @@ public class MenuRefTest {
 
         assertEquals(expectedOutput, result);
     }
+
+    @Test
+    public void testToString() {
+        MenuRef menuRef = new MenuRef("path/to/menu", "Menu Text");
+
+        assertEquals("MenuRef{path='path/to/menu', text='Menu Text'}", menuRef.toString());
+    }
 }
