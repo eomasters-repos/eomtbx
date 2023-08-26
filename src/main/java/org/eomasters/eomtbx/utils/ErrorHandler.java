@@ -109,10 +109,10 @@ public class ErrorHandler {
     reportPreview.add(scrollPane, "top, left, grow");
     JButton export = new JButton("Export");
     export.addActionListener(e -> {
-      FileExporter exporter = new FileExporter("Export Error Report");
+      FileIO exporter = new FileIO("Export Error Report");
       exporter.setParent(contentPane);
       exporter.setFileFilters(new FileNameExtensionFilter("Report files", "txt"));
-      exporter.export(outputStream -> outputStream.write(textArea.getText().getBytes(StandardCharsets.UTF_8)));
+      exporter.save(outputStream -> outputStream.write(textArea.getText().getBytes(StandardCharsets.UTF_8)));
 
     });
     reportPreview.add(export, "top, left");

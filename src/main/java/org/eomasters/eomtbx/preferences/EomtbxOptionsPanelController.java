@@ -25,15 +25,11 @@ package org.eomasters.eomtbx.preferences;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.List;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
 import javax.swing.JButton;
 import javax.swing.JComponent;
-import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -46,7 +42,7 @@ import org.eomasters.eomtbx.EomToolbox;
 import org.eomasters.eomtbx.icons.Icons;
 import org.eomasters.eomtbx.quickmenu.gui.QuickMenuOptionsPanelController;
 import org.eomasters.eomtbx.utils.ErrorHandler;
-import org.eomasters.eomtbx.utils.FileExporter;
+import org.eomasters.eomtbx.utils.FileIO;
 import org.netbeans.spi.options.OptionsPanelController;
 import org.openide.util.HelpCtx;
 import org.openide.util.Lookup;
@@ -88,7 +84,7 @@ public class EomtbxOptionsPanelController extends PropertyChangeOptionsPanelCont
 
   @Override
   public void update() {
-    SwingUtilities.invokeLater(() ->    subControllers.forEach(OptionsPanelController::update));
+    SwingUtilities.invokeLater(() -> subControllers.forEach(OptionsPanelController::update));
   }
 
   @Override
@@ -154,29 +150,18 @@ public class EomtbxOptionsPanelController extends PropertyChangeOptionsPanelCont
   }
 
   private static void exportPreferences(JPanel eomtbxPanel) {
-    FileExporter exporter = new FileExporter("Export EOMTBX preferences");
+    FileIO exporter = new FileIO("Export EOMTBX preferences");
     exporter.setParent(eomtbxPanel);
     exporter.setFileFilters(PREFERENCES_FILE_FILTER);
-    exporter.export(EomToolbox::exportPreferences);
+    exporter.save(EomToolbox::exportPreferences);
   }
 
   private void importPreferences(JPanel eomtbxPanel) {
-    try {
-      JFileChooser fileChooser = new JFileChooser();
-      fileChooser.setDialogTitle("Import EOMTBX preferences");
-      fileChooser.setAcceptAllFileFilterUsed(false);
-      fileChooser.setFileFilter(PREFERENCES_FILE_FILTER);
-      fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
-
-      int returnVal = fileChooser.showOpenDialog(eomtbxPanel);
-      if (returnVal == JFileChooser.APPROVE_OPTION) {
-        Path path = fileChooser.getSelectedFile().toPath();
-        EomToolbox.importPreferences(Files.newInputStream(path));
-        update();
-      }
-    } catch (IOException ex) {
-      ErrorHandler.handle("Could not import preferences", ex);
-    }
+    FileIO fileIO = new FileIO("Import EOMTBX preferences");
+    fileIO.load(inputStream -> {
+      EomToolbox.importPreferences(inputStream);
+      update();
+    });
   }
 
   @Override

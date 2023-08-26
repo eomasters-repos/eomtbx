@@ -2,6 +2,7 @@ package org.eomasters.eomtbx.utils;
 
 import java.awt.Component;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -10,17 +11,17 @@ import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import org.esa.snap.rcp.util.Dialogs;
 
-public class FileExporter {
+public class FileIO {
 
   private final String title;
   private Component parent;
   private boolean allFileFilterUsed;
   private FileFilter[] fileFilters;
 
-  public FileExporter(String title) {
+  public FileIO(String title) {
     this.title = title;
   }
-  
+
   public void setParent(Component parent) {
     this.parent = parent;
   }
@@ -33,19 +34,23 @@ public class FileExporter {
     this.fileFilters = fileFilters;
   }
 
-
-  public void export(Write write) {
+  public void load(Read read) {
     try {
-      JFileChooser fileChooser = new JFileChooser();
-      fileChooser.setDialogTitle(title);
-      fileChooser.setAcceptAllFileFilterUsed(allFileFilterUsed);
-      if (fileFilters != null) {
-        for (FileFilter filter : fileFilters) {
-          fileChooser.addChoosableFileFilter(filter);
-        }
-        fileChooser.setFileFilter(fileFilters[0]);
+      JFileChooser fileChooser = createFileChooser();
+
+      int returnVal = fileChooser.showOpenDialog(parent);
+      if (returnVal == JFileChooser.APPROVE_OPTION) {
+        Path path = fileChooser.getSelectedFile().toPath();
+        read.read(Files.newInputStream(path));
       }
-      fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+    } catch (IOException ex) {
+      ErrorHandler.handle("Could not import file", ex);
+    }
+  }
+
+  public void save(Write write) {
+    try {
+      JFileChooser fileChooser = createFileChooser();
 
       int returnVal = fileChooser.showSaveDialog(parent);
       if (returnVal == JFileChooser.APPROVE_OPTION) {
@@ -64,6 +69,20 @@ public class FileExporter {
     }
   }
 
+  private JFileChooser createFileChooser() {
+    JFileChooser fileChooser = new JFileChooser();
+    fileChooser.setDialogTitle(title);
+    fileChooser.setAcceptAllFileFilterUsed(allFileFilterUsed);
+    if (fileFilters != null) {
+      for (FileFilter filter : fileFilters) {
+        fileChooser.addChoosableFileFilter(filter);
+      }
+      fileChooser.setFileFilter(fileFilters[0]);
+    }
+    fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+    return fileChooser;
+  }
+
   private static Path ensureFileExtension(Path path, FileFilter fileFilter) {
     if (fileFilter instanceof FileNameExtensionFilter) {
       String[] extensions = ((FileNameExtensionFilter) fileFilter).getExtensions();
@@ -80,5 +99,10 @@ public class FileExporter {
   public interface Write {
 
     void write(OutputStream outputStream) throws IOException;
+  }
+
+  public interface Read {
+
+    void read(InputStream inputStream) throws IOException;
   }
 }
