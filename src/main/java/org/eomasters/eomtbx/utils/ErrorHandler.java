@@ -25,11 +25,22 @@ package org.eomasters.eomtbx.utils;
 
 import java.awt.BorderLayout;
 import java.awt.Container;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.nio.charset.StandardCharsets;
 import java.util.logging.Level;
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingUtilities;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import net.miginfocom.swing.MigLayout;
 import org.esa.snap.core.util.SystemUtils;
 
 /**
@@ -50,46 +61,67 @@ public class ErrorHandler {
       return;
     }
 
+
+    JPanel contentPane = new JPanel();
+    contentPane.setBorder(BorderFactory.createEmptyBorder(0, 10, 10, 10));
+    contentPane.setLayout(new MigLayout("top, left, fillx, gap 5 5"));
+
+    JLabel anErrorOccurred = new JLabel("An Error Occurred");
+    anErrorOccurred.setFont(anErrorOccurred.getFont().deriveFont(Font.BOLD, 28f));
+    contentPane.add(anErrorOccurred, "top, left, wrap");
+
+    JTextArea headerText = new JTextArea(
+        "Sorry, this should not have happened. Please help to fix this problem and report the issue to EOMasters.\n");
+    headerText.setEditable(false);
+    headerText.setLineWrap(true);
+    headerText.setWrapStyleWord(true);
+    headerText.setFont(new JLabel().getFont());
+    headerText.setBackground(anErrorOccurred.getBackground());
+    headerText.setPreferredSize(new Dimension(350, headerText.getPreferredSize().height));
+    contentPane.add(headerText, "top, left, growx, wmin 10, wrap");
+
+    addReportArea(contentPane);
+
+    contentPane.add(new JButton("By Mail"), "right, split");
+    contentPane.add(new JButton("In Forum"), "right, wrap");
+
     JDialog dialog = new JDialog();
     dialog.setTitle("Error");
     dialog.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-    dialog.setSize(400, 300);
     dialog.setLocationRelativeTo(null);
     dialog.setVisible(true);
+    dialog.setContentPane(contentPane);
+    dialog.pack();
+  }
 
+  private static void addReportArea(JPanel contentPane) {
+    JPanel reportPreview = new JPanel(new MigLayout("fill, flowy"));
 
-    // todo - think about how this dialog should look like
-    // create report file containing system properties and installed/active plugins and stacktrace
-    // attach to mail
-    // Dialogs.showError("Error", message);
-    // JButton mailButton = new JButton("Report by Mail");
-    // mailButton.addActionListener(e -> {
-    //   try {
-    //     Desktop.getDesktop().mail(new URI("mailto:issues@eomasters.org"));
-    //   } catch (URISyntaxException | IOException e1) {
-    //     SystemUtils.LOG.log(Level.SEVERE, message, e1);
-    //   }
-    // });
-    // JButton forumButton = new JButton("Report in Forum");
-    // forumButton.addActionListener(e -> {
-    //   try {
-    //     Desktop.getDesktop().mail(new URI("https://www.eomasters.org/forum"));
-    //   } catch (URISyntaxException | IOException e1) {
-    //     SystemUtils.LOG.log(Level.SEVERE, message, e1);
-    //   }
-    // });
-    //
-    // JPanel panel = new JPanel(new GridLayout(2, 1, 5, 5));
-    // panel.add(mailButton);
-    // panel.add(forumButton);
-    // ImageIcon icon = TangoIcons.status_dialog_error(TangoIcons.Res.R16);
-    // JLabel balloonDetails = new JLabel(message);
-    // NotificationDisplayer.getDefault().notify("Error",
-    //     icon,
-    //     balloonDetails,
-    //     panel,
-    //     NotificationDisplayer.Priority.HIGH,
-    //     NotificationDisplayer.Category.ERROR);
+    JTextArea textArea = new JTextArea("Report Preview");
+    textArea.setColumns(20);
+    textArea.setEditable(false);
+    textArea.setLineWrap(true);
+    textArea.setWrapStyleWord(true);
+    textArea.setRows(20);
+    JScrollPane scrollPane = new JScrollPane(textArea,
+        ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
+        ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+    reportPreview.add(scrollPane, "top, left, grow");
+    JButton export = new JButton("Export");
+    export.addActionListener(e -> {
+      FileExporter exporter = new FileExporter("Export Error Report");
+      exporter.setParent(contentPane);
+      exporter.setFileFilters(new FileNameExtensionFilter("Report files", "txt"));
+      exporter.export(outputStream -> outputStream.write(textArea.getText().getBytes(StandardCharsets.UTF_8)));
+
+    });
+    reportPreview.add(export, "top, left");
+
+    CollapsiblePanel collapsiblePanel = new CollapsiblePanel("Report Preview");
+    collapsiblePanel.showSeparator(false);
+    collapsiblePanel.setContent(reportPreview);
+
+    contentPane.add(collapsiblePanel, "top, left, grow, wrap");
   }
 
   private static boolean isHeadless() {
@@ -104,10 +136,9 @@ public class ErrorHandler {
       Container container = window.getContentPane();
       container.setLayout(new BorderLayout());
       JButton openErrorHandler = new JButton("Open ErrorHandler");
-      openErrorHandler.addActionListener(e -> {
-        ErrorHandler.handle("Test", new Exception("Test"));
-      });
+      openErrorHandler.addActionListener(e -> ErrorHandler.handle("Test", new Exception("Test")));
       container.add(openErrorHandler);
+      window.pack();
       window.setVisible(true);
     });
   }

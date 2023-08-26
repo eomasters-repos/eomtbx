@@ -46,7 +46,7 @@ import org.eomasters.eomtbx.EomToolbox;
 import org.eomasters.eomtbx.icons.Icons;
 import org.eomasters.eomtbx.quickmenu.gui.QuickMenuOptionsPanelController;
 import org.eomasters.eomtbx.utils.ErrorHandler;
-import org.esa.snap.rcp.util.Dialogs;
+import org.eomasters.eomtbx.utils.FileExporter;
 import org.netbeans.spi.options.OptionsPanelController;
 import org.openide.util.HelpCtx;
 import org.openide.util.Lookup;
@@ -154,28 +154,10 @@ public class EomtbxOptionsPanelController extends PropertyChangeOptionsPanelCont
   }
 
   private static void exportPreferences(JPanel eomtbxPanel) {
-    try {
-      JFileChooser fileChooser = new JFileChooser();
-      fileChooser.setDialogTitle("Export EOMTBX preferences");
-      fileChooser.setAcceptAllFileFilterUsed(false);
-      fileChooser.setFileFilter(PREFERENCES_FILE_FILTER);
-      fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
-
-      int returnVal = fileChooser.showSaveDialog(eomtbxPanel);
-      if (returnVal == JFileChooser.APPROVE_OPTION) {
-        Boolean doWrite = true;
-        Path path = ensurePreferencesExtension(fileChooser.getSelectedFile().toPath());
-        if (Files.exists(path)) {
-          doWrite = Dialogs.requestOverwriteDecision("Preferences file already exists",
-              path.toFile());
-        }
-        if (doWrite) {
-          EomToolbox.exportPreferences(Files.newOutputStream(path));
-        }
-      }
-    } catch (IOException ex) {
-      ErrorHandler.handle("Could not export preferences", ex);
-    }
+    FileExporter exporter = new FileExporter("Export EOMTBX preferences");
+    exporter.setParent(eomtbxPanel);
+    exporter.setFileFilters(PREFERENCES_FILE_FILTER);
+    exporter.export(EomToolbox::exportPreferences);
   }
 
   private void importPreferences(JPanel eomtbxPanel) {
@@ -195,13 +177,6 @@ public class EomtbxOptionsPanelController extends PropertyChangeOptionsPanelCont
     } catch (IOException ex) {
       ErrorHandler.handle("Could not import preferences", ex);
     }
-  }
-
-  private static Path ensurePreferencesExtension(Path path) {
-    if (!path.toString().endsWith(EomtbxOptionsPanelController.PREFERNCES_FILE_EXTENSION)) {
-      path = path.resolveSibling(path.getFileName() + EomtbxOptionsPanelController.PREFERNCES_FILE_EXTENSION);
-    }
-    return path;
   }
 
   @Override

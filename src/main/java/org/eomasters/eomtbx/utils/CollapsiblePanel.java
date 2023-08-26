@@ -5,7 +5,6 @@ import java.awt.Dimension;
 import java.awt.Window;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import javax.swing.BorderFactory;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -21,29 +20,33 @@ public class CollapsiblePanel extends JPanel {
   private final JLabel toggleLabel;
   private final JComponent contentPanel;
   private final JPanel titlePanel;
+  private final JSeparator separator;
 
   public CollapsiblePanel(String title) {
     super(new BorderLayout(5, 5));
-    setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
     setName("CollapsiblePanel." + title.replaceAll(" ", "_"));
-    MigLayout layout = new MigLayout("gap 5 5", "[][][grow, fill]");
-    titlePanel = new JPanel(layout);
+    titlePanel = new JPanel(new MigLayout());
 
-    titlePanel.add(new JLabel(title));
-    toggleLabel = new JLabel();
-    toggleLabel.addMouseListener(new MouseAdapter() {
+    MouseAdapter collapser = new MouseAdapter() {
       @Override
       public void mouseClicked(MouseEvent e) {
         collapse(contentPanel.isVisible());
       }
-    });
+    };
+
+    JLabel titleLabel = new JLabel(title);
+    titleLabel.addMouseListener(collapser);
+    titlePanel.add(titleLabel);
+    toggleLabel = new JLabel();
+    toggleLabel.addMouseListener(collapser);
     titlePanel.add(toggleLabel);
 
-    titlePanel.add(new JSeparator(), "growx, wrap");
+    separator = new JSeparator();
+    titlePanel.add(separator, "growx, wrap");
 
     add(titlePanel, BorderLayout.NORTH);
 
-    contentPanel = new JPanel(new BorderLayout());
+    contentPanel = new JPanel(new MigLayout("fill"));
     add(contentPanel, BorderLayout.CENTER);
 
     doLayout();
@@ -53,8 +56,13 @@ public class CollapsiblePanel extends JPanel {
 
   public void setContent(JComponent content) {
     this.contentPanel.removeAll();
-    contentPanel.add(content, BorderLayout.CENTER);
+    contentPanel.add(content, "grow");
     contentPanel.invalidate();
+  }
+
+  public void showSeparator(boolean show) {
+    separator.setVisible(show);
+    invalidate();
   }
 
   @Override
@@ -63,6 +71,7 @@ public class CollapsiblePanel extends JPanel {
     Window windowAncestor = SwingUtilities.getWindowAncestor(this);
     if (windowAncestor != null) {
       windowAncestor.pack();
+      windowAncestor.setLocationRelativeTo(null);
     }
   }
 
