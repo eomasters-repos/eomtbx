@@ -36,7 +36,6 @@ import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.filechooser.FileFilter;
-import javax.swing.filechooser.FileNameExtensionFilter;
 import net.miginfocom.swing.MigLayout;
 import org.eomasters.eomtbx.EomToolbox;
 import org.eomasters.eomtbx.icons.Icons;
@@ -62,9 +61,7 @@ import org.openide.util.Lookup;
 public class EomtbxOptionsPanelController extends PropertyChangeOptionsPanelController {
 
   public static final String HID_EOMTBX_OPTIONS = "hid_eomtbx.options";
-  private static final String PREFERENCES_FILE_EXTENSION = "prefs";
-  private static final FileFilter PREFERENCES_FILE_FILTER = new FileNameExtensionFilter("Preferences files",
-      PREFERENCES_FILE_EXTENSION);
+  private static final FileFilter PREFERENCES_FILE_FILTER = FileIO.createFileFilter("Preferences file", "prefs");
   private final List<OptionsPanelController> subControllers;
   private final Preferences preferences = EomToolbox.getPreferences();
   private JComponent mainPanel;

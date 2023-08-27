@@ -6,6 +6,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Arrays;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -21,6 +22,11 @@ public class FileIO {
   private Component parent;
   private boolean allFileFilterUsed;
   private FileFilter[] fileFilters;
+
+  public static FileNameExtensionFilter createFileFilter(String description, String... extensions) {
+    String text = description + "(" + Arrays.toString(extensions) + ")";
+    return new FileNameExtensionFilter(text, extensions);
+  }
 
   /**
    * Creates a new FileIO with the given title used by the file chooser dialog.

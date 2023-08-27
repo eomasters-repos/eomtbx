@@ -27,6 +27,8 @@ import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Toolkit;
+import java.awt.datatransfer.StringSelection;
 import java.nio.charset.StandardCharsets;
 import java.util.logging.Level;
 import javax.swing.BorderFactory;
@@ -39,7 +41,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingUtilities;
-import javax.swing.filechooser.FileNameExtensionFilter;
 import net.miginfocom.swing.MigLayout;
 import org.esa.snap.core.util.SystemUtils;
 
@@ -60,7 +61,6 @@ public class ErrorHandler {
       SystemUtils.LOG.log(Level.SEVERE, message, t);
       return;
     }
-
 
     JPanel contentPane = new JPanel();
     contentPane.setBorder(BorderFactory.createEmptyBorder(0, 10, 10, 10));
@@ -95,7 +95,7 @@ public class ErrorHandler {
   }
 
   private static void addReportArea(JPanel contentPane) {
-    JPanel reportPreview = new JPanel(new MigLayout("fill, flowy"));
+    JPanel reportPreview = new JPanel(new MigLayout("fill"));
 
     JTextArea textArea = new JTextArea("Report Preview");
     textArea.setColumns(20);
@@ -106,16 +106,24 @@ public class ErrorHandler {
     JScrollPane scrollPane = new JScrollPane(textArea,
         ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
         ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-    reportPreview.add(scrollPane, "top, left, grow");
-    JButton export = new JButton("Export");
-    export.addActionListener(e -> {
+    reportPreview.add(scrollPane, "top, left, grow, wrap");
+    JButton exportBtn = new JButton("Export");
+    exportBtn.addActionListener(e -> {
       FileIO exporter = new FileIO("Export Error Report");
       exporter.setParent(contentPane);
-      exporter.setFileFilters(new FileNameExtensionFilter("Report files", "txt"));
+      exporter.setFileFilters(FileIO.createFileFilter("Report file", "txt"));
       exporter.save(outputStream -> outputStream.write(textArea.getText().getBytes(StandardCharsets.UTF_8)));
-
     });
-    reportPreview.add(export, "top, left");
+    boolean headless = isHeadless();
+    reportPreview.add(exportBtn, "top, left" + (!headless ? ", split 2" : ""));
+    if (!headless) {
+      JButton clipboardBtn = new JButton("Copy to Clipboard");
+      clipboardBtn.addActionListener(e -> {
+        StringSelection contents = new StringSelection(textArea.getText());
+          Toolkit.getDefaultToolkit().getSystemClipboard().setContents(contents, contents);
+      });
+      reportPreview.add(clipboardBtn, "top, left");
+    }
 
     CollapsiblePanel collapsiblePanel = new CollapsiblePanel("Report Preview");
     collapsiblePanel.showSeparator(false);
