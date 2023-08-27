@@ -7,6 +7,7 @@ import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Arrays;
+import java.util.stream.Collectors;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -24,7 +25,7 @@ public class FileIO {
   private FileFilter[] fileFilters;
 
   public static FileNameExtensionFilter createFileFilter(String description, String... extensions) {
-    String text = description + "(" + Arrays.toString(extensions) + ")";
+    String text = description + " " + Arrays.stream(extensions).map(s -> "*."+s).collect(Collectors.toList());
     return new FileNameExtensionFilter(text, extensions);
   }
 
@@ -70,16 +71,20 @@ public class FileIO {
    * @param read the read callback
    */
   public void load(Read read) {
-    try {
-      JFileChooser fileChooser = createFileChooser();
+    JFileChooser fileChooser = createFileChooser();
 
-      int returnVal = fileChooser.showOpenDialog(parent);
-      if (returnVal == JFileChooser.APPROVE_OPTION) {
-        Path path = fileChooser.getSelectedFile().toPath();
-        read.read(Files.newInputStream(path));
+    int returnVal = fileChooser.showOpenDialog(parent);
+    if (returnVal == JFileChooser.APPROVE_OPTION) {
+      Path path = fileChooser.getSelectedFile().toPath();
+      if (!Files.isReadable(path)) {
+        Dialogs.showError("File not readable", "The file with the path " + path + " is not readable.");
+        return;
       }
-    } catch (IOException ex) {
-      ErrorHandler.handle("Could not import file", ex);
+      try {
+        read.read(Files.newInputStream(path));
+      } catch (IOException ex) {
+        ErrorHandler.handle("Could not import file", ex);
+      }
     }
   }
 
@@ -89,23 +94,24 @@ public class FileIO {
    * @param write the write callback
    */
   public void save(Write write) {
-    try {
-      JFileChooser fileChooser = createFileChooser();
+    JFileChooser fileChooser = createFileChooser();
 
-      int returnVal = fileChooser.showSaveDialog(parent);
-      if (returnVal == JFileChooser.APPROVE_OPTION) {
-        Boolean doWrite = true;
-        Path path = ensureFileExtension(fileChooser.getSelectedFile().toPath(), fileChooser.getFileFilter());
-        if (Files.exists(path)) {
-          doWrite = Dialogs.requestOverwriteDecision("File already exists",
-              path.toFile());
-        }
-        if (doWrite) {
-          write.write(Files.newOutputStream(path));
-        }
+    int returnVal = fileChooser.showSaveDialog(parent);
+    if (returnVal == JFileChooser.APPROVE_OPTION) {
+      Path path = ensureFileExtension(fileChooser.getSelectedFile().toPath(), fileChooser.getFileFilter());
+      if (Files.exists(path) && !Dialogs.requestOverwriteDecision("File already exists",
+          path.toFile())) {
+        return;
       }
-    } catch (IOException ex) {
-      ErrorHandler.handle("Could not export file", ex);
+      if (!Files.isWritable(path)) {
+        Dialogs.showError("File not writable", "Cannot write to " + path + ".");
+        return;
+      }
+      try {
+          write.write(Files.newOutputStream(path));
+      } catch (IOException ex) {
+        ErrorHandler.handle("Could not export file", ex);
+      }
     }
   }
 
