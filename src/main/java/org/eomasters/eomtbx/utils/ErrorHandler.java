@@ -25,11 +25,13 @@ package org.eomasters.eomtbx.utils;
 
 import java.awt.BorderLayout;
 import java.awt.Container;
+import java.awt.Desktop;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Toolkit;
 import java.awt.datatransfer.StringSelection;
 import java.awt.event.ActionEvent;
+import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.time.Clock;
 import java.time.Instant;
@@ -91,8 +93,17 @@ public class ErrorHandler {
     ErrorReport errorReport = new ErrorReport(message, t);
     addReportArea(contentPane, errorReport.generate());
 
-    contentPane.add(new JButton("By Mail"), "right, split");
-    contentPane.add(new JButton("In Forum"), "right, wrap");
+    JButton byMail = new JButton("By Mail");
+    byMail.addActionListener(e -> {
+      try {
+        String bodyText = "<PLEASE ADD A BRIEF DESCRIPTION WHAT YOU DID WHEN THE ERROR OCCURRED>\n\n\n<PLEASE PASTE IN THE ERROR REPORT HERE OR ATTACH IT AS A FILE>";
+        MailTo mailTo = new MailTo("error@eomasters.com").subject("EOMTBX Error Report").body(bodyText);
+        Desktop.getDesktop().mail(mailTo.toURI());
+      } catch (IOException ex) {
+        throw new RuntimeException(ex);
+      }
+    });
+    contentPane.add(byMail, "right, wrap");
 
     JDialog dialog = new JDialog();
     dialog.setTitle("Error");
