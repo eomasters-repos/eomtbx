@@ -147,15 +147,17 @@ public class EomtbxOptionsPanelController extends PropertyChangeOptionsPanelCont
   }
 
   private static void exportPreferences(JPanel eomtbxPanel) {
-    FileIO exporter = new FileIO("Export EOMTBX preferences");
-    exporter.setParent(eomtbxPanel);
-    exporter.setFileFilters(PREFERENCES_FILE_FILTER);
-    exporter.save(EomToolbox::exportPreferences);
+    FileIO fileIO = new FileIO("Export EOMTBX preferences");
+    fileIO.setParent(eomtbxPanel);
+    fileIO.setFileName("eomtbx.prefs");
+    fileIO.setFileFilters(PREFERENCES_FILE_FILTER);
+    fileIO.save(EomToolbox::exportPreferences);
   }
 
   private void importPreferences(JPanel eomtbxPanel) {
     FileIO fileIO = new FileIO("Import EOMTBX preferences");
     fileIO.setParent(eomtbxPanel);
+    fileIO.setFileName("eomtbx.prefs");
     fileIO.setFileFilters(PREFERENCES_FILE_FILTER);
     fileIO.load(inputStream -> {
       EomToolbox.importPreferences(inputStream);

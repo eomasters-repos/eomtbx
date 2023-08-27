@@ -30,6 +30,9 @@ import java.awt.Font;
 import java.awt.Toolkit;
 import java.awt.datatransfer.StringSelection;
 import java.nio.charset.StandardCharsets;
+import java.time.Clock;
+import java.time.Instant;
+import java.time.format.DateTimeFormatter;
 import java.util.logging.Level;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -111,6 +114,11 @@ public class ErrorHandler {
     exportBtn.addActionListener(e -> {
       FileIO exporter = new FileIO("Export Error Report");
       exporter.setParent(contentPane);
+      Clock utcClock = Clock.systemUTC();
+      Instant now = Instant.now(utcClock);
+      DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("uuuuMMdd_HHmmss").withZone(utcClock.getZone());
+      String fileName = String.format("EOMTBX_Error_Report_%s.txt", timeFormatter.format(now));
+      exporter.setFileName(fileName);
       exporter.setFileFilters(FileIO.createFileFilter("Report file", "txt"));
       exporter.save(outputStream -> outputStream.write(textArea.getText().getBytes(StandardCharsets.UTF_8)));
     });

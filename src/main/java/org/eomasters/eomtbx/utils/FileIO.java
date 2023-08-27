@@ -1,6 +1,7 @@
 package org.eomasters.eomtbx.utils;
 
 import java.awt.Component;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -23,6 +24,7 @@ public class FileIO {
   private Component parent;
   private boolean allFileFilterUsed;
   private FileFilter[] fileFilters;
+  private String fileName;
 
   public static FileNameExtensionFilter createFileFilter(String description, String... extensions) {
     String text = description + " " + Arrays.stream(extensions).map(s -> "*."+s).collect(Collectors.toList());
@@ -46,6 +48,15 @@ public class FileIO {
   public void setParent(Component parent) {
     this.parent = parent;
   }
+
+  /**
+   * Sets the file name used by the file chooser dialog.
+   * @param fileName the file name
+   */
+  public void setFileName(String fileName) {
+    this.fileName = fileName;
+  }
+
 
   /**
    * Sets whether the all file filter should be used.
@@ -126,6 +137,9 @@ public class FileIO {
       fileChooser.setFileFilter(fileFilters[0]);
     }
     fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+    if (fileName != null) {
+      fileChooser.setSelectedFile(new File(fileChooser.getCurrentDirectory(), fileName));
+    }
     return fileChooser;
   }
 
