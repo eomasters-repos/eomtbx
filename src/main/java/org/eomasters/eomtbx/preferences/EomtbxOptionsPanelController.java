@@ -62,9 +62,9 @@ import org.openide.util.Lookup;
 public class EomtbxOptionsPanelController extends PropertyChangeOptionsPanelController {
 
   public static final String HID_EOMTBX_OPTIONS = "hid_eomtbx.options";
-  private static final String PREFERNCES_FILE_EXTENSION = "prefs";
+  private static final String PREFERENCES_FILE_EXTENSION = "prefs";
   private static final FileFilter PREFERENCES_FILE_FILTER = new FileNameExtensionFilter("Preferences files",
-      PREFERNCES_FILE_EXTENSION);
+      PREFERENCES_FILE_EXTENSION);
   private final List<OptionsPanelController> subControllers;
   private final Preferences preferences = EomToolbox.getPreferences();
   private JComponent mainPanel;
