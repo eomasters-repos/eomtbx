@@ -11,6 +11,10 @@ import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import org.esa.snap.rcp.util.Dialogs;
 
+
+/**
+ * Utility class for file input/output.
+ */
 public class FileIO {
 
   private final String title;
@@ -18,22 +22,47 @@ public class FileIO {
   private boolean allFileFilterUsed;
   private FileFilter[] fileFilters;
 
+  /**
+   * Creates a new FileIO with the given title used by the file chooser dialog.
+   *
+   * @param title the title
+   */
   public FileIO(String title) {
     this.title = title;
   }
 
+  /**
+   * Sets the parent component of the file chooser dialog.
+   *
+   * @param parent the parent component
+   */
   public void setParent(Component parent) {
     this.parent = parent;
   }
 
+  /**
+   * Sets whether the all file filter should be used.
+   *
+   * @param allFileFilterUsed whether the all file filter should be used
+   */
   public void setAllFileFilterUsed(boolean allFileFilterUsed) {
     this.allFileFilterUsed = allFileFilterUsed;
   }
 
+  /**
+   * Sets the file filters used by the file chooser. The first file filter is used as default.
+   *
+   * @param fileFilters the file filters
+   */
   public void setFileFilters(FileFilter... fileFilters) {
     this.fileFilters = fileFilters;
   }
 
+  /**
+   * Loads a file using the given read callback.
+   *
+   * @param read the read callback
+   */
   public void load(Read read) {
     try {
       JFileChooser fileChooser = createFileChooser();
@@ -48,6 +77,11 @@ public class FileIO {
     }
   }
 
+  /**
+   * Saves a file using the given write callback.
+   *
+   * @param write the write callback
+   */
   public void save(Write write) {
     try {
       JFileChooser fileChooser = createFileChooser();
@@ -93,7 +127,7 @@ public class FileIO {
         }
       }
     }
-     return path;
+    return path;
   }
 
   public interface Write {
