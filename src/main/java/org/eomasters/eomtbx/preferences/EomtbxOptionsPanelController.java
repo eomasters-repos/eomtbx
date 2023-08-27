@@ -158,6 +158,8 @@ public class EomtbxOptionsPanelController extends PropertyChangeOptionsPanelCont
 
   private void importPreferences(JPanel eomtbxPanel) {
     FileIO fileIO = new FileIO("Import EOMTBX preferences");
+    fileIO.setParent(eomtbxPanel);
+    fileIO.setFileFilters(PREFERENCES_FILE_FILTER);
     fileIO.load(inputStream -> {
       EomToolbox.importPreferences(inputStream);
       update();
