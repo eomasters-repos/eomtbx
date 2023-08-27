@@ -29,11 +29,13 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Toolkit;
 import java.awt.datatransfer.StringSelection;
+import java.awt.event.ActionEvent;
 import java.nio.charset.StandardCharsets;
 import java.time.Clock;
 import java.time.Instant;
 import java.time.format.DateTimeFormatter;
 import java.util.logging.Level;
+import javax.swing.AbstractAction;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -46,6 +48,10 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingUtilities;
 import net.miginfocom.swing.MigLayout;
 import org.esa.snap.core.util.SystemUtils;
+import org.openide.awt.ActionID;
+import org.openide.awt.ActionReference;
+import org.openide.awt.ActionRegistration;
+import org.openide.util.NbBundle;
 
 /**
  * Handles errors.
@@ -65,9 +71,8 @@ public class ErrorHandler {
       return;
     }
 
-    JPanel contentPane = new JPanel();
+    JPanel contentPane = new JPanel(new MigLayout("top, left, fillx, gap 5 5"));
     contentPane.setBorder(BorderFactory.createEmptyBorder(0, 10, 10, 10));
-    contentPane.setLayout(new MigLayout("top, left, fillx, gap 5 5"));
 
     JLabel anErrorOccurred = new JLabel("An Error Occurred");
     anErrorOccurred.setFont(anErrorOccurred.getFont().deriveFont(Font.BOLD, 28f));
@@ -83,7 +88,8 @@ public class ErrorHandler {
     headerText.setPreferredSize(new Dimension(350, headerText.getPreferredSize().height));
     contentPane.add(headerText, "top, left, growx, wmin 10, wrap");
 
-    addReportArea(contentPane);
+    ErrorReport errorReport = new ErrorReport(message, t);
+    addReportArea(contentPane, errorReport.generate());
 
     contentPane.add(new JButton("By Mail"), "right, split");
     contentPane.add(new JButton("In Forum"), "right, wrap");
@@ -94,50 +100,56 @@ public class ErrorHandler {
     dialog.setLocationRelativeTo(null);
     dialog.setVisible(true);
     dialog.setContentPane(contentPane);
+    dialog.setModalityType(JDialog.ModalityType.APPLICATION_MODAL);
     dialog.pack();
   }
 
-  private static void addReportArea(JPanel contentPane) {
-    JPanel reportPreview = new JPanel(new MigLayout("fill"));
+  private static void addReportArea(JPanel contentPane, String reportText) {
 
-    JTextArea textArea = new JTextArea("Report Preview");
-    textArea.setColumns(20);
+    JTextArea textArea = new JTextArea(reportText);
+    textArea.setColumns(70);
+    textArea.setBorder(BorderFactory.createEmptyBorder(0, 5, 0, 0));
+    textArea.setTabSize(4);
     textArea.setEditable(false);
-    textArea.setLineWrap(true);
-    textArea.setWrapStyleWord(true);
     textArea.setRows(20);
     JScrollPane scrollPane = new JScrollPane(textArea,
         ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
         ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+
+    JPanel reportPreview = new JPanel(new MigLayout("fill"));
     reportPreview.add(scrollPane, "top, left, grow, wrap");
-    JButton exportBtn = new JButton("Export");
-    exportBtn.addActionListener(e -> {
-      FileIO exporter = new FileIO("Export Error Report");
-      exporter.setParent(contentPane);
-      Clock utcClock = Clock.systemUTC();
-      Instant now = Instant.now(utcClock);
-      DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("uuuuMMdd_HHmmss").withZone(utcClock.getZone());
-      String fileName = String.format("EOMTBX_Error_Report_%s.txt", timeFormatter.format(now));
-      exporter.setFileName(fileName);
-      exporter.setFileFilters(FileIO.createFileFilter("Report file", "txt"));
-      exporter.save(outputStream -> outputStream.write(textArea.getText().getBytes(StandardCharsets.UTF_8)));
-    });
+    JButton exportBtn = createExportButton(contentPane, textArea);
     boolean headless = isHeadless();
     reportPreview.add(exportBtn, "top, left" + (!headless ? ", split 2" : ""));
     if (!headless) {
       JButton clipboardBtn = new JButton("Copy to Clipboard");
       clipboardBtn.addActionListener(e -> {
         StringSelection contents = new StringSelection(textArea.getText());
-          Toolkit.getDefaultToolkit().getSystemClipboard().setContents(contents, contents);
+        Toolkit.getDefaultToolkit().getSystemClipboard().setContents(contents, contents);
       });
       reportPreview.add(clipboardBtn, "top, left");
     }
 
     CollapsiblePanel collapsiblePanel = new CollapsiblePanel("Report Preview");
-    collapsiblePanel.showSeparator(false);
     collapsiblePanel.setContent(reportPreview);
 
     contentPane.add(collapsiblePanel, "top, left, grow, wrap");
+  }
+
+  private static JButton createExportButton(JPanel contentPane, JTextArea textArea) {
+    JButton exportBtn = new JButton("Export");
+    exportBtn.addActionListener(e -> {
+      FileIo exporter = new FileIo("Export Error Report");
+      exporter.setParent(contentPane);
+      Clock utcClock = Clock.systemUTC();
+      Instant now = Instant.now(utcClock);
+      DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("uuuuMMdd_HHmmss").withZone(utcClock.getZone());
+      String fileName = String.format("EOMTBX_Error_Report_%s.txt", timeFormatter.format(now));
+      exporter.setFileName(fileName);
+      exporter.setFileFilters(FileIo.createFileFilter("Report file", "txt"));
+      exporter.save(outputStream -> outputStream.write(textArea.getText().getBytes(StandardCharsets.UTF_8)));
+    });
+    return exportBtn;
   }
 
   private static boolean isHeadless() {
@@ -145,6 +157,11 @@ public class ErrorHandler {
   }
 
 
+  /**
+   * Main method for testing.
+   *
+   * @param args the command line arguments
+   */
   public static void main(String[] args) {
     SwingUtilities.invokeLater(() -> {
       JFrame window = new JFrame("Test ErrorHandler");
@@ -152,10 +169,36 @@ public class ErrorHandler {
       Container container = window.getContentPane();
       container.setLayout(new BorderLayout());
       JButton openErrorHandler = new JButton("Open ErrorHandler");
-      openErrorHandler.addActionListener(e -> ErrorHandler.handle("Test", new Exception("Test")));
+      openErrorHandler.addActionListener(e -> {
+        Exception test = new Exception("Test", new Exception("theCause"));
+        ErrorHandler.handle("Test", test);
+      });
       container.add(openErrorHandler);
       window.pack();
       window.setVisible(true);
     });
+  }
+
+  /**
+   * Action that opens the error handler.
+   */
+  @ActionID(category = "Help", id = "EOM_ErrorHandler")
+  @ActionRegistration(displayName = "#CTL_ErrorHandlerActionName", lazy = false)
+  @ActionReference(path = "Menu/Help", position = 10)
+  @NbBundle.Messages({"CTL_ErrorHandlerActionName=Error Handler"})
+  public static class Action extends AbstractAction {
+
+    /**
+     * Creates a new Action.
+     */
+    public Action() {
+      super(Bundle.CTL_ErrorHandlerActionName());
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+      Exception test = new Exception("Test", new Exception("theCause"));
+      ErrorHandler.handle("Test", test);
+    }
   }
 }

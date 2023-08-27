@@ -1,3 +1,26 @@
+/*-
+ * ========================LICENSE_START=================================
+ * EOMTBX - EOMasters Toolbox for SNAP
+ * --> https://www.eomasters.org/sw/EOMTBX
+ * ======================================================================
+ * Copyright (C) 2023 Marco Peters
+ * ======================================================================
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this program.  If not, see
+ * <http://www.gnu.org/licenses/gpl-3.0.html>.
+ * =========================LICENSE_END==================================
+ */
+
 package org.eomasters.eomtbx.utils;
 
 import java.awt.Component;
@@ -18,7 +41,7 @@ import org.esa.snap.rcp.util.Dialogs;
 /**
  * Utility class for file input/output.
  */
-public class FileIO {
+public class FileIo {
 
   private final String title;
   private Component parent;
@@ -27,7 +50,7 @@ public class FileIO {
   private String fileName;
 
   public static FileNameExtensionFilter createFileFilter(String description, String... extensions) {
-    String text = description + " " + Arrays.stream(extensions).map(s -> "*."+s).collect(Collectors.toList());
+    String text = description + " " + Arrays.stream(extensions).map(s -> "*." + s).collect(Collectors.toList());
     return new FileNameExtensionFilter(text, extensions);
   }
 
@@ -36,7 +59,7 @@ public class FileIO {
    *
    * @param title the title
    */
-  public FileIO(String title) {
+  public FileIo(String title) {
     this.title = title;
   }
 
@@ -51,6 +74,7 @@ public class FileIO {
 
   /**
    * Sets the file name used by the file chooser dialog.
+   *
    * @param fileName the file name
    */
   public void setFileName(String fileName) {
@@ -119,7 +143,7 @@ public class FileIO {
         return;
       }
       try {
-          write.write(Files.newOutputStream(path));
+        write.write(Files.newOutputStream(path));
       } catch (IOException ex) {
         ErrorHandler.handle("Could not export file", ex);
       }
@@ -156,13 +180,31 @@ public class FileIO {
     return path;
   }
 
+  /**
+   * Callback interface for writing a file.
+   */
   public interface Write {
 
+    /**
+     * Writes the file to the given output stream.
+     *
+     * @param outputStream the output stream
+     * @throws IOException if an I/O error occurs
+     */
     void write(OutputStream outputStream) throws IOException;
   }
 
+  /**
+   * Callback interface for reading a file.
+   */
   public interface Read {
 
+    /**
+     * Reads the file from the given input stream.
+     *
+     * @param inputStream the input stream
+     * @throws IOException if an I/O error occurs
+     */
     void read(InputStream inputStream) throws IOException;
   }
 }

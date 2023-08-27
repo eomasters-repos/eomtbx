@@ -92,7 +92,7 @@ public class SnapMenuAccessor {
   private static JMenuItem doFindMenuItem(ActionRef actionRef, MenuElement parent) {
     if (parent instanceof Container) {
       Component[] subComponents;
-      if(parent instanceof JMenu) {
+      if (parent instanceof JMenu) {
         JMenu subMenu = (JMenu) parent;
         subComponents = subMenu.getMenuComponents();
       } else {

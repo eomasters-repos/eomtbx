@@ -41,7 +41,7 @@ import org.eomasters.eomtbx.EomToolbox;
 import org.eomasters.eomtbx.icons.Icons;
 import org.eomasters.eomtbx.quickmenu.gui.QuickMenuOptionsPanelController;
 import org.eomasters.eomtbx.utils.ErrorHandler;
-import org.eomasters.eomtbx.utils.FileIO;
+import org.eomasters.eomtbx.utils.FileIo;
 import org.netbeans.spi.options.OptionsPanelController;
 import org.openide.util.HelpCtx;
 import org.openide.util.Lookup;
@@ -61,7 +61,7 @@ import org.openide.util.Lookup;
 public class EomtbxOptionsPanelController extends PropertyChangeOptionsPanelController {
 
   public static final String HID_EOMTBX_OPTIONS = "hid_eomtbx.options";
-  private static final FileFilter PREFERENCES_FILE_FILTER = FileIO.createFileFilter("Preferences file", "prefs");
+  private static final FileFilter PREFERENCES_FILE_FILTER = FileIo.createFileFilter("Preferences file", "prefs");
   private final List<OptionsPanelController> subControllers;
   private final Preferences preferences = EomToolbox.getPreferences();
   private JComponent mainPanel;
@@ -147,19 +147,19 @@ public class EomtbxOptionsPanelController extends PropertyChangeOptionsPanelCont
   }
 
   private static void exportPreferences(JPanel eomtbxPanel) {
-    FileIO fileIO = new FileIO("Export EOMTBX preferences");
-    fileIO.setParent(eomtbxPanel);
-    fileIO.setFileName("eomtbx.prefs");
-    fileIO.setFileFilters(PREFERENCES_FILE_FILTER);
-    fileIO.save(EomToolbox::exportPreferences);
+    FileIo fileIo = new FileIo("Export EOMTBX preferences");
+    fileIo.setParent(eomtbxPanel);
+    fileIo.setFileName("eomtbx.prefs");
+    fileIo.setFileFilters(PREFERENCES_FILE_FILTER);
+    fileIo.save(EomToolbox::exportPreferences);
   }
 
   private void importPreferences(JPanel eomtbxPanel) {
-    FileIO fileIO = new FileIO("Import EOMTBX preferences");
-    fileIO.setParent(eomtbxPanel);
-    fileIO.setFileName("eomtbx.prefs");
-    fileIO.setFileFilters(PREFERENCES_FILE_FILTER);
-    fileIO.load(inputStream -> {
+    FileIo fileIo = new FileIo("Import EOMTBX preferences");
+    fileIo.setParent(eomtbxPanel);
+    fileIo.setFileName("eomtbx.prefs");
+    fileIo.setFileFilters(PREFERENCES_FILE_FILTER);
+    fileIo.load(inputStream -> {
       EomToolbox.importPreferences(inputStream);
       update();
     });

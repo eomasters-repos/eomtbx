@@ -1,3 +1,26 @@
+/*-
+ * ========================LICENSE_START=================================
+ * EOMTBX - EOMasters Toolbox for SNAP
+ * --> https://www.eomasters.org/sw/EOMTBX
+ * ======================================================================
+ * Copyright (C) 2023 Marco Peters
+ * ======================================================================
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this program.  If not, see
+ * <http://www.gnu.org/licenses/gpl-3.0.html>.
+ * =========================LICENSE_END==================================
+ */
+
 package org.eomasters.eomtbx.utils;
 
 import java.awt.BorderLayout;
@@ -9,10 +32,12 @@ import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JSeparator;
 import javax.swing.SwingUtilities;
 import net.miginfocom.swing.MigLayout;
 
+/**
+ * A collapsible panel. The component set by {@link #setContent(JComponent)} is collapsed when clicked on the title.
+ */
 public class CollapsiblePanel extends JPanel {
 
   public static final String EXPAND_CHAR = "▶";
@@ -20,12 +45,15 @@ public class CollapsiblePanel extends JPanel {
   private final JLabel toggleLabel;
   private final JComponent contentPanel;
   private final JPanel titlePanel;
-  private final JSeparator separator;
 
+  /**
+   * Creates a new collapsible panel with the given title.
+   *
+   * @param title the title
+   */
   public CollapsiblePanel(String title) {
     super(new BorderLayout(5, 5));
     setName("CollapsiblePanel." + title.replaceAll(" ", "_"));
-    titlePanel = new JPanel(new MigLayout());
 
     MouseAdapter collapser = new MouseAdapter() {
       @Override
@@ -34,15 +62,14 @@ public class CollapsiblePanel extends JPanel {
       }
     };
 
+    titlePanel = new JPanel(new MigLayout("flowx","[][][fill]"));
+    titlePanel.addMouseListener(collapser);
     JLabel titleLabel = new JLabel(title);
     titleLabel.addMouseListener(collapser);
-    titlePanel.add(titleLabel);
+    titlePanel.add(titleLabel, "top, left");
     toggleLabel = new JLabel();
     toggleLabel.addMouseListener(collapser);
-    titlePanel.add(toggleLabel);
-
-    separator = new JSeparator();
-    titlePanel.add(separator, "growx, wrap");
+    titlePanel.add(toggleLabel, "top, left");
 
     add(titlePanel, BorderLayout.NORTH);
 
@@ -54,15 +81,15 @@ public class CollapsiblePanel extends JPanel {
     collapse(true);
   }
 
+  /**
+   * Sets the content of this panel which can be collapsed.
+   *
+   * @param content the content
+   */
   public void setContent(JComponent content) {
-    this.contentPanel.removeAll();
+    contentPanel.removeAll();
     contentPanel.add(content, "grow");
     contentPanel.invalidate();
-  }
-
-  public void showSeparator(boolean show) {
-    separator.setVisible(show);
-    invalidate();
   }
 
   @Override
@@ -92,6 +119,11 @@ public class CollapsiblePanel extends JPanel {
     return getInsets().top + titlePanel.getSize().height;
   }
 
+  /**
+   * Main method for testing.
+   *
+   * @param args the command line arguments
+   */
   public static void main(String[] args) {
     JFrame frame = new JFrame("Collapsible Panel Example");
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
