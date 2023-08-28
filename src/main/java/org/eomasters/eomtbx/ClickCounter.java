@@ -44,11 +44,13 @@ class ClickCounter {
    */
   public static void initMenuItemClickCounter() {
     JMenuBar menuBar = SnapMenuAccessor.getMenuBar();
-    MenuElement[] subElements = menuBar.getSubElements();
-    for (MenuElement subElement : subElements) {
-      if (subElement instanceof JMenuItem) {
-        JMenuItem menuItem = (JMenuItem) subElement;
-        menuItem.addMouseListener(new TemporaryClickCounterAdder());
+    if (menuBar != null) {
+      MenuElement[] subElements = menuBar.getSubElements();
+      for (MenuElement subElement : subElements) {
+        if (subElement instanceof JMenuItem) {
+          JMenuItem menuItem = (JMenuItem) subElement;
+          menuItem.addMouseListener(new TemporaryClickCounterAdder());
+        }
       }
     }
   }
