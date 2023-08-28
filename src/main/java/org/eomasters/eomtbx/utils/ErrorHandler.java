@@ -31,7 +31,6 @@ import java.awt.Font;
 import java.awt.Toolkit;
 import java.awt.datatransfer.StringSelection;
 import java.awt.event.ActionEvent;
-import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.time.Clock;
 import java.time.Instant;
@@ -50,6 +49,7 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingUtilities;
 import net.miginfocom.swing.MigLayout;
 import org.esa.snap.core.util.SystemUtils;
+import org.esa.snap.rcp.util.Dialogs;
 import org.openide.awt.ActionID;
 import org.openide.awt.ActionReference;
 import org.openide.awt.ActionRegistration;
@@ -93,19 +93,15 @@ public class ErrorHandler {
     ErrorReport errorReport = new ErrorReport(message, t);
     addReportArea(contentPane, errorReport.generate());
 
-    JButton byMail = new JButton("By Mail");
-    byMail.addActionListener(e -> {
-      try {
-        String bodyText = "<PLEASE ADD A BRIEF DESCRIPTION WHAT YOU DID WHEN THE ERROR OCCURRED>\n\n\n<PLEASE PASTE IN THE ERROR REPORT HERE OR ATTACH IT AS A FILE>";
-        MailTo mailTo = new MailTo("error@eomasters.com").subject("EOMTBX Error Report").body(bodyText);
-        Desktop.getDesktop().mail(mailTo.toURI());
-      } catch (IOException ex) {
-        throw new RuntimeException(ex);
-      }
-    });
-    contentPane.add(byMail, "right, wrap");
-
     JDialog dialog = new JDialog();
+
+    JButton byMail = createMailButton();
+
+    contentPane.add(byMail, "right");
+    JButton close = new JButton("Close");
+    close.addActionListener(e -> dialog.dispose());
+    contentPane.add(close, "right, wrap");
+
     dialog.setTitle("Error");
     dialog.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     dialog.setLocationRelativeTo(null);
@@ -113,6 +109,24 @@ public class ErrorHandler {
     dialog.setContentPane(contentPane);
     dialog.setModalityType(JDialog.ModalityType.APPLICATION_MODAL);
     dialog.pack();
+  }
+
+  private static JButton createMailButton() {
+    JButton byMail = new JButton("Report by Mail");
+    byMail.addActionListener(e -> {
+      try {
+        String bodyText = "<PLEASE ADD A BRIEF DESCRIPTION WHAT YOU DID BEFORE THE ERROR OCCURRED>\n\n"
+            + "<PLEASE PASTE IN THE ERROR REPORT HERE OR ATTACH IT AS A FILE>";
+        MailTo mailTo = new MailTo("error@eomasters.com")
+            .subject("EOMTBX Error Report")
+            .body(bodyText);
+        Desktop.getDesktop().mail(mailTo.toUri());
+      } catch (Exception ex) {
+        Dialogs.showError("Error opening mail client", "Could not open mail client:\n" + ex.getMessage());
+      }
+
+    });
+    return byMail;
   }
 
   private static void addReportArea(JPanel contentPane, String reportText) {
@@ -141,14 +155,14 @@ public class ErrorHandler {
       reportPreview.add(clipboardBtn, "top, left");
     }
 
-    CollapsiblePanel collapsiblePanel = new CollapsiblePanel("Report Preview");
+    CollapsiblePanel collapsiblePanel = new CollapsiblePanel("Error Report Preview");
     collapsiblePanel.setContent(reportPreview);
 
     contentPane.add(collapsiblePanel, "top, left, grow, wrap");
   }
 
   private static JButton createExportButton(JPanel contentPane, JTextArea textArea) {
-    JButton exportBtn = new JButton("Export");
+    JButton exportBtn = new JButton("Export to File");
     exportBtn.addActionListener(e -> {
       FileIo exporter = new FileIo("Export Error Report");
       exporter.setParent(contentPane);
@@ -176,6 +190,7 @@ public class ErrorHandler {
   public static void main(String[] args) {
     SwingUtilities.invokeLater(() -> {
       JFrame window = new JFrame("Test ErrorHandler");
+      window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
       window.setSize(400, 300);
       Container container = window.getContentPane();
       container.setLayout(new BorderLayout());

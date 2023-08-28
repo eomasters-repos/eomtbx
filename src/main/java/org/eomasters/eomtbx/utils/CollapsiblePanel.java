@@ -62,7 +62,7 @@ public class CollapsiblePanel extends JPanel {
       }
     };
 
-    titlePanel = new JPanel(new MigLayout("flowx","[][][fill]"));
+    titlePanel = new JPanel(new MigLayout("flowx", "[][][fill]"));
     titlePanel.addMouseListener(collapser);
     JLabel titleLabel = new JLabel(title);
     titleLabel.addMouseListener(collapser);
