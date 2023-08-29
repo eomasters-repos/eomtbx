@@ -52,6 +52,12 @@
     </dependency>
     <dependency>
       <groupId>org.esa.snap</groupId>
+      <artifactId>snap-gpf</artifactId>
+      <version>${snap.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.esa.snap</groupId>
       <artifactId>snap-tango</artifactId>
       <version>${snap.version}</version>
     </dependency>
@@ -110,6 +116,13 @@
       <artifactId>org-netbeans-modules-options-api</artifactId>
       <version>RELEASE113</version>
     </dependency>
+    <dependency>
+      <groupId>org.netbeans.api</groupId>
+      <artifactId>org-netbeans-modules-sendopts</artifactId>
+      <version>RELEASE113</version>
+    </dependency>
+
+
 
     <dependency>
       <groupId>org.apache.commons</groupId>
