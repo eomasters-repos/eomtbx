@@ -40,7 +40,7 @@ public class BandMathsExtender implements ProductNamespaceExtender {
     for (RasterDataNode rasterDataNode : rasterDataNodes) {
       namespace.registerSymbol(new InvalidSymbol(namePrefix + rasterDataNode.getName() + ".invalid", rasterDataNode));
     }
-    namespace.registerFunction(new WindowFunction());
+    namespace.registerFunction(new WindowFunctions());
   }
 
 }

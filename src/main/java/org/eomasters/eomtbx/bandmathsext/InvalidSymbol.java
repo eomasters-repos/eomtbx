@@ -9,12 +9,12 @@
  * it under the terms of the GNU General Public License as
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public
  * License along with this program.  If not, see
  * <http://www.gnu.org/licenses/gpl-3.0.html>.
@@ -31,22 +31,25 @@ import org.esa.snap.core.jexp.Symbol;
 import org.esa.snap.core.jexp.Term;
 
 /**
- * Allows to check is a pixel is valid or not.
- * The implementation uses {@link RasterDataNode#isPixelValid(int, int) isPixelValid(x, y)} to check
- * if a pixel is valid or not.
- * In a band math expression the symbol is used as follows:
+ * Allows to check iF a pixel is valid or not. The implementation uses
+ * {@link RasterDataNode#isPixelValid(int, int) isPixelValid(x, y)} to check if a pixel is valid or not. In a band math
+ * expression the symbol is used as follows:
  * <pre>
  *   &lt;band_name&gt;.invalid
  * </pre>
- *
- *
  */
-public class InvalidSymbol implements Symbol, Cloneable {
+public class InvalidSymbol implements Symbol {
 
   private final String symbolName;
   private final int symbolType;
   private final RasterDataNode raster;
 
+  /**
+   * Creates a new instance.
+   *
+   * @param symbolName the name of the symbol
+   * @param raster     the raster data node
+   */
   public InvalidSymbol(final String symbolName, final RasterDataNode raster) {
     this.symbolName = symbolName;
     this.symbolType = Term.TYPE_B;
@@ -89,12 +92,4 @@ public class InvalidSymbol implements Symbol, Cloneable {
     return Boolean.toString(evalB(env));
   }
 
-  @Override
-  public InvalidSymbol clone() {
-    try {
-      return (InvalidSymbol) super.clone();
-    } catch (CloneNotSupportedException e) {
-      throw new IllegalStateException(e);
-    }
-  }
 }

@@ -49,7 +49,8 @@ import org.openide.util.NbBundle;
  */
 @org.openide.util.lookup.ServiceProvider(service = OptionProcessor.class)
 @NbBundle.Messages({
-    "DSC_BatchGpt=Run GPT commands in batch: snap --bgpt <file-path>; Add also --nogui --nosplash to prevent GUI and splash screen"
+    "DSC_BatchGpt=Run GPT commands in batch: snap --bgpt <file-path>; "
+        + "Add also --nogui --nosplash to prevent GUI and splash screen"
 })
 public class BatchGptOptionProcessor extends OptionProcessor {
 

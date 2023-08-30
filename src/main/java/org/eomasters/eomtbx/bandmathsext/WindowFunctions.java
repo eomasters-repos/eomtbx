@@ -36,11 +36,17 @@ import org.esa.snap.core.jexp.Term;
 import org.esa.snap.core.jexp.Term.Ref;
 import org.esa.snap.core.jexp.impl.AbstractFunction.D;
 
-class WindowFunction extends D {
+class WindowFunctions extends D {
 
   private static final int[] ALLOWED_WND_SIZES = new int[]{3, 5, 7};
+  private static final String FUNC_SUM = "sum";
+  private static final String FUNC_MIN = "min";
+  private static final String FUNC_MAX = "max";
+  private static final String FUNC_MEAN = "mean";
+  private static final String FUNC_MEDIAN = "median";
+  private static final String[] FUNCTION_NAMES = new String[]{FUNC_SUM, FUNC_MIN, FUNC_MAX, FUNC_MEAN, FUNC_MEDIAN};
 
-  public WindowFunction() {
+  public WindowFunctions() {
     super("wnd", 3, new int[]{Term.TYPE_D, Term.TYPE_I, Term.TYPE_S});
   }
 
@@ -51,63 +57,53 @@ class WindowFunction extends D {
     String wndFunction = getWndFunction(env, args);
 
     switch (wndFunction) {
-      case "sum":
+      case FUNC_SUM:
         return sum(raster, wndSize, env);
-      case "mean":
-        return mean(raster, wndSize, env);
-      case "median":
-        return median(raster, wndSize, env);
-      case "min":
+      case FUNC_MIN:
         return min(raster, wndSize, env);
-      case "max":
+      case FUNC_MAX:
         return max(raster, wndSize, env);
+      case FUNC_MEAN:
+        return mean(raster, wndSize, env);
+      case FUNC_MEDIAN:
+        return median(raster, wndSize, env);
       default:
-        if (wndFunction.startsWith("p")) {
-          try {
-            int percentileValue = Integer.parseInt(wndFunction.substring(1));
-            return percentile(raster, wndSize, percentileValue, env);
-          } catch (NumberFormatException e) {
-            throw new EvalException("Error parsing percentile value", e);
-          }
-        } else {
-          throw new EvalException("Third argument must be 'mean', 'median', 'min' or 'max'");
-        }
+        throw new EvalException("Third argument must be one of +" + Arrays.toString(FUNCTION_NAMES));
     }
   }
 
   private double sum(RasterDataNode raster, int wndSize, EvalEnv env) {
-    double[] data = getDataArray(raster, wndSize, env);
+    double[] data = getNanFilteredData(raster, wndSize, env);
     return Arrays.stream(data).sum();
   }
 
   private double mean(RasterDataNode raster, int wndSize, EvalEnv env) {
-    // not correct; needs to consider NaNs
-    double sum = sum(raster, wndSize, env);
-    return sum / (wndSize * wndSize);
+    double[] data = getNanFilteredData(raster, wndSize, env);
+    double sum = Arrays.stream(data).sum();
+    return sum / data.length;
   }
 
   private double median(RasterDataNode raster, int wndSize, EvalEnv env) {
-    // not correct; needs to consider NaNs
-    double[] dataArray = getDataArray(raster, wndSize, env);
-    Arrays.sort(dataArray);
-    return dataArray[wndSize * wndSize / 2];
+    double[] data = getNanFilteredData(raster, wndSize, env);
+    Arrays.sort(data);
+    long count = data.length;
+    if (count % 2 == 0) {
+      return (data[(int) (count / 2)] + data[(int) (count / 2 - 1)]) / 2;
+    }
+    return data[(int) Math.ceil(count / 2.)];
   }
 
   private double min(RasterDataNode raster, int wndSize, EvalEnv env) {
-    double[] data = getDataArray(raster, wndSize, env);
+    double[] data = getNanFilteredData(raster, wndSize, env);
     return Arrays.stream(data).min().orElse(Double.NaN);
   }
 
   private double max(RasterDataNode raster, int wndSize, EvalEnv env) {
-    double[] data = getDataArray(raster, wndSize, env);
+    double[] data = getNanFilteredData(raster, wndSize, env);
     return Arrays.stream(data).max().orElse(Double.NaN);
   }
 
-  private double percentile(RasterDataNode raster, int wndSize, int percentile, EvalEnv env) {
-    return 0;
-  }
-
-  private double[] getDataArray(RasterDataNode raster, int wndSize, EvalEnv env) {
+  private double[] getNanFilteredData(RasterDataNode raster, int wndSize, EvalEnv env) {
     double[] data = new double[wndSize * wndSize];
     Arrays.fill(data, Double.NaN);
     RasterDataEvalEnv dataEvalEnv = (RasterDataEvalEnv) env;
@@ -116,22 +112,22 @@ class WindowFunction extends D {
     try {
       Dimension rasterSize = raster.getRasterSize();
       for (int i = 0; i < wndSize; i++) {
-        int iOffset = i * wndSize;
+        int offsetI = i * wndSize;
         for (int j = 0; j < wndSize; j++) {
           int x = centerX - wndSize / 2 + i;
           int y = centerY - wndSize / 2 + j;
-          if (x < 0 || x >= rasterSize.width || y < 0 || y >= rasterSize.height || raster.isPixelValid(x, y)) {
-            data[iOffset + j] = Double.NaN;
+          if (x < 0 || x >= rasterSize.width || y < 0 || y >= rasterSize.height || !raster.isPixelValid(x, y)) {
+            data[offsetI + j] = Double.NaN;
           } else {
             double pixelValue = raster.readPixels(x, y, 1, 1, new double[1])[0];
-            data[iOffset + j] = pixelValue;
+            data[offsetI + j] = pixelValue;
           }
         }
       }
     } catch (IOException e) {
       throw new EvalException("Error reading raster data", e);
     }
-    return data;
+    return Arrays.stream(data).filter(d -> !Double.isNaN(d)).toArray();
   }
 
   private static String getWndFunction(EvalEnv env, Term[] args) {
