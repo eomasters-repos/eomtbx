@@ -63,7 +63,12 @@ class WindowFunction extends D {
         return max(raster, wndSize, env);
       default:
         if (wndFunction.startsWith("p")) {
-          return percentile(raster, wndSize, Integer.parseInt(wndFunction.substring(1)), env);
+          try {
+            int percentileValue = Integer.parseInt(wndFunction.substring(1));
+            return percentile(raster, wndSize, percentileValue, env);
+          } catch (NumberFormatException e) {
+            throw new EvalException("Error parsing percentile value", e);
+          }
         } else {
           throw new EvalException("Third argument must be 'mean', 'median', 'min' or 'max'");
         }
