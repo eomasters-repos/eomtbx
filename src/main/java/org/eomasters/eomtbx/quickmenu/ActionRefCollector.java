@@ -36,8 +36,8 @@ import org.openide.filesystems.FileUtil;
  */
 class ActionRefCollector {
 
-  private static final String[] EXCLUDE_ACTION_IDS = {"separator", "spacer", "master-help"};
   public static final String[] EXCLUDE_ELEMENTS_CONTAINING = {"Quick Menu", "Reopen Product"};
+  private static final String[] EXCLUDE_ACTION_IDS = {"separator", "spacer", "master-help"};
 
   static List<ActionRef> collect() {
     return doCollect(new ArrayList<>(), FileUtil.getConfigFile("Menu"));

@@ -79,6 +79,14 @@ public class EomtbxOptionsPanelController extends PropertyChangeOptionsPanelCont
     preferences.addPreferenceChangeListener(evt -> update());
   }
 
+  private static void exportPreferences(JPanel eomtbxPanel) {
+    FileIo fileIo = new FileIo("Export EOMTBX preferences");
+    fileIo.setParent(eomtbxPanel);
+    fileIo.setFileName("eomtbx.prefs");
+    fileIo.setFileFilters(PREFERENCES_FILE_FILTER);
+    fileIo.save(EomToolbox::exportPreferences);
+  }
+
   @Override
   public void update() {
     SwingUtilities.invokeLater(() -> subControllers.forEach(OptionsPanelController::update));
@@ -144,14 +152,6 @@ public class EomtbxOptionsPanelController extends PropertyChangeOptionsPanelCont
     exportButton.addActionListener(e -> exportPreferences(eomtbxPanel));
 
     return eomtbxPanel;
-  }
-
-  private static void exportPreferences(JPanel eomtbxPanel) {
-    FileIo fileIo = new FileIo("Export EOMTBX preferences");
-    fileIo.setParent(eomtbxPanel);
-    fileIo.setFileName("eomtbx.prefs");
-    fileIo.setFileFilters(PREFERENCES_FILE_FILTER);
-    fileIo.save(EomToolbox::exportPreferences);
   }
 
   private void importPreferences(JPanel eomtbxPanel) {

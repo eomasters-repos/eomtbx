@@ -50,6 +50,44 @@ class WindowFunctions extends D {
     super("wnd", 3, new int[]{Term.TYPE_D, Term.TYPE_I, Term.TYPE_S});
   }
 
+  private static String getWndFunction(EvalEnv env, Term[] args) {
+    if (!args[2].isS()) {
+      throw new EvalException("Third argument must be a string");
+    }
+    return args[2].evalS(env);
+  }
+
+  private static int getWndSize(EvalEnv env, Term[] args) {
+    int wndSize = args[1].evalI(env);
+    if (!isValidWndSize(wndSize)) {
+      throw new EvalException("Second argument must be one of " + Arrays.toString(ALLOWED_WND_SIZES));
+    }
+    return wndSize;
+  }
+
+  private static RasterDataNode getRaster(Term[] args) {
+    Term rasterTerm = args[0];
+    if (!(rasterTerm instanceof Ref)) {
+      throw new EvalException("First argument must reference a raster");
+    }
+    Symbol rasterSymbol = ((Ref) rasterTerm).getSymbol();
+    if (!(rasterSymbol instanceof RasterDataSymbol)) {
+      throw new EvalException("First argument must reference a raster");
+    }
+    return ((RasterDataSymbol) rasterSymbol).getRaster();
+  }
+
+  private static boolean isValidWndSize(int wndSize) {
+    boolean found = false;
+    for (int allowedSize : ALLOWED_WND_SIZES) {
+      if (wndSize == allowedSize) {
+        found = true;
+        break;
+      }
+    }
+    return found;
+  }
+
   @Override
   public double evalD(EvalEnv env, Term[] args) throws EvalException {
     RasterDataNode raster = getRaster(args);
@@ -128,44 +166,6 @@ class WindowFunctions extends D {
       throw new EvalException("Error reading raster data", e);
     }
     return Arrays.stream(data).filter(d -> !Double.isNaN(d)).toArray();
-  }
-
-  private static String getWndFunction(EvalEnv env, Term[] args) {
-    if (!args[2].isS()) {
-      throw new EvalException("Third argument must be a string");
-    }
-    return args[2].evalS(env);
-  }
-
-  private static int getWndSize(EvalEnv env, Term[] args) {
-    int wndSize = args[1].evalI(env);
-    if (!isValidWndSize(wndSize)) {
-      throw new EvalException("Second argument must be one of " + Arrays.toString(ALLOWED_WND_SIZES));
-    }
-    return wndSize;
-  }
-
-  private static RasterDataNode getRaster(Term[] args) {
-    Term rasterTerm = args[0];
-    if (!(rasterTerm instanceof Ref)) {
-      throw new EvalException("First argument must reference a raster");
-    }
-    Symbol rasterSymbol = ((Ref) rasterTerm).getSymbol();
-    if (!(rasterSymbol instanceof RasterDataSymbol)) {
-      throw new EvalException("First argument must reference a raster");
-    }
-    return ((RasterDataSymbol) rasterSymbol).getRaster();
-  }
-
-  private static boolean isValidWndSize(int wndSize) {
-    boolean found = false;
-    for (int allowedSize : ALLOWED_WND_SIZES) {
-      if (wndSize == allowedSize) {
-        found = true;
-        break;
-      }
-    }
-    return found;
   }
 
 }

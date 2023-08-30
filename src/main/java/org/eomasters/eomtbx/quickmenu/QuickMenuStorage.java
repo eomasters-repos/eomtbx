@@ -23,20 +23,28 @@
 
 package org.eomasters.eomtbx.quickmenu;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
-import java.util.ArrayList;
+import com.google.gson.Gson;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.Arrays;
 import java.util.List;
-import org.junit.jupiter.api.Test;
-import org.openide.filesystems.FileUtil;
 
-public class ActionRefCollectorTest {
+/**
+ * Proves methods to save and load action references to and from a JSON file.
+ */
+class QuickMenuStorage {
 
-  @Test
-  public void testCollect() {
-    List<ActionRef> collect = ActionRefCollector.doCollect(new ArrayList<>(), FileUtil.getConfigFile("Menu"));
-    assertTrue(collect.contains(new ActionRef("org-esa-snap-dataio-rgb-ImportImageProduct",
-        new MenuRef("Menu/File/Import/Generic Formats/", "RGB Image"))));
-    assertTrue(collect.contains(new ActionRef("CloseProductAction", new MenuRef("Menu/File/", "Close Product"))));
+  // save elements of actionReferences to a JSON file using GSON library
+  static void save(List<ActionRef> actionReferences, OutputStream outputStream) throws IOException {
+    String json = new Gson().toJson(actionReferences.stream()
+        .filter(actionRef1 -> actionRef1.getClicks() > 0).toArray());
+    outputStream.write(json.getBytes());
+  }
+
+  // load actionReferences from JSON stream using GSON library
+  static List<ActionRef> load(InputStream inputStream) throws IOException {
+    String json = new String(inputStream.readAllBytes());
+    return Arrays.asList(new Gson().fromJson(json, ActionRef[].class));
   }
 }

@@ -9,12 +9,12 @@
  * it under the terms of the GNU General Public License as
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public
  * License along with this program.  If not, see
  * <http://www.gnu.org/licenses/gpl-3.0.html>.
@@ -33,6 +33,10 @@ import org.junit.jupiter.api.Test;
 
 class MailToTest {
 
+  private static String genLongText(int i) {
+    return String.join("", Collections.nCopies(i, "a"));
+  }
+
   @Test
   void toCreation() throws MailToException {
     URI uri1 = new MailTo("test@email.com").toUri();
@@ -44,8 +48,8 @@ class MailToTest {
 
   @Test
   void testInvalidMails() {
-    assertThrows(MailToException.class, () -> new  MailTo("illegal@@email.com"));
-    assertThrows(MailToException.class, () -> new  MailTo("test@email.com", "illegal@@email.com"));
+    assertThrows(MailToException.class, () -> new MailTo("illegal@@email.com"));
+    assertThrows(MailToException.class, () -> new MailTo("test@email.com", "illegal@@email.com"));
   }
 
   @Test
@@ -89,7 +93,8 @@ class MailToTest {
   void testAll() throws MailToException {
     URI uri1 = new MailTo("test@mail.org", "one@mail.de", "two@mail.com")
         .cc("copy@mail.org").body("Test body").subject("Test subject").toUri();
-    assertEquals("mailto:?to=test@mail.org,one@mail.de,two@mail.com&cc=copy@mail.org&subject=Test%20subject&body=Test%20body",
+    assertEquals(
+        "mailto:?to=test@mail.org,one@mail.de,two@mail.com&cc=copy@mail.org&subject=Test%20subject&body=Test%20body",
         uri1.toString());
   }
 
@@ -99,10 +104,6 @@ class MailToTest {
         .cc("copy@mail.org", "abcdefg@yourmailhost.org")
         .subject(genLongText(MailTo.MAX_SUBJECT_LENGTH)).body(genLongText(MailTo.MAX_BODY_LENGTH));
     assertThrows(MailToException.class, mailTo::toUri);
-  }
-
-  private static String genLongText(int i) {
-    return String.join("", Collections.nCopies(i, "a"));
   }
 
 }

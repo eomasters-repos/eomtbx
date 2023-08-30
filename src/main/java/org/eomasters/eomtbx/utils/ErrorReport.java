@@ -69,24 +69,6 @@ public class ErrorReport {
     this.throwable = t;
   }
 
-
-  /**
-   * Generates the error report as String.
-   *
-   * @return the error report
-   */
-  public String generate() {
-    StringBuilder report = new StringBuilder("Error Report: ");
-    addBasicInformation(report);
-    addStackTrace(report);
-    addProductList(report);
-    addInstalledModules(report);
-    addPreferences(report);
-    addSystemProperties(report);
-    addEnvironmentVariables(report);
-    return report.toString();
-  }
-
   private static void addEnvironmentVariables(StringBuilder report) {
     report.append("Environment Variables:\n");
     Map<String, String> getenv = System.getenv();
@@ -126,12 +108,10 @@ public class ErrorReport {
     try {
       Collection<? extends ModuleInfo> modules = Lookup.getDefault().lookupAll(ModuleInfo.class);
       modules.stream().sorted(Comparator.comparing((ModuleInfo o) -> o.getCodeNameBase()))
-          .forEach(info -> {
-            report.append(info.getDisplayName()).append("\n")
-                .append("\tcode name: ").append(info.getCodeNameBase()).append("\n")
-                .append("\tversion: ").append(info.getImplementationVersion()).append("\n")
-                .append("\tenabled: ").append(info.isEnabled()).append("\n");
-          });
+          .forEach(info -> report.append(info.getDisplayName()).append("\n")
+              .append("\tcode name: ").append(info.getCodeNameBase()).append("\n")
+              .append("\tversion: ").append(info.getImplementationVersion()).append("\n")
+              .append("\tenabled: ").append(info.isEnabled()).append("\n"));
     } catch (Exception e) {
       report.append("Error while while retrieving module information:\n")
           .append("\t").append(e.getMessage()).append("\n");
@@ -150,6 +130,31 @@ public class ErrorReport {
       }
       report.append("\n\n");
     }
+  }
+
+  private static long toMib(long memory) {
+    return memory / 1024 / 1024;
+  }
+
+  private static long toGib(long memory) {
+    return memory / 1024 / 1024 / 1024;
+  }
+
+  /**
+   * Generates the error report as String.
+   *
+   * @return the error report
+   */
+  public String generate() {
+    StringBuilder report = new StringBuilder("Error Report: ");
+    addBasicInformation(report);
+    addStackTrace(report);
+    addProductList(report);
+    addInstalledModules(report);
+    addPreferences(report);
+    addSystemProperties(report);
+    addEnvironmentVariables(report);
+    return report.toString();
   }
 
   private void addStackTrace(StringBuilder report) {
@@ -190,13 +195,5 @@ public class ErrorReport {
           .append(" Free/Total GiB\n");
     }
     report.append("\n\n");
-  }
-
-  private static long toMib(long memory) {
-    return memory / 1024 / 1024;
-  }
-
-  private static long toGib(long memory) {
-    return memory / 1024 / 1024 / 1024;
   }
 }

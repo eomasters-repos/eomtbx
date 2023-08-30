@@ -9,12 +9,12 @@
  * it under the terms of the GNU General Public License as
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public
  * License along with this program.  If not, see
  * <http://www.gnu.org/licenses/gpl-3.0.html>.
@@ -34,47 +34,47 @@ import org.junit.jupiter.api.Test;
 
 public class QuickMenuStartTest {
 
-    private QuickMenu quickMenu;
+  private QuickMenu quickMenu;
 
-    @BeforeEach
-    void setUp() {
-        quickMenu = new QuickMenu();
-    }
+  @BeforeEach
+  void setUp() {
+    quickMenu = new QuickMenu();
+  }
 
-    @Test
-    public void testGetInstance() {
-        assertNotNull(QuickMenu.getInstance());
-    }
+  @Test
+  public void testGetInstance() {
+    assertNotNull(QuickMenu.getInstance());
+  }
 
-    @Test
-    public void testStart() {
-        assertFalse(quickMenu.isStarted());
+  @Test
+  public void testStart() {
+    assertFalse(quickMenu.isStarted());
 
-        assertThrows(IllegalStateException.class, () -> quickMenu.getActionReferences());
+    assertThrows(IllegalStateException.class, () -> quickMenu.getActionReferences());
 
-        quickMenu.start();
+    quickMenu.start();
 
-        assertTrue(quickMenu.isStarted());
+    assertTrue(quickMenu.isStarted());
 
-        assertThrows(IllegalStateException.class, quickMenu::start);
+    assertThrows(IllegalStateException.class, quickMenu::start);
 
-    }
+  }
 
-    @Test
-    public void testActionRefClicked() {
-        quickMenu.start();
+  @Test
+  public void testActionRefClicked() {
+    quickMenu.start();
 
-        ActionRef actionRef1 = new ActionRef("action1", new MenuRef("path1", "Text 1"));
-        ActionRef actionRef2 = new ActionRef("action2", new MenuRef("path2", "Text 2"));
-        quickMenu.getActionReferences().add(actionRef1);
-        quickMenu.getActionReferences().add(actionRef2);
+    ActionRef actionRef1 = new ActionRef("action1", new MenuRef("path1", "Text 1"));
+    ActionRef actionRef2 = new ActionRef("action2", new MenuRef("path2", "Text 2"));
+    quickMenu.getActionReferences().add(actionRef1);
+    quickMenu.getActionReferences().add(actionRef2);
 
-        actionRef1.incrementClicks();
+    actionRef1.incrementClicks();
 
-        quickMenu.sort();
+    quickMenu.sort();
 
-        assertEquals(1, actionRef1.getClicks());
-        assertEquals(0, actionRef2.getClicks());
-    }
+    assertEquals(1, actionRef1.getClicks());
+    assertEquals(0, actionRef2.getClicks());
+  }
 
 }

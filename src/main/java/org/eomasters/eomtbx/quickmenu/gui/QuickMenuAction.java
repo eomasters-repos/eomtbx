@@ -77,6 +77,28 @@ public class QuickMenuAction extends AbstractAction implements Presenter.Toolbar
         QuickMenuOptions.DEFAULT_NUM_QUICK_ACTIONS));
   }
 
+  private static JMenuItem createMenuItem(ActionRef actionRef, JMenuItem origMenuItem) {
+    JMenuItem menuItem = new JMenuItem(getEnhancedText(actionRef));
+    menuItem.setToolTipText(origMenuItem.getToolTipText());
+    menuItem.setIcon(origMenuItem.getIcon());
+    menuItem.addActionListener(e -> origMenuItem.doClick());
+    return menuItem;
+  }
+
+  private static String getEnhancedText(ActionRef actionRef) {
+    List<MenuRef> menuRefs = actionRef.getMenuRefs();
+    String text = actionRef.getMenuRef().getText();
+    for (MenuRef menuRef : menuRefs) {
+      String path = menuRef.getPath();
+      for (String specialGroup : SPECIAL_GROUPS) {
+        if (path.contains(specialGroup)) {
+          return String.format("%s (%s)", text, specialGroup);
+        }
+      }
+    }
+    return text;
+  }
+
   private void setNumActions(int num) {
     numActions = num;
   }
@@ -121,28 +143,6 @@ public class QuickMenuAction extends AbstractAction implements Presenter.Toolbar
     if (origMenuItem != null) {
       menu.add(createMenuItem(actionRef, origMenuItem));
     }
-  }
-
-  private static JMenuItem createMenuItem(ActionRef actionRef, JMenuItem origMenuItem) {
-    JMenuItem menuItem = new JMenuItem(getEnhancedText(actionRef));
-    menuItem.setToolTipText(origMenuItem.getToolTipText());
-    menuItem.setIcon(origMenuItem.getIcon());
-    menuItem.addActionListener(e -> origMenuItem.doClick());
-    return menuItem;
-  }
-
-  private static String getEnhancedText(ActionRef actionRef) {
-    List<MenuRef> menuRefs = actionRef.getMenuRefs();
-    String text = actionRef.getMenuRef().getText();
-    for (MenuRef menuRef : menuRefs) {
-      String path = menuRef.getPath();
-      for (String specialGroup : SPECIAL_GROUPS) {
-        if (path.contains(specialGroup)) {
-          return String.format("%s (%s)", text, specialGroup);
-        }
-      }
-    }
-    return text;
   }
 
   private class MenuUpdater extends MouseInputAdapter {

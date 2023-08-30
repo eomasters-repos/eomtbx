@@ -82,6 +82,23 @@ public class CollapsiblePanel extends JPanel {
   }
 
   /**
+   * Main method for testing.
+   *
+   * @param args the command line arguments
+   */
+  public static void main(String[] args) {
+    JFrame frame = new JFrame("Collapsible Panel Example");
+    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+    CollapsiblePanel panel = new CollapsiblePanel("Title");
+    panel.setContent(new JLabel("Content"));
+    frame.getContentPane().add(panel);
+
+    frame.pack();
+    frame.setVisible(true);
+  }
+
+  /**
    * Sets the content of this panel which can be collapsed.
    *
    * @param content the content
@@ -117,22 +134,5 @@ public class CollapsiblePanel extends JPanel {
 
   private int getCollapsedHeight() {
     return getInsets().top + titlePanel.getSize().height;
-  }
-
-  /**
-   * Main method for testing.
-   *
-   * @param args the command line arguments
-   */
-  public static void main(String[] args) {
-    JFrame frame = new JFrame("Collapsible Panel Example");
-    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-    CollapsiblePanel panel = new CollapsiblePanel("Title");
-    panel.setContent(new JLabel("Content"));
-    frame.getContentPane().add(panel);
-
-    frame.pack();
-    frame.setVisible(true);
   }
 }

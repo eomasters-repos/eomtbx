@@ -40,6 +40,7 @@ import org.eomasters.eomtbx.quickmenu.QuickMenu;
 import org.esa.snap.rcp.SnapApp;
 import org.esa.snap.runtime.Config;
 import org.openide.modules.OnStart;
+import org.openide.modules.OnStop;
 import org.openide.windows.OnShowing;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -150,4 +151,15 @@ public class EomToolbox {
 
   }
 
+  /**
+   * Invoked when the application is stopped. Not intended to be called by clients.
+   */
+  @OnStop
+  public static class OnStopOperation implements Runnable {
+
+    @Override
+    public void run() {
+      QuickMenu.getInstance().stop();
+    }
+  }
 }

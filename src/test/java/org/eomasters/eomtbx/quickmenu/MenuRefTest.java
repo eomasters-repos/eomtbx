@@ -30,47 +30,47 @@ import org.junit.jupiter.api.Test;
 
 public class MenuRefTest {
 
-    @Test
-    public void testGetPath() {
-        MenuRef menuRef = new MenuRef("path/to/menu", "Menu Text");
+  @Test
+  public void testGetPath() {
+    MenuRef menuRef = new MenuRef("path/to/menu", "Menu Text");
 
-        assertEquals("path/to/menu", menuRef.getPath());
-    }
+    assertEquals("path/to/menu", menuRef.getPath());
+  }
 
-    @Test
-    public void testGetText() {
-        MenuRef menuRef = new MenuRef("path/to/menu", "Menu &Text");
+  @Test
+  public void testGetText() {
+    MenuRef menuRef = new MenuRef("path/to/menu", "Menu &Text");
 
-        assertEquals("Menu Text", menuRef.getText());
-    }
+    assertEquals("Menu Text", menuRef.getText());
+  }
 
-    @Test
-    public void testEqualsAndHashCode() {
-        MenuRef menuRef1 = new MenuRef("path/to/menu", "Menu Text");
-        MenuRef menuRef2 = new MenuRef("path/to/menu", "Menu Text");
+  @Test
+  public void testEqualsAndHashCode() {
+    MenuRef menuRef1 = new MenuRef("path/to/menu", "Menu Text");
+    MenuRef menuRef2 = new MenuRef("path/to/menu", "Menu Text");
 
-        assertEquals(menuRef1, menuRef2);
-        assertEquals(menuRef1.hashCode(), menuRef2.hashCode());
-      //noinspection SimplifiableAssertion,ConstantValue
-      assertFalse(menuRef1.equals(null));
-      //noinspection SimplifiableAssertion
-        assertFalse(menuRef1.equals(new Object())  );
-    }
+    assertEquals(menuRef1, menuRef2);
+    assertEquals(menuRef1.hashCode(), menuRef2.hashCode());
+    // noinspection SimplifiableAssertion,ConstantValue
+    assertFalse(menuRef1.equals(null));
+    // noinspection SimplifiableAssertion
+    assertFalse(menuRef1.equals(new Object()));
+  }
 
-    @Test
-    public void testRemoveShortCutIndicator() {
-        String inputText = "Menu &Text";
-        String expectedOutput = "Menu Text";
+  @Test
+  public void testRemoveShortCutIndicator() {
+    String inputText = "Menu &Text";
+    String expectedOutput = "Menu Text";
 
-        String result = MenuRef.removeShortCutIndicator(inputText);
+    String result = MenuRef.removeShortCutIndicator(inputText);
 
-        assertEquals(expectedOutput, result);
-    }
+    assertEquals(expectedOutput, result);
+  }
 
-    @Test
-    public void testToString() {
-        MenuRef menuRef = new MenuRef("path/to/menu", "Menu Text");
+  @Test
+  public void testToString() {
+    MenuRef menuRef = new MenuRef("path/to/menu", "Menu Text");
 
-        assertEquals("path/to/menu/Menu Text", menuRef.toString());
-    }
+    assertEquals("path/to/menu/Menu Text", menuRef.toString());
+  }
 }

@@ -44,6 +44,10 @@ public class MenuRef {
     this.text = removeShortCutIndicator(text);
   }
 
+  static String removeShortCutIndicator(String displayName) {
+    return displayName.replaceAll("&", "");
+  }
+
   /**
    * Returns the path.
    *
@@ -73,10 +77,6 @@ public class MenuRef {
     MenuRef other = (MenuRef) o;
     return Objects.equals(this.getPath(), other.getPath())
         && Objects.equals(this.getText(), other.getText());
-  }
-
-  static String removeShortCutIndicator(String displayName) {
-    return displayName.replaceAll("&", "");
   }
 
   @Override

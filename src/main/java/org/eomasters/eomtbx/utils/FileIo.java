@@ -49,11 +49,6 @@ public class FileIo {
   private FileFilter[] fileFilters;
   private String fileName;
 
-  public static FileNameExtensionFilter createFileFilter(String description, String... extensions) {
-    String text = description + " " + Arrays.stream(extensions).map(s -> "*." + s).collect(Collectors.toList());
-    return new FileNameExtensionFilter(text, extensions);
-  }
-
   /**
    * Creates a new FileIO with the given title used by the file chooser dialog.
    *
@@ -61,6 +56,24 @@ public class FileIo {
    */
   public FileIo(String title) {
     this.title = title;
+  }
+
+  public static FileNameExtensionFilter createFileFilter(String description, String... extensions) {
+    String text = description + " " + Arrays.stream(extensions).map(s -> "*." + s).collect(Collectors.toList());
+    return new FileNameExtensionFilter(text, extensions);
+  }
+
+  private static Path ensureFileExtension(Path path, FileFilter fileFilter) {
+    if (fileFilter instanceof FileNameExtensionFilter) {
+      String[] extensions = ((FileNameExtensionFilter) fileFilter).getExtensions();
+      if (extensions.length > 0) {
+        String extension = extensions[0];
+        if (!path.toString().endsWith(extension)) {
+          path = path.resolveSibling(path.getFileName() + "." + extension);
+        }
+      }
+    }
+    return path;
   }
 
   /**
@@ -80,7 +93,6 @@ public class FileIo {
   public void setFileName(String fileName) {
     this.fileName = fileName;
   }
-
 
   /**
    * Sets whether the all file filter should be used.
@@ -165,19 +177,6 @@ public class FileIo {
       fileChooser.setSelectedFile(new File(fileChooser.getCurrentDirectory(), fileName));
     }
     return fileChooser;
-  }
-
-  private static Path ensureFileExtension(Path path, FileFilter fileFilter) {
-    if (fileFilter instanceof FileNameExtensionFilter) {
-      String[] extensions = ((FileNameExtensionFilter) fileFilter).getExtensions();
-      if (extensions.length > 0) {
-        String extension = extensions[0];
-        if (!path.toString().endsWith(extension)) {
-          path = path.resolveSibling(path.getFileName() + "." + extension);
-        }
-      }
-    }
-    return path;
   }
 
   /**

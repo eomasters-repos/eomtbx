@@ -43,19 +43,18 @@ class QuickMenuOptions implements Cloneable {
         QuickMenuOptions.DEFAULT_NUM_QUICK_ACTIONS));
   }
 
-  public void setNumActions(int value) {
-    numActions.set(value);
+  public static void putToPreferences(QuickMenuOptions currentOptions, Preferences preferences) {
+    preferences.put(QuickMenuOptions.PREFERENCE_KEY_NUM_QUICK_ACTIONS,
+        Integer.toString(currentOptions.numActions.get()));
   }
 
   public int getNumActions() {
     return numActions.get();
   }
 
-  public static void putToPreferences(QuickMenuOptions currentOptions, Preferences preferences) {
-    preferences.put(QuickMenuOptions.PREFERENCE_KEY_NUM_QUICK_ACTIONS,
-        Integer.toString(currentOptions.numActions.get()));
+  public void setNumActions(int value) {
+    numActions.set(value);
   }
-
 
   @Override
   public boolean equals(Object o) {

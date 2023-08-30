@@ -41,12 +41,12 @@ public class ActionRef {
    * Creates a new ActionRef with the given actionId and menuRef.
    *
    * @param actionId the actionId
-   * @param menuRef  the menuRef
+   * @param menuRefs the menuRef
    */
-  public ActionRef(String actionId, MenuRef menuRef) {
+  public ActionRef(String actionId, MenuRef... menuRefs) {
     this.actionId = actionId;
     this.menuRefs = new ArrayList<>();
-    menuRefs.add(menuRef);
+    this.menuRefs.addAll(List.of(menuRefs));
   }
 
   /**
@@ -99,6 +99,15 @@ public class ActionRef {
    */
   public long getClicks() {
     return clicks;
+  }
+
+  /**
+   * Sets the click counter.
+   *
+   * @param clicks the number of clicks
+   */
+  void setClicks(long clicks) {
+    this.clicks = clicks;
   }
 
   @Override

@@ -64,6 +64,28 @@ public class BatchGptOptionProcessor extends OptionProcessor {
     optionSet = Collections.singleton(OptionGroups.allOf(batchGPT));
   }
 
+  private static List<String> readCommands(Path commandsFilePath) throws CommandException {
+    List<String> commands;
+    try {
+      commands = Files.readAllLines(commandsFilePath);
+    } catch (IOException e) {
+      CommandException commandException = new CommandException(90004, "Could not read GPT commands file");
+      commandException.initCause(e);
+      throw commandException;
+    }
+    return commands;
+  }
+
+  // Splits a command line into an array of strings. As separator serves a space character but if the space is inside
+  // a pair of double quotes, it is not used as separator. The double quotes are removed from the result.
+  static String[] parseCommandline(String cmd) {
+    String[] split = cmd.split(" (?=([^\"]*\"[^\"]*\")*[^\"]*$)");
+    for (int i = 0; i < split.length; i++) {
+      split[i] = split[i].replace("\"", "");
+    }
+    return split;
+  }
+
   @Override
   protected Set<Option> getOptions() {
     return optionSet;
@@ -93,18 +115,6 @@ public class BatchGptOptionProcessor extends OptionProcessor {
     }
   }
 
-  private static List<String> readCommands(Path commandsFilePath) throws CommandException {
-    List<String> commands;
-    try {
-      commands = Files.readAllLines(commandsFilePath);
-    } catch (IOException e) {
-      CommandException commandException = new CommandException(90004, "Could not read GPT commands file");
-      commandException.initCause(e);
-      throw commandException;
-    }
-    return commands;
-  }
-
   private void runBatchGpt(Env env, List<String> commands) {
     env.getOutputStream().println("EomtbxOptionProcessor.runBatchGpt");
 
@@ -125,15 +135,5 @@ public class BatchGptOptionProcessor extends OptionProcessor {
     }
 
     System.exit(0);
-  }
-
-  // Splits a command line into an array of strings. As separator serves a space character but if the space is inside
-  // a pair of double quotes, it is not used as separator. The double quotes are removed from the result.
-  static String[] parseCommandline(String cmd) {
-    String[] split = cmd.split(" (?=([^\"]*\"[^\"]*\")*[^\"]*$)");
-    for (int i = 0; i < split.length; i++) {
-      split[i] = split[i].replace("\"", "");
-    }
-    return split;
   }
 }

@@ -61,8 +61,8 @@ import org.openide.util.NbBundle;
 public class ErrorHandler {
 
   /**
-   * Handles the given throwable. In a headless environment the throwable is only logged to the console. If GUI is available
-   * a dialog is shown in addition.
+   * Handles the given throwable. In a headless environment the throwable is only logged to the console.
+   * If GUI is available a dialog is shown in addition.
    *
    * @param message the message
    * @param t       the throwable
