@@ -9,12 +9,12 @@
  * it under the terms of the GNU General Public License as
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public
  * License along with this program.  If not, see
  * <http://www.gnu.org/licenses/gpl-3.0.html>.
@@ -25,15 +25,19 @@ package org.eomasters.eomtbx.wvleditor;
 
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
+import javax.swing.Action;
+import org.esa.snap.core.datamodel.Product;
+import org.esa.snap.core.datamodel.ProductNode;
 import org.esa.snap.rcp.SnapApp;
-import org.esa.snap.ui.ModalDialog;
 import org.openide.awt.ActionID;
 import org.openide.awt.ActionReference;
 import org.openide.awt.ActionReferences;
 import org.openide.awt.ActionRegistration;
-import org.openide.util.HelpCtx;
 import org.openide.util.NbBundle;
 
+/**
+ * Action to open the Wavelength Editor.
+ */
 @ActionID(category = "View", id = "EOM_WvlEditorAction")
 @ActionRegistration(
     displayName = "#CTL_WvlEditorAction_MenuText",
@@ -48,17 +52,27 @@ import org.openide.util.NbBundle;
     "CTL_WvlEditorAction_MenuText=Modify Wavelengths...",
     "CTL_WvlEditorAction_ShortDescription=Open editor to modify multiply wavelengths of one more or products"
 })
-public class WvlEditorAction extends AbstractAction implements HelpCtx.Provider {
+public class WvlEditorAction extends AbstractAction {
 
-  @Override
-  public void actionPerformed(ActionEvent e) {
-    ModalDialog modalDialog = new WvlEditorDialog(SnapApp.getDefault().getMainFrame());
-    modalDialog.show();
+  private final Product product;
+
+  /**
+   * Creates a new instance of WvlEditorAction. the node is automatically provided by SNAP (NetBeans Platform).
+   *
+   * @param node the node of the product which is currently selected
+   */
+  public WvlEditorAction(ProductNode node) {
+    super(Bundle.CTL_WvlEditorAction_MenuText());
+    product = node.getProduct();
+    putValue(Action.SHORT_DESCRIPTION, Bundle.CTL_WvlEditorAction_ShortDescription());
   }
 
   @Override
-  public HelpCtx getHelpCtx() {
-    return new HelpCtx(WvlEditorDialog.HID_EOMTBX_WvlEditor);
+  public void actionPerformed(ActionEvent e) {
+    WvlEditorDialog wvlEditor = new WvlEditorDialog(SnapApp.getDefault().getMainFrame());
+    Product[] products = SnapApp.getDefault().getProductManager().getProducts();
+    wvlEditor.setProducts(product, products);
+    wvlEditor.show();
   }
 
 }
