@@ -24,31 +24,26 @@
 package org.eomasters.eomtbx.quickmenu;
 
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.prefs.Preferences;
 import org.eomasters.eomtbx.EomToolbox;
-import org.eomasters.eomtbx.utils.ErrorHandler;
-import org.esa.snap.core.util.SystemUtils;
 
 /**
  * The QuickMenu. Provides access to the action references which are most frequently used.
  */
 public class QuickMenu {
 
-  private static final Path EOMTBX_AUXDATA_DIR = SystemUtils.getAuxDataPath().resolve(EomToolbox.TOOLBOX_ID);
-  private static final Path QM_STORAGE_PATH = EOMTBX_AUXDATA_DIR.resolve("quickmenu.data");
+  private static final String QUICKMENU_ID = "quickmenu";
+  private final Preferences qmPreferences;
   private List<ActionRef> actionReferences;
 
   /**
    * Creates a new QuickMenu. Only used by the singleton and testing.
    */
-  QuickMenu() {
+  QuickMenu(Preferences qmPreferences) {
+    this.qmPreferences = qmPreferences;
   }
 
   /**
@@ -59,6 +54,11 @@ public class QuickMenu {
   public static QuickMenu getInstance() {
     return InstanceHolder.INSTANCE;
   }
+
+  public Preferences getPreferences() {
+    return qmPreferences;
+  }
+
 
   /**
    * Returns the list of all action references.
@@ -71,19 +71,17 @@ public class QuickMenu {
   }
 
   /**
-   * Starts and initialises the QuickMenu. This is separated from the constructor because it can take some time.
+   * Initialises the QuickMenu. This is separated from the constructor because it can take some time.
    *
    * @throws IllegalStateException if the QuickMenu is already started
    */
-  public void start() {
-    if (isStarted()) {
+  public void init() {
+    if (isInitialised()) {
       throw new IllegalStateException("QuickMenu already started");
     }
     actionReferences = Collections.synchronizedList(ActionRefCollector.collect());
-    if (Files.isReadable(QM_STORAGE_PATH)) {
-      updateActionReferences(actionReferences, loadQuickMenu());
-      sort();
-    }
+    updateActionReferences(actionReferences, QuickMenuStorage.restore());
+    sort();
   }
 
   private void updateActionReferences(List<ActionRef> actionRefs, List<ActionRef> updates) {
@@ -93,44 +91,38 @@ public class QuickMenu {
     });
   }
 
-  List<ActionRef> loadQuickMenu() {
-    try (InputStream inputStream = Files.newInputStream(QM_STORAGE_PATH)) {
-      return QuickMenuStorage.load(inputStream);
-    } catch (IOException e) {
-      ErrorHandler.handle("Could not restore QuickMenu", e);
-    }
-    return Collections.emptyList();
+  /**
+   * Starts the QuickMenu. The GUI needs to be installed before the QuickMenu can be started properly,
+   * e.g., register click listeners to the menu items.
+   */
+  public void start() {
+    ClickCounter.initMenuItemClickCounter();
   }
 
   /**
    * Stops the QuickMenu. Saves the action references to a JSON file.
    */
   public void stop() {
-    ensureEomtbxAuxDirExists();
-    try (OutputStream outputStream = Files.newOutputStream(QM_STORAGE_PATH)) {
-      QuickMenuStorage.save(actionReferences, outputStream);
-    } catch (IOException e) {
-      ErrorHandler.handle("Could not save QuickMenu data", e);
-    }
+    QuickMenuStorage.store(actionReferences);
     actionReferences = null;
   }
 
   /**
-   * Returns true if the QuickMenu is started.
+   * Returns true if the QuickMenu is initialised.
    *
-   * @return true if the QuickMenu is started
+   * @return true if the QuickMenu is initialised
    */
-  boolean isStarted() {
+  boolean isInitialised() {
     return actionReferences != null;
   }
 
   /**
-   * Ensures that the QuickMenu is started.
+   * Ensures that the QuickMenu is initialised.
    *
-   * @throws IllegalStateException if the QuickMenu is not started
+   * @throws IllegalStateException if the QuickMenu is not initialised
    */
   private void ensureStarted() {
-    if (!isStarted()) {
+    if (!isInitialised()) {
       throw new IllegalStateException("QuickMenu not started");
     }
   }
@@ -142,18 +134,8 @@ public class QuickMenu {
     actionReferences.sort(Comparator.comparing(ActionRef::getClicks).reversed());
   }
 
-  private static void ensureEomtbxAuxDirExists() {
-    if (!Files.exists(EOMTBX_AUXDATA_DIR)) {
-      try {
-        Files.createDirectories(EOMTBX_AUXDATA_DIR);
-      } catch (IOException e) {
-        ErrorHandler.handle("Could not create EOMTBX directory", e);
-      }
-    }
-  }
-
   private static class InstanceHolder {
 
-    private static final QuickMenu INSTANCE = new QuickMenu();
+    private static final QuickMenu INSTANCE = new QuickMenu(EomToolbox.getPreferences().node(QuickMenu.QUICKMENU_ID));
   }
 }

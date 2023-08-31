@@ -38,7 +38,6 @@ import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 import org.eomasters.eomtbx.quickmenu.QuickMenu;
 import org.esa.snap.rcp.SnapApp;
-import org.esa.snap.runtime.Config;
 import org.openide.modules.OnStart;
 import org.openide.modules.OnStop;
 import org.openide.windows.OnShowing;
@@ -57,7 +56,7 @@ public class EomToolbox {
    * The ID of the EOM-Toolbox.
    */
   public static final String TOOLBOX_ID = "eomtbx";
-  private static final Preferences preferences = Config.instance(TOOLBOX_ID).preferences();
+  private static final Preferences preferences = SnapApp.getDefault().getPreferences().node(TOOLBOX_ID);
 
   /**
    * Returns the preferences of the EOM-Toolbox.
@@ -134,7 +133,7 @@ public class EomToolbox {
 
     @Override
     public void run() {
-      new Thread(() -> QuickMenu.getInstance().start()).start();
+      new Thread(() -> QuickMenu.getInstance().init()).start();
     }
   }
 
@@ -146,7 +145,7 @@ public class EomToolbox {
 
     @Override
     public void run() {
-      new Thread(ClickCounter::initMenuItemClickCounter).start();
+      new Thread(() -> QuickMenu.getInstance().start()).start();
     }
 
   }

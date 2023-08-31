@@ -34,8 +34,8 @@ import java.util.Objects;
 public class ActionRef {
 
   private final String actionId;
-  private final List<MenuRef> menuRefs;
   private long clicks = 0;
+  private final List<MenuRef> menuRefs;
 
   /**
    * Creates a new ActionRef with the given actionId and menuRef.
@@ -124,13 +124,12 @@ public class ActionRef {
       return false;
     }
     ActionRef actionRef = (ActionRef) o;
-    return Objects.equals(getMenuRefs(), actionRef.getMenuRefs())
-        && Objects.equals(actionId, actionRef.actionId);
+    return Objects.equals(actionId, actionRef.actionId);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(getMenuRefs(), actionId);
+    return Objects.hash(actionId);
   }
 
 }

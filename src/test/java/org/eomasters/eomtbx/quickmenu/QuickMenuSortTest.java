@@ -26,13 +26,14 @@ package org.eomasters.eomtbx.quickmenu;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
+import org.netbeans.core.startup.preferences.NbPreferences.UserPreferences;
 
 public class QuickMenuSortTest {
 
   @Test
   public void testActionRefClicked() {
-    QuickMenu quickMenu = new QuickMenu();
-    quickMenu.start();
+    QuickMenu quickMenu = new QuickMenu(new UserPreferences());
+    quickMenu.init();
 
     ActionRef actionRef1 = new ActionRef("action1", new MenuRef("path1", "Text 1"));
     ActionRef actionRef2 = new ActionRef("action2", new MenuRef("path2", "Text 2"));

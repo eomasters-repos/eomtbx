@@ -31,6 +31,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.netbeans.core.startup.preferences.NbPreferences.UserPreferences;
 
 public class QuickMenuStartTest {
 
@@ -38,7 +39,7 @@ public class QuickMenuStartTest {
 
   @BeforeEach
   void setUp() {
-    quickMenu = new QuickMenu();
+    quickMenu = new QuickMenu(new UserPreferences());
   }
 
   @Test
@@ -48,21 +49,21 @@ public class QuickMenuStartTest {
 
   @Test
   public void testStart() {
-    assertFalse(quickMenu.isStarted());
+    assertFalse(quickMenu.isInitialised());
 
     assertThrows(IllegalStateException.class, () -> quickMenu.getActionReferences());
 
-    quickMenu.start();
+    quickMenu.init();
 
-    assertTrue(quickMenu.isStarted());
+    assertTrue(quickMenu.isInitialised());
 
-    assertThrows(IllegalStateException.class, quickMenu::start);
+    assertThrows(IllegalStateException.class, quickMenu::init);
 
   }
 
   @Test
   public void testActionRefClicked() {
-    quickMenu.start();
+    quickMenu.init();
 
     ActionRef actionRef1 = new ActionRef("action1", new MenuRef("path1", "Text 1"));
     ActionRef actionRef2 = new ActionRef("action2", new MenuRef("path2", "Text 2"));

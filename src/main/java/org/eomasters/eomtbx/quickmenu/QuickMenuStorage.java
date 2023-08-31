@@ -23,28 +23,55 @@
 
 package org.eomasters.eomtbx.quickmenu;
 
-import com.google.gson.Gson;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.prefs.BackingStoreException;
+import java.util.prefs.Preferences;
 
 /**
  * Proves methods to save and load action references to and from a JSON file.
  */
 class QuickMenuStorage {
 
-  // save elements of actionReferences to a JSON file using GSON library
-  static void save(List<ActionRef> actionReferences, OutputStream outputStream) throws IOException {
-    String json = new Gson().toJson(actionReferences.stream()
-        .filter(actionRef1 -> actionRef1.getClicks() > 0).toArray());
-    outputStream.write(json.getBytes());
+  private static final String ACTIONS_NODE = "actions";
+  private final Preferences qmPreferences;
+
+  QuickMenuStorage(Preferences qmPreferences) {
+    this.qmPreferences = qmPreferences;
   }
 
-  // load actionReferences from JSON stream using GSON library
-  static List<ActionRef> load(InputStream inputStream) throws IOException {
-    String json = new String(inputStream.readAllBytes());
-    return Arrays.asList(new Gson().fromJson(json, ActionRef[].class));
+  List<ActionRef> load() {
+    Preferences qmActionsNode = qmPreferences.node(ACTIONS_NODE);
+    ArrayList<ActionRef> actionRefs = new ArrayList<>();
+    try {
+      String[] strings = qmActionsNode.keys();
+      for (String string : strings) {
+        ActionRef actionRef = new ActionRef(string);
+        actionRef.setClicks(qmActionsNode.getInt(string, 0));
+        actionRefs.add(actionRef);
+      }
+    } catch (BackingStoreException e) {
+      throw new RuntimeException(e);
+    }
+
+    return actionRefs;
   }
+
+  void save(List<ActionRef> actionReferences) {
+    Preferences qmActionsNode = qmPreferences.node(ACTIONS_NODE);
+    actionReferences.stream()
+        .filter(actionRef -> actionRef.getClicks() > 0)
+        .forEach(actionRef -> qmActionsNode.putInt(actionRef.getActionId(), (int) actionRef.getClicks()));
+  }
+
+  static void store(List<ActionRef> actionReferences) {
+    QuickMenuStorage qmStorage = new QuickMenuStorage(QuickMenu.getInstance().getPreferences());
+    qmStorage.save(actionReferences);
+  }
+
+  static List<ActionRef> restore() {
+    QuickMenuStorage qmStorage = new QuickMenuStorage(QuickMenu.getInstance().getPreferences());
+    return qmStorage.load();
+  }
+
 }

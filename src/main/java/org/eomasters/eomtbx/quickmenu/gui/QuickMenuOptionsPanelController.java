@@ -24,7 +24,6 @@
 package org.eomasters.eomtbx.quickmenu.gui;
 
 import java.util.prefs.BackingStoreException;
-import java.util.prefs.Preferences;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -32,8 +31,8 @@ import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.border.TitledBorder;
 import net.miginfocom.swing.MigLayout;
-import org.eomasters.eomtbx.EomToolbox;
 import org.eomasters.eomtbx.preferences.PropertyChangeOptionsPanelController;
+import org.eomasters.eomtbx.quickmenu.QuickMenu;
 import org.eomasters.eomtbx.utils.ErrorHandler;
 import org.openide.util.HelpCtx;
 import org.openide.util.Lookup;
@@ -51,7 +50,7 @@ public class QuickMenuOptionsPanelController extends PropertyChangeOptionsPanelC
 
   @Override
   public void update() {
-    currentOptions = new QuickMenuOptions(EomToolbox.getPreferences());
+    currentOptions = new QuickMenuOptions();
     backup = currentOptions.clone();
     numActionsModel.setValue(currentOptions.getNumActions());
     fireChange();
@@ -114,10 +113,9 @@ public class QuickMenuOptionsPanelController extends PropertyChangeOptionsPanelC
   }
 
   private void storePreferences() {
-    Preferences preferences = EomToolbox.getPreferences();
-    QuickMenuOptions.putToPreferences(currentOptions, EomToolbox.getPreferences());
+    QuickMenuOptions.putToPreferences(currentOptions, QuickMenu.getInstance().getPreferences());
     try {
-      preferences.flush();
+      QuickMenu.getInstance().getPreferences().flush();
     } catch (BackingStoreException e) {
       ErrorHandler.handle("Could not store QuickMenu options", e);
     }

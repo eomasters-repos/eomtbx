@@ -21,7 +21,7 @@
  * =========================LICENSE_END==================================
  */
 
-package org.eomasters.eomtbx;
+package org.eomasters.eomtbx.quickmenu;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -31,10 +31,6 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.MenuElement;
 import javax.swing.event.MouseInputAdapter;
-import org.eomasters.eomtbx.quickmenu.ActionRef;
-import org.eomasters.eomtbx.quickmenu.MenuRef;
-import org.eomasters.eomtbx.quickmenu.QuickMenu;
-import org.eomasters.eomtbx.quickmenu.SnapMenuAccessor;
 
 class ClickCounter {
 

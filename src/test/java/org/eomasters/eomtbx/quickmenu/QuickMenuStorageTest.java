@@ -25,22 +25,16 @@ package org.eomasters.eomtbx.quickmenu;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.prefs.BackingStoreException;
+import java.util.prefs.Preferences;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.netbeans.core.startup.preferences.NbPreferences.UserPreferences;
 
 class QuickMenuStorageTest {
 
-  private static final String JSON_STRING = "[{\"actionId\":\"action123\",\"menuRefs\":["
-      + "{\"path\":\"main/special/tools\",\"text\":\"123-Action\"},"
-      + "{\"path\":\"tools\",\"text\":\"123-Action\"}],\"clicks\":3},"
-      + "{\"actionId\":\"action456\",\"menuRefs\":["
-      + "{\"path\":\"view/windows\",\"text\":\"456-Action\"}],\"clicks\":1}]";
   private static List<ActionRef> actionReferences;
   private static ActionRef actionRef1;
   private static ActionRef actionRef2;
@@ -59,25 +53,34 @@ class QuickMenuStorageTest {
   }
 
   @Test
-  void testSaveAllClicksZero() throws IOException {
-    ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+  void testSaveAllClicksZero() throws BackingStoreException {
     actionRef1.setClicks(0);
     actionRef2.setClicks(0);
-    QuickMenuStorage.save(actionReferences, new DataOutputStream(outputStream));
-    assertEquals("[]", outputStream.toString());
+    UserPreferences preferences = new UserPreferences();
+    new QuickMenuStorage(preferences).save(actionReferences);
+    String[] keys = preferences.node("actions").keys();
+    assertEquals(0, keys.length);
   }
 
   @Test
-  void testSave() throws IOException {
-    ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-    QuickMenuStorage.save(actionReferences, new DataOutputStream(outputStream));
-    String jsonString = outputStream.toString();
-    assertEquals(JSON_STRING, jsonString);
+  void testSave() throws BackingStoreException {
+    UserPreferences preferences = new UserPreferences();
+    new QuickMenuStorage(preferences).save(actionReferences);
+    Preferences actionsNode = preferences.node("actions");
+    String[] keys = actionsNode.keys();
+    assertEquals(2, keys.length);
+    assertEquals(3, actionsNode.getInt(actionRef1.getActionId(), -1));
+    assertEquals(1, actionsNode.getInt(actionRef2.getActionId(), -1));
   }
 
   @Test
-  void testLoad() throws IOException {
-    List<ActionRef> actionRefs = QuickMenuStorage.load(new ByteArrayInputStream(JSON_STRING.getBytes()));
+  void testLoad() {
+    UserPreferences preferences = new UserPreferences();
+    new QuickMenuStorage(preferences).save(actionReferences);
+    List<ActionRef> actionRefs = new QuickMenuStorage(preferences).load();
     assertEquals(actionReferences, actionRefs);
+    Preferences actionsNode = preferences.node("actions");
+    assertEquals(3, actionsNode.getInt(actionRef1.getActionId(), -1));
+    assertEquals(1, actionsNode.getInt(actionRef2.getActionId(), -1));
   }
 }

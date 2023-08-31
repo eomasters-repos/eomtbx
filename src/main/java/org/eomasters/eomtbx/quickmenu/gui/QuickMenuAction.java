@@ -34,7 +34,6 @@ import javax.swing.AbstractAction;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.event.MouseInputAdapter;
-import org.eomasters.eomtbx.EomToolbox;
 import org.eomasters.eomtbx.quickmenu.ActionRef;
 import org.eomasters.eomtbx.quickmenu.MenuRef;
 import org.eomasters.eomtbx.quickmenu.QuickMenu;
@@ -67,7 +66,7 @@ public class QuickMenuAction extends AbstractAction implements Presenter.Toolbar
   public QuickMenuAction() {
     menu = new JMenu(Bundle.CTL_QuickMenuActionName());
     menu.addMouseListener(new MenuUpdater());
-    Preferences preferences = EomToolbox.getPreferences();
+    Preferences preferences = QuickMenu.getInstance().getPreferences();
     preferences.addPreferenceChangeListener(evt -> {
       if (evt.getKey().equals(QuickMenuOptions.PREFERENCE_KEY_NUM_QUICK_ACTIONS)) {
         setNumActions(Integer.parseInt(evt.getNewValue()));
