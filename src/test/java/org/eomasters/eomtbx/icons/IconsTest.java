@@ -34,6 +34,7 @@ class IconsTest {
     assertNotNull(Icons.EOMTBX);
     assertNotNull(Icons.IMPORT);
     assertNotNull(Icons.EXPORT);
+    assertNotNull(Icons.WVL_EDITOR);
   }
 
 }

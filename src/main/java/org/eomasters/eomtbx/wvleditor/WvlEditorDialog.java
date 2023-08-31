@@ -9,43 +9,46 @@
  * it under the terms of the GNU General Public License as
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
- *
+ * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- *
+ * 
  * You should have received a copy of the GNU General Public
  * License along with this program.  If not, see
  * <http://www.gnu.org/licenses/gpl-3.0.html>.
  * =========================LICENSE_END==================================
  */
 
-package org.eomasters.eomtbx.icons;
+package org.eomasters.eomtbx.wvleditor;
 
-/**
- * Eases access to the icons used within the EOMTBX.
- */
-public final class Icons {
+import java.awt.Frame;
+import javax.swing.JPanel;
+import org.esa.snap.ui.ModalDialog;
 
-  /**
-   * The EOMTBX icon.
-   */
-  public static final Icon EOMTBX = new Icon("Eomtbx");
-  /**
-   * An icon for the import action.
-   */
-  public static final Icon IMPORT = new Icon("Import");
-  /**
-   * An icon for the export action.
-   */
-  public static final Icon EXPORT = new Icon("Export");
-  /**
-   * An icon for the Wavelength Editor
-   */
-  public static final Icon WVL_EDITOR = new Icon("WvlEditor");
+class WvlEditorDialog extends ModalDialog {
 
-  private Icons() {
+  public static final String HID_EOMTBX_WvlEditor = "hid_eomtbx.WvlEditor";
+
+  public WvlEditorDialog(Frame parent) {
+    super(parent, "Wavelength Editor", ModalDialog.ID_OK_CANCEL_HELP, HID_EOMTBX_WvlEditor);
+    setContent(new JPanel());
+  }
+
+  @Override
+  public int show() {
+    return super.show();
+  }
+
+  @Override
+  protected boolean verifyUserInput() {
+    return super.verifyUserInput();
+  }
+
+  @Override
+  protected void onOK() {
+    super.onOK();
   }
 
 }
