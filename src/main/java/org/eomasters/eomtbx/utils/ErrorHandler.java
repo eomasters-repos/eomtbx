@@ -26,7 +26,6 @@ package org.eomasters.eomtbx.utils;
 import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.Desktop;
-import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Toolkit;
 import java.awt.datatransfer.StringSelection;
@@ -61,15 +60,15 @@ import org.openide.util.NbBundle;
 public class ErrorHandler {
 
   /**
-   * Handles the given throwable. In a headless environment the throwable is only logged to the console.
-   * If GUI is available a dialog is shown in addition.
+   * Handles the given throwable. In a headless environment the throwable is only logged to the console. If GUI is
+   * available a dialog is shown in addition.
    *
    * @param message the message
    * @param t       the throwable
    */
   public static void handle(String message, Throwable t) {
     SystemUtils.LOG.log(Level.SEVERE, message, t);
-    if (!isHeadless()) {
+    if (isHeadless()) {
       return;
     }
 
@@ -80,14 +79,8 @@ public class ErrorHandler {
     anErrorOccurred.setFont(anErrorOccurred.getFont().deriveFont(Font.BOLD, 28f));
     contentPane.add(anErrorOccurred, "top, left, wrap");
 
-    JTextArea headerText = new JTextArea(
+    JTextArea headerText = new MultiLineText(
         "Sorry, this should not have happened. Please help to fix this problem and report the issue to EOMasters.\n");
-    headerText.setEditable(false);
-    headerText.setLineWrap(true);
-    headerText.setWrapStyleWord(true);
-    headerText.setFont(new JLabel().getFont());
-    headerText.setBackground(anErrorOccurred.getBackground());
-    headerText.setPreferredSize(new Dimension(350, headerText.getPreferredSize().height));
     contentPane.add(headerText, "top, left, growx, wmin 10, wrap");
 
     ErrorReport errorReport = new ErrorReport(message, t);
@@ -227,4 +220,5 @@ public class ErrorHandler {
       ErrorHandler.handle("Test", test);
     }
   }
+
 }

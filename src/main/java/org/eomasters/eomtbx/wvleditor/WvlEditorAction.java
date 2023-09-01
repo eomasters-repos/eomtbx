@@ -69,9 +69,9 @@ public class WvlEditorAction extends AbstractAction {
 
   @Override
   public void actionPerformed(ActionEvent e) {
-    WvlEditorDialog wvlEditor = new WvlEditorDialog(SnapApp.getDefault().getMainFrame());
+    WvlEditorDialog wvlEditor = new WvlEditorDialog(SnapApp.getDefault().getMainFrame(), product);
     Product[] products = SnapApp.getDefault().getProductManager().getProducts();
-    wvlEditor.setProducts(product, products);
+    wvlEditor.addAdditionalProducts(products);
     wvlEditor.show();
   }
 
