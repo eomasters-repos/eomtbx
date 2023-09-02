@@ -36,8 +36,8 @@ public class ProductSelectionDialog extends ModalDialog {
     productSelectionTable.getColumnModel().getColumn(0).setMaxWidth(30);
     JScrollPane scrollPane = new JScrollPane(productSelectionTable, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
         ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-    scrollPane.setMinimumSize(new Dimension(100, 300));
-    scrollPane.setPreferredSize(new Dimension(200, 350));
+    scrollPane.setMinimumSize(new Dimension(100, 200));
+    scrollPane.setPreferredSize(new Dimension(200, 250));
     panel.add(scrollPane, BorderLayout.CENTER);
     JButton selAllBox = new JButton("Select all");
     selAllBox.addActionListener(e -> {

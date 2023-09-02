@@ -83,14 +83,14 @@ class WvlEditorDialog extends ModalDialog {
     JScrollPane scrollPane = new JScrollPane(table);
     scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
     scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-    scrollPane.setPreferredSize(new Dimension(400, 500));
+    scrollPane.setPreferredSize(new Dimension(300, 400));
 
     panel.add(headerPanel, BorderLayout.NORTH);
     panel.add(scrollPane, BorderLayout.CENTER);
 
     if (!additionalProducts.isEmpty()) {
       JPanel footerPanel = new JPanel(new MigLayout("fillx,  bottom"));
-      JLabel note = new JLabel("<html><b>Note:</b> Wavelengths are only editable for bands without sample coding.");
+      JLabel note = new JLabel("<html><b>Note:</b> Wavelength properties are only editable for bands without sample coding.");
       note.setFont(note.getFont().deriveFont(Font.PLAIN));
       footerPanel.add(note, "span 2, growx, gapbottom 10, left, wrap");
 
