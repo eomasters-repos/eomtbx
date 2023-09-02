@@ -1,3 +1,26 @@
+/*-
+ * ========================LICENSE_START=================================
+ * EOMTBX - EOMasters Toolbox for SNAP
+ * --> https://www.eomasters.org/sw/EOMTBX
+ * ======================================================================
+ * Copyright (C) 2023 Marco Peters
+ * ======================================================================
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this program.  If not, see
+ * <http://www.gnu.org/licenses/gpl-3.0.html>.
+ * =========================LICENSE_END==================================
+ */
+
 package org.eomasters.eomtbx.utils;
 
 import java.awt.BorderLayout;
@@ -14,11 +37,20 @@ import net.miginfocom.swing.MigLayout;
 import org.esa.snap.core.datamodel.Product;
 import org.esa.snap.ui.ModalDialog;
 
+/**
+ * A dialog for selecting products.
+ */
 public class ProductSelectionDialog extends ModalDialog {
 
-  public static final String HID_EOMTBX_PRODUCT_SELECTION = "hid_eomtbx.productSelection";
+  private static final String HID_EOMTBX_PRODUCT_SELECTION = "hid_eomtbx.productSelection";
   private final ProductTableModel listModel;
 
+  /**
+   * Creates a new dialog for selecting products.
+   *
+   * @param parent   the parent window
+   * @param products the products to select from
+   */
   public ProductSelectionDialog(Window parent, List<ProductSelection> products) {
     super(parent, "Product Selection", ModalDialog.ID_OK_CANCEL, HID_EOMTBX_PRODUCT_SELECTION);
     listModel = new ProductTableModel(products);
@@ -31,13 +63,15 @@ public class ProductSelectionDialog extends ModalDialog {
   }
 
   private JPanel createContentPanel() {
-    JPanel panel = new JPanel(new BorderLayout(5, 5));
     JTable productSelectionTable = new JTable(listModel);
+    productSelectionTable.setShowVerticalLines(false);
     productSelectionTable.getColumnModel().getColumn(0).setMaxWidth(30);
     JScrollPane scrollPane = new JScrollPane(productSelectionTable, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
         ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
     scrollPane.setMinimumSize(new Dimension(100, 200));
     scrollPane.setPreferredSize(new Dimension(200, 250));
+
+    JPanel panel = new JPanel(new BorderLayout(5, 5));
     panel.add(scrollPane, BorderLayout.CENTER);
     JButton selAllBox = new JButton("Select all");
     selAllBox.addActionListener(e -> {
@@ -99,9 +133,9 @@ public class ProductSelectionDialog extends ModalDialog {
     }
 
     @Override
-    public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
+    public void setValueAt(Object value, int rowIndex, int columnIndex) {
       if (columnIndex == 0) {
-        products.get(rowIndex).setSelected((Boolean) aValue);
+        products.get(rowIndex).setSelected((Boolean) value);
         fireTableCellUpdated(rowIndex, columnIndex);
       }
     }
@@ -121,25 +155,49 @@ public class ProductSelectionDialog extends ModalDialog {
 
   }
 
+  /**
+   * A class representing a product selection.
+   */
   public static class ProductSelection {
 
     private final Product product;
 
     private boolean selected;
 
+    /**
+     * Creates a new product selection.
+     *
+     * @param product  the product
+     * @param selected whether the product is selected
+     */
     public ProductSelection(Product product, boolean selected) {
       this.product = product;
       this.selected = selected;
     }
 
+    /**
+     * Returns the product.
+     *
+     * @return the product
+     */
     public Product getProduct() {
       return product;
     }
 
+    /**
+     * Sets whether the product is selected.
+     *
+     * @param selected whether the product is selected
+     */
     public void setSelected(boolean selected) {
       this.selected = selected;
     }
 
+    /**
+     * Returns whether the product is selected.
+     *
+     * @return whether the product is selected
+     */
     public boolean isSelected() {
       return selected;
     }

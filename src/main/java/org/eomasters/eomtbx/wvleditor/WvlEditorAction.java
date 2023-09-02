@@ -24,6 +24,7 @@
 package org.eomasters.eomtbx.wvleditor;
 
 import java.awt.event.ActionEvent;
+import java.util.Arrays;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import org.esa.snap.core.datamodel.Product;
@@ -70,8 +71,9 @@ public class WvlEditorAction extends AbstractAction {
   @Override
   public void actionPerformed(ActionEvent e) {
     WvlEditorDialog wvlEditor = new WvlEditorDialog(SnapApp.getDefault().getMainFrame(), product);
-    Product[] products = SnapApp.getDefault().getProductManager().getProducts();
-    wvlEditor.addAdditionalProducts(products);
+    Product[] allProducts = SnapApp.getDefault().getProductManager().getProducts();
+    Product[] otherProducts = Arrays.stream(allProducts).filter(p -> p != product).toArray(Product[]::new);
+    wvlEditor.addAdditionalProducts(otherProducts);
     wvlEditor.show();
   }
 

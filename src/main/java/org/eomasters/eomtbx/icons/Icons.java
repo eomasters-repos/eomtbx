@@ -41,7 +41,7 @@ public final class Icons {
    */
   public static final Icon EXPORT = new Icon("Export");
   /**
-   * An icon for the Wavelength Editor
+   * An icon for the Wavelength Editor.
    */
   public static final Icon WVL_EDITOR = new Icon("WvlEditor");
 

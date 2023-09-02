@@ -23,13 +23,14 @@
 
 package org.eomasters.eomtbx.utils;
 
-import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.Desktop;
 import java.awt.Font;
 import java.awt.Toolkit;
 import java.awt.datatransfer.StringSelection;
 import java.awt.event.ActionEvent;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.nio.charset.StandardCharsets;
 import java.time.Clock;
 import java.time.Instant;
@@ -60,14 +61,50 @@ import org.openide.util.NbBundle;
 public class ErrorHandler {
 
   /**
+   * Shows a simple error dialog.
+   *
+   * @param title   the title
+   * @param message the error message
+   */
+  public static void showError(String title, String message) {
+    SystemUtils.LOG.log(Level.WARNING, message);
+    if (isHeadless()) {
+      return;
+    }
+    Dialogs.showError(title, message);
+  }
+
+  /**
+   * Shows an error dialog extended by the cause exception.
+   *
+   * @param title     the title
+   * @param message   the error message
+   * @param exception the cause exception
+   */
+  public static void showError(String title, String message, Throwable exception) {
+    SystemUtils.LOG.log(Level.WARNING, message, exception);
+    if (isHeadless()) {
+      return;
+    }
+    JPanel messagePanel = new JPanel(new MigLayout("top, left, fillx, gap 5 5"));
+    messagePanel.add(new JLabel(message), "wrap");
+    StringWriter stringWriter = new StringWriter();
+    exception.printStackTrace(new PrintWriter(stringWriter));
+    CollapsiblePanel detailsArea = addDetailsArea(messagePanel, "Details", stringWriter.toString());
+    messagePanel.add(detailsArea, "top, left, grow, wrap");
+    messagePanel.doLayout();
+    showDialog(messagePanel, title, false);
+  }
+
+  /**
    * Handles the given throwable. In a headless environment the throwable is only logged to the console. If GUI is
    * available a dialog is shown in addition.
    *
-   * @param message the message
-   * @param t       the throwable
+   * @param message   the message
+   * @param exception the throwable
    */
-  public static void handle(String message, Throwable t) {
-    SystemUtils.LOG.log(Level.SEVERE, message, t);
+  public static void handleException(String message, Throwable exception) {
+    SystemUtils.LOG.log(Level.SEVERE, message, exception);
     if (isHeadless()) {
       return;
     }
@@ -75,7 +112,7 @@ public class ErrorHandler {
     JPanel contentPane = new JPanel(new MigLayout("top, left, fillx, gap 5 5"));
     contentPane.setBorder(BorderFactory.createEmptyBorder(0, 10, 10, 10));
 
-    JLabel anErrorOccurred = new JLabel("An Error Occurred");
+    JLabel anErrorOccurred = new JLabel("A System Exception Occurred");
     anErrorOccurred.setFont(anErrorOccurred.getFont().deriveFont(Font.BOLD, 28f));
     contentPane.add(anErrorOccurred, "top, left, wrap");
 
@@ -83,25 +120,36 @@ public class ErrorHandler {
         "Sorry, this should not have happened. Please help to fix this problem and report the issue to EOMasters.\n");
     contentPane.add(headerText, "top, left, growx, wmin 10, wrap");
 
-    ErrorReport errorReport = new ErrorReport(message, t);
-    addReportArea(contentPane, errorReport.generate());
+    ErrorReport errorReport = new ErrorReport(message, exception);
+    CollapsiblePanel reportArea = addDetailsArea(contentPane, "Error Report Preview", errorReport.generate());
+    contentPane.add(reportArea, "top, left, grow, wrap");
+
+    showDialog(contentPane, "Error", true);
+  }
+
+  private static void showDialog(JPanel contentPane, String title, boolean showMailBtn) {
+    if (showMailBtn) {
+      JButton byMail = createMailButton();
+      byMail.requestFocusInWindow();
+      contentPane.add(byMail, "right");
+    }
+    JButton close = new JButton("Close");
+    if (!showMailBtn) {
+      close.requestFocusInWindow();
+    }
+    contentPane.add(close, "right, wrap");
 
     JDialog dialog = new JDialog();
 
-    JButton byMail = createMailButton();
-
-    contentPane.add(byMail, "right");
-    JButton close = new JButton("Close");
-    close.addActionListener(e -> dialog.dispose());
-    contentPane.add(close, "right, wrap");
-
-    dialog.setTitle("Error");
+    dialog.setTitle(title);
     dialog.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     dialog.setLocationRelativeTo(null);
-    dialog.setVisible(true);
     dialog.setContentPane(contentPane);
     dialog.setModalityType(JDialog.ModalityType.APPLICATION_MODAL);
     dialog.pack();
+    dialog.setVisible(true);
+
+    close.addActionListener(e -> dialog.dispose());
   }
 
   private static JButton createMailButton() {
@@ -115,14 +163,14 @@ public class ErrorHandler {
             .body(bodyText);
         Desktop.getDesktop().mail(mailTo.toUri());
       } catch (Exception ex) {
-        Dialogs.showError("Error opening mail client", "Could not open mail client:\n" + ex.getMessage());
+        ErrorHandler.showError("Error opening mail client", "Could not open mail client:\n" + ex.getMessage());
       }
 
     });
     return byMail;
   }
 
-  private static void addReportArea(JPanel contentPane, String reportText) {
+  private static CollapsiblePanel addDetailsArea(JPanel contentPane, String title, String reportText) {
 
     JTextArea textArea = new JTextArea(reportText);
     textArea.setColumns(70);
@@ -148,10 +196,9 @@ public class ErrorHandler {
       reportPreview.add(clipboardBtn, "top, left");
     }
 
-    CollapsiblePanel collapsiblePanel = new CollapsiblePanel("Error Report Preview");
+    CollapsiblePanel collapsiblePanel = new CollapsiblePanel(title);
     collapsiblePanel.setContent(reportPreview);
-
-    contentPane.add(collapsiblePanel, "top, left, grow, wrap");
+    return collapsiblePanel;
   }
 
   private static JButton createExportButton(JPanel contentPane, JTextArea textArea) {
@@ -186,12 +233,18 @@ public class ErrorHandler {
       window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
       window.setSize(400, 300);
       Container container = window.getContentPane();
-      container.setLayout(new BorderLayout());
-      JButton openErrorHandler = new JButton("Open ErrorHandler");
-      openErrorHandler.addActionListener(e -> {
-        Exception test = new Exception("Test", new Exception("theCause"));
-        ErrorHandler.handle("Test", test);
-      });
+      container.setLayout(new MigLayout("top, left, fillx, gap 5 5"));
+      JButton errorDialog = new JButton("Show Error Dialog");
+      errorDialog.addActionListener(e -> ErrorHandler.showError("Title", "An error occurred."));
+      JButton extendedErrorDialog = new JButton("Show Extended Error Dialog");
+      extendedErrorDialog.addActionListener(
+          e -> ErrorHandler.showError("Title", "An error occurred.",
+              new Exception("Test", new Exception("theCause"))));
+      JButton openErrorHandler = new JButton("Open Exception Handler");
+      openErrorHandler.addActionListener(
+          e -> ErrorHandler.handleException("Test", new Exception("Test", new Exception("theCause"))));
+      container.add(errorDialog);
+      container.add(extendedErrorDialog);
       container.add(openErrorHandler);
       window.pack();
       window.setVisible(true);
@@ -217,7 +270,7 @@ public class ErrorHandler {
     @Override
     public void actionPerformed(ActionEvent e) {
       Exception test = new Exception("Test", new Exception("theCause"));
-      ErrorHandler.handle("Test", test);
+      ErrorHandler.handleException("Test", test);
     }
   }
 

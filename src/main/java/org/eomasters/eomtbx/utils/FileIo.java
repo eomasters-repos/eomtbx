@@ -124,13 +124,13 @@ public class FileIo {
     if (returnVal == JFileChooser.APPROVE_OPTION) {
       Path path = fileChooser.getSelectedFile().toPath();
       if (!Files.isReadable(path)) {
-        Dialogs.showError("File not readable", "The file with the path " + path + " is not readable.");
+        ErrorHandler.showError("File not readable", "The file with the path " + path + " is not readable.");
         return;
       }
       try {
         read.read(Files.newInputStream(path));
       } catch (IOException ex) {
-        ErrorHandler.handle("Could not import file", ex);
+        ErrorHandler.handleException("Could not import file", ex);
       }
     }
   }
@@ -151,13 +151,13 @@ public class FileIo {
         return;
       }
       if (!Files.isWritable(path)) {
-        Dialogs.showError("File not writable", "Cannot write to " + path + ".");
+        ErrorHandler.showError("File not writable", "Cannot write to " + path + ".");
         return;
       }
       try {
         write.write(Files.newOutputStream(path));
       } catch (IOException ex) {
-        ErrorHandler.handle("Could not export file", ex);
+        ErrorHandler.handleException("Could not export file", ex);
       }
     }
   }

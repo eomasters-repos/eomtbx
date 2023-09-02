@@ -44,8 +44,9 @@ import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableModel;
 import net.miginfocom.swing.MigLayout;
 import org.eomasters.eomtbx.utils.MultiLineText;
-import org.eomasters.eomtbx.utils.ProductSelectionDialog.ProductSelection;
 import org.eomasters.eomtbx.utils.ProductSelectionDialog;
+import org.eomasters.eomtbx.utils.ProductSelectionDialog.ProductSelection;
+import org.eomasters.eomtbx.utils.TablePasteAdapter;
 import org.esa.snap.core.datamodel.Band;
 import org.esa.snap.core.datamodel.FlagCoding;
 import org.esa.snap.core.datamodel.IndexCoding;
@@ -72,7 +73,6 @@ class WvlEditorDialog extends ModalDialog {
   }
 
   private JPanel createContentPanel() {
-    JPanel panel = new JPanel(new BorderLayout());
     JPanel headerPanel = new JPanel(new MigLayout("top, left, gap 5", "[][fill, grow]"));
     headerPanel.add(new JLabel("Product:"));
     JTextField productNameField = new JTextField(refProduct.getDisplayName());
@@ -80,17 +80,20 @@ class WvlEditorDialog extends ModalDialog {
     headerPanel.add(productNameField);
 
     JTable table = createTable();
+    table.requestFocusInWindow();
     JScrollPane scrollPane = new JScrollPane(table);
     scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
     scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
     scrollPane.setPreferredSize(new Dimension(300, 400));
 
+    JPanel panel = new JPanel(new BorderLayout());
     panel.add(headerPanel, BorderLayout.NORTH);
     panel.add(scrollPane, BorderLayout.CENTER);
 
     if (!additionalProducts.isEmpty()) {
       JPanel footerPanel = new JPanel(new MigLayout("fillx,  bottom"));
-      JLabel note = new JLabel("<html><b>Note:</b> Wavelength properties are only editable for bands without sample coding.");
+      JLabel note = new JLabel(
+          "<html><b>Note:</b> Wavelength properties are only editable for bands without sample coding.");
       note.setFont(note.getFont().deriveFont(Font.PLAIN));
       footerPanel.add(note, "span 2, growx, gapbottom 10, left, wrap");
 
@@ -118,6 +121,8 @@ class WvlEditorDialog extends ModalDialog {
   private JTable createTable() {
     TableModel tableModel = new WvlEditorTableModel(refProduct);
     JTable table = new JTable(tableModel);
+    table.addKeyListener(new TablePasteAdapter(table));
+    table.setCellSelectionEnabled(true);
     table.setFillsViewportHeight(true);
     TableColumnModel columnModel = table.getColumnModel();
     TableCellRenderer renderer = new DisablingCellRenderer();
@@ -183,9 +188,9 @@ class WvlEditorDialog extends ModalDialog {
     @Override
     public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
         int row, int column) {
+      boolean cellEditable = table.isCellEditable(row, column);
       Component renderer = new DefaultTableCellRenderer().getTableCellRendererComponent(table, value, isSelected,
           hasFocus, row, column);
-      boolean cellEditable = table.isCellEditable(row, column);
       renderer.setEnabled(cellEditable);
       if (renderer instanceof JLabel) {
         ((JLabel) renderer).setHorizontalAlignment(JLabel.RIGHT);
