@@ -78,7 +78,7 @@ class ActionRefCollector {
 
         }
       } catch (Exception e) {
-        ErrorHandler.handleException("Error while collecting actions for " + QuickMenuAction.QUICK_MENU_NAME, e);
+        ErrorHandler.handleUnexpectedExcpetion("Error while collecting actions for " + QuickMenuAction.QUICK_MENU_NAME, e);
       }
     }
     return actionRefs;

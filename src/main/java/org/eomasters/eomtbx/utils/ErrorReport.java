@@ -32,6 +32,7 @@ import java.util.Comparator;
 import java.util.Map;
 import java.util.Properties;
 import java.util.prefs.Preferences;
+import org.esa.snap.core.datamodel.Product;
 import org.esa.snap.core.datamodel.ProductManager;
 import org.esa.snap.core.util.SystemUtils;
 import org.esa.snap.rcp.SnapApp;
@@ -121,15 +122,18 @@ public class ErrorReport {
 
   private static void addProductList(StringBuilder report) {
     ProductManager productManager = SnapApp.getDefault().getProductManager();
-    String[] productNames = productManager.getProductNames();
-    if (productNames.length > 0) {
-      report.append("Open Products:\n");
-      for (int i = 0; i < productNames.length; i++) {
-        String productName = productNames[i];
-        report.append(String.format("(%d) ", i)).append(productName).append("\n");
+    Product[] products = productManager.getProducts();
+    report.append("Open Products:\n");
+    if (products.length > 0) {
+      for (int i = 0; i < products.length; i++) {
+        String productName = products[i].getDisplayName();
+        report.append(String.format("(%d) %s%n", i, productName));
+        report.append(String.format("\t%s%n", products[i].getFileLocation().toPath().toAbsolutePath()));
       }
-      report.append("\n\n");
+    } else {
+      report.append("No products open.\n");
     }
+    report.append("\n\n");
   }
 
   private static long toMib(long memory) {

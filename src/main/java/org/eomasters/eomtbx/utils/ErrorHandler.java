@@ -67,7 +67,7 @@ public class ErrorHandler {
    * @param message the error message
    */
   public static void showError(String title, String message) {
-    SystemUtils.LOG.log(Level.WARNING, message);
+    SystemUtils.LOG.log(Level.WARNING, String.format("%s: %s", title, message));
     if (isHeadless()) {
       return;
     }
@@ -81,7 +81,7 @@ public class ErrorHandler {
    * @param message   the error message
    * @param exception the cause exception
    */
-  public static void showError(String title, String message, Throwable exception) {
+  public static void showError(String title, String message, Exception exception) {
     SystemUtils.LOG.log(Level.WARNING, message, exception);
     if (isHeadless()) {
       return;
@@ -103,7 +103,7 @@ public class ErrorHandler {
    * @param message   the message
    * @param exception the throwable
    */
-  public static void handleException(String message, Throwable exception) {
+  public static void handleUnexpectedExcpetion(String message, Throwable exception) {
     SystemUtils.LOG.log(Level.SEVERE, message, exception);
     if (isHeadless()) {
       return;
@@ -141,6 +141,11 @@ public class ErrorHandler {
 
     JDialog dialog = new JDialog();
 
+    close.addActionListener(e -> {
+      dialog.setVisible(false);
+      dialog.dispose();
+    });
+
     dialog.setTitle(title);
     dialog.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     dialog.setLocationRelativeTo(null);
@@ -148,8 +153,6 @@ public class ErrorHandler {
     dialog.setModalityType(JDialog.ModalityType.APPLICATION_MODAL);
     dialog.pack();
     dialog.setVisible(true);
-
-    close.addActionListener(e -> dialog.dispose());
   }
 
   private static JButton createMailButton() {
@@ -240,9 +243,9 @@ public class ErrorHandler {
       extendedErrorDialog.addActionListener(
           e -> ErrorHandler.showError("Title", "An error occurred.",
               new Exception("Test", new Exception("theCause"))));
-      JButton openErrorHandler = new JButton("Open Exception Handler");
+      JButton openErrorHandler = new JButton("Show Exception Handler");
       openErrorHandler.addActionListener(
-          e -> ErrorHandler.handleException("Test", new Exception("Test", new Exception("theCause"))));
+          e -> ErrorHandler.handleUnexpectedExcpetion("Test", new Exception("Test", new Exception("theCause"))));
       container.add(errorDialog);
       container.add(extendedErrorDialog);
       container.add(openErrorHandler);
@@ -270,7 +273,7 @@ public class ErrorHandler {
     @Override
     public void actionPerformed(ActionEvent e) {
       Exception test = new Exception("Test", new Exception("theCause"));
-      ErrorHandler.handleException("Test", test);
+      ErrorHandler.handleUnexpectedExcpetion("Test", test);
     }
   }
 

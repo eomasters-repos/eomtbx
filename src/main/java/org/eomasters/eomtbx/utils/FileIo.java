@@ -124,13 +124,13 @@ public class FileIo {
     if (returnVal == JFileChooser.APPROVE_OPTION) {
       Path path = fileChooser.getSelectedFile().toPath();
       if (!Files.isReadable(path)) {
-        ErrorHandler.showError("File not readable", "The file with the path " + path + " is not readable.");
+        ErrorHandler.showError(title, "The file with the path " + path + " is not readable.");
         return;
       }
       try {
         read.read(Files.newInputStream(path));
       } catch (IOException ex) {
-        ErrorHandler.handleException("Could not import file", ex);
+        ErrorHandler.showError(title, "Could not import file", ex);
       }
     }
   }
@@ -146,18 +146,13 @@ public class FileIo {
     int returnVal = fileChooser.showSaveDialog(parent);
     if (returnVal == JFileChooser.APPROVE_OPTION) {
       Path path = ensureFileExtension(fileChooser.getSelectedFile().toPath(), fileChooser.getFileFilter());
-      if (Files.exists(path) && !Dialogs.requestOverwriteDecision("File already exists",
-          path.toFile())) {
-        return;
-      }
-      if (!Files.isWritable(path)) {
-        ErrorHandler.showError("File not writable", "Cannot write to " + path + ".");
+      if (!validatePath(path)) {
         return;
       }
       try {
         write.write(Files.newOutputStream(path));
       } catch (IOException ex) {
-        ErrorHandler.handleException("Could not export file", ex);
+        ErrorHandler.showError(title, "Could not export file", ex);
       }
     }
   }
@@ -177,6 +172,34 @@ public class FileIo {
       fileChooser.setSelectedFile(new File(fileChooser.getCurrentDirectory(), fileName));
     }
     return fileChooser;
+  }
+
+  private boolean validatePath(Path path) {
+    if (Files.exists(path) && !Dialogs.requestOverwriteDecision("File already exists",
+        path.toFile())) {
+      return false;
+    }
+    if (!Files.exists(path.getParent())) {
+      try {
+        Files.createDirectories(path.getParent());
+      } catch (IOException e) {
+        ErrorHandler.showError(title, "Could not create directory", e);
+        return false;
+      }
+    }
+    if (!Files.exists(path)) {
+      try {
+        Files.createFile(path);
+      } catch (IOException e) {
+        ErrorHandler.showError(title, "Could not create file", e);
+        return false;
+      }
+    }
+    if (!Files.isWritable(path)) {
+      ErrorHandler.showError(title, "Cannot write to " + path + ".");
+      return false;
+    }
+    return true;
   }
 
   /**
