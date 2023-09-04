@@ -47,7 +47,9 @@ import org.openide.util.NbBundle;
 )
 @ActionReferences({
     @ActionReference(path = "Menu/Optical", position = 5),
-    @ActionReference(path = "Context/Product/Product", position = 55),
+    // [cut,copy,paste,delete] are from 500 to 540 and Properties is at 710, separator-before is at 700
+    // But the action is show before anyway
+    @ActionReference(path = "Context/Product/Product", position = 1010, separatorBefore = 1000),
 })
 @NbBundle.Messages({
     "CTL_WvlEditorAction_MenuText=Modify Wavelengths...",

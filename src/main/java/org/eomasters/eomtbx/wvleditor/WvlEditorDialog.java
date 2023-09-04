@@ -29,6 +29,7 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Frame;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -41,7 +42,6 @@ import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumnModel;
-import javax.swing.table.TableModel;
 import net.miginfocom.swing.MigLayout;
 import org.eomasters.eomtbx.utils.MultiLineText;
 import org.eomasters.eomtbx.utils.ProductSelectionDialog;
@@ -59,6 +59,7 @@ class WvlEditorDialog extends ModalDialog {
   public static final String HID_EOMTBX_WvlEditor = "hid_eomtbx.WvlEditor";
   private final Product refProduct;
   private final List<ProductSelection> additionalProducts = new ArrayList<>();
+  private final WvlEditorTableModel tableModel;
 
 
   /**
@@ -70,6 +71,7 @@ class WvlEditorDialog extends ModalDialog {
   public WvlEditorDialog(Frame parent, Product reference) {
     super(parent, "Wavelength Editor", ModalDialog.ID_OK_CANCEL_HELP, HID_EOMTBX_WvlEditor);
     refProduct = reference;
+    tableModel = new WvlEditorTableModel(refProduct);
   }
 
   private JPanel createContentPanel() {
@@ -119,7 +121,6 @@ class WvlEditorDialog extends ModalDialog {
   }
 
   private JTable createTable() {
-    TableModel tableModel = new WvlEditorTableModel(refProduct);
     JTable table = new JTable(tableModel);
     table.addKeyListener(new TablePasteAdapter(table));
     table.setCellSelectionEnabled(true);
@@ -144,12 +145,30 @@ class WvlEditorDialog extends ModalDialog {
   }
 
   @Override
-  protected boolean verifyUserInput() {
-    return super.verifyUserInput();
-  }
-
-  @Override
   protected void onOK() {
+    List<ProductSelection> applyToProduct = new ArrayList<>();
+    Collections.copy(additionalProducts, applyToProduct);
+    applyToProduct.add(0, new ProductSelection(refProduct, true));
+    int rowCount = tableModel.getRowCount();
+
+    for (ProductSelection productSelection : applyToProduct) {
+      if (!productSelection.isSelected()) {
+        continue;
+      }
+      Product product = productSelection.getProduct();
+      for (int i = 0; i < rowCount; i++) {
+        if (!tableModel.isRowEditable(i)) {
+          continue;
+        }
+        String bandName = (String) tableModel.getValueAt(i, 0);
+        int spectralIndex = (int) tableModel.getValueAt(i, 1);
+        float wavelength = (float) tableModel.getValueAt(i, 2);
+        float bandwidth = (float) tableModel.getValueAt(i, 3);
+        product.getBand(bandName).setSpectralBandIndex(spectralIndex);
+        product.getBand(bandName).setSpectralWavelength(wavelength);
+        product.getBand(bandName).setSpectralBandwidth(bandwidth);
+      }
+    }
     super.onOK();
   }
 

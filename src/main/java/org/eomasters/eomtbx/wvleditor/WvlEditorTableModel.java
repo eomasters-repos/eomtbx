@@ -29,7 +29,7 @@ import org.esa.snap.core.datamodel.Product;
 
 class WvlEditorTableModel extends AbstractTableModel {
 
-  private static final String[] COLUMN_NAMES = {"Band", "Band Index", "Wavelength", "Bandwidth"};
+  private static final String[] COLUMN_NAMES = {"Band", "Spectral Band Index", "Wavelength", "Bandwidth"};
   private static final Class<?>[] COLUMN_CLASSES = {String.class, Integer.class, Float.class, Float.class};
 
   private final Object[][] data;
@@ -53,6 +53,10 @@ class WvlEditorTableModel extends AbstractTableModel {
   @Override
   public int getRowCount() {
     return data.length;
+  }
+
+  public boolean isRowEditable(int row) {
+    return editable[row];
   }
 
   @Override
