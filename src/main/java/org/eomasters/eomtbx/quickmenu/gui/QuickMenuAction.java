@@ -117,7 +117,8 @@ public class QuickMenuAction extends AbstractAction implements Presenter.Toolbar
 
     menu.removeAll();
     if (actions.isEmpty()) {
-      JMenuItem menuItem = new JMenuItem("<No Quick Actions yet");
+      JMenuItem menuItem = new JMenuItem("<No Quick Actions yet>");
+      menuItem.setToolTipText("Please use the menu to fill Quick Menu");
       menuItem.setEnabled(false);
       menu.add(menuItem);
     } else {
