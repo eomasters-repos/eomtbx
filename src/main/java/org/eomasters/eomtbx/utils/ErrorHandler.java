@@ -26,14 +26,11 @@ package org.eomasters.eomtbx.utils;
 import java.awt.Container;
 import java.awt.Desktop;
 import java.awt.Font;
-import java.awt.Toolkit;
-import java.awt.datatransfer.StringSelection;
 import java.awt.event.ActionEvent;
-import java.io.PrintWriter;
-import java.io.StringWriter;
-import java.nio.charset.StandardCharsets;
-import java.time.Clock;
+import java.io.IOException;
 import java.time.Instant;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import java.util.logging.Level;
 import javax.swing.AbstractAction;
@@ -43,13 +40,13 @@ import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
-import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingUtilities;
 import net.miginfocom.swing.MigLayout;
+import org.eomasters.eomtbx.EomToolbox;
+import org.eomasters.eomtbx.utils.FileSharingService.UploadResponse;
 import org.esa.snap.core.util.SystemUtils;
-import org.esa.snap.rcp.util.Dialogs;
+import org.hsqldb.lib.StringInputStream;
 import org.openide.awt.ActionID;
 import org.openide.awt.ActionReference;
 import org.openide.awt.ActionRegistration;
@@ -66,9 +63,9 @@ public class ErrorHandler {
    * @param title   the title
    * @param message the error message
    */
-  public static void showError(String title, String message) {
+  public static void handleError(String title, String message) {
     SystemUtils.LOG.log(Level.WARNING, String.format("%s: %s", title, message));
-    if (isHeadless()) {
+    if (EomToolbox.isHeadless()) {
       return;
     }
     Dialogs.showError(title, message);
@@ -81,19 +78,12 @@ public class ErrorHandler {
    * @param message   the error message
    * @param exception the cause exception
    */
-  public static void showError(String title, String message, Exception exception) {
+  public static void handleError(String title, String message, Exception exception) {
     SystemUtils.LOG.log(Level.WARNING, message, exception);
-    if (isHeadless()) {
+    if (EomToolbox.isHeadless()) {
       return;
     }
-    JPanel messagePanel = new JPanel(new MigLayout("top, left, fillx, gap 5 5"));
-    messagePanel.add(new JLabel(message), "wrap");
-    StringWriter stringWriter = new StringWriter();
-    exception.printStackTrace(new PrintWriter(stringWriter));
-    CollapsiblePanel detailsArea = addDetailsArea(messagePanel, "Details", stringWriter.toString());
-    messagePanel.add(detailsArea, "top, left, grow, wrap");
-    messagePanel.doLayout();
-    showDialog(messagePanel, title, false);
+    Dialogs.showError(title, message, exception);
   }
 
   /**
@@ -103,9 +93,9 @@ public class ErrorHandler {
    * @param message   the message
    * @param exception the throwable
    */
-  public static void handleUnexpectedExcpetion(String message, Throwable exception) {
+  public static void handleUnexpectedException(String message, Throwable exception) {
     SystemUtils.LOG.log(Level.SEVERE, message, exception);
-    if (isHeadless()) {
+    if (EomToolbox.isHeadless()) {
       return;
     }
 
@@ -120,33 +110,27 @@ public class ErrorHandler {
         "Sorry, this should not have happened. Please help to fix this problem and report the issue to EOMasters.\n");
     contentPane.add(headerText, "top, left, growx, wmin 10, wrap");
 
-    ErrorReport errorReport = new ErrorReport(message, exception);
-    CollapsiblePanel reportArea = addDetailsArea(contentPane, "Error Report Preview", errorReport.generate());
+    ErrorReport errorReport = new ErrorReport("EOMTBX_Error_Report", message, exception);
+    CollapsiblePanel reportArea = CollapsiblePanel.createLongTextPanel("Error Report Preview", errorReport.getReport());
     contentPane.add(reportArea, "top, left, grow, wrap");
 
-    showDialog(contentPane, "Error", true);
+    showDialog(contentPane, errorReport);
   }
 
-  private static void showDialog(JPanel contentPane, String title, boolean showMailBtn) {
-    if (showMailBtn) {
-      JButton byMail = createMailButton();
-      byMail.requestFocusInWindow();
-      contentPane.add(byMail, "right");
-    }
+  private static void showDialog(JPanel contentPane, ErrorReport errorReport) {
+    JButton byMail = createMailButton(errorReport);
+    byMail.requestFocusInWindow();
+    contentPane.add(byMail, "right");
     JButton close = new JButton("Close");
-    if (!showMailBtn) {
-      close.requestFocusInWindow();
-    }
     contentPane.add(close, "right, wrap");
 
     JDialog dialog = new JDialog();
-
     close.addActionListener(e -> {
       dialog.setVisible(false);
       dialog.dispose();
     });
 
-    dialog.setTitle(title);
+    dialog.setTitle("Unexpected Error");
     dialog.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     dialog.setLocationRelativeTo(null);
     dialog.setContentPane(contentPane);
@@ -155,73 +139,63 @@ public class ErrorHandler {
     dialog.setVisible(true);
   }
 
-  private static JButton createMailButton() {
+  private static JButton createMailButton(ErrorReport errorReport) {
     JButton byMail = new JButton("Report by Mail");
     byMail.addActionListener(e -> {
       try {
-        String bodyText = "<PLEASE ADD A BRIEF DESCRIPTION WHAT YOU DID BEFORE THE ERROR OCCURRED>\n\n"
-            + "<PLEASE PASTE IN THE ERROR REPORT HERE OR ATTACH IT AS A FILE>";
-        MailTo mailTo = new MailTo("error@eomasters.com")
-            .subject("EOMTBX Error Report")
-            .body(bodyText);
+        JPanel panel = new JPanel(new MigLayout("top, left, fillx, gap 5 5"));
+        FileSharingService sharingService = FileSharing.getService();
+        String serviceName = sharingService.getName().replace(" ", "_");
+        panel.add(new JLabel("<html>The error report will be uploaded to the " + serviceName
+            + " file sharing service and linked in the e-mail.<br>" + "Please note the <b>"
+            + "Terms of Service</b> and the <b>Privacy Policy</b>.<br>"), "top, left, wrap");
+        JButton tosBtn = new JButton("Open Terms of Service");
+        tosBtn.addActionListener(new OpenUriAdaptor(sharingService.getTosUrl()));
+        panel.add(new JLabel(), "split 4, top, left, growx");
+        panel.add(tosBtn, "top, left");
+        JButton privacyBtn = new JButton("Open Privacy Policy");
+        privacyBtn.addActionListener(new OpenUriAdaptor(sharingService.getPrivacyUrl()));
+        panel.add(privacyBtn, "top, left");
+        panel.add(new JLabel(), "top, left, growx, wrap");
+        panel.add(new JLabel("Do you want to continue?"), "top, left, wrap");
+
+        boolean uploadAllowed = Dialogs.confirmation("Report Error", panel, "errorReportUpload." + serviceName);
+
+        String bodyText = createMailBody(errorReport, uploadAllowed, sharingService);
+        MailTo mailTo = new MailTo("error@eomasters.com").subject("EOMTBX Error Report").body(bodyText);
         Desktop.getDesktop().mail(mailTo.toUri());
       } catch (Exception ex) {
-        ErrorHandler.showError("Error opening mail client", "Could not open mail client:\n" + ex.getMessage());
+        ErrorHandler.handleError("Error opening mail client", "Could not open mail client:\n" + ex.getMessage());
       }
 
     });
     return byMail;
   }
 
-  private static CollapsiblePanel addDetailsArea(JPanel contentPane, String title, String reportText) {
-
-    JTextArea textArea = new JTextArea(reportText);
-    textArea.setColumns(70);
-    textArea.setBorder(BorderFactory.createEmptyBorder(0, 5, 0, 0));
-    textArea.setTabSize(4);
-    textArea.setEditable(false);
-    textArea.setRows(20);
-    JScrollPane scrollPane = new JScrollPane(textArea,
-        ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
-        ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-
-    JPanel reportPreview = new JPanel(new MigLayout("fill"));
-    reportPreview.add(scrollPane, "top, left, grow, wrap");
-    JButton exportBtn = createExportButton(contentPane, textArea);
-    boolean headless = isHeadless();
-    reportPreview.add(exportBtn, "top, left" + (!headless ? ", split 2" : ""));
-    if (!headless) {
-      JButton clipboardBtn = new JButton("Copy to Clipboard");
-      clipboardBtn.addActionListener(e -> {
-        StringSelection contents = new StringSelection(textArea.getText());
-        Toolkit.getDefaultToolkit().getSystemClipboard().setContents(contents, contents);
-      });
-      reportPreview.add(clipboardBtn, "top, left");
+  private static String createMailBody(ErrorReport errorReport, boolean uploadAllowed,
+      FileSharingService sharingService) throws IOException {
+    StringBuilder bodyText = new StringBuilder("<Please description briefly what you did before the error occurred. "
+        + "Screenshots help to explain your work.>\n\n");
+    if (uploadAllowed) {
+      DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("uuuuMMdd_HHmmss")
+          .withZone(ZoneId.from(ZoneOffset.UTC));
+      String reportName = errorReport.getReportName();
+      Instant created = errorReport.getCreated();
+      String fileName = String.format(reportName + "_%s.txt", timeFormatter.format(created));
+      String report = errorReport.getReport();
+      UploadResponse uploadResponse = sharingService.uploadFile(fileName, new StringInputStream(report));
+      if (uploadResponse.getStatus() != 200) {
+        ErrorHandler.handleError("Error Report",
+            "The error report could not be uploaded:\n" + uploadResponse.getStatus() + " "
+                + uploadResponse.getStatusMessage());
+        bodyText.append("<Add the error report manually by attaching it as file or pasting the text here.");
+      } else {
+        bodyText.append("The error report can be found at ").append(uploadResponse.getUrl());
+      }
+    } else {
+      bodyText.append("<Add the error report manually by attaching it as file or pasting the text here.");
     }
-
-    CollapsiblePanel collapsiblePanel = new CollapsiblePanel(title);
-    collapsiblePanel.setContent(reportPreview);
-    return collapsiblePanel;
-  }
-
-  private static JButton createExportButton(JPanel contentPane, JTextArea textArea) {
-    JButton exportBtn = new JButton("Export to File");
-    exportBtn.addActionListener(e -> {
-      FileIo exporter = new FileIo("Export Error Report");
-      exporter.setParent(contentPane);
-      Clock utcClock = Clock.systemUTC();
-      Instant now = Instant.now(utcClock);
-      DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("uuuuMMdd_HHmmss").withZone(utcClock.getZone());
-      String fileName = String.format("EOMTBX_Error_Report_%s.txt", timeFormatter.format(now));
-      exporter.setFileName(fileName);
-      exporter.setFileFilters(FileIo.createFileFilter("Report file", "txt"));
-      exporter.save(outputStream -> outputStream.write(textArea.getText().getBytes(StandardCharsets.UTF_8)));
-    });
-    return exportBtn;
-  }
-
-  private static boolean isHeadless() {
-    return System.getProperty("java.awt.headless", "false").equals("true");
+    return bodyText.toString();
   }
 
 
@@ -238,14 +212,13 @@ public class ErrorHandler {
       Container container = window.getContentPane();
       container.setLayout(new MigLayout("top, left, fillx, gap 5 5"));
       JButton errorDialog = new JButton("Show Error Dialog");
-      errorDialog.addActionListener(e -> ErrorHandler.showError("Title", "An error occurred."));
+      errorDialog.addActionListener(e -> ErrorHandler.handleError("Title", "An error occurred."));
       JButton extendedErrorDialog = new JButton("Show Extended Error Dialog");
-      extendedErrorDialog.addActionListener(
-          e -> ErrorHandler.showError("Title", "An error occurred.",
-              new Exception("Test", new Exception("theCause"))));
+      extendedErrorDialog.addActionListener(e -> ErrorHandler.handleError("Title", "An error occurred.",
+          new Exception("Test", new Exception("theCause"))));
       JButton openErrorHandler = new JButton("Show Exception Handler");
       openErrorHandler.addActionListener(
-          e -> ErrorHandler.handleUnexpectedExcpetion("Test", new Exception("Test", new Exception("theCause"))));
+          e -> ErrorHandler.handleUnexpectedException("Test", new Exception("Test", new Exception("theCause"))));
       container.add(errorDialog);
       container.add(extendedErrorDialog);
       container.add(openErrorHandler);
@@ -273,7 +246,7 @@ public class ErrorHandler {
     @Override
     public void actionPerformed(ActionEvent e) {
       Exception test = new Exception("Test", new Exception("theCause"));
-      ErrorHandler.handleUnexpectedExcpetion("Test", test);
+      ErrorHandler.handleUnexpectedException("Test", test);
     }
   }
 

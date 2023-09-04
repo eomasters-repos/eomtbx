@@ -98,7 +98,7 @@ public class EomtbxOptionsPanelController extends PropertyChangeOptionsPanelCont
     try {
       preferences.flush();
     } catch (BackingStoreException e) {
-      ErrorHandler.handleUnexpectedExcpetion("Could not store options for EOMasters Toolbox", e);
+      ErrorHandler.handleUnexpectedException("Could not store options for EOMasters Toolbox", e);
     }
 
   }

@@ -56,8 +56,11 @@ import org.openide.util.Lookup;
  */
 public class ErrorReport {
 
+  private final String reportName;
   private final String message;
   private final Throwable throwable;
+  private final String report;
+  private final Instant created;
 
   /**
    * Generates an error report instance.
@@ -65,9 +68,30 @@ public class ErrorReport {
    * @param message the message
    * @param t       the throwable
    */
-  public ErrorReport(String message, Throwable t) {
+  public ErrorReport(String name, String message, Throwable t) {
+    this.reportName = name;
     this.message = message;
     this.throwable = t;
+    Clock utcClock = Clock.systemUTC();
+    created = Instant.now(utcClock);
+    report = generate();
+  }
+
+  /**
+   * Returns the error report as String.
+   *
+   * @return the error report
+   */
+  public String getReport() {
+    return report;
+  }
+
+  public String getReportName() {
+    return reportName;
+  }
+
+  public Instant getCreated() {
+    return created;
   }
 
   private static void addEnvironmentVariables(StringBuilder report) {
@@ -108,14 +132,13 @@ public class ErrorReport {
     report.append("Installed Modules:\n");
     try {
       Collection<? extends ModuleInfo> modules = Lookup.getDefault().lookupAll(ModuleInfo.class);
-      modules.stream().sorted(Comparator.comparing((ModuleInfo o) -> o.getCodeNameBase()))
-          .forEach(info -> report.append(info.getDisplayName()).append("\n")
-              .append("\tcode name: ").append(info.getCodeNameBase()).append("\n")
-              .append("\tversion: ").append(info.getImplementationVersion()).append("\n")
-              .append("\tenabled: ").append(info.isEnabled()).append("\n"));
+      modules.stream().sorted(Comparator.comparing((ModuleInfo o) -> o.getCodeNameBase())).forEach(
+          info -> report.append(info.getDisplayName()).append("\n").append("\tcode name: ")
+              .append(info.getCodeNameBase()).append("\n").append("\tversion: ").append(info.getImplementationVersion())
+              .append("\n").append("\tenabled: ").append(info.isEnabled()).append("\n"));
     } catch (Exception e) {
-      report.append("Error while while retrieving module information:\n")
-          .append("\t").append(e.getMessage()).append("\n");
+      report.append("Error while while retrieving module information:\n").append("\t").append(e.getMessage())
+          .append("\n");
     }
     report.append("\n\n");
   }
@@ -149,7 +172,7 @@ public class ErrorReport {
    *
    * @return the error report
    */
-  public String generate() {
+  private String generate() {
     StringBuilder report = new StringBuilder("Error Report: ");
     addBasicInformation(report);
     addStackTrace(report);
@@ -194,9 +217,8 @@ public class ErrorReport {
     File[] roots = File.listRoots();
     report.append("File systems: \n");
     for (File root : roots) {
-      report.append(root.getAbsolutePath()).append(" - ")
-          .append(toGib(root.getFreeSpace())).append("/").append(toGib(root.getTotalSpace()))
-          .append(" Free/Total GiB\n");
+      report.append(root.getAbsolutePath()).append(" - ").append(toGib(root.getFreeSpace())).append("/")
+          .append(toGib(root.getTotalSpace())).append(" Free/Total GiB\n");
     }
     report.append("\n\n");
   }

@@ -124,6 +124,10 @@ public class EomToolbox {
     }
   }
 
+  public static boolean isHeadless() {
+    return System.getProperty("java.awt.headless", "false").equals("true");
+  }
+
 
   /**
    * Invoked when the application is started. Not intended to be called by clients.

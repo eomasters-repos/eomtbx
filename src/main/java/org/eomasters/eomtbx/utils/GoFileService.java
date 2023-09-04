@@ -86,7 +86,7 @@ public class GoFileService implements FileSharingService {
     }
     JsonObject uploadData = uploadJson.getAsJsonObject("data");
     String downloadPage = uploadData.get("downloadPage").getAsString();
-    return new UploadResponse(200, downloadPage);
+    return new UploadResponse(200, response.statusMessage(), downloadPage);
 
   }
 }

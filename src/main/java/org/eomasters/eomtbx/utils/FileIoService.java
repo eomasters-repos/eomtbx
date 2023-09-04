@@ -72,7 +72,7 @@ public class FileIoService implements FileSharingService {
 
     String body = response.body();
     JsonObject jsonObject = new Gson().fromJson(body, JsonObject.class);
-    return new UploadResponse(response.statusCode(), jsonObject.get("link").getAsString());
+    return new UploadResponse(response.statusCode(), response.statusMessage(), jsonObject.get("link").getAsString());
   }
 
 }

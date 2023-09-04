@@ -79,7 +79,7 @@ class ActionRefCollector {
         }
       } catch (Exception e) {
         String msg = "Error while collecting actions for " + QuickMenuAction.QUICK_MENU_NAME;
-        ErrorHandler.handleUnexpectedExcpetion(msg, e);
+        ErrorHandler.handleUnexpectedException(msg, e);
       }
     }
     return actionRefs;

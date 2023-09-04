@@ -99,11 +99,11 @@ public class TablePasteAdapter extends KeyAdapter {
         return null;
       }
       if (startCol + numCols > table.getColumnCount()) {
-        ErrorHandler.showError("Cannot paste", "Cannot paste. Not enough columns in table.");
+        ErrorHandler.handleError("Cannot paste", "Cannot paste. Not enough columns in table.");
         return null;
       }
       if (startRow + lines.length > table.getRowCount()) {
-        ErrorHandler.showError("Cannot paste", "Cannot paste. Not enough rows in table.");
+        ErrorHandler.handleError("Cannot paste", "Cannot paste. Not enough rows in table.");
         return null;
       }
 
@@ -112,14 +112,14 @@ public class TablePasteAdapter extends KeyAdapter {
         for (int x = 0; x < numCols; x++) {
           int column = startCol + x;
           if (!table.getModel().isCellEditable(row, column)) {
-            ErrorHandler.showError("Cannot paste", "Cannot paste. Cell is not editable.");
+            ErrorHandler.handleError("Cannot paste", "Cannot paste. Cell is not editable.");
             return null;
           }
         }
       }
       return lines;
     } catch (UnsupportedFlavorException | IOException ex) {
-      ErrorHandler.showError("Cannot paste", "Invalid clipboard content.", ex);
+      ErrorHandler.handleError("Cannot paste", "Invalid clipboard content.", ex);
     }
     return null;
   }

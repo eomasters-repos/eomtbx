@@ -90,16 +90,19 @@ public interface FileSharingService {
 
     // The properties of the response
     private final int status;
+    private final String statusMessage;
     private final String url;
 
     /**
      * Creates a new UploadResponse with the given status and url.
      *
-     * @param status the status
-     * @param url    the url
+     * @param status  the status
+     * @param message the status message
+     * @param url     the url
      */
-    public UploadResponse(int status, String url) {
+    public UploadResponse(int status, String message, String url) {
       this.status = status;
+      this.statusMessage = message;
       this.url = url;
     }
 
@@ -112,6 +115,9 @@ public interface FileSharingService {
       return status;
     }
 
+    public String getStatusMessage() {
+      return statusMessage;
+    }
 
     /**
      * Returns the url of the response.

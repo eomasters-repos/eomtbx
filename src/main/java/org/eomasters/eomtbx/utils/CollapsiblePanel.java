@@ -25,15 +25,24 @@ package org.eomasters.eomtbx.utils;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.awt.Window;
+import java.awt.datatransfer.StringSelection;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.nio.charset.StandardCharsets;
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingUtilities;
 import net.miginfocom.swing.MigLayout;
+import org.eomasters.eomtbx.EomToolbox;
 
 /**
  * A collapsible panel. The component set by {@link #setContent(JComponent)} is collapsed when clicked on the title.
@@ -81,21 +90,34 @@ public class CollapsiblePanel extends JPanel {
     collapse(true);
   }
 
-  /**
-   * Main method for testing.
-   *
-   * @param args the command line arguments
-   */
-  public static void main(String[] args) {
-    JFrame frame = new JFrame("Collapsible Panel Example");
-    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+  static CollapsiblePanel createLongTextPanel(String title, String text) {
 
-    CollapsiblePanel panel = new CollapsiblePanel("Title");
-    panel.setContent(new JLabel("Content"));
-    frame.getContentPane().add(panel);
+    JTextArea textArea = new JTextArea(text);
+    textArea.setColumns(70);
+    textArea.setBorder(BorderFactory.createEmptyBorder(0, 5, 0, 0));
+    textArea.setTabSize(4);
+    textArea.setEditable(false);
+    textArea.setRows(20);
+    JScrollPane scrollPane = new JScrollPane(textArea, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
+        ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 
-    frame.pack();
-    frame.setVisible(true);
+    JPanel reportPreview = new JPanel(new MigLayout("fill"));
+    reportPreview.add(scrollPane, "top, left, grow, wrap");
+    CollapsiblePanel collapsiblePanel = new CollapsiblePanel(title);
+    JButton exportBtn = createExportButton(collapsiblePanel, textArea);
+    boolean headless = EomToolbox.isHeadless();
+    reportPreview.add(exportBtn, "top, left" + (!headless ? ", split 2" : ""));
+    if (!headless) {
+      JButton clipboardBtn = new JButton("Copy to Clipboard");
+      clipboardBtn.addActionListener(e -> {
+        StringSelection contents = new StringSelection(textArea.getText());
+        Toolkit.getDefaultToolkit().getSystemClipboard().setContents(contents, contents);
+      });
+      reportPreview.add(clipboardBtn, "top, left");
+    }
+
+    collapsiblePanel.setContent(reportPreview);
+    return collapsiblePanel;
   }
 
   /**
@@ -132,7 +154,35 @@ public class CollapsiblePanel extends JPanel {
     revalidate();
   }
 
+  private static JButton createExportButton(JPanel contentPane, JTextArea textArea) {
+    JButton exportBtn = new JButton("Export to File");
+    exportBtn.addActionListener(e -> {
+      FileIo exporter = new FileIo("Export Text to File");
+      exporter.setParent(contentPane);
+      exporter.setFileFilters(FileIo.createFileFilter("Text file", "txt"));
+      exporter.save(outputStream -> outputStream.write(textArea.getText().getBytes(StandardCharsets.UTF_8)));
+    });
+    return exportBtn;
+  }
+
   private int getCollapsedHeight() {
     return getInsets().top + titlePanel.getSize().height;
+  }
+
+  /**
+   * Main method for testing.
+   *
+   * @param args the command line arguments
+   */
+  public static void main(String[] args) {
+    JFrame frame = new JFrame("Collapsible Panel Example");
+    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+    CollapsiblePanel panel = new CollapsiblePanel("Title");
+    panel.setContent(new JLabel("Content"));
+    frame.getContentPane().add(panel);
+
+    frame.pack();
+    frame.setVisible(true);
   }
 }
