@@ -44,6 +44,7 @@ import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumnModel;
 import net.miginfocom.swing.MigLayout;
 import org.eomasters.eomtbx.utils.MultiLineText;
+import org.eomasters.eomtbx.utils.NumberCellEditor;
 import org.eomasters.eomtbx.utils.ProductSelectionDialog;
 import org.eomasters.eomtbx.utils.ProductSelectionDialog.ProductSelection;
 import org.eomasters.eomtbx.utils.TablePasteAdapter;
@@ -125,14 +126,17 @@ class WvlEditorDialog extends ModalDialog {
     table.addKeyListener(new TablePasteAdapter(table));
     table.setCellSelectionEnabled(true);
     table.setFillsViewportHeight(true);
+    table.setFont(table.getFont().deriveFont(table.getFont().getSize2D() * 1.1f));
     TableColumnModel columnModel = table.getColumnModel();
-    TableCellRenderer renderer = new DisablingCellRenderer();
+    TableCellRenderer renderer = new DisabledCellRenderer();
     for (int i = 0; i < table.getColumnCount(); i++) {
       if (i == 0) {
         columnModel.getColumn(i).setPreferredWidth(150); // first column is bigger
       } else {
         columnModel.getColumn(i).setCellRenderer(renderer);
         columnModel.getColumn(i).setPreferredWidth(50);
+        NumberCellEditor cellEditor = new NumberCellEditor((Class<? extends Number>) tableModel.getColumnClass(i));
+        columnModel.getColumn(i).setCellEditor(cellEditor);
       }
     }
     return table;
@@ -202,19 +206,18 @@ class WvlEditorDialog extends ModalDialog {
     return reference;
   }
 
-  private static class DisablingCellRenderer implements TableCellRenderer {
+  private static class DisabledCellRenderer extends DefaultTableCellRenderer {
 
     @Override
     public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
         int row, int column) {
-      boolean cellEditable = table.isCellEditable(row, column);
-      Component renderer = new DefaultTableCellRenderer().getTableCellRendererComponent(table, value, isSelected,
-          hasFocus, row, column);
-      renderer.setEnabled(cellEditable);
-      if (renderer instanceof JLabel) {
-        ((JLabel) renderer).setHorizontalAlignment(JLabel.RIGHT);
+      Component rendererComponent = super.getTableCellRendererComponent(table, value, isSelected, hasFocus,
+          row, column);
+      rendererComponent.setEnabled(table.isCellEditable(row, column));
+      if (rendererComponent instanceof JLabel) {
+        ((JLabel) rendererComponent).setHorizontalAlignment(JLabel.RIGHT);
       }
-      return renderer;
+      return rendererComponent;
     }
   }
 
