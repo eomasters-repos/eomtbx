@@ -57,6 +57,11 @@
     </dependency>
 
     <dependency>
+      <groupId>eu.esa.snap.netbeans</groupId>
+      <artifactId>snap-gui-lib</artifactId>
+      <version>1.2.0</version>
+    </dependency>
+    <dependency>
       <groupId>org.esa.snap</groupId>
       <artifactId>snap-tango</artifactId>
       <version>${snap.version}</version>
