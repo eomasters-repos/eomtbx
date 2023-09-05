@@ -23,6 +23,12 @@
 
 package org.eomasters.eomtbx.wvleditor;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
 import javax.swing.table.AbstractTableModel;
 import org.esa.snap.core.datamodel.Band;
 import org.esa.snap.core.datamodel.Product;
@@ -36,7 +42,12 @@ class WvlEditorTableModel extends AbstractTableModel {
   private final boolean[] editable;
 
   public WvlEditorTableModel(Product refProduct) {
-    String[] bandNames = refProduct.getBandNames();
+    String[] bandNames;
+    if (refProduct.getAutoGrouping() != null) {
+      bandNames = sortBandNames(refProduct.getBandNames(), refProduct.getAutoGrouping()::indexOf);
+    } else {
+      bandNames = sortBandNames(refProduct.getBandNames(), s -> s.replaceAll("[0-9]", ""));
+    }
     editable = new boolean[bandNames.length];
     data = new Object[bandNames.length][COLUMN_NAMES.length];
     for (int i = 0; i < bandNames.length; i++) {
@@ -49,6 +60,23 @@ class WvlEditorTableModel extends AbstractTableModel {
       editable[i] = band.getSampleCoding() == null;
     }
   }
+
+  static String[] sortBandNames(String[] bandNames, Function<String, Object> genKey) {
+    Map<Object, List<String>> map = new LinkedHashMap<>();
+    for (String bandName : bandNames) {
+      Object key = genKey.apply(bandName);
+      if (map.containsKey(key)) {
+        map.get(key).add(bandName);
+      } else {
+        List<String> list = new ArrayList<>();
+        list.add(bandName);
+        map.put(key, list);
+      }
+    }
+    Collection<List<String>> values = map.values();
+    return values.stream().flatMap(Collection::stream).toArray(String[]::new);
+  }
+
 
   @Override
   public int getRowCount() {
