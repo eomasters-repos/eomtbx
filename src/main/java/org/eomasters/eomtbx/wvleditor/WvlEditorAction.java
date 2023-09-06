@@ -39,7 +39,7 @@ import org.openide.util.NbBundle;
 /**
  * Action to open the Wavelength Editor.
  */
-@ActionID(category = "View", id = "EOM_WvlEditorAction")
+@ActionID(category = "View", id = "EOMTBX_WvlEditorAction")
 @ActionRegistration(
     displayName = "#CTL_WvlEditorAction_MenuText",
     popupText = "#CTL_WvlEditorAction_MenuText",

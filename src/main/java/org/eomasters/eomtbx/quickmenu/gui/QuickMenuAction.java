@@ -47,7 +47,7 @@ import org.openide.util.actions.Presenter;
 /**
  * The class inserts the QuickMenu into the menu bar.
  */
-@ActionID(category = "EOM", id = "EOM_QuickMenu")
+@ActionID(category = "EOM", id = "EOMTBX_QuickMenu")
 @ActionRegistration(displayName = "#CTL_QuickMenuActionName", lazy = false)
 // File is 100, Edit is 200, Tools is 600
 @ActionReference(path = "Menu", position = 580)
