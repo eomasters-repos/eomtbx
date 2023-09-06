@@ -26,14 +26,12 @@ package org.eomasters.eomtbx.utils;
 import java.awt.Container;
 import java.awt.Desktop;
 import java.awt.Font;
-import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.time.Instant;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import java.util.logging.Level;
-import javax.swing.AbstractAction;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -47,10 +45,6 @@ import org.eomasters.eomtbx.EomToolbox;
 import org.eomasters.eomtbx.utils.FileSharingService.UploadResponse;
 import org.esa.snap.core.util.SystemUtils;
 import org.hsqldb.lib.StringInputStream;
-import org.openide.awt.ActionID;
-import org.openide.awt.ActionReference;
-import org.openide.awt.ActionRegistration;
-import org.openide.util.NbBundle;
 
 /**
  * Handles errors.
@@ -227,27 +221,28 @@ public class ErrorHandler {
     });
   }
 
-  /**
-   * Action that opens the error handler.
-   */
-  @ActionID(category = "Help", id = "EOM_ErrorHandler")
-  @ActionRegistration(displayName = "#CTL_ErrorHandlerActionName", lazy = false)
-  @ActionReference(path = "Menu/Help", position = 10)
-  @NbBundle.Messages({"CTL_ErrorHandlerActionName=Error Handler"})
-  public static class Action extends AbstractAction {
-
-    /**
-     * Creates a new Action.
-     */
-    public Action() {
-      super(Bundle.CTL_ErrorHandlerActionName());
-    }
-
-    @Override
-    public void actionPerformed(ActionEvent e) {
-      Exception test = new Exception("Test", new Exception("theCause"));
-      ErrorHandler.handleUnexpectedException("Test", test);
-    }
-  }
+  // USED FOR DEBUGGING AND TESTING
+  // /**
+  //  * Action that opens the error handler.
+  //  */
+  // @ActionID(category = "Help", id = "EOMTBX_ErrorHandler")
+  // @ActionRegistration(displayName = "#CTL_ErrorHandlerActionName", lazy = false)
+  // @ActionReference(path = "Menu/Help", position = 10)
+  // @NbBundle.Messages({"CTL_ErrorHandlerActionName=Error Handler"})
+  // public static class ErrorHandlerAction extends AbstractAction {
+  //
+  //   /**
+  //    * Creates a new Action.
+  //    */
+  //   public ErrorHandlerAction() {
+  //     super(Bundle.CTL_ErrorHandlerActionName());
+  //   }
+  //
+  //   @Override
+  //   public void actionPerformed(ActionEvent e) {
+  //     Exception test = new Exception("Test", new Exception("theCause"));
+  //     ErrorHandler.handleUnexpectedException("Test", test);
+  //   }
+  // }
 
 }
