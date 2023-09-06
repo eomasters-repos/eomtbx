@@ -60,7 +60,7 @@ import org.openide.util.Lookup;
 )
 public class EomtbxOptionsPanelController extends PropertyChangeOptionsPanelController {
 
-  public static final String HID_EOMTBX_OPTIONS = "hid_eomtbx.options";
+  public static final String HID_EOMTBX_PREFERENCES = "eomtbxPreferences";
   private static final FileFilter PREFERENCES_FILE_FILTER = FileIo.createFileFilter("Preferences file", "prefs");
   private final List<OptionsPanelController> subControllers;
   private final Preferences preferences = EomToolbox.getPreferences();
@@ -167,7 +167,7 @@ public class EomtbxOptionsPanelController extends PropertyChangeOptionsPanelCont
 
   @Override
   public HelpCtx getHelpCtx() {
-    return new HelpCtx(HID_EOMTBX_OPTIONS);
+    return new HelpCtx(HID_EOMTBX_PREFERENCES);
   }
 
   @Override

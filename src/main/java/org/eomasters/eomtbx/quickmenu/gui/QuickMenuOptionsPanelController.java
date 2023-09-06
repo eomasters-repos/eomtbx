@@ -42,7 +42,7 @@ import org.openide.util.Lookup;
  */
 public class QuickMenuOptionsPanelController extends PropertyChangeOptionsPanelController {
 
-  public static final String HID_EOMTBX_QUICKMENU = "HID_EOMTBX_QUICKMENU";
+  public static final String HID_EOMTBX_QUICKMENU = "eomtbxQuickMenu";
   private JPanel mainPanel;
   private QuickMenuOptions currentOptions;
   private QuickMenuOptions backup;
