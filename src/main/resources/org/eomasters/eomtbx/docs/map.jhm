@@ -4,7 +4,8 @@
   "http://java.sun.com/products/javahelp/map_2_0.dtd">
 
 <map version="2.0">
-  <mapID target="eomtbxQuickMenu" url="pages/Intro.html"/>
+  <mapID target="eomtbxIntro" url="pages/Intro.html"/>
+  <mapID target="eomtbxQuickMenu" url="pages/QuickMenu.html"/>
   <mapID target="eomtbxBatchGPT" url="pages/BatchGpt.html"/>
   <mapID target="eomtbxBMExtensions" url="pages/BMExtensions.html"/>
   <mapID target="eomtbxWvlEditor" url="pages/WvlEditor.html"/>

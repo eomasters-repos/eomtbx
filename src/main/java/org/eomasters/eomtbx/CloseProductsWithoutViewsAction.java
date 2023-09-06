@@ -45,12 +45,12 @@ import org.openide.util.NbBundle;
  * Action which closes all products which are not used by an opened scene view.
  */
 @ActionID(category = "File", id = "EOMTBX_CloseProductsWithoutViewsAction")
-@ActionRegistration(displayName = "#CTL_CloseProductsWithoutViewsActionName", lazy = false)
+@ActionRegistration(displayName = "#CloseProductsWithoutViewsActionName", lazy = false)
 
 @ActionReferences({
     @ActionReference(path = "Menu/File", position = 31), // 31 is after "Close Other Products"
     @ActionReference(path = "Context/Product/Product", position = 81)}) // 81 is after "Close Other Product"
-@NbBundle.Messages({"CTL_CloseProductsWithoutViewsActionName=Close Products without a View"})
+@NbBundle.Messages({"CloseProductsWithoutViewsActionName=Close Products Without a View"})
 public final class CloseProductsWithoutViewsAction extends AbstractAction {
 
   public CloseProductsWithoutViewsAction() {
