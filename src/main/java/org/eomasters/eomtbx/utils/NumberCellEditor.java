@@ -9,12 +9,12 @@
  * it under the terms of the GNU General Public License as
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public
  * License along with this program.  If not, see
  * <http://www.gnu.org/licenses/gpl-3.0.html>.
@@ -31,10 +31,18 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
 
+/**
+ * A cell editor for numbers. If the input is not of type number the cell border is set to red.
+ */
 public class NumberCellEditor extends DefaultCellEditor {
 
   private final Class<? extends Number> numberClass;
 
+  /**
+   * Creates a new cell editor for numbers.
+   *
+   * @param numberClass the number class the input text needs to be compatible with
+   */
   public NumberCellEditor(Class<? extends Number> numberClass) {
     super(new JTextField());
     this.numberClass = numberClass;

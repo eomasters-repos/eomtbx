@@ -53,10 +53,13 @@ import org.openide.util.NbBundle;
 @NbBundle.Messages({"CloseProductsWithoutViewsActionName=Close Products Without a View"})
 public final class CloseProductsWithoutViewsAction extends AbstractAction {
 
+  /**
+   * Creates a new instance of {@link CloseProductsWithoutViewsAction}.
+   */
   public CloseProductsWithoutViewsAction() {
     super(Bundle.CloseProductsWithoutViewsActionName());
     ProductManager productManager = SnapApp.getDefault().getProductManager();
-    productManager.addListener(new PMListener());
+    productManager.addListener(new ProductManagerListener());
     setEnabled(false);
   }
 
@@ -72,7 +75,7 @@ public final class CloseProductsWithoutViewsAction extends AbstractAction {
     CloseProductAction.closeProducts(collect);
   }
 
-  private class PMListener implements ProductManager.Listener {
+  private class ProductManagerListener implements ProductManager.Listener {
 
     @Override
     public void productAdded(ProductManager.Event event) {
