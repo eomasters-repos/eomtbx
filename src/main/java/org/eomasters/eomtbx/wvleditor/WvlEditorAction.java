@@ -45,11 +45,12 @@ import org.openide.util.NbBundle;
     popupText = "#CTL_WvlEditorAction_MenuText",
     iconBase = "org/eomasters/eomtbx/icons/WvlEditor_16.png"
 )
+// [cut,copy,paste,delete] are from 500 to 540 and Properties is at 710, separator-before is at 700
+// But the action is show before anyway
 @ActionReferences({
     @ActionReference(path = "Menu/Optical", position = 5),
-    // [cut,copy,paste,delete] are from 500 to 540 and Properties is at 710, separator-before is at 700
-    // But the action is show before anyway
     @ActionReference(path = "Context/Product/Product", position = 1010, separatorBefore = 1000),
+    @ActionReference(path = "Context/Product/RasterDataNode", position = 1010, separatorBefore = 1000),
 })
 @NbBundle.Messages({
     "CTL_WvlEditorAction_MenuText=Modify Wavelengths...",
