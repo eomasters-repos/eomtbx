@@ -54,7 +54,7 @@ import org.openide.util.NbBundle;
 public final class CloseProductsWithoutViewsAction extends AbstractAction {
 
   public CloseProductsWithoutViewsAction() {
-    super(Bundle.CTL_CloseProductsWithoutViewsActionName());
+    super(Bundle.CloseProductsWithoutViewsActionName());
     ProductManager productManager = SnapApp.getDefault().getProductManager();
     productManager.addListener(new PMListener());
     setEnabled(false);
