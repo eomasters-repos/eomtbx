@@ -135,6 +135,7 @@ class WvlEditorDialog extends ModalDialog {
       } else {
         columnModel.getColumn(i).setCellRenderer(renderer);
         columnModel.getColumn(i).setPreferredWidth(50);
+        //noinspection unchecked
         NumberCellEditor cellEditor = new NumberCellEditor((Class<? extends Number>) tableModel.getColumnClass(i));
         columnModel.getColumn(i).setCellEditor(cellEditor);
       }
