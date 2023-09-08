@@ -8,8 +8,9 @@
     <tocitem target="eomtbxBatchGPT" text="Batch GPT"/>
     <tocitem target="eomtbxBMExtensions" text="BandMaths Extension"/>
     <tocitem target="eomtbxWvlEditor" text="Wavelength Editor"/>
-    <tocitem target="eomtbxCloseProductNoView" text="Close products without opened scene view"/>
+    <tocitem target="eomtbxCloseProductNoView" text="Close Products without a View"/>
     <tocitem target="eomtbxViewBookmarks" text="View Bookmarks"/>
+    <tocitem target="eomtbxSystemReport" text="Create System Report"/>
     <tocitem target="eomtbxPreferences" text="Preferences Options"/>
   </tocitem>
 </toc>
