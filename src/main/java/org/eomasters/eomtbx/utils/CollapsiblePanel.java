@@ -67,7 +67,7 @@ public class CollapsiblePanel extends JPanel {
     MouseAdapter collapser = new MouseAdapter() {
       @Override
       public void mouseClicked(MouseEvent e) {
-        collapse(contentPanel.isVisible());
+        setCollapsed(contentPanel.isVisible());
       }
     };
 
@@ -87,10 +87,17 @@ public class CollapsiblePanel extends JPanel {
 
     doLayout();
 
-    collapse(true);
+    setCollapsed(true);
   }
 
-  static CollapsiblePanel createLongTextPanel(String title, String text) {
+  /**
+   * Creates a collapsible panel with a long text. And buttons to export the text to a file or the clipboard.
+   *
+   * @param title the title
+   * @param text  the long text
+   * @return the collapsible panel
+   */
+  public static CollapsiblePanel createLongTextPanel(String title, String text) {
 
     JTextArea textArea = new JTextArea(text);
     textArea.setColumns(70);
@@ -141,7 +148,12 @@ public class CollapsiblePanel extends JPanel {
     }
   }
 
-  private void collapse(boolean collapse) {
+  /**
+   * Sets the collapsed state of this panel.
+   *
+   * @param collapse true to collapse, false to expand
+   */
+  public void setCollapsed(boolean collapse) {
     if (collapse) {
       toggleLabel.setText(EXPAND_CHAR);
       contentPanel.setVisible(false);

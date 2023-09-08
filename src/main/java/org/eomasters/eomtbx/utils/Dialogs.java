@@ -43,13 +43,33 @@ public final class Dialogs {
 
 
   /**
-   * Shows an error dialog.
+   * Shows a message dialog.
    *
    * @param title   the title
    * @param message the message
    */
-  public static void showError(String title, String message) {
-    JOptionPane.showMessageDialog(null, message, title, JOptionPane.ERROR_MESSAGE);
+  public static void message(String title, String message) {
+    message(title, new JLabel(message));
+  }
+
+  /**
+   * Shows a message dialog.
+   *
+   * @param title   the title
+   * @param message the message component
+   */
+  public static void message(String title, JComponent message) {
+    JOptionPane.showMessageDialog(null, message, title, JOptionPane.PLAIN_MESSAGE);
+  }
+
+  /**
+   * Shows an error dialog.
+   *
+   * @param title   the title
+   * @param errorMessage the error message
+   */
+  public static void error(String title, String errorMessage) {
+    JOptionPane.showMessageDialog(null, errorMessage, title, JOptionPane.ERROR_MESSAGE);
   }
 
   /**
@@ -60,7 +80,7 @@ public final class Dialogs {
    * @param message   the message
    * @param exception the exception
    */
-  public static void showError(String title, String message, Exception exception) {
+  public static void error(String title, String message, Exception exception) {
     JPanel messagePanel = new JPanel(new MigLayout("top, left, fillx, gap 5 5"));
     messagePanel.add(new JLabel(message), "wrap");
     StringWriter stringWriter = new StringWriter();

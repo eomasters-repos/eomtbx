@@ -45,7 +45,7 @@ import org.openide.util.actions.Presenter;
 public final class ViewBookmarksAction extends AbstractAction implements Presenter.Toolbar, Presenter.Menu,
     Presenter.Popup {
 
-  private final static int MAX_BOOKMARKS = 7;
+  private static final int MAX_BOOKMARKS = 7;
 
   @Override
   public JMenuItem getMenuPresenter() {

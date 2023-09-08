@@ -62,7 +62,7 @@ public class ErrorHandler {
     if (EomToolbox.isHeadless()) {
       return;
     }
-    Dialogs.showError(title, message);
+    Dialogs.error(title, message);
   }
 
   /**
@@ -77,7 +77,7 @@ public class ErrorHandler {
     if (EomToolbox.isHeadless()) {
       return;
     }
-    Dialogs.showError(title, message, exception);
+    Dialogs.error(title, message, exception);
   }
 
   /**
@@ -220,29 +220,5 @@ public class ErrorHandler {
       window.setVisible(true);
     });
   }
-
-  // USED FOR DEBUGGING AND TESTING
-  // /**
-  //  * Action that opens the error handler.
-  //  */
-  // @ActionID(category = "Help", id = "EOMTBX_ErrorHandler")
-  // @ActionRegistration(displayName = "#CTL_ErrorHandlerActionName", lazy = false)
-  // @ActionReference(path = "Menu/Help", position = 10)
-  // @NbBundle.Messages({"CTL_ErrorHandlerActionName=Error Handler"})
-  // public static class ErrorHandlerAction extends AbstractAction {
-  //
-  //   /**
-  //    * Creates a new Action.
-  //    */
-  //   public ErrorHandlerAction() {
-  //     super(Bundle.CTL_ErrorHandlerActionName());
-  //   }
-  //
-  //   @Override
-  //   public void actionPerformed(ActionEvent e) {
-  //     Exception test = new Exception("Test", new Exception("theCause"));
-  //     ErrorHandler.handleUnexpectedException("Test", test);
-  //   }
-  // }
 
 }
