@@ -21,7 +21,7 @@
  * =========================LICENSE_END==================================
  */
 
-package org.eomasters.eomtbx.quickmenu.gui;
+package org.eomasters.eomtbx.quickmenu;
 
 import java.awt.Component;
 import java.awt.event.ActionEvent;
@@ -34,10 +34,6 @@ import javax.swing.AbstractAction;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.event.MouseInputAdapter;
-import org.eomasters.eomtbx.quickmenu.ActionRef;
-import org.eomasters.eomtbx.quickmenu.MenuRef;
-import org.eomasters.eomtbx.quickmenu.QuickMenu;
-import org.eomasters.eomtbx.quickmenu.SnapMenuAccessor;
 import org.openide.awt.ActionID;
 import org.openide.awt.ActionReference;
 import org.openide.awt.ActionRegistration;
@@ -48,13 +44,13 @@ import org.openide.util.actions.Presenter;
  * The class inserts the QuickMenu into the menu bar.
  */
 @ActionID(category = "EOM", id = "EOMTBX_QuickMenu")
-@ActionRegistration(displayName = "#CTL_QuickMenuActionName", lazy = false)
+@ActionRegistration(displayName = "#QuickMenuActionName", lazy = false)
 // File is 100, Edit is 200, Tools is 600
 @ActionReference(path = "Menu", position = 580)
-@NbBundle.Messages({"CTL_QuickMenuActionName=" + QuickMenuAction.QUICK_MENU_NAME})
+@NbBundle.Messages({"QuickMenuActionName=Quick Menu"})
 public class QuickMenuAction extends AbstractAction implements Presenter.Toolbar, Presenter.Menu {
 
-  public static final String QUICK_MENU_NAME = "Quick Menu";
+  public static final String QUICK_MENU_NAME = Bundle.QuickMenuActionName();
   public static final String[] SPECIAL_GROUPS = {"Export", "Import"};
 
   private final JMenu menu;
@@ -64,7 +60,7 @@ public class QuickMenuAction extends AbstractAction implements Presenter.Toolbar
    * Creates a new QuickMenuAction.
    */
   public QuickMenuAction() {
-    menu = new JMenu(Bundle.CTL_QuickMenuActionName());
+    menu = new JMenu(Bundle.QuickMenuActionName());
     menu.addMouseListener(new MenuUpdater());
     Preferences preferences = QuickMenu.getInstance().getPreferences();
     preferences.addPreferenceChangeListener(evt -> {

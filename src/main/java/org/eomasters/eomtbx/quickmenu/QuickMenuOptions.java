@@ -21,12 +21,11 @@
  * =========================LICENSE_END==================================
  */
 
-package org.eomasters.eomtbx.quickmenu.gui;
+package org.eomasters.eomtbx.quickmenu;
 
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.prefs.Preferences;
-import org.eomasters.eomtbx.quickmenu.QuickMenu;
 
 /**
  * Options for the QuickMenu.

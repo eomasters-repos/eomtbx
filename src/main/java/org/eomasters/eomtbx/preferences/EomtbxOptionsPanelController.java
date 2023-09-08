@@ -39,7 +39,7 @@ import javax.swing.filechooser.FileFilter;
 import net.miginfocom.swing.MigLayout;
 import org.eomasters.eomtbx.EomToolbox;
 import org.eomasters.eomtbx.icons.Icons;
-import org.eomasters.eomtbx.quickmenu.gui.QuickMenuOptionsPanelController;
+import org.eomasters.eomtbx.quickmenu.QuickMenuOptionsPanelController;
 import org.eomasters.eomtbx.utils.ErrorHandler;
 import org.eomasters.eomtbx.utils.FileIo;
 import org.netbeans.spi.options.OptionsPanelController;
