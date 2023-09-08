@@ -104,14 +104,14 @@ public class ErrorHandler {
         "Sorry, this should not have happened. Please help to fix this problem and report the issue to EOMasters.\n");
     contentPane.add(headerText, "top, left, growx, wmin 10, wrap");
 
-    ErrorReport errorReport = new ErrorReport("EOMTBX_Error_Report", message, exception);
-    CollapsiblePanel reportArea = CollapsiblePanel.createLongTextPanel("Error Report Preview", errorReport.getReport());
+    SystemReport errorReport = new SystemReport().name("EOMTBX_Error_Report").message(message).throwable(exception);
+    CollapsiblePanel reportArea = CollapsiblePanel.createLongTextPanel("Error Report Preview", errorReport.generate());
     contentPane.add(reportArea, "top, left, grow, wrap");
 
     showDialog(contentPane, errorReport);
   }
 
-  private static void showDialog(JPanel contentPane, ErrorReport errorReport) {
+  private static void showDialog(JPanel contentPane, SystemReport errorReport) {
     JButton byMail = createMailButton(errorReport);
     byMail.requestFocusInWindow();
     contentPane.add(byMail, "right");
@@ -133,7 +133,7 @@ public class ErrorHandler {
     dialog.setVisible(true);
   }
 
-  private static JButton createMailButton(ErrorReport errorReport) {
+  private static JButton createMailButton(SystemReport errorReport) {
     JButton byMail = new JButton("Report by Mail");
     byMail.addActionListener(e -> {
       try {
@@ -166,17 +166,17 @@ public class ErrorHandler {
     return byMail;
   }
 
-  private static String createMailBody(ErrorReport errorReport, boolean uploadAllowed,
+  private static String createMailBody(SystemReport errorReport, boolean uploadAllowed,
       FileSharingService sharingService) throws IOException {
     StringBuilder bodyText = new StringBuilder("<Please description briefly what you did before the error occurred. "
         + "Screenshots help to explain your work.>\n\n");
     if (uploadAllowed) {
       DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("uuuuMMdd_HHmmss")
           .withZone(ZoneId.from(ZoneOffset.UTC));
-      String reportName = errorReport.getReportName();
-      Instant created = errorReport.getCreated();
+      String reportName = errorReport.getName();
+      Instant created = errorReport.getCreatedAt();
       String fileName = String.format(reportName + "_%s.txt", timeFormatter.format(created));
-      String report = errorReport.getReport();
+      String report = errorReport.generate();
       UploadResponse uploadResponse = sharingService.uploadFile(fileName, new StringInputStream(report));
       if (uploadResponse.getStatus() != 200) {
         ErrorHandler.handleError("Error Report",

@@ -54,44 +54,116 @@ import org.openide.util.Lookup;
  *   <li>Environment Variables</li>
  * </ul>
  */
-public class ErrorReport {
+public class SystemReport {
 
-  private final String reportName;
-  private final String message;
-  private final Throwable throwable;
-  private final String report;
+  private String reportName;
+  private String title;
+  private String message;
+  private Throwable throwable;
   private final Instant created;
 
   /**
    * Generates an error report instance.
-   *
-   * @param message the message
-   * @param t       the throwable
    */
-  public ErrorReport(String name, String message, Throwable t) {
-    this.reportName = name;
-    this.message = message;
-    this.throwable = t;
+  public SystemReport() {
     Clock utcClock = Clock.systemUTC();
     created = Instant.now(utcClock);
-    report = generate();
   }
 
   /**
-   * Returns the error report as String.
+   * Set the name of this report.
    *
-   * @return the error report
+   * @param name the name of the report
+   * @return this report
    */
-  public String getReport() {
-    return report;
+  public SystemReport name(String name) {
+    this.reportName = name;
+    return this;
   }
 
-  public String getReportName() {
+  /**
+   * Set the title of this report.
+   *
+   * @param title the title of the report
+   * @return this report
+   */
+  public SystemReport title(String title) {
+    this.title = title;
+    return this;
+  }
+
+  /**
+   * Set the message of this report.
+   *
+   * @param message the message of the report
+   * @return this report
+   */
+  public SystemReport message(String message) {
+    this.message = message;
+    return this;
+  }
+
+  /**
+   * Set the throwable of this report.
+   *
+   * @param throwable the throwable of the report
+   * @return this report
+   */
+  public SystemReport throwable(Throwable throwable) {
+    this.throwable = throwable;
+    return this;
+  }
+
+
+  /**
+   * Returns the name of the report.
+   *
+   * @return the name
+   */
+  public String getName() {
     return reportName;
   }
 
-  public Instant getCreated() {
+  /**
+   * Returns the title of the report.
+   * If no title is set, the title is "Error Report" if a throwable is set, otherwise it is "System Report".
+   *
+   * @return the title
+   */
+  public String getTitle() {
+    if (title == null) {
+      title = throwable != null ? "Error Report" : "System Report";
+    }
+    return title;
+  }
+
+  /**
+   * Returns the message of the report.
+   *
+   * @return the message
+   */
+  public Instant getCreatedAt() {
     return created;
+  }
+
+  /**
+   * Generates the error report as String.
+   *
+   * @return the error report
+   */
+  public String generate() {
+    getTitle();
+    StringBuilder report = new StringBuilder(title + ": ");
+    addBasicInformation(report);
+    if (throwable != null) {
+      addStackTrace(report);
+    }
+    addProductList(report);
+    addInstalledModules(report);
+    addPreferences(report);
+    addSystemProperties(report);
+    addEnvironmentVariables(report);
+    return report.toString();
   }
 
   private static void addEnvironmentVariables(StringBuilder report) {
@@ -112,9 +184,9 @@ public class ErrorReport {
   }
 
   private static void addPreferences(StringBuilder report) {
-    Preferences preferences = SnapApp.getDefault().getPreferences();
+    report.append("Preferences:\n");
     try {
-      report.append("Preferences:\n");
+      Preferences preferences = SnapApp.getDefault().getPreferences();
       String[] keys = Arrays.stream(preferences.keys()).sorted().toArray(String[]::new);
       if (keys.length == 0) {
         report.append("No preferences found.\n");
@@ -165,23 +237,6 @@ public class ErrorReport {
 
   private static long toGib(long memory) {
     return memory / 1024 / 1024 / 1024;
-  }
-
-  /**
-   * Generates the error report as String.
-   *
-   * @return the error report
-   */
-  private String generate() {
-    StringBuilder report = new StringBuilder("Error Report: ");
-    addBasicInformation(report);
-    addStackTrace(report);
-    addProductList(report);
-    addInstalledModules(report);
-    addPreferences(report);
-    addSystemProperties(report);
-    addEnvironmentVariables(report);
-    return report.toString();
   }
 
   private void addStackTrace(StringBuilder report) {
