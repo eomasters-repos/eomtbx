@@ -208,14 +208,16 @@
 
     <plugins>
       <plugin>
-        <!-- use mvn license:remove-file-header to remove the header  and regenerate it-->
+        <!-- use mvn license:remove-file-header to remove the header and regenerate it-->
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>license-maven-plugin</artifactId>
         <configuration>
-          <licenseName>gpl_v3</licenseName>
+          <licenseResolver>${project.baseUri}/.mvn/license</licenseResolver>
+          <licenseName>eom_gpl_v3</licenseName>
           <copyrightOwners>Marco Peters</copyrightOwners>
           <includes>
             <include>**/*.java</include>
+            <include>**/*.html</include>
           </includes>
         </configuration>
         <executions>
@@ -234,7 +236,7 @@
               <processEndTag>=========================LICENSE_END==================================</processEndTag>
               <sectionDelimiter>======================================================================
               </sectionDelimiter>
-              <descriptionTemplate>.mvn/file_header_description.txt</descriptionTemplate>
+              <descriptionTemplate>.mvn/license/file_header_description.txt</descriptionTemplate>
             </configuration>
           </execution>
         </executions>

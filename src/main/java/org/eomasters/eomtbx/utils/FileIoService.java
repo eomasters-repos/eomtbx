@@ -1,7 +1,7 @@
 /*-
  * ========================LICENSE_START=================================
  * EOMTBX - EOMasters Toolbox for SNAP
- * --> https://www.eomasters.org/sw/EOMTBX
+ * -> https://www.eomasters.org/sw/EOMTBX
  * ======================================================================
  * Copyright (C) 2023 Marco Peters
  * ======================================================================
@@ -17,7 +17,7 @@
  * 
  * You should have received a copy of the GNU General Public
  * License along with this program.  If not, see
- * <http://www.gnu.org/licenses/gpl-3.0.html>.
+ * -> http://www.gnu.org/licenses/gpl-3.0.html
  * =========================LICENSE_END==================================
  */
 

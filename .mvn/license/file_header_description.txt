@@ -8,4 +8,4 @@
     - file current file to treat
 -->
 ${projectName} - ${project.description}
---> ${project.url}
+-> ${project.url}
