@@ -51,7 +51,7 @@ import org.openide.util.Lookup;
  */
 @SuppressWarnings("unused")
 @OptionsPanelController.TopLevelRegistration(
-    id = "EOMTBX",
+    id = EomtbxOptionsPanelController.OPTIONS_ID,
     categoryName = "EOMTBX",
     iconBase = "org/eomasters/eomtbx/icons/Eomtbx_48.png",
     keywordsCategory = "EOMTBX",
@@ -60,6 +60,7 @@ import org.openide.util.Lookup;
 )
 public class EomtbxOptionsPanelController extends PropertyChangeOptionsPanelController {
 
+  public static final String OPTIONS_ID = "EOMTBX";
   public static final String HID_EOMTBX_PREFERENCES = "eomtbxPreferences";
   private static final FileFilter PREFERENCES_FILE_FILTER = FileIo.createFileFilter("Preferences file", "prefs");
   private final List<OptionsPanelController> subControllers;
