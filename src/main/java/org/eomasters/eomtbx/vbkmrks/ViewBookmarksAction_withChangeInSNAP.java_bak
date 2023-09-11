@@ -24,7 +24,6 @@
 package org.eomasters.eomtbx.vbkmrks;
 
 import com.bc.ceres.grender.Viewport;
-import java.awt.Container;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
@@ -66,12 +65,12 @@ import org.openide.util.actions.Presenter;
  * The class inserts the View Bookmarks menu into the menu bar and the context menu of the scene view .
  */
 @ActionID(category = "View", id = "EOMTBX_ViewBookmarksAction")
-@ActionRegistration(displayName = "#ViewBookmarksActionMenuText", menuText = "#ViewBookmarksActionMenuText", popupText = "View-Bookmarks  >", lazy = false)
+@ActionRegistration(displayName = "#ViewBookmarksActionMenuText", menuText = "#ViewBookmarksActionMenuText", lazy = false)
 @ActionReferences({@ActionReference(path = "Menu/View", position = 400),
     @ActionReference(path = "Context/ProductSceneView", position = 70)})
 @NbBundle.Messages({"ViewBookmarksActionMenuText=View-Bookmarks", "OpenOptionsMenuText=Open Options",
     "AddBookmarkMenuText=Add Bookmark"})
-public final class ViewBookmarksAction extends AbstractAction implements LookupListener, Presenter.Menu,
+public final class ViewBookmarksAction_withChangeInSNAP extends AbstractAction implements LookupListener, Presenter.Menu,
     Presenter.Popup {
 
   @SuppressWarnings("FieldCanBeLocal")
@@ -83,7 +82,7 @@ public final class ViewBookmarksAction extends AbstractAction implements LookupL
    * Creates a new ViewBookmarksAction.
    */
   @SuppressWarnings("unused")
-  public ViewBookmarksAction() {
+  public ViewBookmarksAction_withChangeInSNAP() {
     this(Utilities.actionsGlobalContext());
   }
 
@@ -92,14 +91,14 @@ public final class ViewBookmarksAction extends AbstractAction implements LookupL
    *
    * @param lookup the lookup
    */
-  public ViewBookmarksAction(Lookup lookup) {
-    super(Bundle.ViewBookmarksActionMenuText() + "  >");
+  public ViewBookmarksAction_withChangeInSNAP(Lookup lookup) {
+    super(Bundle.ViewBookmarksActionMenuText());
     result = lookup.lookupResult(ProductSceneView.class);
     result.addLookupListener(WeakListeners.create(LookupListener.class, this, result));
-    contextMenu = new JMenu(Bundle.ViewBookmarksActionMenuText() + "  >");
-    contextMenu.addMouseListener(new ContextMenuUpdater(contextMenu));
+    contextMenu = new JMenu(Bundle.ViewBookmarksActionMenuText());
+    contextMenu.addMouseListener(new MenuUpdater());
     mainMenu = new JMenu(Bundle.ViewBookmarksActionMenuText());
-    mainMenu.addMouseListener(new MenuUpdater(mainMenu));
+    mainMenu.addMouseListener(new MenuUpdater());
   }
 
   @Override
@@ -114,29 +113,7 @@ public final class ViewBookmarksAction extends AbstractAction implements LookupL
 
   @Override
   public void actionPerformed(ActionEvent e) {
-    JComponent source = (JComponent) e.getSource();
-    JComponent[] menuItems = createMenuItems();
-    JPopupMenu popupMenu = new JPopupMenu();
-    for (JComponent menuItem : menuItems) {
-      popupMenu.add(menuItem);
-      menuItem.addMouseListener(new MouseInputAdapter() {
-        @Override
-        public void mouseClicked(MouseEvent e) {
-          popupMenu.setVisible(false);
-        }
-      });
-    }
-
-    Container parent = source.getParent();
-    parent.setVisible(true);
-    Point locationOnScreen = parent.getLocationOnScreen();
-    locationOnScreen.setLocation(locationOnScreen.getX() + source.getLocation().getX(),
-        locationOnScreen.getY() + source.getLocation().getY());
-    locationOnScreen.setLocation(locationOnScreen.getX() + source.getWidth(), locationOnScreen.getY());
-    popupMenu.setLocation(locationOnScreen);
-    popupMenu.addMouseListener(new MouseExitListener(popupMenu));
-
-    popupMenu.setVisible(true);
+    // do nothing
   }
 
   @Override
@@ -286,56 +263,11 @@ public final class ViewBookmarksAction extends AbstractAction implements LookupL
     }
   }
 
-  private static class MouseExitListener extends MouseInputAdapter {
-
-    private final JPopupMenu popupMenu;
-    int countDown = 1;
-
-    public MouseExitListener(JPopupMenu popupMenu) {
-      this.popupMenu = popupMenu;
-    }
-
-    @Override
-    public void mouseExited(MouseEvent e) {
-      if (countDown-- == 0) {
-        popupMenu.setVisible(false);
-      }
-    }
-
-  }
-
   private class MenuUpdater extends MouseInputAdapter {
 
-
-    private final JMenu menu;
-
-    public MenuUpdater(JMenu mainMenu) {
-      menu = mainMenu;
-    }
-
     @Override
     public void mouseEntered(MouseEvent e) {
-      updateMenu(menu);
-    }
-  }
-
-  private class ContextMenuUpdater extends MouseInputAdapter {
-
-
-    private final JMenu menu;
-
-    public ContextMenuUpdater(JMenu mainMenu) {
-      menu = mainMenu;
-    }
-
-    @Override
-    public void mouseEntered(MouseEvent e) {
-      updateMenu(menu);
-      JMenuItem popupPresenter = getPopupPresenter();
-      JPopupMenu popupMenu = popupPresenter.getComponentPopupMenu();
-      popupMenu.setLocation(popupPresenter.getLocationOnScreen().x + popupPresenter.getHeight(),
-          popupPresenter.getLocationOnScreen().y + popupPresenter.getHeight());
-      popupMenu.setVisible(true);
+      updateMenu(ViewBookmarksAction_withChangeInSNAP.this.mainMenu);
     }
   }
 }
