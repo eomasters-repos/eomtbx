@@ -71,13 +71,11 @@ import org.openide.util.actions.Presenter;
     @ActionReference(path = "Context/ProductSceneView", position = 70)})
 @NbBundle.Messages({"ViewBookmarksActionMenuText=View-Bookmarks", "OpenOptionsMenuText=Open Options",
     "AddBookmarkMenuText=Add Bookmark"})
-public final class ViewBookmarksAction extends AbstractAction implements LookupListener, Presenter.Menu,
-    Presenter.Popup {
+public final class ViewBookmarksAction extends AbstractAction implements LookupListener, Presenter.Menu {
 
   @SuppressWarnings("FieldCanBeLocal")
   private final Lookup.Result<ProductSceneView> result;
-  private JMenu mainMenu;
-  private JMenu contextMenu;
+  private final JMenu mainMenu;
 
   /**
    * Creates a new ViewBookmarksAction.
@@ -96,8 +94,6 @@ public final class ViewBookmarksAction extends AbstractAction implements LookupL
     super(Bundle.ViewBookmarksActionMenuText() + "  >");
     result = lookup.lookupResult(ProductSceneView.class);
     result.addLookupListener(WeakListeners.create(LookupListener.class, this, result));
-    contextMenu = new JMenu(Bundle.ViewBookmarksActionMenuText() + "  >");
-    contextMenu.addMouseListener(new ContextMenuUpdater(contextMenu));
     mainMenu = new JMenu(Bundle.ViewBookmarksActionMenuText());
     mainMenu.addMouseListener(new MenuUpdater(mainMenu));
   }
@@ -105,11 +101,6 @@ public final class ViewBookmarksAction extends AbstractAction implements LookupL
   @Override
   public JMenuItem getMenuPresenter() {
     return updateMenu(mainMenu);
-  }
-
-  @Override
-  public JMenuItem getPopupPresenter() {
-    return updateMenu(contextMenu);
   }
 
   @Override
@@ -188,7 +179,7 @@ public final class ViewBookmarksAction extends AbstractAction implements LookupL
       boolean canAddBookmark = ViewBookmarks.getInstance().getBookmarks().size() < ViewBookmarks.MAX_BOOKMARKS;
       addAction.setEnabled(addAction.isEnabled() && canAddBookmark);
       if (!canAddBookmark) {
-        addAction.setToolTipText("Number og bookmarks reached maximum of " + ViewBookmarks.MAX_BOOKMARKS);
+        addAction.setToolTipText("Number of bookmarks reached maximum of " + ViewBookmarks.MAX_BOOKMARKS);
       }
     } else {
       addAction.setEnabled(false);
@@ -212,6 +203,9 @@ public final class ViewBookmarksAction extends AbstractAction implements LookupL
       GeoPos lowerLeft = geoCoding.getGeoPos(
           new PixelPos(ulLocation.getX(), ulLocation.getY() + viewBounds.getHeight()), new GeoPos());
       String bookmarkName = Dialogs.input("Create Bookmark", "Enter name for bookmark");
+      if (bookmarkName == null || bookmarkName.isEmpty()) {
+        return;
+      }
       Bookmark bookmark = new Bookmark(bookmarkName, new BookmarkRoi(upperLeft, upperRight, lowerRight, lowerLeft),
           sceneView.getOrientation());
       try {
@@ -235,7 +229,7 @@ public final class ViewBookmarksAction extends AbstractAction implements LookupL
     }
     for (Bookmark bookmark : bookmarks) {
       JMenuItem menuItem = new JMenuItem("Apply " + bookmark.getName());
-      GeoCoding geoCoding = null;
+      GeoCoding geoCoding;
       if (sceneView != null) {
         geoCoding = sceneView.getRaster().getGeoCoding();
         if (geoCoding == null || !geoCoding.canGetPixelPos()) {
@@ -316,26 +310,6 @@ public final class ViewBookmarksAction extends AbstractAction implements LookupL
     @Override
     public void mouseEntered(MouseEvent e) {
       updateMenu(menu);
-    }
-  }
-
-  private class ContextMenuUpdater extends MouseInputAdapter {
-
-
-    private final JMenu menu;
-
-    public ContextMenuUpdater(JMenu mainMenu) {
-      menu = mainMenu;
-    }
-
-    @Override
-    public void mouseEntered(MouseEvent e) {
-      updateMenu(menu);
-      JMenuItem popupPresenter = getPopupPresenter();
-      JPopupMenu popupMenu = popupPresenter.getComponentPopupMenu();
-      popupMenu.setLocation(popupPresenter.getLocationOnScreen().x + popupPresenter.getHeight(),
-          popupPresenter.getLocationOnScreen().y + popupPresenter.getHeight());
-      popupMenu.setVisible(true);
     }
   }
 }
