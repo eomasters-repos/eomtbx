@@ -37,7 +37,7 @@ public class ViewBookmarks implements Cloneable {
   /**
    * The maximum number of bookmarks.
    */
-  public  static final int MAX_BOOKMARKS = 7;
+  public  static final int MAX_BOOKMARKS = 5;
   private static final String VIEW_BOOKMARKS_ID = "viewBookmarks";
   private final Preferences vbPreferences;
   ArrayList<Bookmark> bookmarks = new ArrayList<>();
