@@ -23,7 +23,7 @@
 
 package org.eomasters.eomtbx.vbkmrks;
 
-import java.awt.geom.Rectangle2D;
+import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.prefs.Preferences;
 import org.eomasters.eomtbx.EomToolbox;
@@ -121,19 +121,21 @@ public class ViewBookmarks implements Cloneable {
 
     private String name;
     private double rotation;
+    private final Rectangle viewBounds;
     private BookmarkRoi bookmarkRoi;
-    private Rectangle2D viewBoundary;
 
 
     /**
      * Creates a new Bookmark.
      *
      * @param name        the name of the bookmark
+     * @param viewBounds the view bounds of the bookmark
      * @param bookmarkRoi the ROI of the bookmark
      * @param rotation    the rotation of the bookmark
      */
-    public Bookmark(String name, BookmarkRoi bookmarkRoi, double rotation) {
+    public Bookmark(String name, Rectangle viewBounds, BookmarkRoi bookmarkRoi, double rotation) {
       this.name = name;
+      this.viewBounds = viewBounds;
       this.bookmarkRoi = bookmarkRoi;
       this.rotation = rotation;
     }
@@ -148,14 +150,13 @@ public class ViewBookmarks implements Cloneable {
     }
 
     /**
-     * Returns the rotation of the bookmark.
+     * Returns the view bounds of the bookmark.
      *
-     * @return the rotation of the bookmark
+     * @return the view bounds of the bookmark
      */
-    public double getRotation() {
-      return rotation;
+    public Rectangle getViewBounds() {
+      return viewBounds;
     }
-
 
     /**
      * Returns the ROI of the bookmark.
@@ -166,6 +167,14 @@ public class ViewBookmarks implements Cloneable {
       return bookmarkRoi;
     }
 
+    /**
+     * Returns the rotation of the bookmark.
+     *
+     * @return the rotation of the bookmark
+     */
+    public double getRotation() {
+      return rotation;
+    }
 
     @Override
     public Bookmark clone() {
@@ -176,7 +185,7 @@ public class ViewBookmarks implements Cloneable {
         clone.bookmarkRoi = bookmarkRoi.clone();
         return clone;
       } catch (CloneNotSupportedException e) {
-        return new Bookmark(name, bookmarkRoi.clone(), rotation);
+        return new Bookmark(name, viewBounds, bookmarkRoi.clone(), rotation);
       }
     }
   }

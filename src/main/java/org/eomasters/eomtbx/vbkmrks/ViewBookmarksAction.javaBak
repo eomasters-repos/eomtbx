@@ -23,12 +23,17 @@
 
 package org.eomasters.eomtbx.vbkmrks;
 
+import com.bc.ceres.core.ProgressMonitor;
 import com.bc.ceres.grender.Viewport;
+import eu.esa.snap.netbeans.docwin.DocumentWindowManager;
+import java.awt.Container;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
+import java.awt.geom.AffineTransform;
+import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -46,7 +51,10 @@ import org.eomasters.eomtbx.vbkmrks.ViewBookmarks.BookmarkRoi;
 import org.esa.snap.core.datamodel.GeoCoding;
 import org.esa.snap.core.datamodel.GeoPos;
 import org.esa.snap.core.datamodel.PixelPos;
+import org.esa.snap.core.datamodel.RasterDataNode;
 import org.esa.snap.rcp.SnapApp;
+import org.esa.snap.rcp.windows.ProductSceneViewTopComponent;
+import org.esa.snap.ui.product.ProductSceneImage;
 import org.esa.snap.ui.product.ProductSceneView;
 import org.netbeans.api.options.OptionsDisplayer;
 import org.openide.awt.ActionID;
@@ -60,29 +68,28 @@ import org.openide.util.NbBundle;
 import org.openide.util.Utilities;
 import org.openide.util.WeakListeners;
 import org.openide.util.actions.Presenter;
+import org.openide.windows.WindowManager;
 
 /**
  * The class inserts the View Bookmarks menu into the menu bar and the context menu of the scene view .
  */
 @ActionID(category = "View", id = "EOMTBX_ViewBookmarksAction")
-@ActionRegistration(displayName = "#ViewBookmarksActionMenuText", menuText = "#ViewBookmarksActionMenuText", lazy = false)
+@ActionRegistration(displayName = "#ViewBookmarksActionMenuText", menuText = "#ViewBookmarksActionMenuText", popupText = "View-Bookmarks  >", lazy = false)
 @ActionReferences({@ActionReference(path = "Menu/View", position = 400),
     @ActionReference(path = "Context/ProductSceneView", position = 70)})
 @NbBundle.Messages({"ViewBookmarksActionMenuText=View-Bookmarks", "OpenOptionsMenuText=Open Options",
     "AddBookmarkMenuText=Add Bookmark"})
-public final class ViewBookmarksAction_withChangeInSNAP extends AbstractAction implements LookupListener, Presenter.Menu,
-    Presenter.Popup {
+public final class ViewBookmarksAction extends AbstractAction implements LookupListener, Presenter.Menu {
 
   @SuppressWarnings("FieldCanBeLocal")
   private final Lookup.Result<ProductSceneView> result;
-  private JMenu mainMenu;
-  private JMenu contextMenu;
+  private final JMenu mainMenu;
 
   /**
    * Creates a new ViewBookmarksAction.
    */
   @SuppressWarnings("unused")
-  public ViewBookmarksAction_withChangeInSNAP() {
+  public ViewBookmarksAction() {
     this(Utilities.actionsGlobalContext());
   }
 
@@ -91,14 +98,12 @@ public final class ViewBookmarksAction_withChangeInSNAP extends AbstractAction i
    *
    * @param lookup the lookup
    */
-  public ViewBookmarksAction_withChangeInSNAP(Lookup lookup) {
-    super(Bundle.ViewBookmarksActionMenuText());
+  public ViewBookmarksAction(Lookup lookup) {
+    super(Bundle.ViewBookmarksActionMenuText() + "  >");
     result = lookup.lookupResult(ProductSceneView.class);
     result.addLookupListener(WeakListeners.create(LookupListener.class, this, result));
-    contextMenu = new JMenu(Bundle.ViewBookmarksActionMenuText());
-    contextMenu.addMouseListener(new MenuUpdater());
     mainMenu = new JMenu(Bundle.ViewBookmarksActionMenuText());
-    mainMenu.addMouseListener(new MenuUpdater());
+    mainMenu.addMouseListener(new MenuUpdater(mainMenu));
   }
 
   @Override
@@ -107,13 +112,30 @@ public final class ViewBookmarksAction_withChangeInSNAP extends AbstractAction i
   }
 
   @Override
-  public JMenuItem getPopupPresenter() {
-    return updateMenu(contextMenu);
-  }
-
-  @Override
   public void actionPerformed(ActionEvent e) {
-    // do nothing
+    JComponent source = (JComponent) e.getSource();
+    JComponent[] menuItems = createMenuItems();
+    JPopupMenu popupMenu = new JPopupMenu();
+    for (JComponent menuItem : menuItems) {
+      popupMenu.add(menuItem);
+      menuItem.addMouseListener(new MouseInputAdapter() {
+        @Override
+        public void mouseClicked(MouseEvent e) {
+          popupMenu.setVisible(false);
+        }
+      });
+    }
+
+    Container parent = source.getParent();
+    parent.setVisible(true);
+    Point locationOnScreen = parent.getLocationOnScreen();
+    locationOnScreen.setLocation(locationOnScreen.getX() + source.getLocation().getX(),
+        locationOnScreen.getY() + source.getLocation().getY());
+    locationOnScreen.setLocation(locationOnScreen.getX() + source.getWidth(), locationOnScreen.getY());
+    popupMenu.setLocation(locationOnScreen);
+    popupMenu.addMouseListener(new MouseExitListener(popupMenu));
+
+    popupMenu.setVisible(true);
   }
 
   @Override
@@ -165,7 +187,7 @@ public final class ViewBookmarksAction_withChangeInSNAP extends AbstractAction i
       boolean canAddBookmark = ViewBookmarks.getInstance().getBookmarks().size() < ViewBookmarks.MAX_BOOKMARKS;
       addAction.setEnabled(addAction.isEnabled() && canAddBookmark);
       if (!canAddBookmark) {
-        addAction.setToolTipText("Number og bookmarks reached maximum of " + ViewBookmarks.MAX_BOOKMARKS);
+        addAction.setToolTipText("Number of bookmarks reached maximum of " + ViewBookmarks.MAX_BOOKMARKS);
       }
     } else {
       addAction.setEnabled(false);
@@ -177,20 +199,26 @@ public final class ViewBookmarksAction_withChangeInSNAP extends AbstractAction i
       if (geoCoding == null || !geoCoding.canGetGeoPos()) {
         return;
       }
-      Viewport viewport = sceneView.getViewport();
-      Rectangle viewBounds = viewport.getViewBounds();
-      Point ulLocation = viewBounds.getLocation();
-      GeoPos upperLeft = geoCoding.getGeoPos(new PixelPos(ulLocation.getX(), ulLocation.getY()), new GeoPos());
-      GeoPos upperRight = geoCoding.getGeoPos(
-          new PixelPos(ulLocation.getX() + viewBounds.getWidth(), ulLocation.getY()), new GeoPos());
-      GeoPos lowerRight = geoCoding.getGeoPos(
-          new PixelPos(ulLocation.getX() + viewBounds.getWidth(), ulLocation.getY() + viewBounds.getHeight()),
-          new GeoPos());
-      GeoPos lowerLeft = geoCoding.getGeoPos(
-          new PixelPos(ulLocation.getX(), ulLocation.getY() + viewBounds.getHeight()), new GeoPos());
       String bookmarkName = Dialogs.input("Create Bookmark", "Enter name for bookmark");
-      Bookmark bookmark = new Bookmark(bookmarkName, new BookmarkRoi(upperLeft, upperRight, lowerRight, lowerLeft),
-          sceneView.getOrientation());
+      if (bookmarkName == null || bookmarkName.isEmpty()) {
+        return;
+      }
+
+      Viewport viewport = sceneView.getViewport();
+      Rectangle viewBounds = sceneView.getViewport().getViewBounds();
+      Rectangle visibleImageBounds = sceneView.getVisibleImageBounds();
+
+      Point ulLocation = visibleImageBounds.getLocation();
+      double visImageX = ulLocation.getX();
+      double visImageY = ulLocation.getY();
+      double width = visibleImageBounds.getWidth();
+      double height = visibleImageBounds.getHeight();
+      GeoPos upperLeft = geoCoding.getGeoPos(new PixelPos(visImageX, visImageY), new GeoPos());
+      GeoPos upperRight = geoCoding.getGeoPos(new PixelPos(visImageX + width, visImageY), new GeoPos());
+      GeoPos lowerRight = geoCoding.getGeoPos(new PixelPos(visImageX + width, visImageY + height), new GeoPos());
+      GeoPos lowerLeft = geoCoding.getGeoPos(new PixelPos(visImageX, visImageY + height), new GeoPos());
+      Bookmark bookmark = new Bookmark(bookmarkName, viewBounds,
+          new BookmarkRoi(upperLeft, upperRight, lowerRight, lowerLeft), sceneView.getOrientation());
       try {
         ViewBookmarks.getInstance().add(bookmark);
       } catch (Exception ex) {
@@ -212,7 +240,7 @@ public final class ViewBookmarksAction_withChangeInSNAP extends AbstractAction i
     }
     for (Bookmark bookmark : bookmarks) {
       JMenuItem menuItem = new JMenuItem("Apply " + bookmark.getName());
-      GeoCoding geoCoding = null;
+      GeoCoding geoCoding;
       if (sceneView != null) {
         geoCoding = sceneView.getRaster().getGeoCoding();
         if (geoCoding == null || !geoCoding.canGetPixelPos()) {
@@ -250,24 +278,85 @@ public final class ViewBookmarksAction_withChangeInSNAP extends AbstractAction i
       if (geoCoding == null || !geoCoding.canGetPixelPos()) {
         return;
       }
-      sceneView.getViewport().setOrientation(bookmark.getRotation());
+      // ProductSceneViewTopComponent psvTopComponent = WindowUtilities.getOpened(ProductSceneViewTopComponent.class)
+      //     .filter(psvTc -> sceneView == psvTc.getView()).findFirst().orElse(null);
+      // if (psvTopComponent == null) {
+      //   return;
+      // }
+
+      WindowManager wm = WindowManager.getDefault();
+      ProductSceneImage origSceneImage = sceneView.getSceneImage();
+      ProductSceneImage newSceneImage;
+      RasterDataNode[] imageRasters = origSceneImage.getRasters();
+      if (imageRasters.length == 1) {
+        newSceneImage = new ProductSceneImage(imageRasters[0], origSceneImage.getConfiguration(), ProgressMonitor.NULL);
+      } else {
+        newSceneImage = new ProductSceneImage(origSceneImage.getName() + "_" + bookmark.getName(), imageRasters[0],
+            imageRasters[1], imageRasters[2], origSceneImage.getConfiguration(), ProgressMonitor.NULL);
+      }
+      ProductSceneView productSceneView = new ProductSceneView(newSceneImage);
+      productSceneView.getViewport().setViewBounds(bookmark.getViewBounds());
+      ProductSceneViewTopComponent floatingPsv = new ProductSceneViewTopComponent(productSceneView, null);
+      DocumentWindowManager.getDefault().openWindow(floatingPsv);
+      floatingPsv.setBounds(bookmark.getViewBounds());
+      floatingPsv.invalidate();
+      floatingPsv.getParent().doLayout();
+      // floatingPsv.setPreferredSize(bookmark.getViewBounds().getSize());
+      wm.setTopComponentFloating(floatingPsv, true);
+      floatingPsv.requestSelected();
+      productSceneView.getViewport().setOrientation(bookmark.getRotation());
+
+      // sceneView.getViewport().setOrientation(bookmark.getRotation());
       BookmarkRoi bookmarkRoi = bookmark.getRoi();
       PixelPos upperLeft = geoCoding.getPixelPos(bookmarkRoi.getUpperLeft(), new PixelPos());
-      PixelPos upperRight = geoCoding.getPixelPos(bookmarkRoi.getUpperRight(), new PixelPos());
+      // PixelPos upperRight = geoCoding.getPixelPos(bookmarkRoi.getUpperRight(), new PixelPos());
       PixelPos lowerRight = geoCoding.getPixelPos(bookmarkRoi.getLowerRight(), new PixelPos());
-      PixelPos lowerLeft = geoCoding.getPixelPos(bookmarkRoi.getLowerLeft(), new PixelPos());
-      sceneView.getViewport().setViewBounds(
-          new Rectangle((int) upperLeft.getX(), (int) upperLeft.getY(), (int) (lowerRight.getX() - upperLeft.getX()),
-              (int) (lowerRight.getY() - upperLeft.getY())));
+      // PixelPos lowerLeft = geoCoding.getPixelPos(bookmarkRoi.getLowerLeft(), new PixelPos());
 
+      AffineTransform imageToModelTransform = productSceneView.getBaseImageLayer().getImageToModelTransform();
+      imageToModelTransform.transform(upperLeft, upperLeft);
+      // imageToModelTransform.transform(upperRight, upperRight);
+      imageToModelTransform.transform(lowerRight, lowerRight);
+      // imageToModelTransform.transform(lowerLeft, lowerLeft);
+      Rectangle2D rectangle2D = new Rectangle((int) upperLeft.getX(), (int) upperLeft.getY(),
+          (int) (lowerRight.getX() - upperLeft.getX()), (int) (lowerRight.getY() - upperLeft.getY()));
+      rectangle2D = productSceneView.getViewport().getModelToViewTransform().createTransformedShape(rectangle2D).getBounds2D();
+      productSceneView.zoom(500, 300, 3.5);
+      // productSceneView.zoom(rectangle2D.getCenterX(), rectangle2D.getCenterY(), productSceneView.getZoomFactor());
+      System.out.println();
     }
+  }
+
+  private static class MouseExitListener extends MouseInputAdapter {
+
+    private final JPopupMenu popupMenu;
+    int countDown = 1;
+
+    public MouseExitListener(JPopupMenu popupMenu) {
+      this.popupMenu = popupMenu;
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+      if (countDown-- == 0) {
+        popupMenu.setVisible(false);
+      }
+    }
+
   }
 
   private class MenuUpdater extends MouseInputAdapter {
 
+
+    private final JMenu menu;
+
+    public MenuUpdater(JMenu mainMenu) {
+      menu = mainMenu;
+    }
+
     @Override
     public void mouseEntered(MouseEvent e) {
-      updateMenu(ViewBookmarksAction_withChangeInSNAP.this.mainMenu);
+      updateMenu(menu);
     }
   }
 }
