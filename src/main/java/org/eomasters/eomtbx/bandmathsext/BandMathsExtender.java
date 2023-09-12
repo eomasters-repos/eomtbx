@@ -38,7 +38,7 @@ public class BandMathsExtender implements ProductNamespaceExtender {
   public void extendNamespace(Product product, String namePrefix, WritableNamespace namespace) {
     List<RasterDataNode> rasterDataNodes = product.getRasterDataNodes();
     for (RasterDataNode rasterDataNode : rasterDataNodes) {
-      namespace.registerSymbol(new InvalidSymbol(namePrefix + rasterDataNode.getName() + ".invalid", rasterDataNode));
+      namespace.registerSymbol(new ValidSymbol(namePrefix, rasterDataNode));
     }
     namespace.registerFunction(new WindowFunctions());
   }

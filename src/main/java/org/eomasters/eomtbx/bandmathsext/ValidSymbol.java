@@ -9,12 +9,12 @@
  * it under the terms of the GNU General Public License as
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public
  * License along with this program.  If not, see
  * -> http://www.gnu.org/licenses/gpl-3.0.html
@@ -31,39 +31,40 @@ import org.esa.snap.core.jexp.Symbol;
 import org.esa.snap.core.jexp.Term;
 
 /**
- * Allows to check iF a pixel is valid or not. The implementation uses
- * {@link RasterDataNode#isPixelValid(int, int) isPixelValid(x, y)} to check if a pixel is valid or not. In a band math
- * expression the symbol is used as follows:
+ * Allows to check if a pixel is valid or not. The implementation uses
+ * {@link RasterDataNode#isPixelValid(int, int) isPixelValid(x, y)}. In a band maths expression the symbol is used as
+ * follows:
  * <pre>
- *   &lt;band_name&gt;.invalid
+ *   &lt;band_name&gt;.valid
  * </pre>
  */
-public class InvalidSymbol implements Symbol {
+public class ValidSymbol implements Symbol {
 
-  private final String symbolName;
-  private final int symbolType;
+  protected static final String SYMBOL_ID = ".valid";
+  private final String name;
+  private final int type;
   private final RasterDataNode raster;
 
   /**
    * Creates a new instance.
    *
-   * @param symbolName the name of the symbol
-   * @param raster     the raster data node
+   * @param symbolPrefix the prefix of the symbol
+   * @param raster       the raster data node
    */
-  public InvalidSymbol(final String symbolName, final RasterDataNode raster) {
-    this.symbolName = symbolName;
-    this.symbolType = Term.TYPE_B;
+  public ValidSymbol(final String symbolPrefix, final RasterDataNode raster) {
+    this.name = symbolPrefix + raster.getName() + SYMBOL_ID;
+    this.type = Term.TYPE_B;
     this.raster = raster;
   }
 
   @Override
   public String getName() {
-    return symbolName;
+    return name;
   }
 
   @Override
   public int getRetType() {
-    return symbolType;
+    return type;
   }
 
   @Override
@@ -74,7 +75,7 @@ public class InvalidSymbol implements Symbol {
   @Override
   public boolean evalB(final EvalEnv env) throws EvalException {
     RasterDataEvalEnv rasterEnv = (RasterDataEvalEnv) env;
-    return !raster.isPixelValid(rasterEnv.getPixelX(), rasterEnv.getPixelY());
+    return raster.isPixelValid(rasterEnv.getPixelX(), rasterEnv.getPixelY());
   }
 
   @Override

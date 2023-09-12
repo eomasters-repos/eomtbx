@@ -37,7 +37,7 @@ import org.esa.snap.core.jexp.Term;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-class InvalidSymbolTest {
+class ValidSymbolTest {
 
   private static Product product;
   private static int W;
@@ -55,45 +55,45 @@ class InvalidSymbolTest {
 
   @Test
   void testBasics() {
-    InvalidSymbol symbol = new InvalidSymbol("B1.invalid", product.getBand("B1"));
-    assertEquals("B1.invalid", symbol.getName());
+    ValidSymbol symbol = new ValidSymbol("", product.getBand("B1"));
+    assertEquals("B1.valid", symbol.getName());
     assertEquals(Term.TYPE_B, symbol.getRetType());
     assertFalse(symbol.isConst());
   }
 
   @Test
   void testEvalB() throws ParseException {
-    Term term = BandArithmetic.parseExpression("B1.invalid", new Product[]{product}, 0);
+    Term term = BandArithmetic.parseExpression("B1.valid", new Product[]{product}, 0);
 
     RasterDataEvalEnv evalEnv = new RasterDataEvalEnv(0, 0, W, H);
     evalEnv.setElemIndex(toElemIndex(0, 0));
-    assertFalse(term.evalB(evalEnv));
+    assertTrue(term.evalB(evalEnv));
     evalEnv.setElemIndex(toElemIndex(1, 0));
-    assertFalse(term.evalB(evalEnv));
+    assertTrue(term.evalB(evalEnv));
     evalEnv.setElemIndex(toElemIndex(5, 0));
-    assertTrue(term.evalB(evalEnv));
+    assertFalse(term.evalB(evalEnv));
     evalEnv.setElemIndex(toElemIndex(8, 0));
-    assertTrue(term.evalB(evalEnv));
+    assertFalse(term.evalB(evalEnv));
   }
 
   @Test
   void testEvalI() throws ParseException {
-    Term term = BandArithmetic.parseExpression("B1.invalid", new Product[]{product}, 0);
+    Term term = BandArithmetic.parseExpression("B1.valid", new Product[]{product}, 0);
 
     RasterDataEvalEnv evalEnv = new RasterDataEvalEnv(0, 0, W, H);
     evalEnv.setElemIndex(toElemIndex(0, 0));
-    assertEquals(0, term.evalI(evalEnv));
+    assertEquals(1, term.evalI(evalEnv));
     evalEnv.setElemIndex(toElemIndex(1, 0));
-    assertEquals(0, term.evalI(evalEnv));
+    assertEquals(1, term.evalI(evalEnv));
     evalEnv.setElemIndex(toElemIndex(5, 0));
-    assertEquals(1, term.evalI(evalEnv));
+    assertEquals(0, term.evalI(evalEnv));
     evalEnv.setElemIndex(toElemIndex(8, 0));
-    assertEquals(1, term.evalI(evalEnv));
+    assertEquals(0, term.evalI(evalEnv));
   }
 
   @Test
   void testEvalD() throws ParseException {
-    Term term = BandArithmetic.parseExpression("B1.invalid", new Product[]{product}, 0);
+    Term term = BandArithmetic.parseExpression("!B1.valid", new Product[]{product}, 0);
 
     RasterDataEvalEnv evalEnv = new RasterDataEvalEnv(0, 0, W, H);
     evalEnv.setElemIndex(toElemIndex(0, 0));
@@ -108,16 +108,16 @@ class InvalidSymbolTest {
 
   @Test
   void testEvalS() throws ParseException {
-    Term term = BandArithmetic.parseExpression("B1.invalid", new Product[]{product}, 0);
+    Term term = BandArithmetic.parseExpression("B1.valid", new Product[]{product}, 0);
 
     RasterDataEvalEnv evalEnv = new RasterDataEvalEnv(0, 0, W, H);
     evalEnv.setElemIndex(toElemIndex(0, 0));
-    assertEquals("false", term.evalS(evalEnv));
+    assertEquals("true", term.evalS(evalEnv));
     evalEnv.setElemIndex(toElemIndex(1, 0));
-    assertEquals("false", term.evalS(evalEnv));
+    assertEquals("true", term.evalS(evalEnv));
     evalEnv.setElemIndex(toElemIndex(5, 0));
-    assertEquals("true", term.evalS(evalEnv));
+    assertEquals("false", term.evalS(evalEnv));
     evalEnv.setElemIndex(toElemIndex(8, 0));
-    assertEquals("true", term.evalS(evalEnv));
+    assertEquals("false", term.evalS(evalEnv));
   }
 }
