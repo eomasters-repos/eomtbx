@@ -40,13 +40,35 @@
 </table>
 
 <h3>Band Maths Extensions</h3>
-The these extensions provide new functionalities to the Band Maths expressions. The following functions are available:
+These extensions provide new functionalities for the Band Maths expressions. The following functionalities are
+available:
 <ul>
   <li><b>Valid</b><br>
-    This function returns true if the pixel is valid. If the pixel value is not NaN, the value does not match the no-data
+    This function returns true if the pixel is valid. If the pixel value is not NaN, the value does not match the
+    no-data
     value, and the pixel values matches the valid-pixel expression of the band.
     It is used as follows:<br>
-    <b><code>&lt;band-name&gt;.valid</code></b>&nbsp;&nbsp;e.g.,&nbsp;&nbsp;--> <b><code>Oa10_radiance.valid</code><br></b>
+    <b><code>&lt;band-name&gt;.valid</code></b> &nbsp;&nbsp;e.g.,&nbsp;&nbsp;--> <b><code>Oa10_radiance.valid</code><br></b>
+  </li>
+  <li><b>Window Functions</b><br>
+    The window is centered on the current pixel and the window size must be <b>3, 5 or 7</b>.
+    NaN and invalid values are ignored. If all values in the window are NaN or invalid, the result is NaN.
+    The functions are used as follows:<br>
+    <b><code>wnd(&lt;band-name&gt;, &lt;window-size&gt;, "&lt;function&gt;")</code></b>
+    The following functions are available:<br>
+    <ul>
+      <li><b>sum</b>: Sum of all valid pixels in the window<br>
+        e.g.,&nbsp;&nbsp;--> <b><code>wnd(B8A, 3, "sum")</code><br></b></li>
+      <li><b>min</b>: Minimum of all valid pixels in the window<br>
+        e.g.,&nbsp;&nbsp;--> <b><code>wnd(B2, 3, "min")</code><br></b></li>
+      <li><b>max</b>: Maximum of all valid pixels in the window<br>
+        e.g.,&nbsp;&nbsp;--> <b><code>wnd(B2, 7, "max")</code><br></b></li>
+      <li><b>mean</b>: Mean of all valid pixels in the window<br>
+        e.g.,&nbsp;&nbsp;--> <b><code>wnd(B2, 7, "mean")</code><br></b></li>
+      <li><b>median</b>: Median of all valid pixels in the window<br>
+        e.g.,&nbsp;&nbsp;--> <b><code>wnd(B3, 5, "median")</code><br></b></li>
+    </ul>
+
   </li>
 </ul>
 

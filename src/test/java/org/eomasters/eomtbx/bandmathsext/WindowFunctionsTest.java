@@ -9,12 +9,12 @@
  * it under the terms of the GNU General Public License as
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public
  * License along with this program.  If not, see
  * -> http://www.gnu.org/licenses/gpl-3.0.html
@@ -62,6 +62,12 @@ class WindowFunctionsTest {
     assertEquals(34, term.evalD(evalEnv));
     evalEnv.setElemIndex(toElemIndex(8, 7));
     assertEquals(67, term.evalD(evalEnv));
+
+    evalEnv.setElemIndex(toElemIndex(1, 8)); // all NaN
+    assertEquals(Double.NaN, term.evalD(evalEnv));
+    evalEnv.setElemIndex(toElemIndex(5, 8)); // all Inv
+    assertEquals(Double.NaN, term.evalD(evalEnv));
+
   }
 
   @Test
@@ -77,6 +83,12 @@ class WindowFunctionsTest {
     assertEquals(56, term.evalD(evalEnv));
     evalEnv.setElemIndex(toElemIndex(8, 7));
     assertEquals(89, term.evalD(evalEnv));
+
+    evalEnv.setElemIndex(toElemIndex(1, 8)); // all NaN
+    assertEquals(Double.NaN, term.evalD(evalEnv));
+    evalEnv.setElemIndex(toElemIndex(5, 8)); // all Inv
+    assertEquals(Double.NaN, term.evalD(evalEnv));
+
   }
 
   @Test
@@ -92,6 +104,12 @@ class WindowFunctionsTest {
     assertEquals(180, term.evalD(evalEnv));
     evalEnv.setElemIndex(toElemIndex(8, 7));
     assertEquals(702, term.evalD(evalEnv));
+
+    evalEnv.setElemIndex(toElemIndex(1, 8)); // all NaN
+    assertEquals(Double.NaN, term.evalD(evalEnv));
+    evalEnv.setElemIndex(toElemIndex(5, 8)); // all Inv
+    assertEquals(Double.NaN, term.evalD(evalEnv));
+
   }
 
   @Test
@@ -107,6 +125,12 @@ class WindowFunctionsTest {
     assertEquals(180 / 4., term.evalD(evalEnv));
     evalEnv.setElemIndex(toElemIndex(8, 7));
     assertEquals(702 / 9., term.evalD(evalEnv));
+
+    evalEnv.setElemIndex(toElemIndex(1, 8)); // all NaN
+    assertEquals(Double.NaN, term.evalD(evalEnv));
+    evalEnv.setElemIndex(toElemIndex(5, 8)); // all Inv
+    assertEquals(Double.NaN, term.evalD(evalEnv));
+
   }
 
   @Test
@@ -122,6 +146,11 @@ class WindowFunctionsTest {
     assertEquals(45, term.evalD(evalEnv));
     evalEnv.setElemIndex(toElemIndex(8, 7));
     assertEquals(79, term.evalD(evalEnv));
+
+    evalEnv.setElemIndex(toElemIndex(1, 8)); // all NaN
+    assertEquals(Double.NaN, term.evalD(evalEnv));
+    evalEnv.setElemIndex(toElemIndex(5, 8)); // all Inv
+    assertEquals(Double.NaN, term.evalD(evalEnv));
   }
 
   @Test

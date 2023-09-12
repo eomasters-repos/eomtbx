@@ -9,12 +9,12 @@
  * it under the terms of the GNU General Public License as
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public
  * License along with this program.  If not, see
  * -> http://www.gnu.org/licenses/gpl-3.0.html
@@ -36,6 +36,20 @@ import org.esa.snap.core.jexp.Term;
 import org.esa.snap.core.jexp.Term.Ref;
 import org.esa.snap.core.jexp.impl.AbstractFunction.D;
 
+/**
+ * Window functions for band math expressions.
+ * <p>
+ * The following functions are available:
+ *  <ul>
+ *    <li>sum: Sum of all valid pixels in the window</li>
+ *    <li>min: Minimum of all valid pixels in the window</li>
+ *    <li>max: Maximum of all valid pixels in the window</li>
+ *    <li>mean: Mean of all valid pixels in the window</li>
+ *    <li>median: Median of all valid pixels in the window</li>
+ * </ul>
+ * p>
+ *   The window is centered on the current pixel and the window size must be 3, 5 or 7.
+ */
 class WindowFunctions extends D {
 
   private static final int[] ALLOWED_WND_SIZES = new int[]{3, 5, 7};
@@ -112,17 +126,19 @@ class WindowFunctions extends D {
 
   private double sum(RasterDataNode raster, int wndSize, EvalEnv env) {
     double[] data = getNanFilteredData(raster, wndSize, env);
-    return Arrays.stream(data).sum();
+    return data.length == 0 ? Double.NaN : Arrays.stream(data).sum();
   }
 
   private double mean(RasterDataNode raster, int wndSize, EvalEnv env) {
     double[] data = getNanFilteredData(raster, wndSize, env);
-    double sum = Arrays.stream(data).sum();
-    return sum / data.length;
+    return data.length == 0 ? Double.NaN : Arrays.stream(data).sum() / data.length;
   }
 
   private double median(RasterDataNode raster, int wndSize, EvalEnv env) {
     double[] data = getNanFilteredData(raster, wndSize, env);
+    if (data.length == 0) {
+      return Double.NaN;
+    }
     Arrays.sort(data);
     long count = data.length;
     if (count % 2 == 0) {

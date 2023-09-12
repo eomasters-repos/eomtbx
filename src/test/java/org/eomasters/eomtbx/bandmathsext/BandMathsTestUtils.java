@@ -45,9 +45,9 @@ public class BandMathsTestUtils {
    *  4: NAN, 41, 42, 43,INV,INV,INV, 47, 48, 49,
    *  5: NAN, 51, 52, 53, 54,INV, 56, 57, 58, 59,
    *  6: NAN, 61, 62, 63, 64,INV, 66, 67, 68, 69,
-   *  7: NAN, 71, 72, 73, 74,INV, 76, 77, 78, 79,
-   *  8: NAN, 81, 82, 83, 84,INV, 86, 87, 88, 89,
-   *  9: NAN, 91, 92, 93, 94,INV, 96, 97, 98, 99
+   *  7: NAN,NAN,NAN, 73,INV,INV,INV, 77, 78, 79,
+   *  8: NAN,NAN,NAN, 83,INV,INV,INV, 87, 88, 89,
+   *  9: NAN,NAN,NAN, 93,INV,INV,INV, 97, 98, 99
    *  </pre>
    */
   static Product createProduct() {
@@ -56,17 +56,26 @@ public class BandMathsTestUtils {
 
     double[] data = createData();
     band.setData(ProductData.createInstance(data));
-    band.setValidPixelExpression("B1 % 5 != 0 && B1 != 44 && B1 != 46");
+    band.setValidPixelExpression("B1 % 5 != 0 && B1 != 44 && B1 != 46 "
+        + "&& B1 != 74 && B1 != 84 && B1 != 94"
+        + "&& B1 != 76 && B1 != 86 && B1 != 96");
     return product;
   }
 
   // resulting data array contain values from 0 to w*h-1.
   // the first element of each row is set to NaN
+  // also the elements 7,1; 7,2; 8,1; 8,2; 9,1; 9,2 are set to NaN
   private static double[] createData() {
     double[] array = IntStream.range(0, W * H).asDoubleStream().toArray();
     for (int y = 0; y < H; y++) {
       array[y * W] = Double.NaN;
     }
+    array[7 * W + 1] = Double.NaN;
+    array[7 * W + 2] = Double.NaN;
+    array[8 * W + 1] = Double.NaN;
+    array[8 * W + 2] = Double.NaN;
+    array[9 * W + 1] = Double.NaN;
+    array[9 * W + 2] = Double.NaN;
     return array;
   }
 
