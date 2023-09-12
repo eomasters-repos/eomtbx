@@ -6,7 +6,7 @@
 <map version="2.0">
   <mapID target="eomtbxIntro" url="pages/Intro.html"/>
   <mapID target="eomtbxQuickMenu" url="pages/QuickMenu.html"/>
-  <mapID target="eomtbxBatchGPT" url="pages/BatchGpt.html"/>
+  <mapID target="eomtbxLoopGPT" url="pages/LoopGpt.html"/>
   <mapID target="eomtbxBMExtensions" url="pages/BMExtensions.html"/>
   <mapID target="eomtbxWvlEditor" url="pages/WvlEditor.html"/>
   <mapID target="eomtbxCloseProductNoView" url="pages/CloseProductNoView.html"/>

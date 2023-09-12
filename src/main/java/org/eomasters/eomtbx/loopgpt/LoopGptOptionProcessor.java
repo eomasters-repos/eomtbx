@@ -21,7 +21,7 @@
  * =========================LICENSE_END==================================
  */
 
-package org.eomasters.eomtbx.batchgpt;
+package org.eomasters.eomtbx.loopgpt;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -40,28 +40,29 @@ import org.netbeans.spi.sendopts.OptionProcessor;
 import org.openide.util.NbBundle;
 
 /**
- * Option processor for the --bgpt option.
- * <p>With this option, a file with GPT commands can be run in batch mode.</p>
- * <p>Example: <code>snap --bgpt C:\temp\commands.txt</code></p>
+ * Option processor for the --loopgpt option.
+ * <p>With this option, a file with GPT commands can be run in batch mode.
+ * It loops over each line and executes the gpt command</p>
+ * <p>Example: <code>snap --loopgpt C:\temp\commands.txt</code></p>
  * <p>To prevent the GUI and splash screen from showing, add also {@code --nogui} {@code --nosplash} <br>
  * The GPT commands file should contain one command per line. Empty lines and comments (starting with #) are allowed and
  * will be ignored. File paths containing spaces shall be put inside double quotes.</p>
  */
 @org.openide.util.lookup.ServiceProvider(service = OptionProcessor.class)
 @NbBundle.Messages({
-    "DSC_BatchGpt=Run GPT commands in batch: snap --bgpt <file-path>; "
+    "DSC_LoopGpt=Run GPT commands in loop: snap --loopgpt <file-path>; "
         + "Add also --nogui --nosplash to prevent GUI and splash screen"
 })
-public class BatchGptOptionProcessor extends OptionProcessor {
+public class LoopGptOptionProcessor extends OptionProcessor {
 
   private static final String PROP_PLUGIN_MANAGER_CHECK_INTERVAL = "plugin.manager.check.interval";
-  private static final Option batchGPT;
+  private static final Option loopGpt;
   private static final Set<Option> optionSet;
 
   static {
-    String b = BatchGptOptionProcessor.class.getPackageName() + ".Bundle";
-    batchGPT = Option.shortDescription(Option.requiredArgument(Option.NO_SHORT_NAME, "bgpt"), b, "DSC_BatchGpt");
-    optionSet = Collections.singleton(OptionGroups.allOf(batchGPT));
+    String b = LoopGptOptionProcessor.class.getPackageName() + ".Bundle";
+    loopGpt = Option.shortDescription(Option.requiredArgument(Option.NO_SHORT_NAME, "loopgpt"), b, "DSC_LoopGpt");
+    optionSet = Collections.singleton(OptionGroups.allOf(loopGpt));
   }
 
   private static List<String> readCommands(Path commandsFilePath) throws CommandException {
@@ -94,9 +95,9 @@ public class BatchGptOptionProcessor extends OptionProcessor {
   @Override
   protected void process(Env env, Map<Option, String[]> optionValues) throws CommandException {
 
-    if (optionValues.containsKey(batchGPT)) {
+    if (optionValues.containsKey(loopGpt)) {
       System.setProperty(PROP_PLUGIN_MANAGER_CHECK_INTERVAL, "NEVER");
-      String[] args = optionValues.get(batchGPT);
+      String[] args = optionValues.get(loopGpt);
       if (args.length < 1) {
         throw new CommandException(90001, "No file path given");
       }

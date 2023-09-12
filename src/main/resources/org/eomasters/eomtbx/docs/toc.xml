@@ -5,7 +5,7 @@
 <toc categoryclosedimage="folder" categoryopenimage="folder" topicimage="doc" version="2.0">
   <tocitem target="eomtbxIntro" text="EOM Toolbox Intor">
     <tocitem target="eomtbxQuickMenu" text="Quick Menu"/>
-    <tocitem target="eomtbxBatchGPT" text="Batch GPT"/>
+    <tocitem target="eomtbxLoopGPT" text="Loop GPT"/>
     <tocitem target="eomtbxBMExtensions" text="BandMaths Extension"/>
     <tocitem target="eomtbxWvlEditor" text="Wavelength Editor"/>
     <tocitem target="eomtbxCloseProductNoView" text="Close Products without a View"/>
