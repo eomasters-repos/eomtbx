@@ -9,7 +9,6 @@
   <mapID target="eomtbxBatchGPT" url="pages/BatchGpt.html"/>
   <mapID target="eomtbxBMExtensions" url="pages/BMExtensions.html"/>
   <mapID target="eomtbxWvlEditor" url="pages/WvlEditor.html"/>
-  <mapID target="eomtbxViewBookmarks" url="pages/ViewBookmarks.html"/>
   <mapID target="eomtbxCloseProductNoView" url="pages/CloseProductNoView.html"/>
   <mapID target="eomtbxSystemReport" url="pages/CreateSystemReport.html"/>
   <mapID target="eomtbxPreferences" url="pages/Preferences.html"/>
