@@ -53,7 +53,7 @@ import org.openide.util.Lookup;
 @OptionsPanelController.TopLevelRegistration(
     id = EomtbxOptionsPanelController.OPTIONS_ID,
     categoryName = "EOMTBX",
-    iconBase = "org/eomasters/eomtbx/icons/Eomtbx_48.png",
+    iconBase = "org/eomasters/eomtbx/icons/Eomtbx_32.png",
     keywordsCategory = "EOMTBX",
     keywords = "EOMTBX, EOMASTERS, Toolbox",
     position = 9000
