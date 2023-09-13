@@ -21,7 +21,7 @@
  * =========================LICENSE_END==================================
  */
 
-package org.eomasters.eomtbx;
+package org.eomasters.eomtbx.actions;
 
 import eu.esa.snap.netbeans.docwin.WindowUtilities;
 import java.awt.event.ActionEvent;
