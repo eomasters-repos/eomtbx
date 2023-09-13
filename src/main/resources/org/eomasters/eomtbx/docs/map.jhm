@@ -11,5 +11,5 @@
   <mapID target="eomtbxWvlEditor" url="pages/WvlEditor.html"/>
   <mapID target="eomtbxCloseProductNoView" url="pages/CloseProductNoView.html"/>
   <mapID target="eomtbxSystemReport" url="pages/CreateSystemReport.html"/>
-  <mapID target="eomtbxPreferences" url="pages/Preferences.html"/>
+  <mapID target="eomtbxOptions" url="pages/Options.html"/>
 </map>

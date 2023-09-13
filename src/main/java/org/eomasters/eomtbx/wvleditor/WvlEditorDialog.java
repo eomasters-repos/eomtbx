@@ -9,12 +9,12 @@
  * it under the terms of the GNU General Public License as
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public
  * License along with this program.  If not, see
  * -> http://www.gnu.org/licenses/gpl-3.0.html
@@ -31,6 +31,7 @@ import java.awt.Frame;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Stream;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -43,6 +44,7 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumnModel;
 import net.miginfocom.swing.MigLayout;
+import org.eomasters.eomtbx.icons.Icons;
 import org.eomasters.eomtbx.utils.MultiLineText;
 import org.eomasters.eomtbx.utils.NumberCellEditor;
 import org.eomasters.eomtbx.utils.ProductSelectionDialog;
@@ -59,7 +61,7 @@ class WvlEditorDialog extends ModalDialog {
 
   public static final String HID_EOMTBX_WvlEditor = "eomtbxWvlEditor";
   private final Product refProduct;
-  private final List<ProductSelection> additionalProducts = new ArrayList<>();
+  private final List<ProductSelection> compatibleProducts = new ArrayList<>();
   private final WvlEditorTableModel tableModel;
 
 
@@ -78,8 +80,11 @@ class WvlEditorDialog extends ModalDialog {
   private JPanel createContentPanel() {
     JPanel headerPanel = new JPanel(new MigLayout("top, left, gap 5", "[][fill, grow]"));
     headerPanel.add(new JLabel("Product:"));
-    JTextField productNameField = new JTextField(refProduct.getDisplayName());
+    JTextField productNameField = new JTextField();
     productNameField.setEditable(false);
+    productNameField.setColumns(60);
+    productNameField.setText(refProduct.getDisplayName());
+    productNameField.setToolTipText(refProduct.getDisplayName());
     headerPanel.add(productNameField);
 
     JTable table = createTable();
@@ -93,22 +98,23 @@ class WvlEditorDialog extends ModalDialog {
     panel.add(headerPanel, BorderLayout.NORTH);
     panel.add(scrollPane, BorderLayout.CENTER);
 
-    if (!additionalProducts.isEmpty()) {
+    if (!compatibleProducts.isEmpty()) {
       JPanel footerPanel = new JPanel(new MigLayout("fillx,  bottom"));
       JLabel note = new JLabel(
           "<html><b>Note:</b> Wavelength properties are only editable for bands without sample coding.");
       note.setFont(note.getFont().deriveFont(Font.PLAIN));
       footerPanel.add(note, "span 2, growx, gapbottom 10, left, wrap");
 
-      MultiLineText textField = new MultiLineText("There are " + additionalProducts.size()
+      MultiLineText textField = new MultiLineText("There are " + compatibleProducts.size()
           + " other compatible products opened. Shall the changes be applied to those too?");
       textField.setPreferredWidth(300);
       footerPanel.add(textField, "wmin 10, growx");
-      JButton productSelectionBtn = new JButton(createButtonText(additionalProducts));
+      JButton productSelectionBtn = new JButton(createButtonText(compatibleProducts));
       productSelectionBtn.addActionListener(e -> {
-        ProductSelectionDialog selectionDialog = new ProductSelectionDialog(getParent(), additionalProducts);
+        ProductSelectionDialog selectionDialog = new ProductSelectionDialog(getParent(), compatibleProducts);
+        selectionDialog.getJDialog().setIconImage(Icons.WVL_EDITOR.s16.getImage());
         selectionDialog.show();
-        productSelectionBtn.setText(createButtonText(additionalProducts));
+        productSelectionBtn.setText(createButtonText(compatibleProducts));
       });
       footerPanel.add(productSelectionBtn, "right");
       panel.add(footerPanel, BorderLayout.SOUTH);
@@ -131,11 +137,11 @@ class WvlEditorDialog extends ModalDialog {
     TableCellRenderer renderer = new DisabledCellRenderer();
     for (int i = 0; i < table.getColumnCount(); i++) {
       if (i == 0) {
-        columnModel.getColumn(i).setPreferredWidth(150); // first column is bigger
+        columnModel.getColumn(i).setPreferredWidth(120); // first column is bigger
       } else {
         columnModel.getColumn(i).setCellRenderer(renderer);
-        columnModel.getColumn(i).setPreferredWidth(50);
-        //noinspection unchecked
+        columnModel.getColumn(i).setPreferredWidth(40);
+        // noinspection unchecked
         NumberCellEditor cellEditor = new NumberCellEditor((Class<? extends Number>) tableModel.getColumnClass(i));
         columnModel.getColumn(i).setCellEditor(cellEditor);
       }
@@ -146,13 +152,14 @@ class WvlEditorDialog extends ModalDialog {
   @Override
   public int show() {
     setContent(createContentPanel());
+    getJDialog().setIconImage(Icons.WVL_EDITOR.s16.getImage());
     return super.show();
   }
 
   @Override
   protected void onOK() {
     List<ProductSelection> applyToProduct = new ArrayList<>();
-    Collections.copy(additionalProducts, applyToProduct);
+    Collections.copy(compatibleProducts, applyToProduct);
     applyToProduct.add(0, new ProductSelection(refProduct, true));
     int rowCount = tableModel.getRowCount();
 
@@ -178,9 +185,22 @@ class WvlEditorDialog extends ModalDialog {
   }
 
   public void addAdditionalProducts(Product... additional) {
-    for (Product product : additional) {
-      additionalProducts.add(new ProductSelection(product, false));
+    String[] refBandNames = refProduct.getBandNames();
+    Stream.of(additional).filter(p1 -> isCompatible(p1, refBandNames))
+        .forEach(p -> compatibleProducts.add(new ProductSelection(p, false)));
+  }
+
+  private boolean isCompatible(Product p, String[] refBandNames) {
+    String[] bandNames = p.getBandNames();
+    if (refBandNames.length != bandNames.length) {
+      return false;
     }
+    for (int i = 0; i < refBandNames.length; i++) {
+      if (!refBandNames[i].equals(bandNames[i])) {
+        return false;
+      }
+    }
+    return true;
   }
 
   public static void main(String[] args) {
@@ -212,8 +232,8 @@ class WvlEditorDialog extends ModalDialog {
     @Override
     public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
         int row, int column) {
-      Component rendererComponent = super.getTableCellRendererComponent(table, value, isSelected, hasFocus,
-          row, column);
+      Component rendererComponent = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row,
+          column);
       rendererComponent.setEnabled(table.isCellEditable(row, column));
       if (rendererComponent instanceof JLabel) {
         ((JLabel) rendererComponent).setHorizontalAlignment(JLabel.RIGHT);

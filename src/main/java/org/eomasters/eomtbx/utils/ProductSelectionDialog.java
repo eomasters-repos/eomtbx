@@ -68,8 +68,8 @@ public class ProductSelectionDialog extends ModalDialog {
     productSelectionTable.getColumnModel().getColumn(0).setMaxWidth(30);
     JScrollPane scrollPane = new JScrollPane(productSelectionTable, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
         ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-    scrollPane.setMinimumSize(new Dimension(100, 200));
-    scrollPane.setPreferredSize(new Dimension(200, 250));
+    scrollPane.setMinimumSize(new Dimension(200, 100));
+    scrollPane.setPreferredSize(new Dimension(250, 125));
 
     JPanel panel = new JPanel(new BorderLayout(5, 5));
     panel.add(scrollPane, BorderLayout.CENTER);

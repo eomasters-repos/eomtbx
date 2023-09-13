@@ -27,6 +27,7 @@ import java.awt.event.ActionEvent;
 import java.util.Arrays;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
+import org.eomasters.eomtbx.icons.Icons;
 import org.esa.snap.core.datamodel.Product;
 import org.esa.snap.core.datamodel.ProductNode;
 import org.esa.snap.rcp.SnapApp;
@@ -41,8 +42,8 @@ import org.openide.util.NbBundle;
  */
 @ActionID(category = "View", id = "EOMTBX_WvlEditorAction")
 @ActionRegistration(
-    displayName = "#CTL_WvlEditorAction_MenuText",
-    popupText = "#CTL_WvlEditorAction_MenuText",
+    displayName = "#TXT_WvlEditorAction",
+    popupText = "#TXT_WvlEditorAction",
     iconBase = "org/eomasters/eomtbx/icons/WvlEditor_16.png"
 )
 // [cut,copy,paste,delete] are from 500 to 540 and Properties is at 710, separator-before is at 700
@@ -53,8 +54,8 @@ import org.openide.util.NbBundle;
     @ActionReference(path = "Context/Product/RasterDataNode", position = 1010, separatorBefore = 1000),
 })
 @NbBundle.Messages({
-    "CTL_WvlEditorAction_MenuText=Modify Wavelengths...",
-    "CTL_WvlEditorAction_ShortDescription=Open editor to modify multiply wavelengths of one more or products"
+    "TXT_WvlEditorAction=Modify Wavelengths...",
+    "DSC_WvlEditorAction=Open editor to modify multiply wavelengths of one more or products"
 })
 public class WvlEditorAction extends AbstractAction {
 
@@ -66,9 +67,9 @@ public class WvlEditorAction extends AbstractAction {
    * @param node the node of the product which is currently selected
    */
   public WvlEditorAction(ProductNode node) {
-    super(Bundle.CTL_WvlEditorAction_MenuText());
+    super(Bundle.TXT_WvlEditorAction(), Icons.WVL_EDITOR.s16);
     product = node.getProduct();
-    putValue(Action.SHORT_DESCRIPTION, Bundle.CTL_WvlEditorAction_ShortDescription());
+    putValue(Action.SHORT_DESCRIPTION, Bundle.DSC_WvlEditorAction());
   }
 
   @Override
