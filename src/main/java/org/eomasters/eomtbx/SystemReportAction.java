@@ -52,9 +52,9 @@ public class SystemReportAction extends AbstractAction {
 
   @Override
   public void actionPerformed(ActionEvent e) {
-    SystemReport errorReport = new SystemReport().name("SNAP_System_Report");
+    SystemReport systemReport = new SystemReport().name("SNAP_System_Report");
 
-    CollapsiblePanel reportArea = CollapsiblePanel.createLongTextPanel("System Report", errorReport.generate());
+    CollapsiblePanel reportArea = CollapsiblePanel.createLongTextPanel("System Report", systemReport.generate());
     reportArea.setCollapsed(false);
 
     Dialogs.message("System Report", reportArea);

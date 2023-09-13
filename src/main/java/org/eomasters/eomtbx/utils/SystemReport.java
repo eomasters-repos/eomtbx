@@ -46,7 +46,7 @@ import org.openide.util.Lookup;
  * <p>The report contains the following information:
  * <ul>
  *   <li>Basic System Information/li>
- *   <li>Stacktrace</li>
+ *   <li>Stacktrace (optionally, if provided)</li>
  *   <li>Installed Modules</li>
  *   <li>Open Products</li>
  *   <li>Preferences</li>
