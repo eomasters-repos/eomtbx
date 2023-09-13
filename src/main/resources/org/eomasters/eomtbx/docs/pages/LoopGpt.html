@@ -40,7 +40,40 @@
 </table>
 
 <h3>Loop GPT</h3>
+<p>
+  When using GPT from the command line each gpt call is executed separately. The GPT engine is started and stopped for
+  each call including the Java VM. This takes some time, especially when processing smaller areas or other short running
+  tasks this can take up a reasonable percentage of the whole processing. The Loop GPT avoids this starting and stopping
+  of the GPT engine and Java VM by looping over the GPT calls. It also eases the batch processing of multiple products.
+</p>
+<p>
+  Loop GPT executes GPT calls provided in a commands files. The commands file contains one GPT call per line. Empty
+  lines
+  and comments (starting with #) are allowed and will be ignored. File paths containing spaces shall be put inside
+  double
+  quotes.
+</p>
 
+<div>Example:<br>
+  Unix: <code>snap --loopgpt ~/commands.txt</code><br>
+  Windows: <code>snap64 --loopgpt C:\temp\commands.txt</code><br>
+</div>
+<p>To prevent the GUI and splash screen from showing, add also <code>--nogui</code> and <code>--nosplash</code></p>
+
+<b>Commands File</b>
+<p>The commands file contains one GPT call per line without the gpt executable at the beginning only the GPT parameters
+  shall be provided. Empty lines and comments (starting with #) are allowed and will be
+  ignored. File paths containing spaces shall be put inside double quotes.</p>
+<div>Example:<br>
+  <pre>
+# An initial comment line
+# A GPT graph file call
+D:\processing\S2_BandMaths.xml -t D:\EOData\S2\S2A_MSIL1C_20230627T105621.dim -q 6 D:\EOData\S2\S2A_MSIL1C_20230627T105621_N0509_R094_T30SVG_20230627T162159.SAFE.zip
+
+# A GPT operator call
+Resample -PtargetWidth=1000 -PtargetHeight=1000 -t D:\EOData\S3\S3B_OL_1_EFR____20230717T104859.nc -f NetCDF4-CF -SsourceProduct=D:\EOData\S3\OLCI\S3B_OL_1_EFR____20230717T104859_20230717T105159_20230717T232729_0180_081_379_2160_PS2_O_NT_003.SEN3
+  </pre>
+</div>
 
 <footer>
   <hr>

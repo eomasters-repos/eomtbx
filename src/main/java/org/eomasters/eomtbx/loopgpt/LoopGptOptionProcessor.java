@@ -80,7 +80,7 @@ public class LoopGptOptionProcessor extends OptionProcessor {
   // Splits a command line into an array of strings. As separator serves a space character but if the space is inside
   // a pair of double quotes, it is not used as separator. The double quotes are removed from the result.
   static String[] parseCommandline(String cmd) {
-    String[] split = cmd.split(" (?=([^\"]*\"[^\"]*\")*[^\"]*$)");
+    String[] split = cmd.trim().split(" (?=([^\"]*\"[^\"]*\")*[^\"]*$)");
     for (int i = 0; i < split.length; i++) {
       split[i] = split[i].replace("\"", "");
     }
