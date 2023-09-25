@@ -44,6 +44,10 @@ public final class Icons {
    * An icon for the Wavelength Editor.
    */
   public static final Icon WVL_EDITOR = new Icon("WvlEditor");
+  /**
+   * An icon for the System Report.
+   */
+  public static final Icon SYS_REPORT = new Icon("SysReport");
 
   private Icons() {
   }

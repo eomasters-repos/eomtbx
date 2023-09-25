@@ -9,12 +9,12 @@
  * it under the terms of the GNU General Public License as
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public
  * License along with this program.  If not, see
  * -> http://www.gnu.org/licenses/gpl-3.0.html
@@ -24,14 +24,20 @@
 package org.eomasters.eomtbx.utils;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Path;
 import java.time.Clock;
 import java.time.Instant;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Comparator;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.prefs.Preferences;
+import org.apache.commons.io.input.ReversedLinesFileReader;
+import org.eomasters.eomtbx.EomToolbox;
 import org.esa.snap.core.datamodel.Product;
 import org.esa.snap.core.datamodel.ProductManager;
 import org.esa.snap.core.util.SystemUtils;
@@ -52,6 +58,7 @@ import org.openide.util.Lookup;
  *   <li>Preferences</li>
  *   <li>System Properties</li>
  *   <li>Environment Variables</li>
+ *   <li>System Log Tail (optionally, if number of lines has been set)</li>
  * </ul>
  */
 public class SystemReport {
@@ -61,6 +68,7 @@ public class SystemReport {
   private String message;
   private Throwable throwable;
   private final Instant created;
+  private int numLogTailLines = -1;
 
   /**
    * Generates an error report instance.
@@ -114,6 +122,17 @@ public class SystemReport {
     return this;
   }
 
+  /**
+   * Includes the last {@code numLines} of the log file.
+   *
+   * @param numLines the number of lines to include
+   * @return this report
+   */
+  public SystemReport logTail(int numLines) {
+    this.numLogTailLines = numLines;
+    return this;
+  }
+
 
   /**
    * Returns the name of the report.
@@ -125,8 +144,8 @@ public class SystemReport {
   }
 
   /**
-   * Returns the title of the report.
-   * If no title is set, the title is "Error Report" if a throwable is set, otherwise it is "System Report".
+   * Returns the title of the report. If no title is set, the title is "Error Report" if a throwable is set, otherwise
+   * it is "System Report".
    *
    * @return the title
    */
@@ -155,15 +174,30 @@ public class SystemReport {
     getTitle();
     StringBuilder report = new StringBuilder(title + ": ");
     addBasicInformation(report);
-    if (throwable != null) {
-      addStackTrace(report);
-    }
+    addStackTrace(report);
     addProductList(report);
     addInstalledModules(report);
     addPreferences(report);
     addSystemProperties(report);
     addEnvironmentVariables(report);
+    addLogTail(report);
     return report.toString();
+  }
+
+  private void addLogTail(StringBuilder report) {
+    if (numLogTailLines > 0) {
+      report.append("System Log Tail:\n");
+
+      Path logFile = EomToolbox.getCurrentLogFile();
+      try (ReversedLinesFileReader reader = new ReversedLinesFileReader(logFile.toFile(), StandardCharsets.UTF_8)) {
+        List<String> lines = reader.readLines(numLogTailLines);
+        lines.forEach(line -> report.append(line).append("\n"));
+      } catch (IOException e) {
+        report.append("Error while reading log file: ").append(e.getMessage()).append("\n");
+      }
+      report.append("\n\n");
+    }
+
   }
 
   private static void addEnvironmentVariables(StringBuilder report) {
@@ -231,14 +265,6 @@ public class SystemReport {
     report.append("\n\n");
   }
 
-  private static long toMib(long memory) {
-    return memory / 1024 / 1024;
-  }
-
-  private static long toGib(long memory) {
-    return memory / 1024 / 1024 / 1024;
-  }
-
   private void addStackTrace(StringBuilder report) {
     if (throwable != null) {
       report.append("Stacktrace:\n");
@@ -276,5 +302,13 @@ public class SystemReport {
           .append(toGib(root.getTotalSpace())).append(" Free/Total GiB\n");
     }
     report.append("\n\n");
+  }
+
+  private static long toMib(long memory) {
+    return memory / 1024 / 1024;
+  }
+
+  private static long toGib(long memory) {
+    return memory / 1024 / 1024 / 1024;
   }
 }

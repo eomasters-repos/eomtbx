@@ -26,6 +26,7 @@ package org.eomasters.eomtbx.utils;
 import java.awt.BorderLayout;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import javax.swing.Icon;
 import javax.swing.JCheckBox;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
@@ -60,6 +61,17 @@ public final class Dialogs {
    */
   public static void message(String title, JComponent message) {
     JOptionPane.showMessageDialog(null, message, title, JOptionPane.PLAIN_MESSAGE);
+  }
+
+  /**
+   * Shows a message dialog.
+   *
+   * @param title   the title
+   * @param icon    the dialog icon
+   * @param message the message component
+   */
+  public static void message(String title, Icon icon, JComponent message) {
+    JOptionPane.showMessageDialog(null, message, title, JOptionPane.PLAIN_MESSAGE, icon);
   }
 
   /**

@@ -11,5 +11,9 @@
   <mapID target="eomtbxWvlEditor" url="pages/WvlEditor.html"/>
   <mapID target="eomtbxCloseProductNoView" url="pages/CloseProductNoView.html"/>
   <mapID target="eomtbxSystemReport" url="pages/CreateSystemReport.html"/>
-  <mapID target="eomtbxOptions" url="pages/Options.html"/>
+  <mapID target="eomtbxErrorHandler" url="pages/ErrorHandler.html"/>
+  <mapID target="eomtbxOptions" url="pages/EomtbxOptions.html"/>
+  <mapID target="eomtbxCredits" url="pages/EomtbxCredits.html"/>
+
+  <mapID target="eomtbxIcon" url="images/Eomtbx_16.png"/>
 </map>

@@ -9,12 +9,12 @@
  * it under the terms of the GNU General Public License as
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public
  * License along with this program.  If not, see
  * -> http://www.gnu.org/licenses/gpl-3.0.html
@@ -42,6 +42,7 @@ import javax.swing.JTextArea;
 import javax.swing.SwingUtilities;
 import net.miginfocom.swing.MigLayout;
 import org.eomasters.eomtbx.EomToolbox;
+import org.eomasters.eomtbx.icons.Icons;
 import org.eomasters.eomtbx.utils.FileSharingService.UploadResponse;
 import org.esa.snap.core.util.SystemUtils;
 import org.hsqldb.lib.StringInputStream;
@@ -104,7 +105,7 @@ public class ErrorHandler {
         "Sorry, this should not have happened. Please help to fix this problem and report the issue to EOMasters.\n");
     contentPane.add(headerText, "top, left, growx, wmin 10, wrap");
 
-    SystemReport errorReport = new SystemReport().name("EOMTBX_Error_Report").message(message).throwable(exception);
+    SystemReport errorReport = new SystemReport().name("EOMTBX_Error_Report").message(message).throwable(exception).logTail(150);
     CollapsiblePanel reportArea = CollapsiblePanel.createLongTextPanel("Error Report Preview", errorReport.generate());
     contentPane.add(reportArea, "top, left, grow, wrap");
 
@@ -124,6 +125,7 @@ public class ErrorHandler {
       dialog.dispose();
     });
 
+    dialog.setIconImage(Icons.EOMTBX.s16.getImage());
     dialog.setTitle("Unexpected Error");
     dialog.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     dialog.setLocationRelativeTo(null);
@@ -140,8 +142,8 @@ public class ErrorHandler {
         JPanel panel = new JPanel(new MigLayout("top, left, fillx, gap 5 5"));
         FileSharingService sharingService = FileSharing.getService();
         String serviceName = sharingService.getName().replace(" ", "_");
-        panel.add(new JLabel("<html>The error report will be uploaded to the " + serviceName
-            + " file sharing service and linked in the e-mail.<br>" + "Please note the <b>"
+        panel.add(new JLabel("<html>The error report will be uploaded to the <b>" + serviceName
+            + "</b> file sharing service and linked in the e-mail.<br>" + "Please note the <b>"
             + "Terms of Service</b> and the <b>Privacy Policy</b>.<br>"), "top, left, wrap");
         JButton tosBtn = new JButton("Open Terms of Service");
         tosBtn.addActionListener(new OpenUriAdaptor(sharingService.getTosUrl()));
@@ -152,6 +154,9 @@ public class ErrorHandler {
         panel.add(privacyBtn, "top, left");
         panel.add(new JLabel(), "top, left, growx, wrap");
         panel.add(new JLabel("Do you want to continue?"), "top, left, wrap");
+        panel.add(new JLabel(
+                "If not, please use the preview area to either copy the report to the clipboard or save it "
+                    + "as a file and provide it with the mail."), "top, left, wrap");
 
         boolean uploadAllowed = Dialogs.confirmation("Report Error", panel, "errorReportUpload." + serviceName);
 

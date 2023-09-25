@@ -9,12 +9,12 @@
  * it under the terms of the GNU General Public License as
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public
  * License along with this program.  If not, see
  * -> http://www.gnu.org/licenses/gpl-3.0.html
@@ -25,6 +25,7 @@ package org.eomasters.eomtbx.actions;
 
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
+import org.eomasters.eomtbx.icons.Icons;
 import org.eomasters.eomtbx.utils.CollapsiblePanel;
 import org.eomasters.eomtbx.utils.Dialogs;
 import org.eomasters.eomtbx.utils.SystemReport;
@@ -47,17 +48,17 @@ public class SystemReportAction extends AbstractAction {
    * Creates a new Action.
    */
   public SystemReportAction() {
-    super(Bundle.SystemReportActionName());
+    super(Bundle.SystemReportActionName(), Icons.SYS_REPORT.s16);
   }
 
   @Override
   public void actionPerformed(ActionEvent e) {
-    SystemReport systemReport = new SystemReport().name("SNAP_System_Report");
+    SystemReport systemReport = new SystemReport().name("SNAP_System_Report").logTail(100);
 
     CollapsiblePanel reportArea = CollapsiblePanel.createLongTextPanel("System Report", systemReport.generate());
     reportArea.setCollapsed(false);
 
-    Dialogs.message("System Report", reportArea);
+    Dialogs.message("System Report", Icons.SYS_REPORT.s16, reportArea);
   }
 
 }

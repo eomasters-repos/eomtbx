@@ -40,7 +40,7 @@ public class GoFileService implements FileSharingService {
 
   @Override
   public String getName() {
-    return "Gofile";
+    return "GoFile";
   }
 
   @Override

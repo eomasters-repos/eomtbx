@@ -27,6 +27,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
 import javax.xml.parsers.DocumentBuilder;
@@ -37,6 +39,7 @@ import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 import org.eomasters.eomtbx.quickmenu.QuickMenu;
+import org.esa.snap.core.util.SystemUtils;
 import org.esa.snap.rcp.SnapApp;
 import org.openide.modules.OnStart;
 import org.openide.modules.OnStop;
@@ -126,6 +129,14 @@ public class EomToolbox {
 
   public static boolean isHeadless() {
     return System.getProperty("java.awt.headless", "false").equals("true");
+  }
+
+  public static Path getCurrentLogFile() {
+    Path userHomeDir = SystemUtils.getUserHomeDir().toPath();
+    Path winLogDir = userHomeDir.resolve("AppData/Roaming/SNAP/var/log");
+    Path unixLogDir = userHomeDir.resolve(".snap/system/var/log");
+    Path logDir = Files.exists(winLogDir) ? winLogDir : unixLogDir;
+    return logDir.resolve("messages.log");
   }
 
 

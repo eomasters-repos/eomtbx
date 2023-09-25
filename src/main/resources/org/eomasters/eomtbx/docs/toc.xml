@@ -3,15 +3,16 @@
   "http://java.sun.com/products/javahelp/toc_2_0.dtd">
 
 <toc categoryclosedimage="folder" categoryopenimage="folder" topicimage="doc" version="2.0">
-  <tocitem target="eomtbxIntro" text="EOM Toolbox">
+  <tocitem target="eomtbxIntro" text="EOM Toolbox" image="eomtbxIcon">
     <tocitem target="eomtbxIntro" text="Intro"/>
     <tocitem target="eomtbxQuickMenu" text="Quick Menu"/>
     <tocitem target="eomtbxLoopGPT" text="Loop GPT"/>
     <tocitem target="eomtbxBMExtensions" text="BandMaths Extension"/>
     <tocitem target="eomtbxWvlEditor" text="Wavelength Editor"/>
     <tocitem target="eomtbxCloseProductNoView" text="Close Products without a View"/>
-    <tocitem target="eomtbxViewBookmarks" text="View Bookmarks"/>
     <tocitem target="eomtbxSystemReport" text="Create System Report"/>
+    <tocitem target="eomtbxErrorHandler" text="Error Handler"/>
     <tocitem target="eomtbxOptions" text="EOMTBX Options"/>
+    <tocitem target="eomtbxCredits" text="Credits"/>
   </tocitem>
 </toc>
