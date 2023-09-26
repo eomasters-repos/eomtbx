@@ -138,7 +138,6 @@
     </dependency>
 
 
-
     <dependency>
       <groupId>org.apache.commons</groupId>
       <artifactId>commons-text</artifactId>
@@ -166,6 +165,21 @@
       <artifactId>junit-jupiter</artifactId>
       <scope>test</scope>
     </dependency>
+
+    <!-- needed to run tests -->
+    <dependency>
+      <groupId>org.netbeans.api</groupId>
+      <artifactId>org-openide-dialogs</artifactId>
+      <version>RELEASE113</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.netbeans.api</groupId>
+      <artifactId>org-netbeans-swing-tabcontrol</artifactId>
+      <version>RELEASE113</version>
+      <scope>test</scope>
+    </dependency>
+
 
   </dependencies>
 

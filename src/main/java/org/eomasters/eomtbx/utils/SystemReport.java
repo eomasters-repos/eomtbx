@@ -94,6 +94,7 @@ public class SystemReport {
    *
    * @param title the title of the report
    * @return this report
+   * @see #getTitle()
    */
   public SystemReport title(String title) {
     this.title = title;
@@ -150,10 +151,7 @@ public class SystemReport {
    * @return the title
    */
   public String getTitle() {
-    if (title == null) {
-      title = throwable != null ? "Error Report" : "System Report";
-    }
-    return title;
+    return title != null ? title : (throwable != null ? "Error Report" : "System Report");
   }
 
   /**
@@ -166,13 +164,21 @@ public class SystemReport {
   }
 
   /**
+   * Returns the message of the report.
+   *
+   * @return the message
+   */
+  public String getMessage() {
+    return message;
+  }
+
+  /**
    * Generates the error report as String.
    *
    * @return the error report
    */
   public String generate() {
-    getTitle();
-    StringBuilder report = new StringBuilder(title + ": ");
+    StringBuilder report = new StringBuilder();
     addBasicInformation(report);
     addStackTrace(report);
     addProductList(report);
@@ -251,7 +257,7 @@ public class SystemReport {
           info -> report.append(info.getDisplayName()).append("\n").append("\tcode name: ")
               .append(info.getCodeNameBase()).append("\n").append("\tversion: ").append(info.getImplementationVersion())
               .append("\n").append("\tenabled: ").append(info.isEnabled()).append("\n"));
-    } catch (Exception e) {
+    } catch (Throwable e) {
       report.append("Error while while retrieving module information:\n").append("\t").append(e.getMessage())
           .append("\n");
     }
@@ -292,8 +298,11 @@ public class SystemReport {
   }
 
   private void addBasicInformation(StringBuilder report) {
-    report.append(message).append("\n");
-    report.append("Time: ").append(Instant.now(Clock.systemUTC())).append("\n");
+    report.append(getTitle()).append(": ").append(getMessage()).append("\n");
+    report.append("Time: ").append(getCreatedAt()).append("\n");
+    if (getName() != null) {
+      report.append("Report Name: ").append(getName()).append("\n");
+    }
     String applicationName = SnapApp.getDefault().getAppContext().getApplicationName();
     report.append("Application: ").append(applicationName).append(" v").append(SystemUtils.getReleaseVersion())
         .append("\n");
