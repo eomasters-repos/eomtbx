@@ -26,6 +26,7 @@ package org.eomasters.eomtbx.utils;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.Clock;
 import java.time.Instant;
@@ -37,7 +38,6 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.prefs.Preferences;
 import org.apache.commons.io.input.ReversedLinesFileReader;
-import org.eomasters.eomtbx.EomToolbox;
 import org.esa.snap.core.datamodel.Product;
 import org.esa.snap.core.datamodel.ProductManager;
 import org.esa.snap.core.util.SystemUtils;
@@ -188,7 +188,7 @@ public class SystemReport {
     if (numLogTailLines > 0) {
       report.append("System Log Tail:\n");
 
-      Path logFile = EomToolbox.getCurrentLogFile();
+      Path logFile = getCurrentLogFile();
       try (ReversedLinesFileReader reader = new ReversedLinesFileReader(logFile.toFile(), StandardCharsets.UTF_8)) {
         List<String> lines = reader.readLines(numLogTailLines);
         lines.forEach(line -> report.append(line).append("\n"));
@@ -199,6 +199,15 @@ public class SystemReport {
     }
 
   }
+
+  private static Path getCurrentLogFile() {
+    Path userHomeDir = SystemUtils.getUserHomeDir().toPath();
+    Path winLogDir = userHomeDir.resolve("AppData/Roaming/SNAP/var/log");
+    Path unixLogDir = userHomeDir.resolve(".snap/system/var/log");
+    Path logDir = Files.exists(winLogDir) ? winLogDir : unixLogDir;
+    return logDir.resolve("messages.log");
+  }
+
 
   private static void addEnvironmentVariables(StringBuilder report) {
     report.append("Environment Variables:\n");
