@@ -7,7 +7,7 @@
   <mapID target="eomtbxIntro" url="pages/Intro.html"/>
   <mapID target="eomtbxQuickMenu" url="pages/QuickMenu.html"/>
   <mapID target="eomtbxLoopGPT" url="pages/LoopGpt.html"/>
-  <mapID target="eomtbxBMExtensions" url="pages/BMExtensions.html"/>
+  <mapID target="eomtbxBMExtensions" url="pages/BmExtensions.html"/>
   <mapID target="eomtbxWvlEditor" url="pages/WvlEditor.html"/>
   <mapID target="eomtbxCloseProductNoView" url="pages/CloseProductNoView.html"/>
   <mapID target="eomtbxSystemReport" url="pages/CreateSystemReport.html"/>
