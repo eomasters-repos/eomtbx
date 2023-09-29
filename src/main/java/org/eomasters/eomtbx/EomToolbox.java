@@ -57,7 +57,8 @@ public class EomToolbox {
    * The ID of the EOM-Toolbox.
    */
   public static final String TOOLBOX_ID = "eomtbx";
-  public static final URI FORUM_URL = URI.create("https://www.eomasters.org/forum") ;
+  public static final URI EOMASTERS_URL = URI.create("https://www.eomasters.org");
+  public static final URI FORUM_URL = URI.create("https://www.eomasters.org/forum");
   private static final Preferences preferences = SnapApp.getDefault().getPreferences().node(TOOLBOX_ID);
 
   /**
