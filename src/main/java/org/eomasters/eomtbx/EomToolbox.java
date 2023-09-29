@@ -27,6 +27,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintStream;
+import java.net.URI;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
 import javax.xml.parsers.DocumentBuilder;
@@ -56,6 +57,7 @@ public class EomToolbox {
    * The ID of the EOM-Toolbox.
    */
   public static final String TOOLBOX_ID = "eomtbx";
+  public static final URI FORUM_URL = URI.create("https://www.eomasters.org/forum") ;
   private static final Preferences preferences = SnapApp.getDefault().getPreferences().node(TOOLBOX_ID);
 
   /**

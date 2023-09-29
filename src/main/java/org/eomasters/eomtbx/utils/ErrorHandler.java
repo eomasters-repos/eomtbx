@@ -116,10 +116,19 @@ public class ErrorHandler {
     JButton byMail = createMailButton(errorReport);
     byMail.requestFocusInWindow();
     contentPane.add(byMail, "right");
-    JButton close = new JButton("Close");
-    contentPane.add(close, "right, wrap");
+    JButton reportInForum = new JButton("Report in Forum");
+    reportInForum.addActionListener(e -> {
+      try {
+        Desktop.getDesktop().browse(EomToolbox.FORUM_URL);
+      } catch (IOException ex) {
+       Dialogs.error("Error opening browser", "Could not open browser:\n" + ex.getMessage());
+      }
+    });
+    contentPane.add(reportInForum, "right");
 
     JDialog dialog = new JDialog();
+    JButton close = new JButton("Close");
+    contentPane.add(close, "right, wrap");
     close.addActionListener(e -> {
       dialog.setVisible(false);
       dialog.dispose();
