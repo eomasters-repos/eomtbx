@@ -2,7 +2,7 @@ EOMasters Toolbox for SNAP
 ==========================
 
 The EOMasters Toolbox (EOMTBX) is a collection of various tools which help to ease the daily work and to save valuable
-time while working with SNAP. The EOMTBX v1 release will be compatible with SNAPv10. The toolbox comprises the following
+time while working with SNAP. The EOMTBX v1 release will be compatible with ESA's SNAP v10. The toolbox comprises the following
 tools, features and options:
 
 * Quick Menu<br>
