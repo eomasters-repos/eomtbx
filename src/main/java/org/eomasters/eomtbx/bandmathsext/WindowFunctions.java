@@ -64,6 +64,28 @@ class WindowFunctions extends D {
     super("wnd", 3, new int[]{Term.TYPE_D, Term.TYPE_I, Term.TYPE_S});
   }
 
+  @Override
+  public double evalD(EvalEnv env, Term[] args) throws EvalException {
+    RasterDataNode raster = getRaster(args);
+    int wndSize = getWndSize(env, args);
+    String wndFunction = getWndFunction(env, args);
+
+    switch (wndFunction) {
+      case FUNC_SUM:
+        return sum(raster, wndSize, env);
+      case FUNC_MIN:
+        return min(raster, wndSize, env);
+      case FUNC_MAX:
+        return max(raster, wndSize, env);
+      case FUNC_MEAN:
+        return mean(raster, wndSize, env);
+      case FUNC_MEDIAN:
+        return median(raster, wndSize, env);
+      default:
+        throw new EvalException("Third argument must be one of +" + Arrays.toString(FUNCTION_NAMES));
+    }
+  }
+
   private static String getWndFunction(EvalEnv env, Term[] args) {
     if (!args[2].isS()) {
       throw new EvalException("Third argument must be a string");
@@ -100,28 +122,6 @@ class WindowFunctions extends D {
       }
     }
     return found;
-  }
-
-  @Override
-  public double evalD(EvalEnv env, Term[] args) throws EvalException {
-    RasterDataNode raster = getRaster(args);
-    int wndSize = getWndSize(env, args);
-    String wndFunction = getWndFunction(env, args);
-
-    switch (wndFunction) {
-      case FUNC_SUM:
-        return sum(raster, wndSize, env);
-      case FUNC_MIN:
-        return min(raster, wndSize, env);
-      case FUNC_MAX:
-        return max(raster, wndSize, env);
-      case FUNC_MEAN:
-        return mean(raster, wndSize, env);
-      case FUNC_MEDIAN:
-        return median(raster, wndSize, env);
-      default:
-        throw new EvalException("Third argument must be one of +" + Arrays.toString(FUNCTION_NAMES));
-    }
   }
 
   private double sum(RasterDataNode raster, int wndSize, EvalEnv env) {
