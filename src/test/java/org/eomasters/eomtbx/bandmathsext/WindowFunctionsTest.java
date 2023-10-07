@@ -23,10 +23,11 @@
 
 package org.eomasters.eomtbx.bandmathsext;
 
-import static org.eomasters.eomtbx.bandmathsext.BandMathsTestUtils.toElemIndex;
+import static org.eomasters.eomtbx.TestUtils.toElemIndex;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import org.eomasters.eomtbx.TestUtils;
 import org.esa.snap.core.datamodel.Product;
 import org.esa.snap.core.dataop.barithm.BandArithmetic;
 import org.esa.snap.core.dataop.barithm.RasterDataEvalEnv;
@@ -44,7 +45,7 @@ class WindowFunctionsTest {
 
   @BeforeAll
   static void beforeAll() {
-    product = BandMathsTestUtils.createProduct();
+    product = TestUtils.createProduct();
     W = product.getSceneRasterWidth();
     H = product.getSceneRasterHeight();
   }

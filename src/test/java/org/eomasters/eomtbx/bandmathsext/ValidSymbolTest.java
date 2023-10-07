@@ -23,11 +23,12 @@
 
 package org.eomasters.eomtbx.bandmathsext;
 
-import static org.eomasters.eomtbx.bandmathsext.BandMathsTestUtils.toElemIndex;
+import static org.eomasters.eomtbx.TestUtils.toElemIndex;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import org.eomasters.eomtbx.TestUtils;
 import org.esa.snap.core.datamodel.Band;
 import org.esa.snap.core.datamodel.Product;
 import org.esa.snap.core.dataop.barithm.BandArithmetic;
@@ -45,7 +46,7 @@ class ValidSymbolTest {
 
   @BeforeAll
   static void beforeAll() {
-    product = BandMathsTestUtils.createProduct();
+    product = TestUtils.createProduct();
     W = product.getSceneRasterWidth();
     H = product.getSceneRasterHeight();
     Band b1 = product.getBand("B1");
