@@ -44,17 +44,21 @@
   available:</p>
 <ul>
   <li><b>Valid</b><br>
-    This function returns true if the pixel is valid. If the pixel value is not NaN, the value does not match the
-    no-data
-    value, and the pixel values matches the valid-pixel expression of the band.
+    This attribute returns true if the current pixel is valid. Valid means that the pixel value does not equal the no-data value
+    (if used) and the pixel matches by the valid-pixel expression of the band. NaN values are not considered as invalid except the no-data value of the band is NaN.
     It is used as follows:<br>
     <b><code>&lt;band-name&gt;.valid</code></b> &nbsp;&nbsp;e.g.,&nbsp;&nbsp;--> <b><code>Oa10_radiance.valid</code><br></b>
+  </li>
+  <li><b>AreValid Function</b><br>
+    Similar to the <b>valid</b> attribute, this function returns true if all provided bands are valid.<br>
+    It is used as follows:<br>
+    <b><code>areValid(&lt;band_name&gt;, &lt;band_name&gt;, ...)</code></b> &nbsp;&nbsp;e.g.,&nbsp;&nbsp;--> <b><code>areValid(B2, B3, B4, B8)</code><br></b>
   </li>
   <li><b>Window Functions</b><br>
     The window is centered on the current pixel and the window size must be <b>3, 5 or 7</b>.
     NaN and invalid values are ignored. If all values in the window are NaN or invalid, the result is NaN.
     The functions are used as follows:<br>
-    <b><code>wnd(&lt;band-name&gt;, &lt;window-size&gt;, "&lt;function&gt;")</code></b>
+    <b><code>wnd(&lt;band_name&gt;, &lt;window_size&gt;, "&lt;function&gt;")</code></b>
     The following functions are available:<br>
     <ul>
       <li><b>sum</b>: Sum of all valid pixels in the window<br>

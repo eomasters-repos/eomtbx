@@ -28,12 +28,9 @@ import java.io.IOException;
 import java.util.Arrays;
 import org.esa.snap.core.datamodel.RasterDataNode;
 import org.esa.snap.core.dataop.barithm.RasterDataEvalEnv;
-import org.esa.snap.core.dataop.barithm.RasterDataSymbol;
 import org.esa.snap.core.jexp.EvalEnv;
 import org.esa.snap.core.jexp.EvalException;
-import org.esa.snap.core.jexp.Symbol;
 import org.esa.snap.core.jexp.Term;
-import org.esa.snap.core.jexp.Term.Ref;
 import org.esa.snap.core.jexp.impl.AbstractFunction.D;
 
 /**
@@ -66,7 +63,11 @@ class WindowFunctions extends D {
 
   @Override
   public double evalD(EvalEnv env, Term[] args) throws EvalException {
-    RasterDataNode raster = getRaster(args);
+    RasterDataNode raster = TermUtils.getRaster(args[0]);
+    if(raster == null) {
+      throw new EvalException("First argument of wnd() must reference a raster");
+    }
+
     int wndSize = getWndSize(env, args);
     String wndFunction = getWndFunction(env, args);
 
@@ -82,35 +83,23 @@ class WindowFunctions extends D {
       case FUNC_MEDIAN:
         return median(raster, wndSize, env);
       default:
-        throw new EvalException("Third argument must be one of +" + Arrays.toString(FUNCTION_NAMES));
+        throw new EvalException("Third argument of wnd() must be one of +" + Arrays.toString(FUNCTION_NAMES));
     }
-  }
-
-  private static String getWndFunction(EvalEnv env, Term[] args) {
-    if (!args[2].isS()) {
-      throw new EvalException("Third argument must be a string");
-    }
-    return args[2].evalS(env);
   }
 
   private static int getWndSize(EvalEnv env, Term[] args) {
     int wndSize = args[1].evalI(env);
     if (!isValidWndSize(wndSize)) {
-      throw new EvalException("Second argument must be one of " + Arrays.toString(ALLOWED_WND_SIZES));
+      throw new EvalException("Second argument of wnd() must be one of " + Arrays.toString(ALLOWED_WND_SIZES));
     }
     return wndSize;
   }
 
-  private static RasterDataNode getRaster(Term[] args) {
-    Term rasterTerm = args[0];
-    if (!(rasterTerm instanceof Ref)) {
-      throw new EvalException("First argument must reference a raster");
+  private static String getWndFunction(EvalEnv env, Term[] args) {
+    if (!args[2].isS()) {
+      throw new EvalException("Third argument of wnd() must be a string");
     }
-    Symbol rasterSymbol = ((Ref) rasterTerm).getSymbol();
-    if (!(rasterSymbol instanceof RasterDataSymbol)) {
-      throw new EvalException("First argument must reference a raster");
-    }
-    return ((RasterDataSymbol) rasterSymbol).getRaster();
+    return args[2].evalS(env);
   }
 
   private static boolean isValidWndSize(int wndSize) {
@@ -125,17 +114,17 @@ class WindowFunctions extends D {
   }
 
   private double sum(RasterDataNode raster, int wndSize, EvalEnv env) {
-    double[] data = getNanFilteredData(raster, wndSize, env);
+    double[] data = getFilteredData(raster, wndSize, env);
     return data.length == 0 ? Double.NaN : Arrays.stream(data).sum();
   }
 
   private double mean(RasterDataNode raster, int wndSize, EvalEnv env) {
-    double[] data = getNanFilteredData(raster, wndSize, env);
+    double[] data = getFilteredData(raster, wndSize, env);
     return data.length == 0 ? Double.NaN : Arrays.stream(data).sum() / data.length;
   }
 
   private double median(RasterDataNode raster, int wndSize, EvalEnv env) {
-    double[] data = getNanFilteredData(raster, wndSize, env);
+    double[] data = getFilteredData(raster, wndSize, env);
     if (data.length == 0) {
       return Double.NaN;
     }
@@ -148,16 +137,17 @@ class WindowFunctions extends D {
   }
 
   private double min(RasterDataNode raster, int wndSize, EvalEnv env) {
-    double[] data = getNanFilteredData(raster, wndSize, env);
+    double[] data = getFilteredData(raster, wndSize, env);
     return Arrays.stream(data).min().orElse(Double.NaN);
   }
 
   private double max(RasterDataNode raster, int wndSize, EvalEnv env) {
-    double[] data = getNanFilteredData(raster, wndSize, env);
+    double[] data = getFilteredData(raster, wndSize, env);
     return Arrays.stream(data).max().orElse(Double.NaN);
   }
 
-  private double[] getNanFilteredData(RasterDataNode raster, int wndSize, EvalEnv env) {
+  // returns only valid and not NaN sample value
+  private double[] getFilteredData(RasterDataNode raster, int wndSize, EvalEnv env) {
     double[] data = new double[wndSize * wndSize];
     Arrays.fill(data, Double.NaN);
     RasterDataEvalEnv dataEvalEnv = (RasterDataEvalEnv) env;
