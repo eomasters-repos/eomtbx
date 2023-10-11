@@ -9,12 +9,12 @@
  * it under the terms of the GNU General Public License as
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public
  * License along with this program.  If not, see
  * -> http://www.gnu.org/licenses/gpl-3.0.html
@@ -96,28 +96,34 @@ public class LoopGptOptionProcessor extends OptionProcessor {
   protected void process(Env env, Map<Option, String[]> optionValues) throws CommandException {
 
     if (optionValues.containsKey(loopGpt)) {
-      System.setProperty(PROP_PLUGIN_MANAGER_CHECK_INTERVAL, "NEVER");
-      String[] args = optionValues.get(loopGpt);
-      if (args.length < 1) {
-        throw new CommandException(90001, "No file path given");
-      }
-      Path commandsFilePath = Paths.get(args[0]);
-      if (!Files.exists(commandsFilePath) || Files.isReadable(commandsFilePath)) {
-        throw new CommandException(90002, "GPT commands file does not exist or is not readable");
-      }
-      List<String> commands = readCommands(commandsFilePath);
+      String actualUpdateIternal = System.getProperty(PROP_PLUGIN_MANAGER_CHECK_INTERVAL);
+      try {
+        System.setProperty(PROP_PLUGIN_MANAGER_CHECK_INTERVAL, "NEVER");
+        String[] args = optionValues.get(loopGpt);
+        if (args.length < 1) {
+          throw new CommandException(90001, "No file path given");
+        }
+        Path commandsFilePath = Paths.get(args[0]);
+        if (!Files.exists(commandsFilePath) || Files.isReadable(commandsFilePath)) {
+          throw new CommandException(90002, "GPT commands file does not exist or is not readable");
+        }
+        List<String> commands = readCommands(commandsFilePath);
 
-      commands.stream().filter(s -> s.startsWith("#") || s.isBlank()).forEach(commands::remove);
-      if (commands.isEmpty()) {
-        throw new CommandException(90003, "GPT commands file is empty");
+        commands.stream().filter(s -> s.startsWith("#") || s.isBlank()).forEach(commands::remove);
+        if (commands.isEmpty()) {
+          throw new CommandException(90003, "GPT commands file is empty");
+        }
+
+        runLoopGpt(env, commands);
+      } finally {
+        System.setProperty(PROP_PLUGIN_MANAGER_CHECK_INTERVAL, actualUpdateIternal);
       }
 
-      runBatchGpt(env, commands);
     }
   }
 
-  private void runBatchGpt(Env env, List<String> commands) {
-    env.getOutputStream().println("EomtbxOptionProcessor.runBatchGpt");
+  private void runLoopGpt(Env env, List<String> commands) {
+    env.getOutputStream().println("LoopGpt");
 
     CommandLineTool commandLineTool = new CommandLineTool();
     for (String cmd : commands) {
