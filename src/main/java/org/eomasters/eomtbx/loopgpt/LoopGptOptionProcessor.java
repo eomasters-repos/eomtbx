@@ -51,7 +51,7 @@ import org.openide.util.NbBundle;
 @org.openide.util.lookup.ServiceProvider(service = OptionProcessor.class)
 @NbBundle.Messages({
     "DSC_LoopGpt=Run GPT commands in loop: snap --loopgpt <file-path>; "
-        + "Add also --nogui --nosplash to prevent GUI and splash screen"
+        + "Add also --nogui --nosplash to prevent GUI and splash screen from showing."
 })
 public class LoopGptOptionProcessor extends OptionProcessor {
 
