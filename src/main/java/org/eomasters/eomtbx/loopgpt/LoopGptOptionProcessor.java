@@ -23,15 +23,18 @@
 
 package org.eomasters.eomtbx.loopgpt;
 
+import com.bc.ceres.jai.operator.ReinterpretDescriptor;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 import org.esa.snap.core.gpf.main.CommandLineTool;
+import org.esa.snap.core.util.SystemUtils;
 import org.netbeans.api.sendopts.CommandException;
 import org.netbeans.spi.sendopts.Env;
 import org.netbeans.spi.sendopts.Option;
@@ -124,6 +127,9 @@ public class LoopGptOptionProcessor extends OptionProcessor {
 
   private void runLoopGpt(Env env, List<String> commands) {
     env.getOutputStream().println("LoopGpt");
+    Locale.setDefault(Locale.ENGLISH); // Force usage of english locale
+    // need to use a class from ceres-jai in order to get the defined JAI descriptors loaded
+    SystemUtils.init3rdPartyLibs(ReinterpretDescriptor.class);
 
     CommandLineTool commandLineTool = new CommandLineTool();
     for (String cmd : commands) {
