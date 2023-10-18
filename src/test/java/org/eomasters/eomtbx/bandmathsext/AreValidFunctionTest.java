@@ -56,7 +56,7 @@ class AreValidFunctionTest {
     RasterDataEvalEnv evalEnv = new RasterDataEvalEnv(0, 0, W, H);
     evalEnv.setElemIndex(toElemIndex(0, 0));
     assertTrue(term.evalB(evalEnv)); // all NaN
-    evalEnv.setElemIndex(toElemIndex(0, 9));
+    evalEnv.setElemIndex(toElemIndex(1, 9));
     assertTrue(term.evalB(evalEnv)); // one NaN, one value
 
     evalEnv.setElemIndex(toElemIndex(9, 9));

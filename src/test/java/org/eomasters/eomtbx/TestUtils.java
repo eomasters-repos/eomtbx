@@ -79,7 +79,7 @@ public class TestUtils {
     b2.setData(ProductData.createInstance(b2Data));
     b2.setNoDataValue(98);
     b2.setNoDataValueUsed(true);
-    b2.setValidPixelExpression("B1 % 5 != 0");
+    b2.setValidPixelExpression("B2 % 5 != 0");
     return product;
   }
 
