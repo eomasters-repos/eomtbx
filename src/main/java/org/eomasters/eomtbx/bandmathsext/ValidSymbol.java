@@ -23,6 +23,7 @@
 
 package org.eomasters.eomtbx.bandmathsext;
 
+import java.lang.ref.WeakReference;
 import org.esa.snap.core.datamodel.RasterDataNode;
 import org.esa.snap.core.dataop.barithm.RasterDataEvalEnv;
 import org.esa.snap.core.jexp.EvalEnv;
@@ -43,7 +44,7 @@ public class ValidSymbol implements Symbol {
   protected static final String SYMBOL_ID = ".valid";
   private final String name;
   private final int type;
-  private final RasterDataNode raster;
+  private final WeakReference<RasterDataNode> raster;
 
   /**
    * Creates a new instance.
@@ -54,7 +55,7 @@ public class ValidSymbol implements Symbol {
   public ValidSymbol(final String symbolPrefix, final RasterDataNode raster) {
     this.name = symbolPrefix + raster.getName() + SYMBOL_ID;
     this.type = Term.TYPE_B;
-    this.raster = raster;
+    this.raster = new WeakReference<>(raster);
   }
 
   @Override
@@ -75,7 +76,12 @@ public class ValidSymbol implements Symbol {
   @Override
   public boolean evalB(final EvalEnv env) throws EvalException {
     RasterDataEvalEnv rasterEnv = (RasterDataEvalEnv) env;
-    return raster.isPixelValid(rasterEnv.getPixelX(), rasterEnv.getPixelY());
+    RasterDataNode rasterDataNode = raster.get();
+    if (rasterDataNode != null) {
+      return rasterDataNode.isPixelValid(rasterEnv.getPixelX(), rasterEnv.getPixelY());
+    }else {
+      throw new EvalException("RasterDataNode is not available anymore");
+    }
   }
 
   @Override
