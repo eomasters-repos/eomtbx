@@ -50,26 +50,32 @@ class MapPosSymbolTest {
 
     RasterDataEvalEnv evalEnv = new RasterDataEvalEnv(0, 0, size.width, size.height);
     evalEnv.setElemIndex(toElemIndex(0, 0, size));
-    assertEquals(0.0, xTerm.evalD(evalEnv), EPS);
-    assertEquals(0.0, yTerm.evalD(evalEnv), EPS);
+    assertEquals(0.0416666, xTerm.evalD(evalEnv), EPS);
+    assertEquals(-0.0416666, yTerm.evalD(evalEnv), EPS);
+
     evalEnv.setElemIndex(toElemIndex(1, 0, size));
-    assertEquals(0.0833333, xTerm.evalD(evalEnv), EPS);
-    assertEquals(0.0, yTerm.evalD(evalEnv), EPS);
+    assertEquals(0.125, xTerm.evalD(evalEnv), EPS);
+    assertEquals(-0.0416666, yTerm.evalD(evalEnv), EPS);
+
     evalEnv.setElemIndex(toElemIndex(2, 0, size));
-    assertEquals(0.166666, xTerm.evalD(evalEnv), EPS);
-    assertEquals(-0.0, yTerm.evalD(evalEnv), EPS);
+    assertEquals(0.2083333, xTerm.evalD(evalEnv), EPS);
+    assertEquals(-0.0416666, yTerm.evalD(evalEnv), EPS);
+
     evalEnv.setElemIndex(toElemIndex(1, 1, size));
-    assertEquals(0.0833333, xTerm.evalD(evalEnv), EPS);
-    assertEquals(-0.0833333, yTerm.evalD(evalEnv), EPS);
+    assertEquals(0.125, xTerm.evalD(evalEnv), EPS);
+    assertEquals(-0.125, yTerm.evalD(evalEnv), EPS);
+
     evalEnv.setElemIndex(toElemIndex(0, 1, size));
-    assertEquals(0.0, xTerm.evalD(evalEnv), EPS);
-    assertEquals(-0.0833333, yTerm.evalD(evalEnv), EPS);
+    assertEquals(0.0416666, xTerm.evalD(evalEnv), EPS);
+    assertEquals(-0.125, yTerm.evalD(evalEnv), EPS);
+
     evalEnv.setElemIndex(toElemIndex(1, 3, size));
-    assertEquals(0.0833333, xTerm.evalD(evalEnv), EPS);
-    assertEquals(-0.25, yTerm.evalD(evalEnv), EPS);
+    assertEquals(0.125, xTerm.evalD(evalEnv), EPS);
+    assertEquals(-0.2916666, yTerm.evalD(evalEnv), EPS);
+
     evalEnv.setElemIndex(toElemIndex(5, 0, size));
-    assertEquals(0.416666, xTerm.evalD(evalEnv), EPS);
-    assertEquals(0., yTerm.evalD(evalEnv), EPS);
+    assertEquals(0.4583333, xTerm.evalD(evalEnv), EPS);
+    assertEquals(-0.0416666, yTerm.evalD(evalEnv), EPS);
   }
 
   @Test
@@ -81,14 +87,16 @@ class MapPosSymbolTest {
 
     RasterDataEvalEnv evalEnv = new RasterDataEvalEnv(0, 0, size.width, size.height);
     evalEnv.setElemIndex(toElemIndex(0, 0, size));
-    assertEquals(-5.710593, xTerm.evalD(evalEnv), EPS);
-    assertEquals(20.942178, yTerm.evalD(evalEnv), EPS);
+    assertEquals(-5.663245, xTerm.evalD(evalEnv), EPS);
+    assertEquals(20.903569, yTerm.evalD(evalEnv), EPS);
+
     evalEnv.setElemIndex(toElemIndex(1, 3, size));
-    assertEquals(-5.615898, xTerm.evalD(evalEnv), EPS);
-    assertEquals(20.704709, yTerm.evalD(evalEnv), EPS);
+    assertEquals(-5.568550, xTerm.evalD(evalEnv), EPS);
+    assertEquals(20.666081, yTerm.evalD(evalEnv), EPS);
+
     evalEnv.setElemIndex(toElemIndex(5, 0, size));
-    assertEquals(-5.237117, xTerm.evalD(evalEnv), EPS);
-    assertEquals(20.956674, yTerm.evalD(evalEnv), EPS);
+    assertEquals(-5.189769, xTerm.evalD(evalEnv), EPS);
+    assertEquals(20.918042, yTerm.evalD(evalEnv), EPS);
   }
 
   @Test
