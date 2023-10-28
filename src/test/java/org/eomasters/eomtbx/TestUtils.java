@@ -90,7 +90,7 @@ public class TestUtils {
   // resulting data array contain values from 0 to w*h-1.
   // the first element of row 0-6 is set to NaN
   private static double[] createB2Data() {
-    double[] array = IntStream.range(0, W * H).asDoubleStream().toArray();
+    double[] array = IntStream.range(0, W * H).asDoubleStream().map(operand -> operand * 2).toArray();
     for (int y = 0; y < H - 3; y++) {
       array[y * W] = Double.NaN;
     }
