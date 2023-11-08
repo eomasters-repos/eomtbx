@@ -15,5 +15,5 @@
   <mapID target="eomtbxOptions" url="pages/EomtbxOptions.html"/>
   <mapID target="eomtbxCredits" url="pages/EomtbxCredits.html"/>
 
-  <mapID target="eomtbxIcon" url="images/Eomtbx_16.png"/>
+  <mapID target="eomtbxIcon" url="images/EomToolbox_16.png"/>
 </map>
