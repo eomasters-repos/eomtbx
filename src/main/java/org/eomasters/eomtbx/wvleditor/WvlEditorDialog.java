@@ -44,6 +44,7 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumnModel;
 import net.miginfocom.swing.MigLayout;
+import org.eomasters.eomtbx.icons.Icon.SIZE;
 import org.eomasters.eomtbx.icons.Icons;
 import org.eomasters.eomtbx.utils.MultiLineText;
 import org.eomasters.eomtbx.utils.NumberCellEditor;
@@ -112,7 +113,7 @@ class WvlEditorDialog extends ModalDialog {
       JButton productSelectionBtn = new JButton(createButtonText(compatibleProducts));
       productSelectionBtn.addActionListener(e -> {
         ProductSelectionDialog selectionDialog = new ProductSelectionDialog(getParent(), compatibleProducts);
-        selectionDialog.getJDialog().setIconImage(Icons.WVL_EDITOR.s16.getImage());
+        selectionDialog.getJDialog().setIconImage(Icons.WVL_EDITOR.getImageIcon(SIZE.S16).getImage());
         selectionDialog.show();
         productSelectionBtn.setText(createButtonText(compatibleProducts));
       });
@@ -152,7 +153,7 @@ class WvlEditorDialog extends ModalDialog {
   @Override
   public int show() {
     setContent(createContentPanel());
-    getJDialog().setIconImage(Icons.WVL_EDITOR.s16.getImage());
+    getJDialog().setIconImage(Icons.WVL_EDITOR.getImageIcon(SIZE.S16).getImage());
     return super.show();
   }
 

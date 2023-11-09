@@ -23,59 +23,99 @@
 
 package org.eomasters.eomtbx.icons;
 
+import java.awt.Container;
+import java.awt.Dimension;
+import java.awt.GridLayout;
+import java.lang.reflect.Field;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.SwingUtilities;
+import javax.swing.WindowConstants;
+import org.eomasters.eomtbx.icons.Icon.SIZE;
+
 /**
  * Eases access to the icons used within the EOMTBX.
  */
 public final class Icons {
 
-  /**
-   * The EOMTBX icon.
-   */
-  public static final Icon EOMTBX = new Icon("EomToolbox");
-  /**
-   * An icon for the import action.
-   */
-  public static final Icon IMPORT = new Icon("Import");
-  /**
-   * An icon for the export action.
-   */
-  public static final Icon EXPORT = new Icon("Export");
-  /**
-   * A  filter icon.
-   */
-  public static final Icon FILTER = new Icon("Filter");
-  /**
-   * An icon representing groups or categories.
-   */
-  public static final Icon GROUPS = new Icon("Groups");
-  /**
-   * An icon showing document with an arrow pointing upwards.
-   */
-  public static final Icon DOC_ARROW_UP = new Icon("DocArrowUp");
-  /**
-   * An icon showing document with an arrow pointing upwards.
-   */
-  public static final Icon MINUS = new Icon("Minus");
-  /**
-   * An icon showing document with an arrow pointing upwards.
-   */
-  public static final Icon PLUS = new Icon("Plus");
-  /**
-   * An icon representing a checkmark.
-   */
-  public static final Icon CHECKMARK = new Icon("Checkmark");
+
+  public static void main(String[] args) throws IllegalAccessException {
+    final JFrame frame = new JFrame("SpeX Parameters Panel");
+    frame.setPreferredSize(new Dimension(400, 400));
+    Container contentPane = frame.getContentPane();
+    SIZE size = SIZE.S16;
+    Field[] fields = Icons.class.getFields();
+    for (Field field : fields) {
+      if(Icon.class.isAssignableFrom(field.getType())) {
+        contentPane.add(new JLabel(((Icon)field.get(null)).getImageIcon(size)));
+      }
+    }
+    int gridsize = (int) Math.ceil(Math.sqrt(contentPane.getComponents().length));
+    contentPane.setLayout(new GridLayout(gridsize, gridsize));
+    frame.setLocationRelativeTo(null);
+    frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+    frame.pack();
+    SwingUtilities.invokeLater(() -> frame.setVisible(true));
+  }
+
   /**
    * An icon with ABCDEF letters.
    */
-  public static final Icon ABCDEF = new Icon("Abcdef");
+  public static final Icon ABCDEF = new SvgIcon("Abcdef");
   /**
-   * An icon for the Wavelength Editor.
+   * An icon representing a checkmark.
    */
-  public static final Icon WVL_EDITOR = new Icon("WvlEditor");
+  public static final Icon CHECKMARK = new SvgIcon("Checkmark");
+  /**
+   * An icon showing document with an arrow pointing upwards.
+   */
+  public static final Icon DOC_ARROW_UP = new SvgIcon("DocArrowUp");
+  /**
+   * The EOMTBX icon.
+   */
+  public static final Icon EOMTBX = new SvgIcon("EomToolbox");
+  /**
+   * An icon for the export action.
+   */
+  public static final Icon EXPORT = new SvgIcon("Export");
+  /**
+   * A filter icon.
+   */
+  public static final Icon FILTER = new SvgIcon("Filter");
+  /**
+   * An icon representing groups or categories.
+   */
+  public static final Icon GROUPS = new SvgIcon("Groups");
+  /**
+   * An icon for the import action.
+   */
+  public static final Icon IMPORT = new SvgIcon("Import");
+  /**
+   * An icon with an 'i'.
+   */
+  public static final Icon INFO = new SvgIcon("Info");
+  /**
+   * An icon showing document with an arrow pointing upwards.
+   */
+  public static final Icon MINUS = new SvgIcon("Minus");
+  // public static final Icon MINUS = new RasterIcon("Minus");
+  /**
+   * An icon showing document with an arrow pointing upwards.
+   */
+  public static final Icon PLUS = new SvgIcon("Plus");
+  // public static final Icon PLUS = new RasterIcon("Plus");
+  /**
+   * An icon representing the SpeX Database.
+   */
+  public static final Icon SPEX_DB = new RasterIcon("SPEX_DB");
   /**
    * An icon for the System Report.
    */
-  public static final Icon SYS_REPORT = new Icon("SysReport");
+  public static final Icon SYS_REPORT = new RasterIcon("SysReport");
+  /**
+   * An icon for the Wavelength Editor.
+   */
+  public static final Icon WVL_EDITOR = new RasterIcon("WvlEditor");
 
   private Icons() {
   }

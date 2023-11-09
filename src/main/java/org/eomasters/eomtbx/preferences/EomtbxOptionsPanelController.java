@@ -38,6 +38,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.filechooser.FileFilter;
 import net.miginfocom.swing.MigLayout;
 import org.eomasters.eomtbx.EomToolbox;
+import org.eomasters.eomtbx.icons.Icon.SIZE;
 import org.eomasters.eomtbx.icons.Icons;
 import org.eomasters.eomtbx.quickmenu.QuickMenuOptionsPanelController;
 import org.eomasters.eomtbx.utils.ErrorHandler;
@@ -53,7 +54,7 @@ import org.openide.util.Lookup;
 @OptionsPanelController.TopLevelRegistration(
     id = EomtbxOptionsPanelController.OPTIONS_ID,
     categoryName = "EOMTBX",
-    iconBase = "org/eomasters/eomtbx/icons/Eomtbx_32.png",
+    iconBase = "org/eomasters/eomtbx/icons/EomToolbox_32.png",
     keywordsCategory = "EOMTBX",
     keywords = "EOMTBX, EOMASTERS, Toolbox",
     position = 9000
@@ -144,8 +145,8 @@ public class EomtbxOptionsPanelController extends PropertyChangeOptionsPanelCont
     JPanel eomtbxPanel = new JPanel(new MigLayout("gap 5, insets 5"));
     eomtbxPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("EOMTBX General Options"));
     eomtbxPanel.add(new JLabel("Import/Export options:"), "gapright 10");
-    JButton importButton = new JButton("Import", Icons.IMPORT.s24);
-    JButton exportButton = new JButton("Export", Icons.EXPORT.s24);
+    JButton importButton = new JButton("Import", Icons.IMPORT.getImageIcon(SIZE.S24));
+    JButton exportButton = new JButton("Export", Icons.EXPORT.getImageIcon(SIZE.S24));
     eomtbxPanel.add(importButton);
     eomtbxPanel.add(exportButton, "wrap");
 

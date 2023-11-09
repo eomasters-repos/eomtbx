@@ -25,6 +25,7 @@ package org.eomasters.eomtbx.actions;
 
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
+import org.eomasters.eomtbx.icons.Icon.SIZE;
 import org.eomasters.eomtbx.icons.Icons;
 import org.eomasters.eomtbx.utils.CollapsiblePanel;
 import org.eomasters.eomtbx.utils.Dialogs;
@@ -48,7 +49,7 @@ public class SystemReportAction extends AbstractAction {
    * Creates a new Action.
    */
   public SystemReportAction() {
-    super(Bundle.SystemReportActionName(), Icons.SYS_REPORT.s16);
+    super(Bundle.SystemReportActionName(), Icons.SYS_REPORT.getImageIcon(SIZE.S16));
   }
 
   @Override
@@ -58,7 +59,7 @@ public class SystemReportAction extends AbstractAction {
     CollapsiblePanel reportArea = CollapsiblePanel.createLongTextPanel("System Report", systemReport.generate());
     reportArea.setCollapsed(false);
 
-    Dialogs.message("System Report", Icons.SYS_REPORT.s16, reportArea);
+    Dialogs.message("System Report", Icons.SYS_REPORT.getImageIcon(SIZE.S16), reportArea);
   }
 
 }

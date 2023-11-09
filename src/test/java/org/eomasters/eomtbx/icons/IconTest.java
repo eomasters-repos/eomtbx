@@ -27,22 +27,27 @@ import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import javax.swing.ImageIcon;
+import org.eomasters.eomtbx.icons.Icon.SIZE;
 import org.junit.jupiter.api.Test;
 
 class IconTest {
 
   @Test
   public void createNotExistingIcon() {
-    assertThrows(IllegalStateException.class, () -> new Icon("NotExisting"));
+    assertThrows(IllegalStateException.class, () -> {
+      RasterIcon notExisting = new RasterIcon("NotExisting");
+      notExisting.getImageIcon(SIZE.S32);
+    });
+
   }
 
   @Test
   public void createIcon() {
-    Icon eomtbx = new Icon("Eomtbx");
-    assertInstanceOf(ImageIcon.class, eomtbx.s48);
-    assertInstanceOf(ImageIcon.class, eomtbx.s32);
-    assertInstanceOf(ImageIcon.class, eomtbx.s24);
-    assertInstanceOf(ImageIcon.class, eomtbx.s16);
+    Icon eomtbx = new SvgIcon("EomToolbox");
+    assertInstanceOf(ImageIcon.class, eomtbx.getImageIcon(SIZE.S48));
+    assertInstanceOf(ImageIcon.class, eomtbx.getImageIcon(SIZE.S32));
+    assertInstanceOf(ImageIcon.class, eomtbx.getImageIcon(SIZE.S24));
+    assertInstanceOf(ImageIcon.class, eomtbx.getImageIcon(SIZE.S16));
   }
 
 }

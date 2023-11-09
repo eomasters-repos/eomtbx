@@ -27,6 +27,7 @@ import java.awt.event.ActionEvent;
 import java.util.Arrays;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
+import org.eomasters.eomtbx.icons.Icon.SIZE;
 import org.eomasters.eomtbx.icons.Icons;
 import org.esa.snap.core.datamodel.Product;
 import org.esa.snap.core.datamodel.ProductNode;
@@ -67,7 +68,7 @@ public class WvlEditorAction extends AbstractAction {
    * @param node the node of the product which is currently selected
    */
   public WvlEditorAction(ProductNode node) {
-    super(Bundle.TXT_WvlEditorAction(), Icons.WVL_EDITOR.s16);
+    super(Bundle.TXT_WvlEditorAction(), Icons.WVL_EDITOR.getImageIcon(SIZE.S16));
     product = node.getProduct();
     putValue(Action.SHORT_DESCRIPTION, Bundle.DSC_WvlEditorAction());
   }

@@ -42,6 +42,7 @@ import javax.swing.JTextArea;
 import javax.swing.SwingUtilities;
 import net.miginfocom.swing.MigLayout;
 import org.eomasters.eomtbx.EomToolbox;
+import org.eomasters.eomtbx.icons.Icon.SIZE;
 import org.eomasters.eomtbx.icons.Icons;
 import org.eomasters.eomtbx.utils.FileSharingService.UploadResponse;
 import org.esa.snap.core.util.SystemUtils;
@@ -134,7 +135,7 @@ public class ErrorHandler {
       dialog.dispose();
     });
 
-    dialog.setIconImage(Icons.EOMTBX.s16.getImage());
+    dialog.setIconImage(Icons.EOMTBX.getImageIcon(SIZE.S16).getImage());
     dialog.setTitle("Unexpected Error");
     dialog.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     dialog.setLocationRelativeTo(null);
