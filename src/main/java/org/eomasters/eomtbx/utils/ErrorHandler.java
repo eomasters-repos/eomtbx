@@ -45,6 +45,8 @@ import org.eomasters.eomtbx.EomToolbox;
 import org.eomasters.eomtbx.icons.Icon.SIZE;
 import org.eomasters.eomtbx.icons.Icons;
 import org.eomasters.eomtbx.utils.FileSharingService.UploadResponse;
+import org.eomasters.eomtbx.utils.gui.CollapsiblePanel;
+import org.eomasters.eomtbx.utils.gui.Dialogs;
 import org.esa.snap.core.util.SystemUtils;
 import org.hsqldb.lib.StringInputStream;
 

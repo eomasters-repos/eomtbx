@@ -21,7 +21,7 @@
  * =========================LICENSE_END==================================
  */
 
-package org.eomasters.eomtbx.utils;
+package org.eomasters.eomtbx.utils.gui;
 
 import java.awt.BorderLayout;
 import java.io.PrintWriter;

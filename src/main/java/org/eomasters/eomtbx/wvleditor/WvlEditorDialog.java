@@ -47,7 +47,7 @@ import net.miginfocom.swing.MigLayout;
 import org.eomasters.eomtbx.icons.Icon.SIZE;
 import org.eomasters.eomtbx.icons.Icons;
 import org.eomasters.eomtbx.utils.MultiLineText;
-import org.eomasters.eomtbx.utils.NumberCellEditor;
+import org.eomasters.eomtbx.utils.gui.NumberCellEditor;
 import org.eomasters.eomtbx.utils.ProductSelectionDialog;
 import org.eomasters.eomtbx.utils.ProductSelectionDialog.ProductSelection;
 import org.eomasters.eomtbx.utils.TablePasteAdapter;
