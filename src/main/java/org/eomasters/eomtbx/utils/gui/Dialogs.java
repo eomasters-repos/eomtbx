@@ -24,6 +24,7 @@
 package org.eomasters.eomtbx.utils.gui;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import javax.swing.Icon;
@@ -128,10 +129,11 @@ public final class Dialogs {
    *
    * @param title    the title
    * @param question the question
+   * @param parentComponent   the parent component to determine the frame the dialog will be displayed in
    * @return {@code true} if the user confirmed, {@code false} otherwise
    */
-  public static boolean confirmation(String title, String question) {
-    return confirmation(title, new JLabel(question));
+  public static boolean confirmation(String title, String question, Component parentComponent) {
+    return confirmation(title, new JLabel(question), parentComponent);
   }
 
 
@@ -140,10 +142,11 @@ public final class Dialogs {
    *
    * @param title             the title
    * @param questionComponent the question component
+   * @param parentComponent   the parent component to determine the frame the dialog will be displayed in
    * @return {@code true} if the user confirmed, {@code false} otherwise
    */
-  public static boolean confirmation(String title, JComponent questionComponent) {
-    return confirmation(title, questionComponent, null);
+  public static boolean confirmation(String title, JComponent questionComponent, Component parentComponent) {
+    return confirmation(title, questionComponent, parentComponent, null);
   }
 
   /**
@@ -151,10 +154,12 @@ public final class Dialogs {
    *
    * @param title             the title
    * @param questionComponent the question component
+   * @param parentComponent   the parent component to determine the frame the dialog will be displayed in
    * @param preferenceKey     the preference key to store the answer
    * @return {@code true} if the user confirmed, {@code false} otherwise
    */
-  public static boolean confirmation(String title, JComponent questionComponent, String preferenceKey) {
+  public static boolean confirmation(String title, JComponent questionComponent, Component parentComponent,
+      String preferenceKey) {
     if (preferenceKey != null) {
       if (EomToolbox.getPreferences().node(CONFIRMATION_NODE).getBoolean(preferenceKey, false)) {
         return true;
@@ -169,7 +174,7 @@ public final class Dialogs {
       msgPanel.add(checkBox, BorderLayout.SOUTH);
     }
     boolean confirmed =
-        JOptionPane.showConfirmDialog(null, msgPanel, title, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE)
+        JOptionPane.showConfirmDialog(parentComponent, msgPanel, title, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE)
             == JOptionPane.YES_OPTION;
     if (preferenceKey != null) {
       EomToolbox.getPreferences().node(CONFIRMATION_NODE).putBoolean(preferenceKey, confirmed);

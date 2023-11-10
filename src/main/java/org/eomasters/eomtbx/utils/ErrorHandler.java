@@ -170,7 +170,7 @@ public class ErrorHandler {
                 "If not, please use the preview area to either copy the report to the clipboard or save it "
                     + "as a file and provide it with the mail."), "top, left, wrap");
 
-        boolean uploadAllowed = Dialogs.confirmation("Report Error", panel, "errorReportUpload." + serviceName);
+        boolean uploadAllowed = Dialogs.confirmation("Report Error", panel, null, "errorReportUpload." + serviceName);
 
         String bodyText = createMailBody(errorReport, uploadAllowed, sharingService);
         MailTo mailTo = new MailTo("error@eomasters.com").subject("EOMTBX Error Report").body(bodyText);
