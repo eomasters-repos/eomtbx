@@ -23,11 +23,13 @@
 
 package org.eomasters.eomtbx;
 
+import com.bc.ceres.binding.ConverterRegistry;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintStream;
 import java.net.URI;
+import java.nio.file.Path;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
 import javax.xml.parsers.DocumentBuilder;
@@ -38,6 +40,7 @@ import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 import org.eomasters.eomtbx.quickmenu.QuickMenu;
+import org.eomasters.eomtbx.utils.PathConverter;
 import org.esa.snap.rcp.SnapApp;
 import org.openide.modules.OnStart;
 import org.openide.modules.OnStop;
@@ -140,7 +143,11 @@ public class EomToolbox {
 
     @Override
     public void run() {
-      new Thread(() -> QuickMenu.getInstance().init()).start();
+      new Thread(
+          () -> {
+            ConverterRegistry.getInstance().setConverter(Path.class, new PathConverter());
+            QuickMenu.getInstance().init();
+          }).start();
     }
   }
 
