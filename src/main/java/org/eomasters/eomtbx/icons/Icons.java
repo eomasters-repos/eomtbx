@@ -98,12 +98,14 @@ public final class Icons {
    * An icon showing document with an arrow pointing upwards.
    */
   public static final Icon MINUS = new SvgIcon("Minus");
-  // public static final Icon MINUS = new RasterIcon("Minus");
   /**
-   * An icon showing document with an arrow pointing upwards.
+   * An icon showing a pen.
+   */
+  public static final Icon PEN = new SvgIcon("Pen");
+  /**
+   * A plus icon.
    */
   public static final Icon PLUS = new SvgIcon("Plus");
-  // public static final Icon PLUS = new RasterIcon("Plus");
   /**
    * An icon representing the SpeX Database.
    */
