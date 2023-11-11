@@ -1,6 +1,6 @@
 /*-
  * ========================LICENSE_START=================================
- * EOMTBX PRO - EOMasters Toolbox PRO for SNAP
+ * EOMTBX - EOMasters Toolbox for SNAP
  * -> https://www.eomasters.org/sw/EOMTBX
  * ======================================================================
  * Copyright (C) 2023 Marco Peters
