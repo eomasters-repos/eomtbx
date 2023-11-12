@@ -45,13 +45,25 @@ public class PopupPanel extends JPanel {
     setLayout(new BorderLayout());
     setBorder(new BevelBorder(BevelBorder.RAISED));
     if (component != null) {
-      add(component);
+      add(component, BorderLayout.CENTER);
     }
 
     dialog = new JDialog();
     dialog.setUndecorated(true);
     dialog.setContentPane(this);
-    addMouseListener(new HidePopupPanelListener());
+    dialog.setAlwaysOnTop(true);
+  }
+
+  public void showAt(int x, int y) {
+    dialog.setLocation(x, y);
+    dialog.pack();
+    dialog.setVisible(true);
+  }
+
+  @Override
+  public void setVisible(boolean aFlag) {
+    super.setVisible(aFlag);
+    dialog.setVisible(aFlag);
   }
 
   public void installTo(JComponent component) {
@@ -65,6 +77,7 @@ public class PopupPanel extends JPanel {
       Rectangle bounds = getScreenLocationBounds(e.getComponent());
       if (!bounds.contains(e.getLocationOnScreen())) {
         dialog.setVisible(false);
+        e.getComponent().removeMouseListener(this);
       }
     }
 
@@ -80,9 +93,9 @@ public class PopupPanel extends JPanel {
 
     @Override
     public void mouseEntered(MouseEvent e) {
-      dialog.setLocation(e.getLocationOnScreen().x - 10, e.getLocationOnScreen().y - 10);
-      dialog.pack();
-      dialog.setVisible(true);
+      showAt(e.getLocationOnScreen().x - 10, e.getLocationOnScreen().y - 10);
+      e.getComponent().addMouseListener(new HidePopupPanelListener());
     }
   }
+
 }
