@@ -29,7 +29,6 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import javax.swing.JComponent;
-import javax.swing.JTextField;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.MatteBorder;
@@ -39,10 +38,10 @@ public class ComponentHighlighter {
   private Border oldBorder;
   private Color color = Color.red.darker();
   private int margin = 2;
-  private double timeSpan = 2.0;
+  private double duration = 2.0;
   private JComponent theComponent;
   private String infoMessage;
-  private PopupPanel popupPanel;
+  private PopupPanel popupComponent;
 
   public void setColor(Color color) {
     this.color = color;
@@ -53,12 +52,13 @@ public class ComponentHighlighter {
   }
 
   /**
-   * @param timeSpan in seconds
+   * Sets the highlighting duration in seconds.
+   * @param duration in seconds
    */
-  public void setTimeSpan(double timeSpan) {
-    this.timeSpan = timeSpan;
+  public void setDuration(double duration) {
+    this.duration = duration;
   }
-  
+
   public void setInfoMessage(String infoMessage) {
     this.infoMessage = infoMessage;
   }
@@ -68,30 +68,29 @@ public class ComponentHighlighter {
     theComponent = component;
     theComponent.setBorder(new MatteBorder(margin, margin, margin, margin, color));
     if (infoMessage != null) {
-      popupPanel = createPopup(infoMessage);
+      popupComponent = createPopup(infoMessage);
     }
 
     ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
-    executorService.schedule(this::removeHighlighting, (long) (timeSpan * 1000), TimeUnit.MILLISECONDS);
+    executorService.schedule(this::removeHighlighting, (long) (duration * 1000), TimeUnit.MILLISECONDS);
   }
 
   private PopupPanel createPopup(String message) {
-    JTextField textField = new JTextField(message);
+    MultiLineText textField = new MultiLineText(message);
     textField.setFont(textField.getFont().deriveFont(Font.BOLD));
     textField.setEditable(false);
     textField.setBorder(new EmptyBorder(0, 0, 0, 0));
     float[] rgbComponents = color.getRGBComponents(null);
     textField.setBackground(new Color(color.getColorSpace(), rgbComponents, rgbComponents[3] * 0.3f));
-    PopupPanel popupPanel = new PopupPanel(textField);
-    popupPanel.showAt(theComponent.getLocationOnScreen().x,theComponent.getLocationOnScreen().y + theComponent.getHeight());
-    popupPanel.setBorder(new EmptyBorder(0, 0, 0, 0));
-    return popupPanel;
+    PopupPanel popupComponent = new PopupPanel(textField);
+    popupComponent.showPopupAt(theComponent.getLocationOnScreen().x,theComponent.getLocationOnScreen().y + theComponent.getHeight());
+    return popupComponent;
   }
 
   private void removeHighlighting() {
     theComponent.setBorder(oldBorder);
-    if (popupPanel != null) {
-      popupPanel.setVisible(false);
+    if (popupComponent != null) {
+      popupComponent.hidePopup();
     }
   }
 }

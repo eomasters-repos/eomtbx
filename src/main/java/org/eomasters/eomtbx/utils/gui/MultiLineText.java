@@ -32,7 +32,7 @@ import javax.swing.JTextArea;
 /**
  * A multi-line text component based on a JTextArea.
  *
- * <p>If used in a MigLayout the "wmin" property should be set.
+ * <p>If used in a MigLayout the "wmin" property should be set to a small value.
  */
 public class MultiLineText extends JTextArea {
 

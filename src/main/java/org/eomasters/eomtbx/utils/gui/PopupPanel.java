@@ -23,69 +23,74 @@
 
 package org.eomasters.eomtbx.utils.gui;
 
-import java.awt.BorderLayout;
 import java.awt.Component;
+import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 import javax.swing.JComponent;
-import javax.swing.JDialog;
-import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
 import javax.swing.border.BevelBorder;
 
-public class PopupPanel extends JPanel {
+public class PopupPanel {
 
-  protected final JDialog dialog;
-
-  public PopupPanel() {
-    this(null);
-  }
+  private int delay = 500;
+  private final JComponent component;
+  protected final JPopupMenu popup;
+  private JComponent invoker;
 
   public PopupPanel(JComponent component) {
-    setLayout(new BorderLayout());
-    setBorder(new BevelBorder(BevelBorder.RAISED));
-    if (component != null) {
-      add(component, BorderLayout.CENTER);
+    popup = new JPopupMenu();
+    popup.setBorder(new BevelBorder(BevelBorder.RAISED));
+    this.component = component;
+    if (this.component != null) {
+      popup.add(component);
     }
-
-    dialog = new JDialog();
-    dialog.setUndecorated(true);
-    dialog.setContentPane(this);
-    dialog.setAlwaysOnTop(true);
+    popup.pack();
   }
 
-  public void showAt(int x, int y) {
-    dialog.setLocation(x, y);
-    dialog.pack();
-    dialog.setVisible(true);
+  public void setPopupDelay(int delay) {
+    this.delay = delay;
   }
 
-  @Override
-  public void setVisible(boolean aFlag) {
-    super.setVisible(aFlag);
-    dialog.setVisible(aFlag);
+  public void showPopupAt(int x, int y) {
+    popup.show(invoker, x, y);
+  }
+
+  public void hidePopup() {
+    popup.setVisible(false);
   }
 
   public void installTo(JComponent component) {
-    component.addMouseListener(new ShowPopupPanelListener());
+    invoker = component;
+    invoker.addMouseListener(new ShowPopupPanelListener());
+  }
+
+  // Makes the bounds independent of parent
+  private Rectangle getScreenLocationBounds(Component component) {
+    Rectangle bounds = component.getBounds();
+    synchronized (component.getTreeLock()) {
+      if (component.isShowing()) {
+        bounds.setLocation(component.getLocationOnScreen());
+      }
+    }
+    return bounds;
   }
 
   private class HidePopupPanelListener extends MouseAdapter {
 
     @Override
     public void mouseExited(MouseEvent e) {
-      Rectangle bounds = getScreenLocationBounds(e.getComponent());
-      if (!bounds.contains(e.getLocationOnScreen())) {
-        dialog.setVisible(false);
-        e.getComponent().removeMouseListener(this);
+      if (!component.isVisible()) {
+        return;
       }
-    }
-
-    // Makes the bounds independent of parent
-    private Rectangle getScreenLocationBounds(Component component) {
-      Rectangle bounds = component.getBounds();
-      bounds.setLocation(getLocationOnScreen());
-      return bounds;
+      Rectangle bounds = getScreenLocationBounds(component);
+      if (!bounds.contains(e.getLocationOnScreen())) {
+        hidePopup();
+      }
     }
   }
 
@@ -93,9 +98,17 @@ public class PopupPanel extends JPanel {
 
     @Override
     public void mouseEntered(MouseEvent e) {
-      showAt(e.getLocationOnScreen().x - 10, e.getLocationOnScreen().y - 10);
-      e.getComponent().addMouseListener(new HidePopupPanelListener());
+      // popup should be made visible only if the mouse is still over the invoker after a short delay
+      ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
+      executor.schedule(() -> {
+        Point mousePosition = invoker.getMousePosition(true);
+        if (mousePosition != null) {
+          showPopupAt(mousePosition.x - 10, mousePosition.y - 10);
+          component.addMouseListener(new HidePopupPanelListener());
+        }
+      }, delay, TimeUnit.MILLISECONDS);
     }
+
   }
 
 }
