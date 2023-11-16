@@ -36,10 +36,6 @@ public final class EomTbxIcons {
    */
   public static final Icon EOMTBX = new SvgIcon("/org/eomasters/eomtbx/icons/EomToolbox");
   /**
-   * An icon for the System Report.
-   */
-  public static final Icon SYS_REPORT = new RasterIcon("/org/eomasters/eomtbx/icons/SysReport");
-  /**
    * An icon for the Wavelength Editor.
    */
   public static final Icon WVL_EDITOR = new RasterIcon("/org/eomasters/eomtbx/icons/WvlEditor");
