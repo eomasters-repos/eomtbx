@@ -28,14 +28,14 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import org.eomasters.icons.Icons;
 import org.junit.jupiter.api.Test;
 
-class EomTbxIconsTest {
+class EomtbxIconsTest {
 
   @Test
   void getIcons() {
-    assertNotNull(EomTbxIcons.EOMTBX);
+    assertNotNull(EomtbxIcons.EOMTBX);
     assertNotNull(Icons.IMPORT);
     assertNotNull(Icons.EXPORT);
-    assertNotNull(EomTbxIcons.WVL_EDITOR);
+    assertNotNull(EomtbxIcons.WVL_EDITOR);
   }
 
 }

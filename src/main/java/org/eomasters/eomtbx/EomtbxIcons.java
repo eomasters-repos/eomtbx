@@ -23,14 +23,43 @@
 
 package org.eomasters.eomtbx;
 
+import java.awt.Container;
+import java.awt.Dimension;
+import java.awt.GridLayout;
+import java.lang.reflect.Field;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.SwingUtilities;
+import javax.swing.WindowConstants;
 import org.eomasters.icons.Icon;
-import org.eomasters.icons.RasterIcon;
+import org.eomasters.icons.Icon.SIZE;
 import org.eomasters.icons.SvgIcon;
 
 /**
  * Eases access to the icons used within the EOMTBX.
  */
-public final class EomTbxIcons {
+public final class EomtbxIcons {
+
+  public static void main(String[] args) throws IllegalAccessException {
+    final JFrame frame = new JFrame("Icons");
+    frame.setPreferredSize(new Dimension(400, 400));
+    Container contentPane = frame.getContentPane();
+    SIZE size = SIZE.S48;
+    Field[] fields = EomtbxIcons.class.getFields();
+    for (Field field : fields) {
+      if (Icon.class.isAssignableFrom(field.getType())) {
+        contentPane.add(new JLabel(((Icon) field.get(null)).getImageIcon(size)));
+      }
+    }
+    int gridsize = (int) Math.ceil(Math.sqrt(contentPane.getComponents().length));
+    contentPane.setLayout(new GridLayout(gridsize, gridsize));
+    frame.setLocationRelativeTo(null);
+    frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+    frame.pack();
+    SwingUtilities.invokeLater(() -> frame.setVisible(true));
+  }
+
+
   /**
    * The EOMTBX icon.
    */
@@ -38,9 +67,9 @@ public final class EomTbxIcons {
   /**
    * An icon for the Wavelength Editor.
    */
-  public static final Icon WVL_EDITOR = new RasterIcon("/org/eomasters/eomtbx/icons/WvlEditor");
+  public static final Icon WVL_EDITOR = new SvgIcon("/org/eomasters/eomtbx/icons/WvlEditor");
 
-  private EomTbxIcons() {
+  private EomtbxIcons() {
   }
 
 }
