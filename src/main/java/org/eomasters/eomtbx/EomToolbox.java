@@ -248,7 +248,7 @@ public class EomToolbox {
       dialog.dispose();
     });
 
-    dialog.setIconImage(EomTbxIcons.EOMTBX.getImageIcon(SIZE.S16).getImage());
+    dialog.setIconImage(EomtbxIcons.EOMTBX.getImageIcon(SIZE.S16).getImage());
     dialog.setTitle("Unexpected Error");
     dialog.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     dialog.setLocationRelativeTo(null);
