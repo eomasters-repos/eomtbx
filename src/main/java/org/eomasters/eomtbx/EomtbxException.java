@@ -21,16 +21,11 @@
  * =========================LICENSE_END==================================
  */
 
-package org.eomasters.eomtbx.utils;
+package org.eomasters.eomtbx;
 
-@SuppressWarnings("unused")
-public class ValidMaskBuilderException extends Exception {
+public class EomtbxException extends RuntimeException {
 
-  public ValidMaskBuilderException(String message) {
-    super(message);
-  }
-
-  public ValidMaskBuilderException(String message, Throwable cause) {
-    super(message, cause);
+  public EomtbxException(String s, Throwable e) {
+    super(s, e);
   }
 }

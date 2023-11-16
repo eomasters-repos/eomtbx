@@ -31,8 +31,8 @@ import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.border.TitledBorder;
 import net.miginfocom.swing.MigLayout;
+import org.eomasters.eomtbx.EomToolbox;
 import org.eomasters.eomtbx.preferences.PropertyChangeOptionsPanelController;
-import org.eomasters.eomtbx.utils.ErrorHandler;
 import org.openide.util.HelpCtx;
 import org.openide.util.Lookup;
 
@@ -116,7 +116,7 @@ public class QuickMenuOptionsPanelController extends PropertyChangeOptionsPanelC
     try {
       QuickMenu.getInstance().getPreferences().flush();
     } catch (BackingStoreException e) {
-      ErrorHandler.handleUnexpectedException("Could not store QuickMenu options", e);
+      EomToolbox.handleUnexpectedException("Could not store QuickMenu options", e);
     }
   }
 }

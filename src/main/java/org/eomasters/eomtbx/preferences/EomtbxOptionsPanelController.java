@@ -38,11 +38,10 @@ import javax.swing.SwingUtilities;
 import javax.swing.filechooser.FileFilter;
 import net.miginfocom.swing.MigLayout;
 import org.eomasters.eomtbx.EomToolbox;
-import org.eomasters.eomtbx.icons.Icon.SIZE;
-import org.eomasters.eomtbx.icons.Icons;
 import org.eomasters.eomtbx.quickmenu.QuickMenuOptionsPanelController;
-import org.eomasters.eomtbx.utils.ErrorHandler;
-import org.eomasters.eomtbx.utils.FileIo;
+import org.eomasters.gui.FileIo;
+import org.eomasters.icons.Icon.SIZE;
+import org.eomasters.icons.Icons;
 import org.netbeans.spi.options.OptionsPanelController;
 import org.openide.util.HelpCtx;
 import org.openide.util.Lookup;
@@ -100,7 +99,7 @@ public class EomtbxOptionsPanelController extends PropertyChangeOptionsPanelCont
     try {
       preferences.flush();
     } catch (BackingStoreException e) {
-      ErrorHandler.handleUnexpectedException("Could not store options for EOMasters Toolbox", e);
+      EomToolbox.handleUnexpectedException("Could not store options for EOMasters Toolbox", e);
     }
 
   }

@@ -9,12 +9,12 @@
  * it under the terms of the GNU General Public License as
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public
  * License along with this program.  If not, see
  * -> http://www.gnu.org/licenses/gpl-3.0.html
@@ -27,8 +27,8 @@ import java.awt.event.ActionEvent;
 import java.util.Arrays;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
-import org.eomasters.eomtbx.icons.Icon.SIZE;
-import org.eomasters.eomtbx.icons.Icons;
+import org.eomasters.eomtbx.EomTbxIcons;
+import org.eomasters.icons.Icon.SIZE;
 import org.esa.snap.core.datamodel.Product;
 import org.esa.snap.core.datamodel.ProductNode;
 import org.esa.snap.rcp.SnapApp;
@@ -68,7 +68,7 @@ public class WvlEditorAction extends AbstractAction {
    * @param node the node of the product which is currently selected
    */
   public WvlEditorAction(ProductNode node) {
-    super(Bundle.TXT_WvlEditorAction(), Icons.WVL_EDITOR.getImageIcon(SIZE.S16));
+    super(Bundle.TXT_WvlEditorAction(), EomTbxIcons.WVL_EDITOR.getImageIcon(SIZE.S16));
     product = node.getProduct();
     putValue(Action.SHORT_DESCRIPTION, Bundle.DSC_WvlEditorAction());
   }

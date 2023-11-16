@@ -21,21 +21,42 @@
  * =========================LICENSE_END==================================
  */
 
-package org.eomasters.eomtbx.utils.gui;
+package org.eomasters.eomtbx;
 
-import com.bc.ceres.binding.PropertyDescriptor;
-import com.bc.ceres.swing.binding.internal.FileEditor;
-import java.nio.file.Path;
+import org.eomasters.icons.Icon;
+import org.eomasters.icons.RasterIcon;
 
 /**
- * An editor for paths using a file chooser dialog.
+ * Eases access to the icons used within the EOMTBX.
  */
-public class PathEditor extends FileEditor {
+public final class EomTbxIcons {
 
-  @Override
-  public boolean isValidFor(PropertyDescriptor propertyDescriptor) {
-    return Path.class.isAssignableFrom(propertyDescriptor.getType())
-        && !Boolean.TRUE.equals(propertyDescriptor.getAttribute("directory"));
+  /**
+   * An icon with ABCDEF letters.
+   */
+  public static final Icon ABCDEF = new RasterIcon("/org/eomasters/eomtbx/icons/Abcdef");
+  /**
+   * An icon showing document with an arrow pointing upwards.
+   */
+  public static final Icon DOC_ARROW_UP = new RasterIcon("/org/eomasters/eomtbx/icons/DocArrowUp");
+  /**
+   * The EOMTBX icon.
+   */
+  public static final Icon EOMTBX = new RasterIcon("/org/eomasters/eomtbx/icons/EomToolbox");
+  /**
+   * An icon representing groups or categories.
+   */
+  public static final Icon GROUPS = new RasterIcon("/org/eomasters/eomtbx/icons/Groups");
+  /**
+   * An icon for the System Report.
+   */
+  public static final Icon SYS_REPORT = new RasterIcon("/org/eomasters/eomtbx/icons/SysReport");
+  /**
+   * An icon for the Wavelength Editor.
+   */
+  public static final Icon WVL_EDITOR = new RasterIcon("/org/eomasters/eomtbx/icons/WvlEditor");
+
+  private EomTbxIcons() {
   }
 
 }

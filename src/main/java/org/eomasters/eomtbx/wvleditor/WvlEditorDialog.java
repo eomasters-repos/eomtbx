@@ -44,13 +44,13 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumnModel;
 import net.miginfocom.swing.MigLayout;
-import org.eomasters.eomtbx.icons.Icon.SIZE;
-import org.eomasters.eomtbx.icons.Icons;
-import org.eomasters.eomtbx.utils.ProductSelectionDialog;
-import org.eomasters.eomtbx.utils.ProductSelectionDialog.ProductSelection;
-import org.eomasters.eomtbx.utils.TablePasteAdapter;
-import org.eomasters.eomtbx.utils.gui.MultiLineText;
-import org.eomasters.eomtbx.utils.gui.NumberCellEditor;
+import org.eomasters.eomtbx.EomTbxIcons;
+import org.eomasters.gui.MultiLineText;
+import org.eomasters.gui.NumberCellEditor;
+import org.eomasters.gui.TablePasteAdapter;
+import org.eomasters.icons.Icon.SIZE;
+import org.eomasters.snap.gui.ProductSelectionDialog;
+import org.eomasters.snap.gui.ProductSelectionDialog.ProductSelection;
 import org.esa.snap.core.datamodel.Band;
 import org.esa.snap.core.datamodel.FlagCoding;
 import org.esa.snap.core.datamodel.IndexCoding;
@@ -113,7 +113,7 @@ class WvlEditorDialog extends ModalDialog {
       JButton productSelectionBtn = new JButton(createButtonText(compatibleProducts));
       productSelectionBtn.addActionListener(e -> {
         ProductSelectionDialog selectionDialog = new ProductSelectionDialog(getParent(), compatibleProducts);
-        selectionDialog.getJDialog().setIconImage(Icons.WVL_EDITOR.getImageIcon(SIZE.S16).getImage());
+        selectionDialog.getJDialog().setIconImage(EomTbxIcons.WVL_EDITOR.getImageIcon(SIZE.S16).getImage());
         selectionDialog.show();
         productSelectionBtn.setText(createButtonText(compatibleProducts));
       });
@@ -153,7 +153,7 @@ class WvlEditorDialog extends ModalDialog {
   @Override
   public int show() {
     setContent(createContentPanel());
-    getJDialog().setIconImage(Icons.WVL_EDITOR.getImageIcon(SIZE.S16).getImage());
+    getJDialog().setIconImage(EomTbxIcons.WVL_EDITOR.getImageIcon(SIZE.S16).getImage());
     return super.show();
   }
 

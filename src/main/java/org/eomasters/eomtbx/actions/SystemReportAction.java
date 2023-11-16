@@ -25,11 +25,11 @@ package org.eomasters.eomtbx.actions;
 
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
-import org.eomasters.eomtbx.icons.Icon.SIZE;
-import org.eomasters.eomtbx.icons.Icons;
-import org.eomasters.eomtbx.utils.gui.CollapsiblePanel;
-import org.eomasters.eomtbx.utils.gui.Dialogs;
-import org.eomasters.eomtbx.utils.SystemReport;
+import org.eomasters.eomtbx.EomTbxIcons;
+import org.eomasters.gui.CollapsiblePanel;
+import org.eomasters.gui.Dialogs;
+import org.eomasters.icons.Icon.SIZE;
+import org.eomasters.snap.utils.SnapSystemReport;
 import org.openide.awt.ActionID;
 import org.openide.awt.ActionReference;
 import org.openide.awt.ActionRegistration;
@@ -49,17 +49,17 @@ public class SystemReportAction extends AbstractAction {
    * Creates a new Action.
    */
   public SystemReportAction() {
-    super(Bundle.SystemReportActionName(), Icons.SYS_REPORT.getImageIcon(SIZE.S16));
+    super(Bundle.SystemReportActionName(), EomTbxIcons.SYS_REPORT.getImageIcon(SIZE.S16));
   }
 
   @Override
   public void actionPerformed(ActionEvent e) {
-    SystemReport systemReport = new SystemReport().name("SNAP_System_Report").logTail(100);
+    SnapSystemReport systemReport = new SnapSystemReport().name("SNAP_System_Report").logTail(100);
 
     CollapsiblePanel reportArea = CollapsiblePanel.createLongTextPanel("System Report", systemReport.generate());
     reportArea.setCollapsed(false);
 
-    Dialogs.message("System Report", Icons.SYS_REPORT.getImageIcon(SIZE.S16), reportArea);
+    Dialogs.message("System Report", EomTbxIcons.SYS_REPORT.getImageIcon(SIZE.S16), reportArea);
   }
 
 }

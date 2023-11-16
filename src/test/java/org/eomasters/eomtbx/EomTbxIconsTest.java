@@ -21,56 +21,21 @@
  * =========================LICENSE_END==================================
  */
 
-package org.eomasters.eomtbx.utils.gui;
+package org.eomasters.eomtbx;
 
-import javax.swing.Icon;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-public class State {
+import org.eomasters.icons.Icons;
+import org.junit.jupiter.api.Test;
 
-  private final String id;
-  private Icon icon;
-  private String text;
-  private String toolTip;
+class EomTbxIconsTest {
 
-  public State(String id) {
-    this.id = id;
+  @Test
+  void getIcons() {
+    assertNotNull(EomTbxIcons.EOMTBX);
+    assertNotNull(Icons.IMPORT);
+    assertNotNull(Icons.EXPORT);
+    assertNotNull(EomTbxIcons.WVL_EDITOR);
   }
 
-  public State(String id, Icon icon) {
-    this.id = id;
-    this.icon = icon;
-  }
-
-  public State(String id, String text) {
-    this.id = id;
-    this.text = text;
-  }
-
-  public String getId() {
-    return id;
-  }
-
-  public Icon getIcon() {
-    return icon;
-  }
-
-  public String getText() {
-    return text;
-  }
-
-  public String getToolTipText() {
-    return toolTip;
-  }
-
-  public void setIcon(Icon icon) {
-    this.icon = icon;
-  }
-
-  public void setText(String text) {
-    this.text = text;
-  }
-
-  public void setToolTip(String toolTip) {
-    this.toolTip = toolTip;
-  }
 }

@@ -26,7 +26,7 @@ package org.eomasters.eomtbx.quickmenu;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import org.eomasters.eomtbx.utils.ErrorHandler;
+import org.eomasters.eomtbx.EomToolbox;
 import org.openide.filesystems.FileObject;
 import org.openide.filesystems.FileUtil;
 
@@ -78,7 +78,7 @@ class ActionRefCollector {
         }
       } catch (Exception e) {
         String msg = "Error while collecting actions for " + QuickMenuAction.QUICK_MENU_NAME;
-        ErrorHandler.handleUnexpectedException(msg, e);
+        EomToolbox.handleUnexpectedException(msg, e);
       }
     }
     return actionRefs;
