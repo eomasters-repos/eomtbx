@@ -25,28 +25,16 @@ package org.eomasters.eomtbx;
 
 import org.eomasters.icons.Icon;
 import org.eomasters.icons.RasterIcon;
+import org.eomasters.icons.SvgIcon;
 
 /**
  * Eases access to the icons used within the EOMTBX.
  */
 public final class EomTbxIcons {
-
-  /**
-   * An icon with ABCDEF letters.
-   */
-  public static final Icon ABCDEF = new RasterIcon("/org/eomasters/eomtbx/icons/Abcdef");
-  /**
-   * An icon showing document with an arrow pointing upwards.
-   */
-  public static final Icon DOC_ARROW_UP = new RasterIcon("/org/eomasters/eomtbx/icons/DocArrowUp");
   /**
    * The EOMTBX icon.
    */
-  public static final Icon EOMTBX = new RasterIcon("/org/eomasters/eomtbx/icons/EomToolbox");
-  /**
-   * An icon representing groups or categories.
-   */
-  public static final Icon GROUPS = new RasterIcon("/org/eomasters/eomtbx/icons/Groups");
+  public static final Icon EOMTBX = new SvgIcon("/org/eomasters/eomtbx/icons/EomToolbox");
   /**
    * An icon for the System Report.
    */

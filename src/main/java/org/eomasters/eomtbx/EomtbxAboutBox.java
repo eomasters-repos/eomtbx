@@ -26,7 +26,6 @@ package org.eomasters.eomtbx;
 import java.awt.BorderLayout;
 import java.awt.Cursor;
 import java.net.URI;
-import java.net.URL;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -41,20 +40,17 @@ import org.openide.modules.Modules;
 @AboutBox(displayName = "EOMTBX", position = 500)
 public class EomtbxAboutBox extends JPanel {
 
-
   public EomtbxAboutBox() {
     super(new BorderLayout(4, 4));
     setBorder(new EmptyBorder(4, 4, 4, 4));
-    URL aboutLogo = EomtbxAboutBox.class.getResource("about-eomtbx-logo.png");
-    ImageIcon aboutImage = new ImageIcon(aboutLogo);
-    JLabel iconLabel = new JLabel(aboutImage);
-    add(iconLabel, BorderLayout.CENTER);
+    JLabel label = new JLabel(new ImageIcon(EomtbxAboutBox.class.getResource("about-eomtbx-logo.png")));
+    add(label, BorderLayout.CENTER);
     add(createVersionPanel(), BorderLayout.SOUTH);
   }
 
   private JPanel createVersionPanel() {
     String eomLink = "<a href=\"" + EomToolbox.EOMASTERS_URL + "\">EOMasters</a>";
-    JLabel copyrightLabel = new JLabel("<html><b>©2023 Marco Peters from "+eomLink+"</b>", SwingConstants.CENTER);
+    JLabel copyrightLabel = new JLabel("<html><b>©2023 Marco Peters from " + eomLink + "</b>", SwingConstants.CENTER);
     copyrightLabel.addMouseListener(new BrowserUtils.URLClickAdaptor(EomToolbox.EOMASTERS_URL.toString()));
 
     final ModuleInfo moduleInfo = Modules.getDefault().ownerOf(EomtbxAboutBox.class);
