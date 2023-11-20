@@ -26,11 +26,9 @@ package org.eomasters.eomtbx.preferences;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.List;
-import java.util.prefs.BackingStoreException;
+import java.util.prefs.PreferenceChangeListener;
 import java.util.prefs.Preferences;
-import javax.swing.JButton;
 import javax.swing.JComponent;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
@@ -40,28 +38,26 @@ import net.miginfocom.swing.MigLayout;
 import org.eomasters.eomtbx.EomToolbox;
 import org.eomasters.eomtbx.quickmenu.QuickMenuOptionsPanelController;
 import org.eomasters.gui.FileIo;
-import org.eomasters.icons.Icon.SIZE;
-import org.eomasters.icons.Icons;
 import org.netbeans.spi.options.OptionsPanelController;
 import org.openide.util.HelpCtx;
 import org.openide.util.Lookup;
+import org.openide.util.WeakListeners;
 
 /**
  * Controller for the EOMTBX options panel. Allows to change the preferences for the EOMTBX.
  */
 @SuppressWarnings("unused")
-@OptionsPanelController.TopLevelRegistration(
-    id = EomtbxOptionsPanelController.OPTIONS_ID,
-    categoryName = "EOMTBX",
-    iconBase = "org/eomasters/eomtbx/icons/EomToolbox_32.png",
+@OptionsPanelController.SubRegistration(
+    id = "general",
+    displayName = "General",
+    location = "eomtbx",
     keywordsCategory = "EOMTBX",
     keywords = "EOMTBX, EOMASTERS, Toolbox",
-    position = 9000
+    position = 0
 )
-public class EomtbxOptionsPanelController extends PropertyChangeOptionsPanelController {
+public class GeneralOptionsPanelController extends PropertyChangeOptionsPanelController {
 
-  public static final String OPTIONS_ID = "EOMTBX";
-  public static final String HID_EOMTBX_PREFERENCES = "eomtbxPreferences";
+  public static final String HID_EOMTBX_PREFERENCES = "eomtbxOptions";
   private static final FileFilter PREFERENCES_FILE_FILTER = FileIo.createFileFilter("Preferences file", "prefs");
   private final List<OptionsPanelController> subControllers;
   private final Preferences preferences = EomToolbox.getPreferences();
@@ -70,22 +66,18 @@ public class EomtbxOptionsPanelController extends PropertyChangeOptionsPanelCont
   /**
    * Creates a new EomtbxOptionsPanelController.
    */
-  public EomtbxOptionsPanelController() {
+  public GeneralOptionsPanelController() {
     SubControllerChangeDelegate propertyChangeDelegate = new SubControllerChangeDelegate();
 
+    ImExportOptionsPanelController imExportController = new ImExportOptionsPanelController();
     QuickMenuOptionsPanelController quickMenuController = new QuickMenuOptionsPanelController();
+    imExportController.addPropertyChangeListener(propertyChangeDelegate);
     quickMenuController.addPropertyChangeListener(propertyChangeDelegate);
-    subControllers = List.of(quickMenuController);
 
-    preferences.addPreferenceChangeListener(evt -> update());
-  }
 
-  private static void exportPreferences(JPanel eomtbxPanel) {
-    FileIo fileIo = new FileIo("Export EOMTBX preferences");
-    fileIo.setParent(eomtbxPanel);
-    fileIo.setFileName("eomtbx.prefs");
-    fileIo.setFileFilters(PREFERENCES_FILE_FILTER);
-    fileIo.save(EomToolbox::exportPreferences);
+    subControllers = List.of(imExportController, quickMenuController);
+    preferences.addPreferenceChangeListener(
+        WeakListeners.create(PreferenceChangeListener.class, evt -> update(), preferences));
   }
 
   @Override
@@ -96,12 +88,6 @@ public class EomtbxOptionsPanelController extends PropertyChangeOptionsPanelCont
   @Override
   public void applyChanges() {
     SwingUtilities.invokeLater(() -> subControllers.forEach(OptionsPanelController::applyChanges));
-    try {
-      preferences.flush();
-    } catch (BackingStoreException e) {
-      EomToolbox.handleUnexpectedException("Could not store options for EOMasters Toolbox", e);
-    }
-
   }
 
   @Override
@@ -122,10 +108,8 @@ public class EomtbxOptionsPanelController extends PropertyChangeOptionsPanelCont
   @Override
   public JComponent getComponent(Lookup lookup) {
     if (mainPanel == null) {
-      MigLayout layout = new MigLayout("fillx, gapy 5");
+      MigLayout layout = new MigLayout("top, left, fillx, gapy 5");
       JPanel prefPanel = new JPanel(layout);
-      JPanel generalPanel = createGeneralPanel();
-      prefPanel.add(generalPanel, "growx, wrap");
 
       for (OptionsPanelController subController : subControllers) {
         prefPanel.add(subController.getComponent(Lookup.getDefault()), "growx, wrap");
@@ -138,32 +122,6 @@ public class EomtbxOptionsPanelController extends PropertyChangeOptionsPanelCont
       mainPanel = scrollPane;
     }
     return mainPanel;
-  }
-
-  private JPanel createGeneralPanel() {
-    JPanel eomtbxPanel = new JPanel(new MigLayout("gap 5, insets 5"));
-    eomtbxPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("EOMTBX General Options"));
-    eomtbxPanel.add(new JLabel("Import/Export options:"), "gapright 10");
-    JButton importButton = new JButton("Import", Icons.IMPORT.getImageIcon(SIZE.S24));
-    JButton exportButton = new JButton("Export", Icons.EXPORT.getImageIcon(SIZE.S24));
-    eomtbxPanel.add(importButton);
-    eomtbxPanel.add(exportButton, "wrap");
-
-    importButton.addActionListener(e -> importPreferences(eomtbxPanel));
-    exportButton.addActionListener(e -> exportPreferences(eomtbxPanel));
-
-    return eomtbxPanel;
-  }
-
-  private void importPreferences(JPanel eomtbxPanel) {
-    FileIo fileIo = new FileIo("Import EOMTBX preferences");
-    fileIo.setParent(eomtbxPanel);
-    fileIo.setFileName("eomtbx.prefs");
-    fileIo.setFileFilters(PREFERENCES_FILE_FILTER);
-    fileIo.load(inputStream -> {
-      EomToolbox.importPreferences(inputStream);
-      update();
-    });
   }
 
   @Override
@@ -195,3 +153,5 @@ public class EomtbxOptionsPanelController extends PropertyChangeOptionsPanelCont
     }
   }
 }
+
+

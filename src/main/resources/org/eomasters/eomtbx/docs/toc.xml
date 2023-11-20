@@ -12,7 +12,9 @@
     <tocitem target="eomtbxCloseProductNoView" text="Close Products without a View"/>
     <tocitem target="eomtbxSystemReport" text="Create System Report"/>
     <tocitem target="eomtbxErrorHandler" text="Error Handler"/>
-    <tocitem target="eomtbxOptions" text="EOMTBX Options"/>
+    <tocitem target="eomtbxOptions" text="EOMTBX Options">
+      <tocitem target="eomtbxOptions.general" text="EOMTBX Options"/>
+    </tocitem>
     <tocitem target="eomtbxCredits" text="Credits"/>
   </tocitem>
 </toc>

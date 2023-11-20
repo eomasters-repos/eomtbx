@@ -12,7 +12,10 @@
   <mapID target="eomtbxCloseProductNoView" url="pages/CloseProductNoView.html"/>
   <mapID target="eomtbxSystemReport" url="pages/CreateSystemReport.html"/>
   <mapID target="eomtbxErrorHandler" url="pages/ErrorHandler.html"/>
+
   <mapID target="eomtbxOptions" url="pages/EomtbxOptions.html"/>
+  <mapID target="eomtbxOptions.general" url="pages/EomtbxOptions.html"/>
+
   <mapID target="eomtbxCredits" url="pages/EomtbxCredits.html"/>
 
   <mapID target="eomtbxIcon" url="images/EomToolbox_16.png"/>
