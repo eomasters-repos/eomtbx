@@ -42,7 +42,7 @@ public class AreValidFunction extends B {
     for (Term arg : args) {
       RasterDataNode raster = TermUtils.getRaster(arg);
       if (raster == null) {
-        throw new EvalException("Arguments of areValid() must reference a raster");
+        throw new EvalException("Arguments of areValid() must reference raster");
       }
       boolean pixelValid = raster.isPixelValid(dataEvalEnv.getPixelX(), dataEvalEnv.getPixelY());
       if (!pixelValid) {
