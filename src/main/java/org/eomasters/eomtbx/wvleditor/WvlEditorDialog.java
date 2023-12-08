@@ -112,7 +112,7 @@ class WvlEditorDialog extends ModalDialog {
       footerPanel.add(textField, "wmin 10, growx");
       JButton productSelectionBtn = new JButton(createButtonText(compatibleProducts));
       productSelectionBtn.addActionListener(e -> {
-        ProductSelectionDialog selectionDialog = new ProductSelectionDialog(getParent(), compatibleProducts);
+        ProductSelectionDialog selectionDialog = new ProductSelectionDialog(getParent(), compatibleProducts, HID_EOMTBX_WvlEditor);
         selectionDialog.getJDialog().setIconImage(EomtbxIcons.WVL_EDITOR.getImageIcon(SIZE.S16).getImage());
         selectionDialog.show();
         productSelectionBtn.setText(createButtonText(compatibleProducts));
