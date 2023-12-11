@@ -23,6 +23,7 @@
 
 package org.eomasters.eomtbx.preferences;
 
+import java.io.IOException;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
 import javax.swing.JButton;
@@ -32,9 +33,11 @@ import javax.swing.JPanel;
 import javax.swing.filechooser.FileFilter;
 import net.miginfocom.swing.MigLayout;
 import org.eomasters.eomtbx.EomToolbox;
+import org.eomasters.gui.Dialogs;
 import org.eomasters.gui.FileIo;
 import org.eomasters.icons.Icon.SIZE;
 import org.eomasters.icons.Icons;
+import org.openide.awt.NotificationDisplayer;
 import org.openide.util.HelpCtx;
 import org.openide.util.Lookup;
 
@@ -98,22 +101,37 @@ public class ImExportOptionsPanelController extends PropertyChangeOptionsPanelCo
   }
 
   private void importPreferences(JPanel eomtbxPanel) {
-    FileIo fileIo = new FileIo("Import EOMTBX preferences");
+    FileIo fileIo = new FileIo("Import EOMTBX Preferences");
     fileIo.setParent(eomtbxPanel);
     fileIo.setFileName("eomtbx.prefs");
     fileIo.setFileFilters(PREFERENCES_FILE_FILTER);
     fileIo.load(inputStream -> {
-      EomToolbox.importPreferences(inputStream);
+      try {
+        EomToolbox.importPreferences(inputStream);
+        NotificationDisplayer.getDefault().notify("EOMTBX Preferences",
+            Icons.IMPORT.getImageIcon(SIZE.S24), "Preferences imported successfully", null, NotificationDisplayer.Priority.NORMAL);
+      } catch (IOException e) {
+        Dialogs.error("EOMTBX Preferences", "Could not import preferences", e);
+      }
       update();
     });
   }
 
   private void exportPreferences(JPanel eomtbxPanel) {
-    FileIo fileIo = new FileIo("Export EOMTBX preferences");
+    FileIo fileIo = new FileIo("Export EOMTBX Preferences");
     fileIo.setParent(eomtbxPanel);
     fileIo.setFileName("eomtbx.prefs");
     fileIo.setFileFilters(PREFERENCES_FILE_FILTER);
-    fileIo.save(EomToolbox::exportPreferences);
+    fileIo.save(out -> {
+      try {
+        EomToolbox.exportPreferences(out);
+        NotificationDisplayer.getDefault().notify("EOMTBX Preferences",
+            Icons.EXPORT.getImageIcon(SIZE.S24), "Preferences exported successfully", null, NotificationDisplayer.Priority.NORMAL);
+      } catch (IOException e) {
+        Dialogs.error("EOMTBX Preferences", "Could not export preferences", e);
+      }
+
+    });
   }
 
 
