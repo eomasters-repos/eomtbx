@@ -80,6 +80,11 @@
       <artifactId>snap-gpf</artifactId>
       <version>${snap.version}</version>
     </dependency>
+    <dependency>
+      <groupId>org.esa.snap</groupId>
+      <artifactId>snap-gpf-ui</artifactId>
+      <version>${snap.version}</version>
+    </dependency>
 
     <dependency>
       <groupId>eu.esa.snap.netbeans</groupId>
