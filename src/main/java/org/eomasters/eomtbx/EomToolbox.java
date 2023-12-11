@@ -24,6 +24,7 @@
 package org.eomasters.eomtbx;
 
 import com.bc.ceres.binding.ConverterRegistry;
+import com.jidesoft.swing.MultilineLabel;
 import java.awt.Container;
 import java.awt.Desktop;
 import java.awt.Font;
@@ -31,6 +32,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintStream;
+import java.lang.ref.Cleaner;
 import java.net.URI;
 import java.nio.file.Path;
 import java.time.Instant;
@@ -59,8 +61,7 @@ import net.miginfocom.swing.MigLayout;
 import org.eomasters.eomtbx.quickmenu.QuickMenu;
 import org.eomasters.gui.CollapsiblePanel;
 import org.eomasters.gui.Dialogs;
-import org.eomasters.gui.MultiLineText;
-import org.eomasters.gui.OpenUriAdaptor;
+import org.eomasters.gui.UriField;
 import org.eomasters.icons.Icon.SIZE;
 import org.eomasters.snap.utils.PathConverter;
 import org.eomasters.snap.utils.SnapSystemReport;
@@ -96,6 +97,8 @@ public class EomToolbox {
       JFrame window = new JFrame("Test ErrorHandler");
       window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
       window.setSize(400, 300);
+      window.setLocationRelativeTo(null);
+
       Container container = window.getContentPane();
       container.setLayout(new MigLayout("top, left, fillx, gap 5 5"));
       JButton errorDialog = new JButton("Show Error Dialog");
@@ -105,7 +108,7 @@ public class EomToolbox {
           new Exception("Test", new Exception("theCause"))));
       JButton openErrorHandler = new JButton("Show Exception Handler");
       openErrorHandler.addActionListener(
-          e -> handleUnexpectedException("Test", new Exception("Test", new Exception("theCause"))));
+          e -> EomToolbox.handleUnexpectedException("Test", new Exception("Test", new Exception("theCause"))));
       container.add(errorDialog);
       container.add(extendedErrorDialog);
       container.add(openErrorHandler);
@@ -121,6 +124,7 @@ public class EomToolbox {
   public static final URI EOMASTERS_URL = URI.create("https://www.eomasters.org");
   public static final URI FORUM_URL = URI.create("https://www.eomasters.org/forum");
   private static final Preferences preferences = SnapApp.getDefault().getPreferences().node(TOOLBOX_ID);
+  private static final Cleaner cleaner = Cleaner.create();
 
   /**
    * Returns the preferences of the EOM-Toolbox.
@@ -152,31 +156,63 @@ public class EomToolbox {
    * @throws IOException if an I/O error occurs
    */
   public static void importPreferences(InputStream in) throws IOException {
-    // Preferences.importPreferences(in); is not working
-    Document document = loadPreferencesDocument(in);
-    XPath xpath = XPathFactory.newInstance().newXPath();
-    String snapName = SnapApp.getDefault().getInstanceName().toLowerCase();
-    String expression = String.format("/preferences/root[@type='system']/node[@name='%s']/node[@name='%s']/map/entry",
-        snapName, TOOLBOX_ID);
+    // Preferences.importPreferences(in); is not working for some reason
     try {
-      NodeList prefNodes = (NodeList) xpath.compile(expression).evaluate(document, XPathConstants.NODESET);
+      Document document = loadPreferencesDocument(in);
+      XPath xpath = XPathFactory.newInstance().newXPath();
       Preferences preferences = getPreferences();
-      for (int i = 0; i < prefNodes.getLength(); i++) {
-        Node item = prefNodes.item(i);
-        if (item.getNodeType() == Node.ELEMENT_NODE) {
-          String key = item.getAttributes().getNamedItem("key").getNodeValue();
-          String value = item.getAttributes().getNamedItem("value").getNodeValue();
-          preferences.put(key, value);
-        }
-      }
+      String expression = createSubNodesExpression(preferences);
+      NodeList prefNodes = (NodeList) xpath.compile(expression).evaluate(document, XPathConstants.NODESET);
+      addNodes(preferences, prefNodes);
       preferences.flush();
     } catch (XPathExpressionException | BackingStoreException e) {
-      throw new RuntimeException(e);
+      throw new IOException(e);
     }
 
   }
 
-  private static Document loadPreferencesDocument(InputStream in) throws IOException {
+  private static void addNodes(Preferences parentNode, NodeList prefNodes) {
+    for (int i = 0; i < prefNodes.getLength(); i++) {
+      Node item = prefNodes.item(i);
+      if (item.getNodeType() == Node.ELEMENT_NODE) {
+        processNode(parentNode, item);
+      }
+    }
+  }
+
+  private static void processNode(Preferences parentNode, Node item) {
+    if (item.getNodeName().equals("node")) {
+      String name = item.getAttributes().getNamedItem("name").getNodeValue();
+      Preferences node = parentNode.node(name);
+      addNodes(node, item.getChildNodes());
+    } else if (item.getNodeName().equals("map")) {
+      processMap(parentNode, item.getChildNodes());
+    }
+  }
+
+  private static void processMap(Preferences parentNode, NodeList entries) {
+    for (int j = 0; j < entries.getLength(); j++) {
+      Node entry = entries.item(j);
+      if (entry.getNodeType() == Node.ELEMENT_NODE && entry.getNodeName().equals("entry")) {
+        String key = entry.getAttributes().getNamedItem("key").getNodeValue();
+        String value = entry.getAttributes().getNamedItem("value").getNodeValue();
+        parentNode.put(key, value);
+      }
+    }
+  }
+
+  private static String createSubNodesExpression(Preferences preferences) {
+    String[] splits = preferences.absolutePath().replaceFirst("/", "").split("/");
+    StringBuilder sb = new StringBuilder();
+    sb.append("/preferences/root[@type='system']");
+    for (String split : splits) {
+      sb.append("/node[@name='").append(split).append("']");
+    }
+    sb.append("/*");
+    return sb.toString();
+  }
+
+  static Document loadPreferencesDocument(InputStream in) throws IOException {
     DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
     dbf.setIgnoringElementContentWhitespace(true);
     dbf.setIgnoringComments(true);
@@ -188,10 +224,6 @@ public class EomToolbox {
     }
   }
 
-  public static boolean isHeadless() {
-    return System.getProperty("java.awt.headless", "false").equals("true");
-  }
-
   /**
    * Handles the given throwable. In a headless environment the throwable is only logged to the console. If GUI is
    * available a dialog is shown in addition.
@@ -201,7 +233,7 @@ public class EomToolbox {
    */
   public static void handleUnexpectedException(String message, Throwable exception) {
     SystemUtils.LOG.log(Level.SEVERE, message, exception);
-    if (isHeadless()) {
+    if (org.eomasters.utils.SystemHelper.isHeadless()) {
       return;
     }
 
@@ -212,8 +244,8 @@ public class EomToolbox {
     anErrorOccurred.setFont(anErrorOccurred.getFont().deriveFont(Font.BOLD, 28f));
     contentPane.add(anErrorOccurred, "top, left, wrap");
 
-    JTextArea headerText = new MultiLineText(
-        "Sorry, this should not have happened. Please help to fix this problem and report the issue to EOMasters.\n");
+    JTextArea headerText = new MultilineLabel(
+        "Sorry, this should not have happened. Please help to fix this problem and report the issue to EOMasters.");
     contentPane.add(headerText, "top, left, growx, wmin 10, wrap");
 
     SnapSystemReport errorReport = new SnapSystemReport().name("EOMTBX_Error_Report")
@@ -227,26 +259,9 @@ public class EomToolbox {
   }
 
   private static void showDialog(JPanel contentPane, SnapSystemReport errorReport) {
-    JButton byMail = createMailButton(errorReport);
-    byMail.requestFocusInWindow();
-    contentPane.add(byMail, "right");
-    JButton reportInForum = new JButton("Report in Forum");
-    reportInForum.addActionListener(e -> {
-      try {
-        Desktop.getDesktop().browse(FORUM_URL);
-      } catch (IOException ex) {
-        Dialogs.error("Error opening browser", "Could not open browser:\n" + ex.getMessage());
-      }
-    });
-    contentPane.add(reportInForum, "right");
-
     JDialog dialog = new JDialog();
-    JButton close = new JButton("Close");
-    contentPane.add(close, "right, wrap");
-    close.addActionListener(e -> {
-      dialog.setVisible(false);
-      dialog.dispose();
-    });
+    JPanel buttonPanel = createButtonPanel(errorReport, dialog);
+    contentPane.add(buttonPanel, "top, left, grow, wrap");
 
     dialog.setIconImage(EomtbxIcons.EOMTBX.getImageIcon(SIZE.S16).getImage());
     dialog.setTitle("Unexpected Error");
@@ -258,6 +273,30 @@ public class EomToolbox {
     dialog.setVisible(true);
   }
 
+  private static JPanel createButtonPanel(SnapSystemReport errorReport, JDialog dialog) {
+    JPanel btnPanel = new JPanel(new MigLayout("flowx, top, right"));
+    JButton byMail = createMailButton(errorReport);
+    byMail.requestFocusInWindow();
+    btnPanel.add(byMail, "right");
+    JButton reportInForum = new JButton("Report in Forum");
+    reportInForum.addActionListener(e -> {
+      try {
+        Desktop.getDesktop().browse(FORUM_URL);
+      } catch (IOException ex) {
+        Dialogs.error("Error opening browser", "Could not open browser:\n" + ex.getMessage(), null);
+      }
+    });
+    btnPanel.add(reportInForum, "right");
+
+    JButton close = new JButton("Close");
+    btnPanel.add(close, "right, wrap");
+    close.addActionListener(e -> {
+      dialog.setVisible(false);
+      dialog.dispose();
+    });
+    return btnPanel;
+  }
+
   private static JButton createMailButton(SnapSystemReport errorReport) {
     JButton byMail = new JButton("Report by Mail");
     byMail.addActionListener(e -> {
@@ -266,16 +305,16 @@ public class EomToolbox {
         FileSharingService sharingService = FileSharing.getService();
         String serviceName = sharingService.getName().replace(" ", "_");
         panel.add(new JLabel("<html>The error report will be uploaded to the <b>" + serviceName
-            + "</b> file sharing service and linked in the e-mail.<br>" + "Please note the <b>"
-            + "Terms of Service</b> and the <b>Privacy Policy</b>.<br>"), "top, left, wrap");
-        JButton tosBtn = new JButton("Open Terms of Service");
-        tosBtn.addActionListener(new OpenUriAdaptor(sharingService.getTosUrl()));
-        panel.add(new JLabel(), "split 4, top, left, growx");
-        panel.add(tosBtn, "top, left");
-        JButton privacyBtn = new JButton("Open Privacy Policy");
-        privacyBtn.addActionListener(new OpenUriAdaptor(sharingService.getPrivacyUrl()));
-        panel.add(privacyBtn, "top, left");
-        panel.add(new JLabel(), "top, left, growx, wrap");
+            + "</b> file sharing service and linked in the e-mail.<br>" + "Please note the<br>"), "top, left, wrap");
+
+        JPanel linkPanel = new JPanel(new MigLayout("top, left, gap 5 5"));
+        UriField openTermsOfService = new UriField(sharingService.getTosUrl(), "Terms of Service");
+        UriField openPrivacyPolicy = new UriField(sharingService.getPrivacyUrl(), "Privacy Policy");
+        linkPanel.add(openTermsOfService, "top");
+        linkPanel.add(new JLabel(" & "), "top");
+        linkPanel.add(openPrivacyPolicy, "top");
+
+        panel.add(linkPanel, "top, left, wrap");
         panel.add(new JLabel("Do you want to continue?"), "top, left, wrap");
         panel.add(new JLabel(
             "If not, please use the preview area to either copy the report to the clipboard or save it "

@@ -9,12 +9,12 @@
  * it under the terms of the GNU General Public License as
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public
  * License along with this program.  If not, see
  * -> http://www.gnu.org/licenses/gpl-3.0.html
@@ -33,7 +33,7 @@ import java.util.prefs.Preferences;
  */
 class QuickMenuStorage {
 
-  private static final String ACTIONS_NODE = "actions";
+  static final String ACTIONS_NODE = "actions";
   private final Preferences qmPreferences;
 
   QuickMenuStorage(Preferences qmPreferences) {
@@ -59,9 +59,13 @@ class QuickMenuStorage {
 
   void save(List<ActionRef> actionReferences) {
     Preferences qmActionsNode = qmPreferences.node(ACTIONS_NODE);
+    try {
+      qmActionsNode.clear();
+    } catch (BackingStoreException ignore) {
+    }
     actionReferences.stream()
-        .filter(actionRef -> actionRef.getClicks() > 0)
-        .forEach(actionRef -> qmActionsNode.putInt(actionRef.getActionId(), (int) actionRef.getClicks()));
+                    .filter(actionRef -> actionRef.getClicks() > 0)
+                    .forEach(actionRef -> qmActionsNode.putInt(actionRef.getActionId(), (int) actionRef.getClicks()));
   }
 
   static void store(List<ActionRef> actionReferences) {
