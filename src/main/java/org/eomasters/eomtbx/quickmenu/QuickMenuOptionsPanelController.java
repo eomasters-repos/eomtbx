@@ -9,12 +9,12 @@
  * it under the terms of the GNU General Public License as
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public
  * License along with this program.  If not, see
  * -> http://www.gnu.org/licenses/gpl-3.0.html
@@ -49,9 +49,16 @@ public class QuickMenuOptionsPanelController extends PropertyChangeOptionsPanelC
 
   @Override
   public void update() {
-    currentOptions = new QuickMenuOptions();
+    if (currentOptions == null) {
+      currentOptions = new QuickMenuOptions();
+    }
     backup = currentOptions.clone();
     numActionsModel.setValue(currentOptions.getNumActions());
+    QuickMenu.getInstance().getPreferences().addPreferenceChangeListener(evt -> {
+      if (evt.getKey().equals(QuickMenuOptions.PREFERENCE_KEY_NUM_QUICK_ACTIONS)) {
+        numActionsModel.setValue(Integer.parseInt(evt.getNewValue()));
+      }
+    });
     fireChange();
   }
 
@@ -65,7 +72,6 @@ public class QuickMenuOptionsPanelController extends PropertyChangeOptionsPanelC
   @Override
   public void cancel() {
     currentOptions = backup.clone();
-    update();
     fireChange();
   }
 
@@ -76,9 +82,6 @@ public class QuickMenuOptionsPanelController extends PropertyChangeOptionsPanelC
 
   @Override
   public boolean isChanged() {
-    if (currentOptions == null) {
-      return false;
-    }
     return !currentOptions.equals(backup);
   }
 
