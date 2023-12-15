@@ -12,6 +12,15 @@ td div.eom_ft {
   font-size:130%
 }
 
+.codenote {
+  font-family: monospace;
+  font-size: 100%;
+  color: #000000;
+  background-color: #f0f0f0;
+  padding: 1px;
+  border: 1px solid #cccccc;
+}
+
 code {
   font-family: monospace;
   font-size: 100%;
