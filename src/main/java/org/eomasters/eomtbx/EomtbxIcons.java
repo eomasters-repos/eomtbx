@@ -38,7 +38,7 @@ import org.eomasters.icons.SvgIcon;
 /**
  * Eases access to the icons used within the EOMTBX.
  */
-public final class EomtbxIcons {
+public class EomtbxIcons {
 
   public static void main(String[] args) throws IllegalAccessException {
     final JFrame frame = new JFrame("Icons");
@@ -69,7 +69,7 @@ public final class EomtbxIcons {
    */
   public static final Icon WVL_EDITOR = new SvgIcon("/org/eomasters/eomtbx/icons/WvlEditor");
 
-  private EomtbxIcons() {
+  protected EomtbxIcons() {
   }
 
 }
