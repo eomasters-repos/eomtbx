@@ -348,6 +348,9 @@
           </dependency>
         </dependencies>
         <configuration>
+          <publicPackages>
+            <package>org.eomasters.eomtbx.*</package>
+          </publicPackages>
           <homePageUrl>https://www.eomasters.org</homePageUrl>
           <licenseName>GPL 3</licenseName>
           <licenseFile>${project.basedir}/LICENSE.html</licenseFile>
