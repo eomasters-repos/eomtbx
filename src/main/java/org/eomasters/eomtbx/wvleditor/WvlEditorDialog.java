@@ -106,13 +106,11 @@ class WvlEditorDialog extends ModalDialog {
       note.setFont(note.getFont().deriveFont(Font.PLAIN));
       footerPanel.add(note, "span 2, growx, gapbottom 10, left, wrap");
 
-      MultiLineText textField = null;
+      MultiLineText textField = new MultiLineText(
+          "There is one other compatible product opened. Shall the changes be applied to that too?");
       if (compatibleProducts.size() > 1) {
         textField = new MultiLineText("There are " + compatibleProducts.size()
             + " other compatible products opened. Shall the changes be applied to those too?");
-      } else {
-        textField = new MultiLineText(
-            "There is one other compatible product opened. Shall the changes be applied to that too?");
       }
       textField.setPreferredWidth(300);
       footerPanel.add(textField, "wmin 10, growx");
