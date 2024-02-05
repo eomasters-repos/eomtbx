@@ -74,7 +74,7 @@ class WvlEditorTableModel extends AbstractTableModel {
       }
     }
     Collection<List<String>> values = map.values();
-    return values.stream().flatMap(Collection::stream).toArray(String[]::new);
+    return values.stream().parallel().flatMap(Collection::stream).toArray(String[]::new);
   }
 
 

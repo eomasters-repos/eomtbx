@@ -52,7 +52,8 @@ import org.openide.util.actions.Presenter;
 @ActionID(category = "View", id = "EOMTBX_WvlEditorAction")
 @ActionRegistration(
     displayName = "#TXT_WvlEditorAction",
-    popupText = "#TXT_WvlEditorAction"
+    popupText = "#TXT_WvlEditorAction",
+    lazy = false
 )
 // [cut,copy,paste,delete] are from 500 to 540 and Properties is at 710, separator-before is at 700
 // But the action is show before anyway
@@ -89,7 +90,7 @@ public class WvlEditorAction extends AbstractAction implements Presenter.Popup {
 
   @Override
   public void actionPerformed(ActionEvent e) {
-    Optional<? extends ProductNode> any = result.allInstances().stream().findAny();
+    Optional<? extends ProductNode> any = result.allInstances().stream().parallel().findAny();
     if (any.isPresent()) {
       Product product = any.get().getProduct();
       WvlEditorDialog wvlEditor = new WvlEditorDialog(SnapApp.getDefault().getMainFrame(), product);

@@ -124,7 +124,7 @@ class WvlEditorDialog extends ModalDialog {
   }
 
   private String createButtonText(List<ProductSelection> additionalProducts) {
-    long numSelectedProducts = additionalProducts.stream().filter(ProductSelection::isSelected).count();
+    long numSelectedProducts = additionalProducts.stream().parallel().filter(ProductSelection::isSelected).count();
     return "Selected [" + numSelectedProducts + " of " + additionalProducts.size() + "]";
   }
 
