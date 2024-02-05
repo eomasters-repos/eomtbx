@@ -85,7 +85,7 @@ public class QuickMenu {
   }
 
   private void updateActionReferences(List<ActionRef> actionRefs, List<ActionRef> updates) {
-    actionRefs.stream().filter(updates::contains).forEach(actionRef -> {
+    actionRefs.stream().parallel().filter(updates::contains).forEach(actionRef -> {
       ActionRef update = updates.get(updates.indexOf(actionRef));
       actionRef.setClicks(update.getClicks());
     });
