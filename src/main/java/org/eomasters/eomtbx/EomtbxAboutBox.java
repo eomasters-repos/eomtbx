@@ -50,7 +50,7 @@ public class EomtbxAboutBox extends JPanel {
 
   private JPanel createVersionPanel() {
     String eomLink = "<a href=\"" + EomToolbox.EOMASTERS_URL + "\">EOMasters</a>";
-    JLabel copyrightLabel = new JLabel("<html><b>©2023 Marco Peters from " + eomLink + "</b>", SwingConstants.CENTER);
+    JLabel copyrightLabel = new JLabel("<html><b>©2023-2024 Marco Peters from " + eomLink + "</b>", SwingConstants.CENTER);
     copyrightLabel.addMouseListener(new BrowserUtils.URLClickAdaptor(EomToolbox.EOMASTERS_URL.toString()));
 
     final ModuleInfo moduleInfo = Modules.getDefault().ownerOf(EomtbxAboutBox.class);
