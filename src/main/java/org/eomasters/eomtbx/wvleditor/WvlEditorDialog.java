@@ -9,12 +9,12 @@
  * it under the terms of the GNU General Public License as
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public
  * License along with this program.  If not, see
  * -> http://www.gnu.org/licenses/gpl-3.0.html
@@ -106,13 +106,20 @@ class WvlEditorDialog extends ModalDialog {
       note.setFont(note.getFont().deriveFont(Font.PLAIN));
       footerPanel.add(note, "span 2, growx, gapbottom 10, left, wrap");
 
-      MultiLineText textField = new MultiLineText("There are " + compatibleProducts.size()
-          + " other compatible products opened. Shall the changes be applied to those too?");
+      MultiLineText textField = null;
+      if (compatibleProducts.size() > 1) {
+        textField = new MultiLineText("There are " + compatibleProducts.size()
+            + " other compatible products opened. Shall the changes be applied to those too?");
+      } else {
+        textField = new MultiLineText(
+            "There is one other compatible product opened. Shall the changes be applied to that too?");
+      }
       textField.setPreferredWidth(300);
       footerPanel.add(textField, "wmin 10, growx");
       JButton productSelectionBtn = new JButton(createButtonText(compatibleProducts));
       productSelectionBtn.addActionListener(e -> {
-        ProductSelectionDialog selectionDialog = new ProductSelectionDialog(getParent(), compatibleProducts, HID_EOMTBX_WvlEditor);
+        ProductSelectionDialog selectionDialog = new ProductSelectionDialog(getParent(), compatibleProducts,
+            HID_EOMTBX_WvlEditor);
         selectionDialog.getJDialog().setIconImage(EomtbxIcons.WVL_EDITOR.getImageIcon(SIZE.S16).getImage());
         selectionDialog.show();
         productSelectionBtn.setText(createButtonText(compatibleProducts));
@@ -188,7 +195,7 @@ class WvlEditorDialog extends ModalDialog {
   public void addAdditionalProducts(Product... additional) {
     String[] refBandNames = refProduct.getBandNames();
     Stream.of(additional).filter(p1 -> isCompatible(p1, refBandNames))
-        .forEach(p -> compatibleProducts.add(new ProductSelection(p, false)));
+          .forEach(p -> compatibleProducts.add(new ProductSelection(p, false)));
   }
 
   private boolean isCompatible(Product p, String[] refBandNames) {
