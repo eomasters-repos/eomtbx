@@ -3,7 +3,7 @@
  * EOMTBX PRO - EOMasters Toolbox PRO for SNAP
  * -> https://www.eomasters.org/sw/EOMTBX
  * ======================================================================
- * Copyright (C) 2023 Marco Peters
+ * Copyright (C) 2023 - 2024 Marco Peters
  * ======================================================================
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as
