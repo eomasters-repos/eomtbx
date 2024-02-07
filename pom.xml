@@ -361,7 +361,8 @@
         </dependencies>
         <configuration>
           <publicPackages>
-            <package>org.eomasters.eomtbx.*</package>
+            <package>org.eomasters.*</package>
+            <package>org.apache.commons.io.*</package>
           </publicPackages>
           <homePageUrl>https://www.eomasters.org</homePageUrl>
           <licenseName>GPL 3</licenseName>
