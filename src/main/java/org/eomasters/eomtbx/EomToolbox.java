@@ -40,6 +40,7 @@ import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
 import javax.swing.BorderFactory;
@@ -70,8 +71,8 @@ import org.eomasters.utils.FileSharing;
 import org.eomasters.utils.FileSharingService;
 import org.eomasters.utils.FileSharingService.UploadResponse;
 import org.eomasters.utils.MailTo;
-import org.esa.snap.core.util.SystemUtils;
 import org.esa.snap.rcp.SnapApp;
+import org.esa.snap.runtime.EngineConfig;
 import org.hsqldb.lib.StringInputStream;
 import org.openide.modules.OnStart;
 import org.openide.modules.OnStop;
@@ -86,6 +87,12 @@ import org.xml.sax.SAXException;
  * The EOM-Toolbox. Provides general static methods for the EOMTBX.
  */
 public class EomToolbox {
+
+  public static final Logger LOG;
+  static {
+    LOG = Logger.getLogger(EomToolbox.class.getSimpleName());
+    LOG.setLevel(EngineConfig.instance().logLevel()); // inherit log level from SNAP
+  }
 
   /**
    * Main method for testing.
@@ -232,7 +239,7 @@ public class EomToolbox {
    * @param exception the throwable
    */
   public static void handleUnexpectedException(String message, Throwable exception) {
-    SystemUtils.LOG.log(Level.SEVERE, message, exception);
+    LOG.log(Level.SEVERE, message, exception);
     if (org.eomasters.utils.SystemHelper.isHeadless()) {
       return;
     }
