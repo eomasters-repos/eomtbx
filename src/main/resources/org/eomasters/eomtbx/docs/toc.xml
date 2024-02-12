@@ -13,7 +13,7 @@
     <tocitem target="eomtbx.systemReport" text="Create System Report"/>
     <tocitem target="eomtbx.errorHandler" text="Error Handler"/>
     <tocitem target="eomtbx.options" text="EOMTBX Options">
-      <tocitem target="eomtbx.options.general" text="EOMTBX Options"/>
+      <tocitem target="eomtbx.options.general" text="General Options"/>
     </tocitem>
     <tocitem target="eomtbxCredits" text="Credits"/>
   </tocitem>
