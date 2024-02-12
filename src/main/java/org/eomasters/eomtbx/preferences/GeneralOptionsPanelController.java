@@ -57,7 +57,7 @@ import org.openide.util.WeakListeners;
 )
 public class GeneralOptionsPanelController extends PropertyChangeOptionsPanelController {
 
-  public static final String HID_EOMTBX_PREFERENCES = "eomtbxOptions";
+  public static final String HID_EOMTBX_PREFERENCES = "eomtbx.options";
   private static final FileFilter PREFERENCES_FILE_FILTER = FileIo.createFileFilter("Preferences file", "prefs");
   private final List<OptionsPanelController> subControllers;
   private final Preferences preferences = EomToolbox.getPreferences();

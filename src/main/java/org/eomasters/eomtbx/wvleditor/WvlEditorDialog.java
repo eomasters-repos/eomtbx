@@ -60,7 +60,7 @@ import org.esa.snap.ui.ModalDialog;
 
 class WvlEditorDialog extends ModalDialog {
 
-  public static final String HID_EOMTBX_WvlEditor = "eomtbxWvlEditor";
+  public static final String HID_EOMTBX_WvlEditor = "eomtbx.wvlEditor";
   private final Product refProduct;
   private final List<ProductSelection> compatibleProducts = new ArrayList<>();
   private final WvlEditorTableModel tableModel;

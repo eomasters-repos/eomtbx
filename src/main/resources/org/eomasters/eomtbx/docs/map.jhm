@@ -5,16 +5,16 @@
 
 <map version="2.0">
   <mapID target="eomtbxIntro" url="pages/Intro.html"/>
-  <mapID target="eomtbxQuickMenu" url="pages/QuickMenu.html"/>
-  <mapID target="eomtbxLoopGPT" url="pages/LoopGpt.html"/>
-  <mapID target="eomtbxBMExtensions" url="pages/BmExtensions.html"/>
-  <mapID target="eomtbxWvlEditor" url="pages/WvlEditor.html"/>
-  <mapID target="eomtbxCloseProductNoView" url="pages/CloseProductNoView.html"/>
-  <mapID target="eomtbxSystemReport" url="pages/CreateSystemReport.html"/>
-  <mapID target="eomtbxErrorHandler" url="pages/ErrorHandler.html"/>
+  <mapID target="eomtbx.quickMenu" url="pages/QuickMenu.html"/>
+  <mapID target="eomtbx.loopGPT" url="pages/LoopGpt.html"/>
+  <mapID target="eomtbx.mathsExtensions" url="pages/BmExtensions.html"/>
+  <mapID target="eomtbx.wvlEditor" url="pages/WvlEditor.html"/>
+  <mapID target="eomtbx.closeProductNoView" url="pages/CloseProductNoView.html"/>
+  <mapID target="eomtbx.systemReport" url="pages/CreateSystemReport.html"/>
+  <mapID target="eomtbx.errorHandler" url="pages/ErrorHandler.html"/>
 
-  <mapID target="eomtbxOptions" url="pages/EomtbxOptions.html"/>
-  <mapID target="eomtbxOptions.general" url="pages/EomtbxOptions.html"/>
+  <mapID target="eomtbx.options" url="pages/EomtbxOptions.html"/>
+  <mapID target="eomtbx.options.general" url="pages/EomtbxOptions.html"/>
 
   <mapID target="eomtbxCredits" url="pages/EomtbxCredits.html"/>
 

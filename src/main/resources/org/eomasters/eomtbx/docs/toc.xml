@@ -3,17 +3,17 @@
   "http://java.sun.com/products/javahelp/toc_2_0.dtd">
 
 <toc categoryclosedimage="folder" categoryopenimage="folder" topicimage="doc" version="2.0">
-  <tocitem target="eomtbxIntro" text="EOM Toolbox" image="eomtbxIcon">
-    <tocitem target="eomtbxIntro" text="Intro"/>
-    <tocitem target="eomtbxQuickMenu" text="Quick Menu"/>
-    <tocitem target="eomtbxLoopGPT" text="Loop GPT"/>
-    <tocitem target="eomtbxBMExtensions" text="BandMaths Extension"/>
-    <tocitem target="eomtbxWvlEditor" text="Wavelength Editor"/>
-    <tocitem target="eomtbxCloseProductNoView" text="Close Products without a View"/>
-    <tocitem target="eomtbxSystemReport" text="Create System Report"/>
-    <tocitem target="eomtbxErrorHandler" text="Error Handler"/>
-    <tocitem target="eomtbxOptions" text="EOMTBX Options">
-      <tocitem target="eomtbxOptions.general" text="EOMTBX Options"/>
+  <tocitem target="eomtbx.intro" text="EOM Toolbox" image="eomtbxIcon">
+    <tocitem target="eomtbx.intro" text="Intro"/>
+    <tocitem target="eomtbx.quickMenu" text="Quick Menu"/>
+    <tocitem target="eomtbx.loopGPT" text="Loop GPT"/>
+    <tocitem target="eomtbx.mathsExtensions" text="BandMaths Extension"/>
+    <tocitem target="eomtbx.wvlEditor" text="Wavelength Editor"/>
+    <tocitem target="eomtbx.closeProductNoView" text="Close Products without a View"/>
+    <tocitem target="eomtbx.systemReport" text="Create System Report"/>
+    <tocitem target="eomtbx.errorHandler" text="Error Handler"/>
+    <tocitem target="eomtbx.options" text="EOMTBX Options">
+      <tocitem target="eomtbx.options.general" text="EOMTBX Options"/>
     </tocitem>
     <tocitem target="eomtbxCredits" text="Credits"/>
   </tocitem>
