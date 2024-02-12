@@ -363,6 +363,7 @@
           <publicPackages>
             <package>org.eomasters.*</package>
             <package>org.apache.commons.io.*</package>
+            <package>com.google.gson.*</package>
           </publicPackages>
           <homePageUrl>https://www.eomasters.org</homePageUrl>
           <licenseName>GPL 3</licenseName>
