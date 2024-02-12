@@ -63,11 +63,11 @@ public class EomtbxIcons {
   /**
    * The EOMTBX icon.
    */
-  public static final Icon EOMTBX = new SvgIcon("/org/eomasters/eomtbx/icons/EomToolbox");
+  public static final Icon EOMTBX = new SvgIcon("/org/eomasters/eomtbx/icons/EomToolbox", EomtbxIcons.class);
   /**
    * An icon for the Wavelength Editor.
    */
-  public static final Icon WVL_EDITOR = new SvgIcon("/org/eomasters/eomtbx/icons/WvlEditor");
+  public static final Icon WVL_EDITOR = new SvgIcon("/org/eomasters/eomtbx/icons/WvlEditor", EomtbxIcons.class);
 
   protected EomtbxIcons() {
   }
