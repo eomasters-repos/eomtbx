@@ -9,12 +9,12 @@
  * it under the terms of the GNU General Public License as
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public
  * License along with this program.  If not, see
  * -> http://www.gnu.org/licenses/gpl-3.0.html
@@ -64,15 +64,19 @@ public class QuickMenuOptionsPanelController extends PropertyChangeOptionsPanelC
 
   @Override
   public void applyChanges() {
-    storePreferences();
-    backup = currentOptions.clone();
-    fireChange();
+    if (currentOptions != null) {
+      storePreferences();
+      backup = currentOptions.clone();
+      fireChange();
+    }
   }
 
   @Override
   public void cancel() {
-    currentOptions = backup.clone();
-    fireChange();
+    if (currentOptions != null) {
+      currentOptions = backup.clone();
+      fireChange();
+    }
   }
 
   @Override
@@ -82,7 +86,10 @@ public class QuickMenuOptionsPanelController extends PropertyChangeOptionsPanelC
 
   @Override
   public boolean isChanged() {
-    return !currentOptions.equals(backup);
+    if (currentOptions != null) {
+      return !currentOptions.equals(backup);
+    }
+    return false;
   }
 
   @Override
@@ -115,11 +122,13 @@ public class QuickMenuOptionsPanelController extends PropertyChangeOptionsPanelC
   }
 
   private void storePreferences() {
-    QuickMenuOptions.putToPreferences(currentOptions, QuickMenu.getInstance().getPreferences());
-    try {
-      QuickMenu.getInstance().getPreferences().flush();
-    } catch (BackingStoreException e) {
-      EomToolbox.handleUnexpectedException("Could not store QuickMenu options", e);
+    if (currentOptions != null) {
+      QuickMenuOptions.putToPreferences(currentOptions, QuickMenu.getInstance().getPreferences());
+      try {
+        QuickMenu.getInstance().getPreferences().flush();
+      } catch (BackingStoreException e) {
+        EomToolbox.handleUnexpectedException("Could not store QuickMenu options", e);
+      }
     }
   }
 }
