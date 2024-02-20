@@ -3,7 +3,7 @@
   "http://java.sun.com/products/javahelp/toc_2_0.dtd">
 
 <toc categoryclosedimage="folder" categoryopenimage="folder" topicimage="doc" version="2.0">
-  <tocitem target="eomtbx.intro" text="EOM Toolbox" image="eomtbxIcon">
+  <tocitem target="eomtbx.intro" text="EOM Toolbox" image="eomtbx.icon">
     <tocitem target="eomtbx.intro" text="Intro"/>
     <tocitem target="eomtbx.quickMenu" text="Quick Menu"/>
     <tocitem target="eomtbx.loopGPT" text="Loop GPT"/>
@@ -15,6 +15,6 @@
     <tocitem target="eomtbx.options" text="EOMTBX Options">
       <tocitem target="eomtbx.options.general" text="General Options"/>
     </tocitem>
-    <tocitem target="eomtbxCredits" text="Credits"/>
+    <tocitem target="eomtbx.credits" text="Credits"/>
   </tocitem>
 </toc>

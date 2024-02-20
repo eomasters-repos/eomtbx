@@ -29,3 +29,11 @@ code {
   padding: 1px;
   border: 1px solid #cccccc;
 }
+
+img.vCenter {
+  vertical-align: middle;
+}
+
+td {
+    font-size: 12;
+}
