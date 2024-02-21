@@ -12,6 +12,10 @@ td div.eom_ft {
   font-size:130%
 }
 
+table.borderless, td {
+  border: none;
+}
+
 .codenote {
   font-family: monospace;
   font-size: 100%;
