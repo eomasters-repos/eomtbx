@@ -4,6 +4,8 @@
   "http://java.sun.com/products/javahelp/map_2_0.dtd">
 
 <map version="2.0">
+  <mapID target="eomtbx.icon" url="images/EomToolbox_16.png"/>
+
   <mapID target="eomtbx.intro" url="pages/Intro.html"/>
   <mapID target="eomtbx.quickMenu" url="pages/QuickMenu.html"/>
   <mapID target="eomtbx.loopGPT" url="pages/LoopGpt.html"/>
@@ -17,6 +19,4 @@
   <mapID target="eomtbx.options.general" url="pages/EomtbxOptions.html"/>
 
   <mapID target="eomtbx.credits" url="pages/EomtbxCredits.html"/>
-
-  <mapID target="eomtbx.icon" url="images/EomToolbox_16.png"/>
 </map>
