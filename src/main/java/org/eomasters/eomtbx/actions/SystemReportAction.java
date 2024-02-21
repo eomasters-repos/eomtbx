@@ -55,7 +55,7 @@ public class SystemReportAction extends AbstractAction {
   @Override
   public void actionPerformed(ActionEvent e) {
     SnapSystemReport systemReport = new SnapSystemReport().name("SNAP_System_Report").logTail(100);
-
+    // JPanel reportPanel = new JPanel(new BorderLayout());
     CollapsiblePanel reportArea = CollapsiblePanel.createLongTextPanel("System Report", systemReport.generate());
     reportArea.setCollapsed(false);
 
