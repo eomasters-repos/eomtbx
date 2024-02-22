@@ -24,4 +24,4 @@
 @HelpSetRegistration(helpSet = "help.hs", position = 99)
 package org.eomasters.eomtbx.docs;
 
-import eu.esa.snap.netbeans.javahelp.api.HelpSetRegistration;
+import org.netbeans.api.javahelp.HelpSetRegistration;

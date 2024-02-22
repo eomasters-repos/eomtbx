@@ -32,7 +32,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintStream;
-import java.lang.ref.Cleaner;
 import java.net.URI;
 import java.nio.file.Path;
 import java.time.Instant;
@@ -131,7 +130,6 @@ public class EomToolbox {
   public static final URI EOMASTERS_URL = URI.create("https://www.eomasters.org");
   public static final URI FORUM_URL = URI.create("https://www.eomasters.org/forum");
   private static final Preferences preferences = SnapApp.getDefault().getPreferences().node(TOOLBOX_ID);
-  private static final Cleaner cleaner = Cleaner.create();
 
   /**
    * Returns the preferences of the EOM-Toolbox.

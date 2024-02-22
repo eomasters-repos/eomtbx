@@ -31,8 +31,8 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
-import java.util.List;
 import java.util.prefs.Preferences;
+import org.apache.commons.lang.ArrayUtils;
 import org.eomasters.eomtbx.quickmenu.QuickMenu;
 import org.eomasters.eomtbx.quickmenu.QuickMenuOptions;
 import org.junit.jupiter.api.Test;
@@ -51,7 +51,7 @@ class EomToolboxTest {
     qmPreferences.flush();
     ByteArrayOutputStream out = new ByteArrayOutputStream();
     EomToolbox.exportPreferences(out);
-    String xml = out.toString(StandardCharsets.UTF_8);
+    String xml = out.toString(StandardCharsets.UTF_8.name());
     Document document = EomToolbox.loadPreferencesDocument(
         new ByteArrayInputStream(xml.getBytes(StandardCharsets.UTF_8)));
     NodeList nodeList = document.getElementsByTagName("node");
@@ -111,9 +111,9 @@ class EomToolboxTest {
     InputStream is = new ByteArrayInputStream(xml.getBytes(StandardCharsets.UTF_8));
 
     Preferences eomtbxPreferences = EomToolbox.getPreferences();
-    assertFalse(List.of(eomtbxPreferences.node("quickmenu").keys()).contains("numActions"));
+    assertFalse(ArrayUtils.contains(eomtbxPreferences.node("quickmenu").keys(), "numActions"));
     EomToolbox.importPreferences(is);
-    assertTrue(List.of(eomtbxPreferences.node("quickmenu").keys()).contains("numActions"));
+    assertTrue(ArrayUtils.contains(eomtbxPreferences.node("quickmenu").keys(), "numActions"));
     assertEquals(7, eomtbxPreferences.node("quickmenu").getInt("numActions", -1));
   }
 }

@@ -31,6 +31,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import javax.swing.MenuElement;
+import org.apache.commons.lang.StringUtils;
 import org.esa.snap.rcp.SnapApp;
 import org.esa.snap.ui.UIUtils;
 
@@ -73,7 +74,7 @@ public class SnapMenuAccessor {
       if (element instanceof JMenuItem) {
         JMenuItem item = (JMenuItem) element;
         String text = item.getText();
-        if (!text.isBlank()) {
+        if (!StringUtils.isBlank(text)) {
           path.insert(0, text + "/");
         }
         element = element.getParent();

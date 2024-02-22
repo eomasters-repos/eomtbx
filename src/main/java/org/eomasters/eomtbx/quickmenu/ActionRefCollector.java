@@ -9,12 +9,12 @@
  * it under the terms of the GNU General Public License as
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public
  * License along with this program.  If not, see
  * -> http://www.gnu.org/licenses/gpl-3.0.html
@@ -26,6 +26,8 @@ package org.eomasters.eomtbx.quickmenu;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
+import org.apache.commons.lang.StringUtils;
 import org.eomasters.eomtbx.EomToolbox;
 import org.openide.filesystems.FileObject;
 import org.openide.filesystems.FileUtil;
@@ -63,17 +65,20 @@ class ActionRefCollector {
             continue;
           }
           String displayName = (String) delegatesTo.getAttribute("displayName");
-          if (displayName == null || displayName.isBlank()) {
+          if (displayName == null || StringUtils.isBlank(displayName)) {
             continue;
           }
           if (shallExclude(EXCLUDE_ELEMENTS_CONTAINING, path + "/" + displayName)) {
             continue;
           }
-          actionRefs.stream()
-              .filter(aref -> aref.getActionId().equals(actionId))
-              .findAny()
-              .ifPresentOrElse(ref -> ref.addMenuRef(new MenuRef(path, displayName)),
-                  () -> actionRefs.add(new ActionRef(actionId, new MenuRef(path, displayName))));
+          Optional<ActionRef> optional = actionRefs.stream()
+                                                   .filter(aref -> aref.getActionId().equals(actionId))
+                                                   .findAny();
+          if (optional.isPresent()) {
+            optional.get().addMenuRef(new MenuRef(path, displayName));
+          } else {
+            actionRefs.add(new ActionRef(actionId, new MenuRef(path, displayName)));
+          }
 
         }
       } catch (Exception e) {

@@ -23,7 +23,6 @@
 
 package org.eomasters.eomtbx.actions;
 
-import eu.esa.snap.netbeans.docwin.WindowUtilities;
 import java.awt.event.ActionEvent;
 import java.util.Arrays;
 import java.util.Set;
@@ -33,6 +32,7 @@ import javax.swing.AbstractAction;
 import javax.swing.SwingUtilities;
 import org.esa.snap.core.datamodel.Product;
 import org.esa.snap.core.datamodel.ProductManager;
+import org.esa.snap.netbeans.docwin.WindowUtilities;
 import org.esa.snap.rcp.SnapApp;
 import org.esa.snap.rcp.actions.file.CloseProductAction;
 import org.esa.snap.rcp.windows.ProductSceneViewTopComponent;

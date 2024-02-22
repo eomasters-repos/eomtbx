@@ -33,6 +33,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
+import org.apache.commons.lang.StringUtils;
 import org.esa.snap.core.gpf.main.CommandLineTool;
 import org.esa.snap.core.util.SystemUtils;
 import org.netbeans.api.sendopts.CommandException;
@@ -63,7 +64,7 @@ public class LoopGptOptionProcessor extends OptionProcessor {
   private static final Set<Option> optionSet;
 
   static {
-    String b = LoopGptOptionProcessor.class.getPackageName() + ".Bundle";
+    String b = LoopGptOptionProcessor.class.getPackage().getName() + ".Bundle";
     loopGpt = Option.shortDescription(Option.requiredArgument(Option.NO_SHORT_NAME, "loopgpt"), b, "DSC_LoopGpt");
     optionSet = Collections.singleton(OptionGroups.allOf(loopGpt));
   }
@@ -112,7 +113,7 @@ public class LoopGptOptionProcessor extends OptionProcessor {
         }
         List<String> commands = readCommands(commandsFilePath);
 
-        commands.stream().filter(s -> s.startsWith("#") || s.isBlank()).forEach(commands::remove);
+        commands.stream().filter(s -> s.startsWith("#") || StringUtils.isBlank(s)).forEach(commands::remove);
         if (commands.isEmpty()) {
           throw new CommandException(90003, "GPT commands file is empty");
         }

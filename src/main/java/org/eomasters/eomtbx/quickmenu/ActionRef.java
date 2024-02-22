@@ -24,6 +24,7 @@
 package org.eomasters.eomtbx.quickmenu;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -46,7 +47,7 @@ public class ActionRef {
   public ActionRef(String actionId, MenuRef... menuRefs) {
     this.actionId = actionId;
     this.menuRefs = new ArrayList<>();
-    this.menuRefs.addAll(List.of(menuRefs));
+    Collections.addAll(this.menuRefs, menuRefs);
   }
 
   /**

@@ -25,6 +25,8 @@ package org.eomasters.eomtbx.preferences;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.prefs.PreferenceChangeListener;
 import java.util.prefs.Preferences;
@@ -75,7 +77,8 @@ public class GeneralOptionsPanelController extends PropertyChangeOptionsPanelCon
     quickMenuController.addPropertyChangeListener(propertyChangeDelegate);
 
 
-    subControllers = List.of(imExportController, quickMenuController);
+    subControllers = new ArrayList<>();
+    Collections.addAll(subControllers, imExportController, quickMenuController);
     preferences.addPreferenceChangeListener(
         WeakListeners.create(PreferenceChangeListener.class, evt -> update(), preferences));
   }
