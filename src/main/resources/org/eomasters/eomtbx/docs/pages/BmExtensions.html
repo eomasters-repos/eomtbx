@@ -47,9 +47,8 @@
 <ul>
   <li><b>Valid</b><br>
     This attribute returns true if the current pixel is valid. Valid means that the pixel value is not equal to the
-    no-data value (if used) and the pixel matches the valid-pixel expression of the band. NaN values are not
-    considered as invalid except the no-data value of the band is set to NaN.
-    It is used as follows:<br>
+    no-data value (if used) and the pixel matches the valid-pixel expression of the band. NaN values are considered as
+    valid except the no-data value of the band is set to NaN. It is used as follows:<br>
     <b><code>&lt;band-name&gt;.valid</code></b> &nbsp;&nbsp;e.g.,&nbsp;&nbsp;--> <b><code>Oa10_radiance.valid</code><br></b>
   </li>
   <li><b>Map Coordinates</b><br>
