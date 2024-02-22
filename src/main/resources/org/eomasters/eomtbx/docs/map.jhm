@@ -7,6 +7,7 @@
   <mapID target="eomtbx.icon" url="images/EomToolbox_16.png"/>
 
   <mapID target="eomtbx.intro" url="pages/Intro.html"/>
+  <mapID target="eomtbx.overview" url="pages/Overview.html"/>
   <mapID target="eomtbx.quickMenu" url="pages/QuickMenu.html"/>
   <mapID target="eomtbx.loopGPT" url="pages/LoopGpt.html"/>
   <mapID target="eomtbx.mathsExtensions" url="pages/BmExtensions.html"/>
