@@ -15,7 +15,7 @@
 
   <groupId>org.eomasters</groupId>
   <artifactId>eomtbx</artifactId>
-  <version>0.10-BETA</version>
+  <version>0.10.1-SNAPSHOT</version>
   <packaging>nbm</packaging>
 
 
