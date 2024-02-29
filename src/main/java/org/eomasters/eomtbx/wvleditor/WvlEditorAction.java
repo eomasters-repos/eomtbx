@@ -31,7 +31,7 @@ import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.JMenuItem;
 import org.eomasters.eomtbx.EomtbxIcons;
-import org.eomasters.icons.Icon.SIZE;
+import org.eomasters.icons.Icon;
 import org.esa.snap.core.datamodel.Product;
 import org.esa.snap.core.datamodel.ProductNode;
 import org.esa.snap.rcp.SnapApp;
@@ -79,8 +79,8 @@ public class WvlEditorAction extends AbstractAction implements Presenter.Popup {
   public WvlEditorAction() {
     putValue(Action.NAME, Bundle.TXT_WvlEditorAction());
     putValue(Action.SHORT_DESCRIPTION, Bundle.DSC_WvlEditorAction());
-    putValue(Action.SMALL_ICON, EomtbxIcons.WVL_EDITOR.getImageIcon(SIZE.S16));
-    putValue(Action.LARGE_ICON_KEY, EomtbxIcons.WVL_EDITOR.getImageIcon(SIZE.S24));
+    putValue(Action.SMALL_ICON, EomtbxIcons.WVL_EDITOR.getImageIcon(Icon.SIZE_16));
+    putValue(Action.LARGE_ICON_KEY, EomtbxIcons.WVL_EDITOR.getImageIcon(Icon.SIZE_24));
 
     result = Utilities.actionsGlobalContext().lookupResult(ProductNode.class);
     this.lookupListener = ev -> EventQueue.invokeLater(() -> setEnabled(!result.allInstances().isEmpty()));

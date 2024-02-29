@@ -1,3 +1,26 @@
+/*-
+ * ========================LICENSE_START=================================
+ * EOMTBX - EOMasters Toolbox for SNAP
+ * -> https://www.eomasters.org/sw/EOMTBX
+ * ======================================================================
+ * Copyright (C) 2023 - 2024 Marco Peters
+ * ======================================================================
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public
+ * License along with this program.  If not, see
+ * -> http://www.gnu.org/licenses/gpl-3.0.html
+ * =========================LICENSE_END==================================
+ */
+
 package org.eomasters.eomtbx;
 
 import com.jidesoft.swing.MultilineLabel;
@@ -19,7 +42,7 @@ import net.miginfocom.swing.MigLayout;
 import org.eomasters.gui.CollapsiblePanel;
 import org.eomasters.gui.Dialogs;
 import org.eomasters.gui.UriField;
-import org.eomasters.icons.Icon.SIZE;
+import org.eomasters.icons.Icon;
 import org.eomasters.snap.utils.SnapSystemReport;
 import org.eomasters.utils.ErrorHandler;
 import org.eomasters.utils.FileSharing;
@@ -60,7 +83,7 @@ public class UnexpectedExceptionDialog {
     JPanel buttonPanel = createButtonPanel(errorReport, dialog);
     contentPane.add(buttonPanel, "top, left, grow, wrap");
 
-    dialog.setIconImage(EomtbxIcons.EOMTBX.getImageIcon(SIZE.S16).getImage());
+    dialog.setIconImage(EomtbxIcons.EOMTBX.getImageIcon(Icon.SIZE_16).getImage());
     dialog.setTitle("Unexpected Error");
     dialog.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     dialog.setLocationRelativeTo(null);
