@@ -35,7 +35,7 @@ import net.miginfocom.swing.MigLayout;
 import org.eomasters.eomtbx.EomToolbox;
 import org.eomasters.gui.Dialogs;
 import org.eomasters.gui.FileIo;
-import org.eomasters.icons.Icon.SIZE;
+import org.eomasters.icons.Icon;
 import org.eomasters.icons.Icons;
 import org.openide.awt.NotificationDisplayer;
 import org.openide.util.HelpCtx;
@@ -89,8 +89,8 @@ public class ImExportOptionsPanelController extends PropertyChangeOptionsPanelCo
     JPanel eomtbxPanel = new JPanel(new MigLayout("gap 5, insets 5"));
     eomtbxPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Import / Export"));
     eomtbxPanel.add(new JLabel("Import/Export EOMTBX options:"), "gapright 10");
-    JButton importButton = new JButton("Import", Icons.IMPORT.getImageIcon(SIZE.S24));
-    JButton exportButton = new JButton("Export", Icons.EXPORT.getImageIcon(SIZE.S24));
+    JButton importButton = new JButton("Import", Icons.IMPORT.getImageIcon(Icon.SIZE_48));
+    JButton exportButton = new JButton("Export", Icons.EXPORT.getImageIcon(Icon.SIZE_24));
     eomtbxPanel.add(importButton);
     eomtbxPanel.add(exportButton, "wrap");
 
@@ -109,7 +109,7 @@ public class ImExportOptionsPanelController extends PropertyChangeOptionsPanelCo
       try {
         EomToolbox.importPreferences(inputStream);
         NotificationDisplayer.getDefault().notify("EOMTBX Preferences",
-            Icons.IMPORT.getImageIcon(SIZE.S24), "Preferences imported successfully", null, NotificationDisplayer.Priority.NORMAL);
+            Icons.IMPORT.getImageIcon(Icon.SIZE_24), "Preferences imported successfully", null, NotificationDisplayer.Priority.NORMAL);
       } catch (IOException e) {
         Dialogs.error("EOMTBX Preferences", "Could not import preferences", e);
       }
@@ -126,7 +126,7 @@ public class ImExportOptionsPanelController extends PropertyChangeOptionsPanelCo
       try {
         EomToolbox.exportPreferences(out);
         NotificationDisplayer.getDefault().notify("EOMTBX Preferences",
-            Icons.EXPORT.getImageIcon(SIZE.S24), "Preferences exported successfully", null, NotificationDisplayer.Priority.NORMAL);
+            Icons.EXPORT.getImageIcon(Icon.SIZE_24), "Preferences exported successfully", null, NotificationDisplayer.Priority.NORMAL);
       } catch (IOException e) {
         Dialogs.error("EOMTBX Preferences", "Could not export preferences", e);
       }

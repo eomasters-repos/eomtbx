@@ -48,7 +48,7 @@ import org.eomasters.eomtbx.EomtbxIcons;
 import org.eomasters.gui.MultiLineText;
 import org.eomasters.gui.NumberCellEditor;
 import org.eomasters.gui.TablePasteAdapter;
-import org.eomasters.icons.Icon.SIZE;
+import org.eomasters.icons.Icon;
 import org.eomasters.snap.gui.ProductSelectionDialog;
 import org.eomasters.snap.gui.ProductSelectionDialog.ProductSelection;
 import org.esa.snap.core.datamodel.Band;
@@ -118,7 +118,7 @@ class WvlEditorDialog extends ModalDialog {
       productSelectionBtn.addActionListener(e -> {
         ProductSelectionDialog selectionDialog = new ProductSelectionDialog(getParent(), compatibleProducts,
             HID_EOMTBX_WvlEditor);
-        selectionDialog.getJDialog().setIconImage(EomtbxIcons.WVL_EDITOR.getImageIcon(SIZE.S16).getImage());
+        selectionDialog.getJDialog().setIconImage(EomtbxIcons.WVL_EDITOR.getImageIcon(Icon.SIZE_16).getImage());
         selectionDialog.show();
         productSelectionBtn.setText(createButtonText(compatibleProducts));
       });
@@ -158,7 +158,7 @@ class WvlEditorDialog extends ModalDialog {
   @Override
   public int show() {
     setContent(createContentPanel());
-    getJDialog().setIconImage(EomtbxIcons.WVL_EDITOR.getImageIcon(SIZE.S16).getImage());
+    getJDialog().setIconImage(EomtbxIcons.WVL_EDITOR.getImageIcon(Icon.SIZE_16).getImage());
     return super.show();
   }
 
