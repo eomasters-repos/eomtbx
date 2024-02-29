@@ -27,7 +27,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 import org.eomasters.gui.CollapsiblePanel;
 import org.eomasters.gui.Dialogs;
-import org.eomasters.icons.Icon.SIZE;
+import org.eomasters.icons.Icon;
 import org.eomasters.icons.Icons;
 import org.eomasters.snap.utils.SnapSystemReport;
 import org.openide.awt.ActionID;
@@ -49,7 +49,7 @@ public class SystemReportAction extends AbstractAction {
    * Creates a new Action.
    */
   public SystemReportAction() {
-    super(Bundle.SystemReportActionName(), Icons.REPORT.getImageIcon(SIZE.S16));
+    super(Bundle.SystemReportActionName(), Icons.REPORT.getImageIcon(Icon.SIZE_16));
   }
 
   @Override
@@ -59,7 +59,7 @@ public class SystemReportAction extends AbstractAction {
     CollapsiblePanel reportArea = CollapsiblePanel.createLongTextPanel("System Report", systemReport.generate());
     reportArea.setCollapsed(false);
 
-    Dialogs.message("System Report", Icons.REPORT.getImageIcon(SIZE.S48), reportArea);
+    Dialogs.message("System Report", Icons.REPORT.getImageIcon(Icon.SIZE_48), reportArea);
   }
 
 }
