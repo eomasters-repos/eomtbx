@@ -59,9 +59,21 @@ public class EomtbxIcons {
 
 
   /**
-   * The EOMTBX icon.
+   * The EOMTBX icon, clean without text.
    */
-  public static final Icon EOMTBX = new SvgIcon("/org/eomasters/eomtbx/icons/EomToolbox", EomtbxIcons.class);
+  public static final Icon EOMTBX = new SvgIcon("/org/eomasters/eomtbx/icons/eomtbx_logo", EomtbxIcons.class);
+  /**
+   * The EOMTBX icon with short EOMTBX text on it.
+   */
+  public static final Icon EOMTBX_SHORT = new SvgIcon("/org/eomasters/eomtbx/icons/eomtbx_logo_shortText", EomtbxIcons.class);
+  /**
+   * The EOMTBX icon with long EOMAsters Toolbox text on it.
+   */
+  public static final Icon EOMTBX_TEXT = new SvgIcon("/org/eomasters/eomtbx/icons/eomtbx_logo_text", EomtbxIcons.class);
+  /**
+   * The EOMTBX icon with long EOMAsters Toolbox text below.
+   */
+  public static final Icon EOMTBX_TEXT_BELOW = new SvgIcon("/org/eomasters/eomtbx/icons/eomtbx_logo_text_below", EomtbxIcons.class);
   /**
    * An icon for the Wavelength Editor.
    */

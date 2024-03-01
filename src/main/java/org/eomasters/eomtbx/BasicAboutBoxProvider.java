@@ -34,14 +34,14 @@ import org.esa.snap.rcp.util.BrowserUtils;
 import org.openide.modules.ModuleInfo;
 import org.openide.modules.Modules;
 
-public class FreeAboutBoxProvider implements AboutBoxProvider {
+public class BasicAboutBoxProvider implements AboutBoxProvider {
 
-  public FreeAboutBoxProvider() {
+  public BasicAboutBoxProvider() {
   }
 
   @Override
   public String getTitle() {
-    return "Free";
+    return "Basic";
   }
 
   @Override
@@ -53,7 +53,7 @@ public class FreeAboutBoxProvider implements AboutBoxProvider {
 
     final ModuleInfo moduleInfo = Modules.getDefault().ownerOf(getClass());
     JLabel versionLabel = new JLabel(
-        "<html><b>EOMasters Toolbox Free version " + moduleInfo.getImplementationVersion() + "</b>",
+        "<html><b>EOMasters Toolbox Basic version " + moduleInfo.getImplementationVersion() + "</b>",
         SwingConstants.CENTER);
 
     URI changelogUri = URI.create("https://github.com/eomasters-repos/eomtbx/releases");

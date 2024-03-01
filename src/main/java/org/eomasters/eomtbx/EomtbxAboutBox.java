@@ -24,8 +24,9 @@
 package org.eomasters.eomtbx;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
+import java.util.Optional;
 import java.util.ServiceLoader;
-import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
@@ -39,13 +40,25 @@ public class EomtbxAboutBox extends JPanel {
     super(new BorderLayout(4, 4));
     setBorder(new EmptyBorder(4, 4, 4, 4));
     ServiceLoader<AboutBoxProvider> eomToolboxServiceLoader = ServiceLoader.load(AboutBoxProvider.class);
-    JTabbedPane jTabbedPane = new JTabbedPane();
-    eomToolboxServiceLoader.forEach(provider -> {
-      jTabbedPane.addTab(provider.getTitle(), provider.getAboutPanel());
-    });
+    long numBoxes = eomToolboxServiceLoader.stream().count();
+    Component boxPanel = null;
+    if(numBoxes == 1) {
+      Optional<AboutBoxProvider> first = eomToolboxServiceLoader.findFirst();
+      if (first.isPresent()) {
+        boxPanel = first.get().getAboutPanel();
+      }
+    }else {
+      JTabbedPane jTabbedPane = new JTabbedPane();
+      eomToolboxServiceLoader.forEach(provider -> {
+        jTabbedPane.addTab(provider.getTitle(), provider.getAboutPanel());
+      });
+      boxPanel = jTabbedPane;
+    }
 
-    JLabel label = new JLabel(new ImageIcon(EomtbxAboutBox.class.getResource("about-eomtbx-logo.png")));
+    JLabel label = new JLabel(EomtbxIcons.EOMTBX_TEXT_BELOW.getImageIcon(365));
     add(label, BorderLayout.CENTER);
-    add(jTabbedPane, BorderLayout.SOUTH);
+    if (boxPanel != null) {
+      add(boxPanel, BorderLayout.SOUTH);
+    }
   }
 }
