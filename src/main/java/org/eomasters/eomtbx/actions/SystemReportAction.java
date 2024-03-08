@@ -59,7 +59,7 @@ public class SystemReportAction extends AbstractAction {
     CollapsiblePanel reportArea = CollapsiblePanel.createLongTextPanel("System Report", systemReport.generate());
     reportArea.setCollapsed(false);
 
-    Dialogs.message("System Report", Icons.REPORT.getImageIcon(Icon.SIZE_48), reportArea);
+    Dialogs.message("System Report", reportArea, Icons.REPORT.getImageIcon(Icon.SIZE_48));
   }
 
 }
