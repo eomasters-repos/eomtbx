@@ -48,6 +48,7 @@ import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 import net.miginfocom.swing.MigLayout;
 import org.eomasters.eomtbx.quickmenu.QuickMenu;
+import org.eomasters.gui.Dialogs;
 import org.eomasters.snap.utils.PathConverter;
 import org.eomasters.utils.ErrorHandler;
 import org.esa.snap.rcp.SnapApp;
@@ -236,6 +237,7 @@ public class EomToolbox {
     public void run() {
       new Thread(
           () -> {
+            Dialogs.setDefaultIcon(EomtbxIcons.EOMTBX);
             ConverterRegistry.getInstance().setConverter(Path.class, new PathConverter());
             QuickMenu.getInstance().init();
           }).start();
