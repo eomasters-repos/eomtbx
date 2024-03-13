@@ -9,12 +9,12 @@
  * it under the terms of the GNU General Public License as
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public
  * License along with this program.  If not, see
  * -> http://www.gnu.org/licenses/gpl-3.0.html
@@ -30,6 +30,7 @@ import org.eomasters.gui.Dialogs;
 import org.eomasters.icons.Icon;
 import org.eomasters.icons.Icons;
 import org.eomasters.snap.utils.SnapSystemReport;
+import org.esa.snap.rcp.SnapApp;
 import org.openide.awt.ActionID;
 import org.openide.awt.ActionReference;
 import org.openide.awt.ActionRegistration;
@@ -55,11 +56,11 @@ public class SystemReportAction extends AbstractAction {
   @Override
   public void actionPerformed(ActionEvent e) {
     SnapSystemReport systemReport = new SnapSystemReport().name("SNAP_System_Report").logTail(100);
-    // JPanel reportPanel = new JPanel(new BorderLayout());
     CollapsiblePanel reportArea = CollapsiblePanel.createLongTextPanel("System Report", systemReport.generate());
     reportArea.setCollapsed(false);
 
-    Dialogs.message("System Report", reportArea, Icons.REPORT.getImageIcon(Icon.SIZE_48));
+    Dialogs.message(SnapApp.getDefault().getMainFrame(), "System Report", reportArea,
+        Icons.REPORT.getImageIcon(Icon.SIZE_48));
   }
 
 }
