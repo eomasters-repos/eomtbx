@@ -127,7 +127,7 @@ public class QuickMenuOptionsPanelController extends PropertyChangeOptionsPanelC
       try {
         QuickMenu.getInstance().getPreferences().flush();
       } catch (BackingStoreException e) {
-        EomToolbox.handleUnexpectedException("Could not store QuickMenu options", e);
+        EomToolbox.reportError("Could not store QuickMenu options", e);
       }
     }
   }

@@ -58,7 +58,7 @@ public class ImExportOptionsPanelController extends PropertyChangeOptionsPanelCo
     try {
       preferences.flush();
     } catch (BackingStoreException e) {
-      EomToolbox.handleUnexpectedException("Could not store options for EOMasters Toolbox", e);
+      EomToolbox.reportError("Could not store options for EOMasters Toolbox", e);
     }
 
   }

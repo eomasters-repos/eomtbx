@@ -51,16 +51,16 @@ import org.eomasters.utils.FileSharingService.UploadResponse;
 import org.eomasters.utils.MailTo;
 import org.hsqldb.lib.StringInputStream;
 
-public class UnexpectedExceptionDialog {
+public class ErrorReportDialog {
 
-  private UnexpectedExceptionDialog() {
+  private ErrorReportDialog() {
   }
 
   static void showDialog(String message, Throwable exception) {
     JPanel contentPane = new JPanel(new MigLayout("top, left, fillx, gap 5 5"));
     contentPane.setBorder(BorderFactory.createEmptyBorder(0, 10, 10, 10));
 
-    JLabel anErrorOccurred = new JLabel("A System Exception Occurred");
+    JLabel anErrorOccurred = new JLabel("A Error Occurred");
     anErrorOccurred.setFont(anErrorOccurred.getFont().deriveFont(Font.BOLD, 28f));
     contentPane.add(anErrorOccurred, "top, left, wrap");
 

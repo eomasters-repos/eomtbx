@@ -51,6 +51,7 @@ import org.eomasters.eomtbx.quickmenu.QuickMenu;
 import org.eomasters.gui.Dialogs;
 import org.eomasters.snap.utils.PathConverter;
 import org.eomasters.utils.ErrorHandler;
+import org.eomasters.utils.SystemHelper;
 import org.esa.snap.rcp.SnapApp;
 import org.esa.snap.runtime.EngineConfig;
 import org.openide.modules.OnStart;
@@ -94,7 +95,7 @@ public class EomToolbox {
           new Exception("Test", new Exception("theCause"))));
       JButton openErrorHandler = new JButton("Show Exception Handler");
       openErrorHandler.addActionListener(
-          e -> EomToolbox.handleUnexpectedException("Test", new Exception("Test", new Exception("theCause"))));
+          e -> EomToolbox.reportError("Test", new Exception("Test", new Exception("theCause"))));
       container.add(errorDialog);
       container.add(extendedErrorDialog);
       container.add(openErrorHandler);
@@ -212,18 +213,18 @@ public class EomToolbox {
 
   /**
    * Handles the given throwable. In a headless environment the throwable is only logged to the console. If GUI is
-   * available a dialog is shown in addition.
+   * available a dialog is shown in addition to allow reporting to EOMasters.
    *
    * @param message   the message
    * @param exception the throwable
    */
-  public static void handleUnexpectedException(String message, Throwable exception) {
+  public static void reportError(String message, Throwable exception) {
     LOG.log(Level.SEVERE, message, exception);
-    if (org.eomasters.utils.SystemHelper.isHeadless()) {
+    if (SystemHelper.isHeadless()) {
       return;
     }
 
-    UnexpectedExceptionDialog.showDialog(message, exception);
+    ErrorReportDialog.showDialog(message, exception);
   }
 
 
