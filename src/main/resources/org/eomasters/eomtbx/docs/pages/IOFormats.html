@@ -44,18 +44,27 @@
 <h1>IO Formats</h1>
 <p>
   You use GPT and need to specify a data format name, but you don't know which are supported by SNAP?
-  The "formats" command will help you.
+  The "ioformats" command will help you.
 </p>
 
 <div>Example:<br>
-  Unix: <code>snap --formats</code><br>
-  Windows: <code>snap64 --formats</code><br>
+  Unix: <code>snap --ioformats</code><br>
+  Windows: <code>snap64 --ioformats</code><br>
 </div>
 <p>To prevent the GUI and splash screen from showing, add also <code>--nogui</code> and <code>--nosplash</code></p>
 
 <p>
-  This will give you a list of all readable and writable data formats. Following snippets of the output:
-<pre>Readable Data Formats:
+  This will give you a list of all readable and writable data formats.
+  For each element is formatted like:
+<pre style="background-color: #F0F0F0">
+<i>ClassName</i> (<i>package path</i>)
+   Description: <i>A short description</i>
+   Format Names: <i>List of format names</i>
+   File Extensions: <i>List of file extensions</i>
+</pre>
+
+  Following snippets of the output:
+<pre style="background-color: #F0F0F0">Readable Data Formats:
 ACE2_5MinReaderPlugIn (org.esa.snap.dem.dataio.ace2_5min)
    Description: ACE2 Data Product Tile
    Format Names: ACE2

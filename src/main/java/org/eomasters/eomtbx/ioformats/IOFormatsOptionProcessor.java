@@ -43,14 +43,14 @@ import org.netbeans.spi.sendopts.OptionProcessor;
 import org.openide.util.NbBundle;
 
 /**
- * Option processor for the --formats option.
+ * Option processor for the --ioformats option.
  * <p>With this option, a list of available readable and writable data formats will be printed.
- * <p>Example: <code>snap --formats</p>
+ * <p>Example: <code>snap --ioformats</p>
  * <p>To prevent the GUI and splash screen from showing, add also {@code --nogui} {@code --nosplash} <br>
  */
 @org.openide.util.lookup.ServiceProvider(service = OptionProcessor.class)
 @NbBundle.Messages({
-    "DSC_Formats=Print list of available data formats: snap --formats; "
+    "DSC_Formats=Print list of available data formats: snap --ioformats; "
         + "Add also --nogui --nosplash to prevent GUI and splash screen from showing."
 })
 public class IOFormatsOptionProcessor extends OptionProcessor {
@@ -60,7 +60,7 @@ public class IOFormatsOptionProcessor extends OptionProcessor {
 
   static {
     String b = IOFormatsOptionProcessor.class.getPackageName() + ".Bundle";
-    formatsOpt = Option.shortDescription(Option.withoutArgument(Option.NO_SHORT_NAME, "formats"), b, "DSC_Formats");
+    formatsOpt = Option.shortDescription(Option.withoutArgument(Option.NO_SHORT_NAME, "ioformats"), b, "DSC_Formats");
     optionSet = Collections.singleton(OptionGroups.allOf(formatsOpt));
   }
 

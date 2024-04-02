@@ -10,6 +10,7 @@
   <mapID target="eomtbx.overview" url="pages/Overview.html"/>
   <mapID target="eomtbx.quickMenu" url="pages/QuickMenu.html"/>
   <mapID target="eomtbx.loopGPT" url="pages/LoopGpt.html"/>
+  <mapID target="eomtbx.ioFormats" url="pages/IOFormats.html"/>
   <mapID target="eomtbx.mathsExtensions" url="pages/BmExtensions.html"/>
   <mapID target="eomtbx.wvlEditor" url="pages/WvlEditor.html"/>
   <mapID target="eomtbx.closeProductNoView" url="pages/CloseProductNoView.html"/>
