@@ -41,3 +41,13 @@ img.vCenter {
 td {
     font-size: 12;
 }
+
+.attention {
+    padding: 5px;
+    background-color: #DDDDDD;
+    border-width: medium;
+    border-color: #090909;
+    border-style: double;
+    display: inline-block;
+    margin: 20px 50px
+}
