@@ -49,7 +49,7 @@ public class TestUtils {
    *  8: NAN,NAN,NAN, 83,INV,INV,INV, 87, 88, 89,
    *  9: NAN,NAN,NAN, 93,INV,INV,INV, 97, 98, ND
    *  </pre>
-   * and B2 with the following data:
+   * and B2 with the following data (times 2):
    * <pre>
    *      0   1   2   3   4   5   6   7   8   9
    *  0: NAN,  1,  2,  3,  4,INV,  6,  7,  8,  9,
@@ -72,8 +72,9 @@ public class TestUtils {
     b1.setData(ProductData.createInstance(b1Data));
     b1.setNoDataValue(99);
     b1.setNoDataValueUsed(true);
-    b1.setValidPixelExpression("B1 % 5 != 0 && B1 != 44 && B1 != 46 " + "&& B1 != 74 && B1 != 84 && B1 != 94"
-        + "&& B1 != 76 && B1 != 86 && B1 != 96");
+    b1.setValidPixelExpression("B1.raw % 5 != 0 && B1.raw != 44 && B1.raw != 46 "
+        + "&& B1.raw != 74 && B1.raw != 84 && B1.raw != 94"
+        + "&& B1.raw != 76 && B1.raw != 86 && B1.raw != 96");
     Band b2 = product.addBand("B2", ProductData.TYPE_FLOAT64);
     double[] b2Data = createB2Data();
     b2.setData(ProductData.createInstance(b2Data));
