@@ -34,7 +34,7 @@ import org.esa.snap.core.dataop.barithm.RasterDataEvalEnv;
 import org.esa.snap.core.jexp.EvalException;
 import org.esa.snap.core.jexp.ParseException;
 import org.esa.snap.core.jexp.Term;
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class WindowFunctionsTest {
@@ -43,8 +43,8 @@ class WindowFunctionsTest {
   private static int W;
   private static int H;
 
-  @BeforeAll
-  static void beforeAll() {
+  @BeforeEach
+  void beforeEach() {
     product = TestUtils.createProduct();
     W = product.getSceneRasterWidth();
     H = product.getSceneRasterHeight();
@@ -68,7 +68,27 @@ class WindowFunctionsTest {
     assertEquals(Double.NaN, term.evalD(evalEnv));
     evalEnv.setElemIndex(toElemIndex(5, 8)); // all Inv
     assertEquals(Double.NaN, term.evalD(evalEnv));
+  }
 
+  @Test
+  void testMinFunction_WithScaling() throws ParseException {
+    product.getBand("B1").setScalingFactor(0.1);
+    Term term = BandArithmetic.parseExpression("wnd(B1, 3, \"min\")", new Product[]{product}, 0);
+
+    RasterDataEvalEnv evalEnv = new RasterDataEvalEnv(0, 0, W, H);
+    evalEnv.setElemIndex(toElemIndex(0, 0));
+    assertEquals(0.1, term.evalD(evalEnv), 1e-8);
+    evalEnv.setElemIndex(toElemIndex(9, 0));
+    assertEquals(0.8, term.evalD(evalEnv), 1e-8);
+    evalEnv.setElemIndex(toElemIndex(5, 4));
+    assertEquals(3.4, term.evalD(evalEnv), 1e-8);
+    evalEnv.setElemIndex(toElemIndex(8, 7));
+    assertEquals(6.7, term.evalD(evalEnv), 1e-8);
+
+    evalEnv.setElemIndex(toElemIndex(1, 8)); // all NaN
+    assertEquals(Double.NaN, term.evalD(evalEnv));
+    evalEnv.setElemIndex(toElemIndex(5, 8)); // all Inv
+    assertEquals(Double.NaN, term.evalD(evalEnv));
   }
 
   @Test

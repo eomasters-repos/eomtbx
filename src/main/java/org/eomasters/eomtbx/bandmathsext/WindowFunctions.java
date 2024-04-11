@@ -23,7 +23,6 @@
 
 package org.eomasters.eomtbx.bandmathsext;
 
-import java.awt.Dimension;
 import java.io.IOException;
 import java.util.Arrays;
 import org.esa.snap.core.datamodel.RasterDataNode;
@@ -146,7 +145,7 @@ class WindowFunctions extends D {
     return Arrays.stream(data).max().orElse(Double.NaN);
   }
 
-  // returns only valid and not NaN sample value
+  // returns only valid and not NaN value scaled to geophysical values
   private double[] getFilteredData(RasterDataNode raster, int wndSize, EvalEnv env) {
     double[] data = new double[wndSize * wndSize];
     Arrays.fill(data, Double.NaN);
@@ -154,17 +153,13 @@ class WindowFunctions extends D {
     int centerX = dataEvalEnv.getPixelX();
     int centerY = dataEvalEnv.getPixelY();
     try {
-      Dimension rasterSize = raster.getRasterSize();
       for (int i = 0; i < wndSize; i++) {
         int offsetI = i * wndSize;
+        int x = centerX - wndSize / 2 + i;
         for (int j = 0; j < wndSize; j++) {
-          int x = centerX - wndSize / 2 + i;
           int y = centerY - wndSize / 2 + j;
-          if (x < 0 || x >= rasterSize.width || y < 0 || y >= rasterSize.height || !raster.isPixelValid(x, y)) {
-            data[offsetI + j] = Double.NaN;
-          } else {
-            double pixelValue = raster.readPixels(x, y, 1, 1, new double[1])[0];
-            data[offsetI + j] = pixelValue;
+          if (raster.isPixelWithinImageBounds(x, y) && raster.isPixelValid(x, y)) {
+            data[offsetI + j] = raster.readPixels(x, y, 1, 1, new double[1])[0];
           }
         }
       }
