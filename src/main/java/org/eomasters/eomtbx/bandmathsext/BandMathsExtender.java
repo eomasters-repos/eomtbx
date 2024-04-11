@@ -46,7 +46,12 @@ public class BandMathsExtender implements ProductNamespaceExtender {
     namespace.registerSymbol(new MapYSymbol(product.getSceneGeoCoding(), product.getSceneRasterSize()));
 
     namespace.registerFunction(new WindowFunctions());
+
     namespace.registerFunction(new AreValidFunction());
+
+    namespace.registerFunction(MultiInputFunctions.MIN);
+    namespace.registerFunction(MultiInputFunctions.MAX);
+    namespace.registerFunction(MultiInputFunctions.MEAN);
   }
 
 }

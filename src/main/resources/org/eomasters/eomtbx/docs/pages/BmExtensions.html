@@ -58,15 +58,28 @@
     coordinates are returned. The X and Y map coordinates are returned by the symbols: <b><code>MAPX</code></b> and
     <b><code>MAPY</code><br></b>
   </li>
-  <div class="inote"><b class="note">Note!</b><br>
+  <div class="attention"><b class="note">Note!</b><br>
     The valid attribute and the map attributes are not selectable from the drop-down boxes in the GUI. But they can be
     used in the expression.
   </div>
   <li><b>AreValid Function</b><br>
-    Similar to the <b>valid</b> attribute, this function returns true if all provided bands are valid.<br>
-    It is used as follows:<br>
+    Similar to the <b>valid</b> attribute, this function returns true if all provided bands are valid.<br> Only bands
+    are allowed as arguments. It is used as follows:<br>
     <b><code>areValid(&lt;band_name&gt;, &lt;band_name&gt;, ...)</code></b> &nbsp;&nbsp;e.g.,&nbsp;&nbsp;--> <b><code>areValid(B2,
       B3, B4, B8)</code><br></b>
+  </li>
+  <li><b>Min, Max and Mean of multiple inputs</b><br>
+    These functions return the minimum, maximum and mean of the provided inputs. The functions exclude NaN, infinite and
+    invalid values from the computation. It is used as follows:<br>
+    <b><code>&lt;func&gt;(&lt;value&gt;, &lt;value&gt;, ...)</code></b><br>
+    <ul>
+      <li><b>minOf:</b> Returns the minimum of the provided inputs values.<br>
+        e.g., --> <b><code>minOf(0.7, &lt;B7&gt;, &lt;B8&gt;, &lt;B8A&gt;)</code></b></li>
+      <li><b>maxOf:</b> Returns the maximum of the provided inputs values.<br>
+        e.g., --> <b><code>maxOf(&lt;B1&gt;, &lt;B2&gt;, 0.2)</code></b></li>
+      <li><b>meanOf:</b> Returns the mean value of the provided inputs values.<br>
+        e.g., --> <b><code>meanOf(&lt;B1&gt;, &lt;B2&gt;, &lt;B3&gt;, &lt;B4&gt;, &lt;B5&gt;)</code></b></li>
+    </ul>
   </li>
   <li><b>Window Functions</b><br>
     The window is centered on the current pixel and the window size must be <b>3, 5 or 7</b>.
