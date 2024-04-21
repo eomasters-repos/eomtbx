@@ -33,26 +33,33 @@ import javax.swing.JTabbedPane;
 import javax.swing.border.EmptyBorder;
 import org.esa.snap.rcp.about.AboutBox;
 
+/**
+ * The common {@link AboutBox} which is registered to SNAP/NetBeans.
+ * It provides an extension point usgin the {@link AboutBoxProvider} for variants of the EOMTBX.
+ */
 @AboutBox(displayName = "EOMTBX", position = 500)
 public class EomtbxAboutBox extends JPanel {
 
+  /**
+   * Creates a new AboutBox.
+   */
   public EomtbxAboutBox() {
     super(new BorderLayout(4, 4));
     setBorder(new EmptyBorder(4, 4, 4, 4));
     ServiceLoader<AboutBoxProvider> eomToolboxServiceLoader = ServiceLoader.load(AboutBoxProvider.class);
     long numBoxes = eomToolboxServiceLoader.stream().count();
     Component boxPanel = null;
-    if(numBoxes == 1) {
+    if (numBoxes == 1) {
       Optional<AboutBoxProvider> first = eomToolboxServiceLoader.findFirst();
       if (first.isPresent()) {
         boxPanel = first.get().getAboutPanel();
       }
-    }else {
-      JTabbedPane jTabbedPane = new JTabbedPane();
+    } else {
+      JTabbedPane tabbedPane = new JTabbedPane();
       eomToolboxServiceLoader.forEach(provider -> {
-        jTabbedPane.addTab(provider.getTitle(), provider.getAboutPanel());
+        tabbedPane.addTab(provider.getTitle(), provider.getAboutPanel());
       });
-      boxPanel = jTabbedPane;
+      boxPanel = tabbedPane;
     }
 
     JLabel label = new JLabel(EomtbxIcons.EOMTBX_TEXT_BELOW.getImageIcon(365));

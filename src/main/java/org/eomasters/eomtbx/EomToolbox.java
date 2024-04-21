@@ -29,7 +29,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintStream;
-import java.lang.ref.Cleaner;
 import java.net.URI;
 import java.nio.file.Path;
 import java.util.logging.Level;
@@ -69,6 +68,7 @@ import org.xml.sax.SAXException;
 public class EomToolbox {
 
   public static final Logger LOG;
+
   static {
     LOG = Logger.getLogger(EomToolbox.class.getSimpleName());
     LOG.setLevel(EngineConfig.instance().logLevel()); // inherit log level from SNAP
@@ -111,7 +111,6 @@ public class EomToolbox {
   public static final URI EOMASTERS_URL = URI.create("https://www.eomasters.org");
   public static final URI FORUM_URL = URI.create("https://www.eomasters.org/forum");
   private static final Preferences preferences = SnapApp.getDefault().getPreferences().node(TOOLBOX_ID);
-  private static final Cleaner cleaner = Cleaner.create();
 
   /**
    * Returns the preferences of the EOM-Toolbox.
@@ -215,8 +214,8 @@ public class EomToolbox {
    * Handles the given throwable. In a headless environment the throwable is only logged to the console. If GUI is
    * available a dialog is shown in addition to allow reporting to EOMasters.
    *
-   * @param message   the message
-   * @param exception the throwable
+   * @param message   the message. Must not be null.
+   * @param exception the throwable. Can be null.
    */
   public static void reportError(String message, Throwable exception) {
     LOG.log(Level.SEVERE, message, exception);

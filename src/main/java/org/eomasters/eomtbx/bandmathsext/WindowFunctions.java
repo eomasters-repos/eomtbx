@@ -9,12 +9,12 @@
  * it under the terms of the GNU General Public License as
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public
  * License along with this program.  If not, see
  * -> http://www.gnu.org/licenses/gpl-3.0.html
@@ -34,8 +34,8 @@ import org.esa.snap.core.jexp.impl.AbstractFunction.D;
 
 /**
  * Window functions for band math expressions.
- * <p>
- * The following functions are available:
+ *
+ * <p>The following functions are available:
  *  <ul>
  *    <li>sum: Sum of all valid pixels in the window</li>
  *    <li>min: Minimum of all valid pixels in the window</li>
@@ -43,7 +43,7 @@ import org.esa.snap.core.jexp.impl.AbstractFunction.D;
  *    <li>mean: Mean of all valid pixels in the window</li>
  *    <li>median: Median of all valid pixels in the window</li>
  * </ul>
- * p>
+ * </p>
  *   The window is centered on the current pixel and the window size must be 3, 5 or 7.
  */
 class WindowFunctions extends D {
@@ -63,7 +63,7 @@ class WindowFunctions extends D {
   @Override
   public double evalD(EvalEnv env, Term[] args) throws EvalException {
     RasterDataNode raster = TermUtils.getRaster(args[0]);
-    if(raster == null) {
+    if (raster == null) {
       throw new EvalException("First argument of wnd() must reference a raster");
     }
 

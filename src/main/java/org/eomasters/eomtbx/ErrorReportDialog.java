@@ -9,12 +9,12 @@
  * it under the terms of the GNU General Public License as
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public
  * License along with this program.  If not, see
  * -> http://www.gnu.org/licenses/gpl-3.0.html
@@ -31,6 +31,7 @@ import java.time.Instant;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
+import java.util.Objects;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -51,12 +52,22 @@ import org.eomasters.utils.FileSharingService.UploadResponse;
 import org.eomasters.utils.MailTo;
 import org.hsqldb.lib.StringInputStream;
 
-public class ErrorReportDialog {
+/**
+ * A dialog that displays an error report and allows to report it in the EOMasters forum or by mail.
+ */
+class ErrorReportDialog {
 
   private ErrorReportDialog() {
   }
 
+  /**
+   * Shoes the error report dialog.
+   *
+   * @param message   The message to display in the dialog. Must not be null.
+   * @param exception The exception that caused the error. Can be null.
+   */
   static void showDialog(String message, Throwable exception) {
+    Objects.requireNonNull(message);
     JPanel contentPane = new JPanel(new MigLayout("top, left, fillx, gap 5 5"));
     contentPane.setBorder(BorderFactory.createEmptyBorder(0, 10, 10, 10));
 

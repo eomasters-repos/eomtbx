@@ -24,9 +24,11 @@
 package org.eomasters.eomtbx.quickmenu;
 
 
+import java.io.IOException;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.prefs.Preferences;
 import org.eomasters.eomtbx.EomToolbox;
 
@@ -80,8 +82,12 @@ public class QuickMenu {
       throw new IllegalStateException("QuickMenu already started");
     }
     actionReferences = Collections.synchronizedList(ActionRefCollector.collect());
-    updateActionReferences(actionReferences, QuickMenuStorage.restore());
-    sort();
+    try {
+      updateActionReferences(actionReferences, QuickMenuStorage.restore());
+      sort();
+    } catch (IOException e) {
+      EomToolbox.LOG.log(Level.SEVERE, "Failed to restore QuickMenu", e);
+    }
   }
 
   private void updateActionReferences(List<ActionRef> actionRefs, List<ActionRef> updates) {
@@ -103,7 +109,11 @@ public class QuickMenu {
    * Stops the QuickMenu. Saves the action references to a JSON file.
    */
   public void stop() {
-    QuickMenuStorage.store(actionReferences);
+    try {
+      QuickMenuStorage.store(actionReferences);
+    } catch (IOException e) {
+      EomToolbox.LOG.log(Level.SEVERE, "Failed to save QuickMenu", e);
+    }
     actionReferences = null;
   }
 

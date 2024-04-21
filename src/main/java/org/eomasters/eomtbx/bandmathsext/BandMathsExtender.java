@@ -24,8 +24,8 @@
 package org.eomasters.eomtbx.bandmathsext;
 
 import java.util.List;
-import org.eomasters.eomtbx.bandmathsext.MapPosSymbol.MapXSymbol;
-import org.eomasters.eomtbx.bandmathsext.MapPosSymbol.MapYSymbol;
+import org.eomasters.eomtbx.bandmathsext.MapPosSymbol.SymbolMapX;
+import org.eomasters.eomtbx.bandmathsext.MapPosSymbol.SymbolMapY;
 import org.esa.snap.core.datamodel.Product;
 import org.esa.snap.core.datamodel.RasterDataNode;
 import org.esa.snap.core.dataop.barithm.ProductNamespaceExtender;
@@ -42,8 +42,8 @@ public class BandMathsExtender implements ProductNamespaceExtender {
     for (RasterDataNode rasterDataNode : rasterDataNodes) {
       namespace.registerSymbol(new ValidSymbol(namePrefix, rasterDataNode));
     }
-    namespace.registerSymbol(new MapXSymbol(product.getSceneGeoCoding(), product.getSceneRasterSize()));
-    namespace.registerSymbol(new MapYSymbol(product.getSceneGeoCoding(), product.getSceneRasterSize()));
+    namespace.registerSymbol(new SymbolMapX(product.getSceneGeoCoding(), product.getSceneRasterSize()));
+    namespace.registerSymbol(new SymbolMapY(product.getSceneGeoCoding(), product.getSceneRasterSize()));
 
     namespace.registerFunction(new WindowFunctions());
 

@@ -23,6 +23,7 @@
 
 package org.eomasters.eomtbx.quickmenu;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.prefs.BackingStoreException;
@@ -40,7 +41,7 @@ class QuickMenuStorage {
     this.qmPreferences = qmPreferences;
   }
 
-  List<ActionRef> load() {
+  List<ActionRef> load() throws IOException {
     Preferences qmActionsNode = qmPreferences.node(ACTIONS_NODE);
     ArrayList<ActionRef> actionRefs = new ArrayList<>();
     try {
@@ -51,29 +52,30 @@ class QuickMenuStorage {
         actionRefs.add(actionRef);
       }
     } catch (BackingStoreException e) {
-      throw new RuntimeException(e);
+      throw new IOException(e);
     }
 
     return actionRefs;
   }
 
-  void save(List<ActionRef> actionReferences) {
+  void save(List<ActionRef> actionReferences) throws IOException {
     Preferences qmActionsNode = qmPreferences.node(ACTIONS_NODE);
     try {
       qmActionsNode.clear();
-    } catch (BackingStoreException ignore) {
+    } catch (BackingStoreException e) {
+      throw new IOException(e);
     }
     actionReferences.stream()
                     .filter(actionRef -> actionRef.getClicks() > 0)
                     .forEach(actionRef -> qmActionsNode.putInt(actionRef.getActionId(), (int) actionRef.getClicks()));
   }
 
-  static void store(List<ActionRef> actionReferences) {
+  static void store(List<ActionRef> actionReferences) throws IOException {
     QuickMenuStorage qmStorage = new QuickMenuStorage(QuickMenu.getInstance().getPreferences());
     qmStorage.save(actionReferences);
   }
 
-  static List<ActionRef> restore() {
+  static List<ActionRef> restore() throws IOException {
     QuickMenuStorage qmStorage = new QuickMenuStorage(QuickMenu.getInstance().getPreferences());
     return qmStorage.load();
   }

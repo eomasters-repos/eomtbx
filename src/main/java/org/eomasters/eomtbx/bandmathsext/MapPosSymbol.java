@@ -83,9 +83,9 @@ abstract class MapPosSymbol extends AbstractSymbol.D {
 
   protected abstract double getMapCoord(Point2D.Double mapCoord);
 
-  static final class MapXSymbol extends MapPosSymbol {
+  static final class SymbolMapX extends MapPosSymbol {
 
-    MapXSymbol(GeoCoding geocoding, Dimension size) {
+    SymbolMapX(GeoCoding geocoding, Dimension size) {
       super("MAPX", geocoding, size);
     }
 
@@ -95,9 +95,9 @@ abstract class MapPosSymbol extends AbstractSymbol.D {
     }
   }
 
-  static final class MapYSymbol extends MapPosSymbol {
+  static final class SymbolMapY extends MapPosSymbol {
 
-    MapYSymbol(GeoCoding geocoding, Dimension size) {
+    SymbolMapY(GeoCoding geocoding, Dimension size) {
       super("MAPY", geocoding, size);
     }
 

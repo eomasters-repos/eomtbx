@@ -9,12 +9,12 @@
  * it under the terms of the GNU General Public License as
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public
  * License along with this program.  If not, see
  * -> http://www.gnu.org/licenses/gpl-3.0.html
@@ -33,9 +33,18 @@ import org.esa.snap.core.jexp.Function;
 import org.esa.snap.core.jexp.Term;
 import org.esa.snap.core.jexp.impl.AbstractFunction;
 
-public class MultiInputFunctions {
+/**
+ * Implements various functions for which can take a variable length of arguments. Currently, these are MIN, MAX and
+ * MEAN. All implementations exclude invalid pixels from the calculation.
+ *
+ * @author Marco Peters
+ */
+class MultiInputFunctions {
 
-  public static final Function MIN = new AbstractFunction.D("minOf", -1) {
+  /**
+   * Function that returns the minimum value of the arguments.
+   */
+  static final Function MIN = new AbstractFunction.D("minOf", -1) {
 
     public double evalD(final EvalEnv env, final Term[] args) {
       return Arrays.stream(args)
@@ -45,7 +54,10 @@ public class MultiInputFunctions {
     }
   };
 
-  public static final Function MAX = new AbstractFunction.D("maxOf", -1) {
+  /**
+   * Function that returns the maximum value of the arguments.
+   */
+  static final Function MAX = new AbstractFunction.D("maxOf", -1) {
 
     public double evalD(final EvalEnv env, final Term[] args) {
       return Arrays.stream(args)
@@ -55,16 +67,19 @@ public class MultiInputFunctions {
     }
   };
 
-  public static final Function MEAN = new AbstractFunction.D("meanOf", -1) {
+  /**
+   * Function that returns the mean value of the arguments.
+   */
+  static final Function MEAN = new AbstractFunction.D("meanOf", -1) {
 
     public double evalD(final EvalEnv env, final Term[] args) {
       double[] values = Arrays.stream(args)
-                             .filter(new RemoveInvalidPixels(env))
-                             .map(term -> term.evalD(env))
-                             .filter(Double::isFinite)
-                             .mapToDouble(Double::doubleValue)
-                             .toArray();
-      if(values.length == 0) {
+                              .filter(new RemoveInvalidPixels(env))
+                              .map(term -> term.evalD(env))
+                              .filter(Double::isFinite)
+                              .mapToDouble(Double::doubleValue)
+                              .toArray();
+      if (values.length == 0) {
         return Double.NaN;
       }
       return DoubleStream.of(values).sum() / values.length;

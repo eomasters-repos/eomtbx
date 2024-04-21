@@ -34,10 +34,10 @@ import org.esa.snap.rcp.util.BrowserUtils;
 import org.openide.modules.ModuleInfo;
 import org.openide.modules.Modules;
 
+/**
+ * Provides the AboutBox for the EOMasters Toolbox Basic.
+ */
 public class BasicAboutBoxProvider implements AboutBoxProvider {
-
-  public BasicAboutBoxProvider() {
-  }
 
   @Override
   public String getTitle() {
@@ -46,27 +46,34 @@ public class BasicAboutBoxProvider implements AboutBoxProvider {
 
   @Override
   public Component getAboutPanel() {
+    final JPanel mainPanel = new JPanel();
+    mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
+    mainPanel.add(getCopyrightLabel());
+    mainPanel.add(getVersionLabel());
+    mainPanel.add(getReleaseNotesLabel());
+    return mainPanel;
+  }
+
+  private static JLabel getCopyrightLabel() {
     String eomLink = "<a href=\"" + EomToolbox.EOMASTERS_URL + "\">EOMasters</a>";
     JLabel copyrightLabel = new JLabel("<html><b>©2023-2024 Marco Peters from " + eomLink + "</b>",
         SwingConstants.CENTER);
     copyrightLabel.addMouseListener(new BrowserUtils.URLClickAdaptor(EomToolbox.EOMASTERS_URL.toString()));
+    return copyrightLabel;
+  }
 
-    final ModuleInfo moduleInfo = Modules.getDefault().ownerOf(getClass());
-    JLabel versionLabel = new JLabel(
-        "<html><b>EOMasters Toolbox Basic version " + moduleInfo.getImplementationVersion() + "</b>",
-        SwingConstants.CENTER);
-
+  private static JLabel getReleaseNotesLabel() {
     URI changelogUri = URI.create("https://github.com/eomasters-repos/eomtbx/releases");
-    final JLabel releaseNoteLabel = new JLabel("<html><a href=\"" + changelogUri + "\">Release Notes</a>",
+    final JLabel releaseNotesLabel = new JLabel(String.format("<html><a href=\"%s\">Release Notes</a>", changelogUri),
         SwingConstants.CENTER);
-    releaseNoteLabel.setCursor(new Cursor(Cursor.HAND_CURSOR));
-    releaseNoteLabel.addMouseListener(new BrowserUtils.URLClickAdaptor(changelogUri.toString()));
+    releaseNotesLabel.setCursor(new Cursor(Cursor.HAND_CURSOR));
+    releaseNotesLabel.addMouseListener(new BrowserUtils.URLClickAdaptor(changelogUri.toString()));
+    return releaseNotesLabel;
+  }
 
-    final JPanel mainPanel = new JPanel();
-    mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
-    mainPanel.add(copyrightLabel);
-    mainPanel.add(versionLabel);
-    mainPanel.add(releaseNoteLabel);
-    return mainPanel;
+  private static JLabel getVersionLabel() {
+    ModuleInfo moduleInfo = Modules.getDefault().ownerOf(BasicAboutBoxProvider.class);;
+    return new JLabel(String.format("<html><b>EOMasters Toolbox Basic version %s</b>",
+        moduleInfo.getImplementationVersion()), SwingConstants.CENTER);
   }
 }

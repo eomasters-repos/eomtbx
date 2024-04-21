@@ -44,22 +44,25 @@ import org.openide.util.NbBundle;
 
 /**
  * Option processor for the --ioformats option.
- * <p>With this option, a list of available readable and writable data formats will be printed.
- * <p>Example: <code>snap --ioformats</p>
- * <p>To prevent the GUI and splash screen from showing, add also {@code --nogui} {@code --nosplash} <br>
+ *
+ *  <p>With this option, a list of available readable and writable data formats will be printed.
+ *
+ *  <p>Example: {@code snap --ioformats}
+ *
+ *  <p>To prevent the GUI and splash screen from showing, add also {@code --nogui} {@code --nosplash}
  */
 @org.openide.util.lookup.ServiceProvider(service = OptionProcessor.class)
 @NbBundle.Messages({
     "DSC_Formats=Print list of available data formats: snap --ioformats; "
         + "Add also --nogui --nosplash to prevent GUI and splash screen from showing."
 })
-public class IOFormatsOptionProcessor extends OptionProcessor {
+public class IoFormatsOptionProcessor extends OptionProcessor {
 
   private static final Option formatsOpt;
   private static final Set<Option> optionSet;
 
   static {
-    String b = IOFormatsOptionProcessor.class.getPackageName() + ".Bundle";
+    String b = IoFormatsOptionProcessor.class.getPackageName() + ".Bundle";
     formatsOpt = Option.shortDescription(Option.withoutArgument(Option.NO_SHORT_NAME, "ioformats"), b, "DSC_Formats");
     optionSet = Collections.singleton(OptionGroups.allOf(formatsOpt));
   }
@@ -131,6 +134,7 @@ public class IOFormatsOptionProcessor extends OptionProcessor {
   private void println() {
     println(0, "");
   }
+
   private void println(int indent, String text) {
     for (int i = 0; i < indent; i++) {
       out.print("   ");

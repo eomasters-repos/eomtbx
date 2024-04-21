@@ -9,12 +9,12 @@
  * it under the terms of the GNU General Public License as
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public
  * License along with this program.  If not, see
  * -> http://www.gnu.org/licenses/gpl-3.0.html
@@ -39,6 +39,12 @@ import org.eomasters.icons.SvgIcon;
  */
 public class EomtbxIcons {
 
+  /**
+   * Shows the icons in a new window.
+   *
+   * @param args the command line arguments
+   * @throws IllegalAccessException if the icons are not accessible
+   */
   public static void main(String[] args) throws IllegalAccessException {
     final JFrame frame = new JFrame("Icons");
     frame.setPreferredSize(new Dimension(400, 400));
@@ -65,15 +71,18 @@ public class EomtbxIcons {
   /**
    * The EOMTBX icon with short EOMTBX text on it.
    */
-  public static final Icon EOMTBX_SHORT = new SvgIcon("/org/eomasters/eomtbx/icons/eomtbx_logo_shortText", EomtbxIcons.class);
+  public static final Icon EOMTBX_SHORT = new SvgIcon("/org/eomasters/eomtbx/icons/eomtbx_logo_shortText",
+      EomtbxIcons.class);
   /**
    * The EOMTBX icon with long EOMAsters Toolbox text on it.
    */
-  public static final Icon EOMTBX_TEXT = new SvgIcon("/org/eomasters/eomtbx/icons/eomtbx_logo_text", EomtbxIcons.class);
+  public static final Icon EOMTBX_TEXT = new SvgIcon("/org/eomasters/eomtbx/icons/eomtbx_logo_text",
+      EomtbxIcons.class);
   /**
    * The EOMTBX icon with long EOMAsters Toolbox text below.
    */
-  public static final Icon EOMTBX_TEXT_BELOW = new SvgIcon("/org/eomasters/eomtbx/icons/eomtbx_logo_text_below", EomtbxIcons.class);
+  public static final Icon EOMTBX_TEXT_BELOW = new SvgIcon("/org/eomasters/eomtbx/icons/eomtbx_logo_text_below",
+      EomtbxIcons.class);
   /**
    * An icon for the Wavelength Editor.
    */

@@ -9,12 +9,12 @@
  * it under the terms of the GNU General Public License as
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public
  * License along with this program.  If not, see
  * -> http://www.gnu.org/licenses/gpl-3.0.html
@@ -41,10 +41,15 @@ import org.openide.awt.NotificationDisplayer;
 import org.openide.util.HelpCtx;
 import org.openide.util.Lookup;
 
-public class ImExportOptionsPanelController extends PropertyChangeOptionsPanelController {
+/**
+ * Implementation of {@link PropertyChangeOptionsPanelController} for EOMTBX preferences. Allows to import and export
+ * the EOMTBX preferences.
+ */
+class ImExportOptionsPanelController extends PropertyChangeOptionsPanelController {
 
   public static final String HID_EOMTBX_PREFERENCES = "eomtbx.options";
-  private static final FileFilter PREFERENCES_FILE_FILTER = FileIo.createFileFilter("Preferences file", "prefs");
+  private static final FileFilter PREFERENCES_FILE_FILTER = FileIo.createFileFilter("Preferences file",
+      "prefs");
   private final Preferences preferences = EomToolbox.getPreferences();
   private JComponent mainPanel;
 
@@ -109,7 +114,8 @@ public class ImExportOptionsPanelController extends PropertyChangeOptionsPanelCo
       try {
         EomToolbox.importPreferences(inputStream);
         NotificationDisplayer.getDefault().notify("EOMTBX Preferences",
-            Icons.IMPORT.getImageIcon(Icon.SIZE_24), "Preferences imported successfully", null, NotificationDisplayer.Priority.NORMAL);
+            Icons.IMPORT.getImageIcon(Icon.SIZE_24), "Preferences imported successfully", null,
+            NotificationDisplayer.Priority.NORMAL);
       } catch (IOException e) {
         Dialogs.error("EOMTBX Preferences", "Could not import preferences", e);
       }
@@ -126,7 +132,8 @@ public class ImExportOptionsPanelController extends PropertyChangeOptionsPanelCo
       try {
         EomToolbox.exportPreferences(out);
         NotificationDisplayer.getDefault().notify("EOMTBX Preferences",
-            Icons.EXPORT.getImageIcon(Icon.SIZE_24), "Preferences exported successfully", null, NotificationDisplayer.Priority.NORMAL);
+            Icons.EXPORT.getImageIcon(Icon.SIZE_24), "Preferences exported successfully", null,
+            NotificationDisplayer.Priority.NORMAL);
       } catch (IOException e) {
         Dialogs.error("EOMTBX Preferences", "Could not export preferences", e);
       }

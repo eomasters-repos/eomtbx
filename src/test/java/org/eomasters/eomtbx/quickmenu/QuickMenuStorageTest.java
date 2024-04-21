@@ -25,6 +25,7 @@ package org.eomasters.eomtbx.quickmenu;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.prefs.BackingStoreException;
@@ -53,7 +54,7 @@ class QuickMenuStorageTest {
   }
 
   @Test
-  void testSaveAllClicksZero() throws BackingStoreException {
+  void testSaveAllClicksZero() throws BackingStoreException, IOException {
     actionRef1.setClicks(0);
     actionRef2.setClicks(0);
     UserPreferences preferences = new UserPreferences();
@@ -63,7 +64,7 @@ class QuickMenuStorageTest {
   }
 
   @Test
-  void testSave() throws BackingStoreException {
+  void testSave() throws BackingStoreException, IOException {
     UserPreferences preferences = new UserPreferences();
     new QuickMenuStorage(preferences).save(actionReferences);
     Preferences actionsNode = preferences.node("actions");
@@ -74,7 +75,7 @@ class QuickMenuStorageTest {
   }
 
   @Test
-  void testLoad() {
+  void testLoad() throws IOException {
     UserPreferences preferences = new UserPreferences();
     new QuickMenuStorage(preferences).save(actionReferences);
     List<ActionRef> actionRefs = new QuickMenuStorage(preferences).load();

@@ -9,12 +9,12 @@
  * it under the terms of the GNU General Public License as
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public
  * License along with this program.  If not, see
  * -> http://www.gnu.org/licenses/gpl-3.0.html
@@ -30,12 +30,26 @@ import org.esa.snap.core.jexp.EvalException;
 import org.esa.snap.core.jexp.Term;
 import org.esa.snap.core.jexp.impl.AbstractFunction.B;
 
-public class AreValidFunction extends B {
+/**
+ * A boolean function that evaluates if all pixels of the referenced raster are valid.
+ *
+ * @author Marco Peters
+ */
+class AreValidFunction extends B {
 
-  public AreValidFunction() {
+  AreValidFunction() {
     super("areValid", -1);
   }
 
+
+  /**
+   * Evaluates if all pixels of the raster referenced by the arguments are valid at the current pixel position.
+   *
+   * @param env  the evaluation environment
+   * @param args the arguments referencing the raster
+   * @return true if all pixels are valid
+   * @throws EvalException if the arguments do not reference a raster
+   */
   @Override
   public boolean evalB(EvalEnv env, Term[] args) throws EvalException {
     RasterDataEvalEnv dataEvalEnv = (RasterDataEvalEnv) env;
