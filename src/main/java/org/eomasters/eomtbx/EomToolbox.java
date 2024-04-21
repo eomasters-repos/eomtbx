@@ -9,12 +9,12 @@
  * it under the terms of the GNU General Public License as
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public
  * License along with this program.  If not, see
  * -> http://www.gnu.org/licenses/gpl-3.0.html
@@ -23,14 +23,12 @@
 
 package org.eomasters.eomtbx;
 
-import com.bc.ceres.binding.ConverterRegistry;
 import java.awt.Container;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintStream;
 import java.net.URI;
-import java.nio.file.Path;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.prefs.BackingStoreException;
@@ -48,7 +46,6 @@ import javax.xml.xpath.XPathFactory;
 import net.miginfocom.swing.MigLayout;
 import org.eomasters.eomtbx.quickmenu.QuickMenu;
 import org.eomasters.gui.Dialogs;
-import org.eomasters.snap.utils.PathConverter;
 import org.eomasters.utils.ErrorHandler;
 import org.eomasters.utils.SystemHelper;
 import org.esa.snap.rcp.SnapApp;
@@ -238,7 +235,6 @@ public class EomToolbox {
       new Thread(
           () -> {
             Dialogs.setDefaultIcon(EomtbxIcons.EOMTBX);
-            ConverterRegistry.getInstance().setConverter(Path.class, new PathConverter());
             QuickMenu.getInstance().init();
           }).start();
     }
