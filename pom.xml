@@ -467,6 +467,13 @@
     </repository>
   </repositories>
 
+  <distributionManagement>
+    <repository>
+      <id>internal</id>
+      <url>file://${project.build.directory}/mvn-repo</url>
+    </repository>
+  </distributionManagement>
+
   <developers>
     <developer>
       <id>marco</id>
