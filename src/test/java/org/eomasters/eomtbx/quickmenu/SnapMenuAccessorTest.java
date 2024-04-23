@@ -25,7 +25,9 @@ package org.eomasters.eomtbx.quickmenu;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assumptions.assumeFalse;
 
+import java.awt.GraphicsEnvironment;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -46,6 +48,7 @@ class SnapMenuAccessorTest {
 
   @BeforeAll
   static void beforeAll() {
+    assumeFalse(GraphicsEnvironment.isHeadless(), "Test cannot be run in headless mode");
     menuBar = new JMenuBar();
     JMenu subMenu = new JMenu("View");
     menuBar.add(subMenu);
