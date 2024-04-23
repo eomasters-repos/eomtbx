@@ -1,5 +1,11 @@
 EOMasters Toolbox for SNAP
 ==========================
+[![Maven Build](https://github.com/eomasters-repos/eomtbx/actions/workflows/maven.yml/badge.svg?branch=master&event=push)](https://github.com/eomasters-repos/eomtbx/actions/workflows/maven.yml)
+[![Static Badge](https://img.shields.io/badge/FOR%20ESA%20SNAP-Version%2010-00AA89?labelColor=5A5A5A)](https://step.esa.int/main/)
+
+[![X Follow](https://img.shields.io/twitter/follow/eomasters)](https://twitter.com/eomasters)
+[![Mastodon Follow](https://img.shields.io/mastodon/follow/109247513006034690?domain=https%3A%2F%2Fmastodon.green)](https://mastodon.green/@EOMasters)
+
 
 The EOMasters Toolbox (EOMTBX) is a collection of various tools which help to ease the daily work and to save valuable
 time while working with ESA's SNAP. The EOMTBX v1 release will be compatible with ESA's SNAP v10. 
