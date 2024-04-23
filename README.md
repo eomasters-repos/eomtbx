@@ -6,13 +6,13 @@ EOMasters Toolbox for SNAP
 [![X Follow](https://img.shields.io/twitter/follow/eomasters)](https://twitter.com/eomasters)
 [![Mastodon Follow](https://img.shields.io/mastodon/follow/109247513006034690?domain=https%3A%2F%2Fmastodon.green)](https://mastodon.green/@EOMasters)
 
-
 The EOMasters Toolbox (EOMTBX) is a collection of various tools which help to ease the daily work and to save valuable
-time while working with ESA's SNAP. The EOMTBX v1 release will be compatible with ESA's SNAP v10. 
+time while working with ESA's SNAP.
 
 ![about-eomtbx-logo.png](src/main/resources/org/eomasters/eomtbx/icons/eomtbx_logo_text_below.svg)
 
-The toolbox comprises the following tools, features and options:
+The toolbox comprises for example the following tools, features and options:
+
 * Quick Menu<br>
   Provides quick access to the most often used menu actions.
 * Loop GPT<br>
