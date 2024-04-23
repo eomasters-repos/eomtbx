@@ -25,8 +25,8 @@
     <javahelp.version>2.0.05</javahelp.version>
     <maven.compiler.release>11</maven.compiler.release>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <eom-commons.version>0.3</eom-commons.version>
-    <eom-commons-snap.version>0.2</eom-commons-snap.version>
+    <eom-commons.version>0.3.1</eom-commons.version>
+    <eom-commons-snap.version>0.2.2</eom-commons-snap.version>
   </properties>
 
   <dependencyManagement>
@@ -442,6 +442,16 @@
   </build>
 
   <repositories>
+    <repository>
+      <id>mvn-repo</id>
+      <url>https://raw.githubusercontent.com/eomasters-repos/mvn-repo/main/</url>
+      <releases>
+        <enabled>true</enabled>
+      </releases>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+    </repository>
     <repository>
       <id>snap-repo-public</id>
       <name>Public Maven Repository for SNAP</name>
