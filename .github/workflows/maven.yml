@@ -23,6 +23,7 @@ jobs:
       with:
         java-version: '11'
         distribution: 'liberica'
+        cache: 'maven'
         settings-path: ${{ github.workspace }} # location for the settings.xml file
 
     - name: Build with Maven
