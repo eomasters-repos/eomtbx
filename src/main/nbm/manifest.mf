@@ -3,7 +3,7 @@ AutoUpdate-Show-In-Client: true
 AutoUpdate-Essential-Module: false
 OpenIDE-Module-Java-Dependencies: Java > 11
 OpenIDE-Module-Display-Category: SNAP Community Plugins
-OpenIDE-Module-Long-Description: EOMasters Toolbox for SNAP providing different tools to ease the daily work.<br>
+OpenIDE-Module-Long-Description: The EOMasters Toolbox for SNAP provides different tools to ease the daily work.<br>
  Among other things:
  <ul>
  <li>Quick Menu</li>
