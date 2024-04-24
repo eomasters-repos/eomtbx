@@ -9,12 +9,12 @@
  * it under the terms of the GNU General Public License as
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public
  * License along with this program.  If not, see
  * -> http://www.gnu.org/licenses/gpl-3.0.html
@@ -88,6 +88,11 @@ class WvlEditorTableModel extends AbstractTableModel {
   }
 
   @Override
+  public boolean isCellEditable(int rowIndex, int columnIndex) {
+    return editable[rowIndex] && columnIndex > 0;
+  }
+
+  @Override
   public String getColumnName(int column) {
     return COLUMN_NAMES[column];
   }
@@ -109,13 +114,22 @@ class WvlEditorTableModel extends AbstractTableModel {
 
   @Override
   public void setValueAt(Object value, int rowIndex, int columnIndex) {
-    data[rowIndex][columnIndex] = value;
+    if (!isCellEditable(rowIndex, columnIndex)) {
+      return;
+    }
+    switch (columnIndex) {
+      case 0:
+        data[rowIndex][columnIndex] = String.valueOf(value);
+        break;
+      case 1:
+        data[rowIndex][columnIndex] = Integer.valueOf(value.toString());
+        break;
+      case 2:
+      case 3:
+        data[rowIndex][columnIndex] = Float.valueOf(value.toString());
+        break;
+    }
     fireTableCellUpdated(rowIndex, columnIndex);
-  }
-
-  @Override
-  public boolean isCellEditable(int rowIndex, int columnIndex) {
-    return editable[rowIndex] && columnIndex > 0;
   }
 
 }
