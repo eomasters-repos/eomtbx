@@ -6,7 +6,7 @@
 
   <name>EOMTBX</name>
   <description>EOMasters Toolbox for SNAP</description>
-  <url>https://www.eomasters.org/sw/EOMTBX</url>
+  <url>https://www.eomasters.org/eomtbx</url>
   <inceptionYear>2023</inceptionYear>
   <organization>
     <name>EOMasters</name>
@@ -15,7 +15,7 @@
 
   <groupId>org.eomasters</groupId>
   <artifactId>eomtbx</artifactId>
-  <version>0.12</version>
+  <version>1.0</version>
   <packaging>nbm</packaging>
 
 
