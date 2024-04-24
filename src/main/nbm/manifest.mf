@@ -4,18 +4,18 @@ AutoUpdate-Essential-Module: false
 OpenIDE-Module-Java-Dependencies: Java > 11
 OpenIDE-Module-Display-Category: SNAP Community Plugins
 OpenIDE-Module-Long-Description: EOMasters Toolbox for SNAP providing different tools to ease the daily work.<br>
+ Among other things:
  <ul>
  <li>Quick Menu</li>
  <li>Loop GPT</li>
  <li>Band Maths Extensions</li>
  <li>Wavelength Editor</li>
- <li>Close Product Without a View</li>
  <li>Generate System Report</li>
  </ul>
  <p>
  <b>Vendor: </b>EOMasters<br>
  <b>Web: </b><a href="https://www.eomasters.org">www.eomasters.org</a><br>
  <b>Contact Address: </b> <a href="mailto:info@eomasters.org">info@eomasters.org</a><br>
- <b>Copyright:</b> (C) 2023 Marco Peters<br>
+ <b>Copyright:</b> (C) 2023-2024 Marco Peters<br>
  <b>License:</b> http://www.gnu.org/licenses/gpl.html<br>
  </p>
