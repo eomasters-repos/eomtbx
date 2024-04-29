@@ -71,7 +71,7 @@ class ErrorReportDialog {
     JPanel contentPane = new JPanel(new MigLayout("top, left, fillx, gap 5 5"));
     contentPane.setBorder(BorderFactory.createEmptyBorder(0, 10, 10, 10));
 
-    JLabel anErrorOccurred = new JLabel("A Error Occurred");
+    JLabel anErrorOccurred = new JLabel("An Error Occurred");
     anErrorOccurred.setFont(anErrorOccurred.getFont().deriveFont(Font.BOLD, 28f));
     contentPane.add(anErrorOccurred, "top, left, wrap");
 
