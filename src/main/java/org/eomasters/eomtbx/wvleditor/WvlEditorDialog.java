@@ -29,7 +29,6 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Frame;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Stream;
 import javax.swing.JButton;
@@ -164,8 +163,7 @@ class WvlEditorDialog extends ModalDialog {
 
   @Override
   protected void onOK() {
-    List<ProductSelection> applyToProduct = new ArrayList<>();
-    Collections.copy(compatibleProducts, applyToProduct);
+    List<ProductSelection> applyToProduct = new ArrayList<>(compatibleProducts);
     applyToProduct.add(0, new ProductSelection(refProduct, true));
     int rowCount = tableModel.getRowCount();
 
