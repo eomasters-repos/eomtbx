@@ -3,6 +3,8 @@ EOMasters Toolbox for SNAP
 [![Maven Build](https://github.com/eomasters-repos/eomtbx/actions/workflows/maven.yml/badge.svg?branch=master&event=push)](https://github.com/eomasters-repos/eomtbx/actions/workflows/maven.yml)
 [![Static Badge](https://img.shields.io/badge/FOR%20ESA%20SNAP-Version%2010-00AA89?labelColor=5A5A5A)](https://step.esa.int/main/)
 
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/eomasters)
+
 [![X Follow](https://img.shields.io/twitter/follow/eomasters)](https://twitter.com/eomasters)
 [![Mastodon Follow](https://img.shields.io/mastodon/follow/109247513006034690?domain=https%3A%2F%2Fmastodon.green)](https://mastodon.green/@EOMasters)
 
