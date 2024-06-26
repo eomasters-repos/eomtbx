@@ -1,6 +1,6 @@
 /*-
  * ========================LICENSE_START=================================
- * EOMTBX - EOMasters Toolbox for SNAP
+ * EOMTBX - EOMasters Toolbox Free for SNAP
  * -> https://www.eomasters.org/sw/EOMTBX
  * ======================================================================
  * Copyright (C) 2023 - 2024 Marco Peters
@@ -35,7 +35,7 @@ import org.openide.modules.ModuleInfo;
 import org.openide.modules.Modules;
 
 /**
- * Provides the AboutBox for the EOMasters Toolbox Basic.
+ * Provides the AboutBox for the EOMasters Toolbox Free Basic.
  */
 public class BasicAboutBoxProvider implements AboutBoxProvider {
 
@@ -73,7 +73,7 @@ public class BasicAboutBoxProvider implements AboutBoxProvider {
 
   private static JLabel getVersionLabel() {
     ModuleInfo moduleInfo = Modules.getDefault().ownerOf(BasicAboutBoxProvider.class);;
-    return new JLabel(String.format("<html><b>EOMasters Toolbox Basic version %s</b>",
+    return new JLabel(String.format("<html><b>EOMasters Toolbox Free Basic version %s</b>",
         moduleInfo.getImplementationVersion()), SwingConstants.CENTER);
   }
 }

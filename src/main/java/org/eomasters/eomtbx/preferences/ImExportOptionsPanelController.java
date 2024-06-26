@@ -1,6 +1,6 @@
 /*-
  * ========================LICENSE_START=================================
- * EOMTBX PRO - EOMasters Toolbox PRO for SNAP
+ * EOMTBX PRO - EOMasters Toolbox Free PRO for SNAP
  * -> https://www.eomasters.org/sw/EOMTBX
  * ======================================================================
  * Copyright (C) 2023 - 2024 Marco Peters
@@ -63,7 +63,7 @@ class ImExportOptionsPanelController extends PropertyChangeOptionsPanelControlle
     try {
       preferences.flush();
     } catch (BackingStoreException e) {
-      EomToolbox.reportError("Could not store options for EOMasters Toolbox", e);
+      EomToolbox.reportError("Could not store options for EOMasters Toolbox Free", e);
     }
 
   }
