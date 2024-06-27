@@ -12,6 +12,12 @@
     <name>EOMasters</name>
     <url>https://www.eomasters.org</url>
   </organization>
+  <licenses>
+    <license>
+      <name>GPL 3</name>
+      <url>https://www.gnu.org/licenses/gpl-3.0.html</url>
+    </license>
+  </licenses>
 
   <groupId>org.eomasters</groupId>
   <artifactId>eomtbx</artifactId>
