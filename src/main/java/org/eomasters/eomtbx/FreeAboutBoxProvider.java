@@ -37,11 +37,11 @@ import org.openide.modules.Modules;
 /**
  * Provides the AboutBox for the EOMasters Toolbox Free Basic.
  */
-public class BasicAboutBoxProvider implements AboutBoxProvider {
+public class FreeAboutBoxProvider implements AboutBoxProvider {
 
   @Override
   public String getTitle() {
-    return "Basic";
+    return "Free";
   }
 
   @Override
@@ -72,8 +72,8 @@ public class BasicAboutBoxProvider implements AboutBoxProvider {
   }
 
   private static JLabel getVersionLabel() {
-    ModuleInfo moduleInfo = Modules.getDefault().ownerOf(BasicAboutBoxProvider.class);;
-    return new JLabel(String.format("<html><b>EOMasters Toolbox Free Basic version %s</b>",
+    ModuleInfo moduleInfo = Modules.getDefault().ownerOf(FreeAboutBoxProvider.class);;
+    return new JLabel(String.format("<html><b>EOMasters Toolbox Free version %s</b>",
         moduleInfo.getImplementationVersion()), SwingConstants.CENTER);
   }
 }
