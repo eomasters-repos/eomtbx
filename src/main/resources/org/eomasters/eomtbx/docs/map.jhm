@@ -6,8 +6,7 @@
 <map version="2.0">
   <mapID target="eomtbx.icon" url="images/EomToolbox_16.png"/>
 
-  <mapID target="eomtbx.intro" url="pages/Intro.html"/>
-  <mapID target="eomtbx.overview" url="pages/Overview.html"/>
+  <mapID target="eomtbx.overview.free" url="pages/Overview.html"/>
   <mapID target="eomtbx.quickMenu" url="pages/QuickMenu.html"/>
   <mapID target="eomtbx.loopGPT" url="pages/LoopGpt.html"/>
   <mapID target="eomtbx.ioFormats" url="pages/IOFormats.html"/>
@@ -17,8 +16,7 @@
   <mapID target="eomtbx.systemReport" url="pages/CreateSystemReport.html"/>
   <mapID target="eomtbx.errorHandler" url="pages/ErrorHandler.html"/>
 
-  <mapID target="eomtbx.options" url="pages/EomtbxOptions.html"/>
-  <mapID target="eomtbx.options.general" url="pages/EomtbxOptions.html"/>
+  <mapID target="eomtbx.options.free" url="pages/OptionsFree.html"/>
 
-  <mapID target="eomtbx.credits" url="pages/EomtbxCredits.html"/>
+  <mapID target="eomtbx.about.free" url="pages/About.html"/>
 </map>

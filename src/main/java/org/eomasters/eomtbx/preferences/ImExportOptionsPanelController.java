@@ -47,7 +47,7 @@ import org.openide.util.Lookup;
  */
 class ImExportOptionsPanelController extends PropertyChangeOptionsPanelController {
 
-  public static final String HID_EOMTBX_PREFERENCES = "eomtbx.options";
+  public static final String HID_EOMTBX_PREFERENCES = "eomtbx.options.free";
   private static final FileFilter PREFERENCES_FILE_FILTER = FileIo.createFileFilter("Preferences file",
       "prefs");
   private final Preferences preferences = EomToolbox.getPreferences();

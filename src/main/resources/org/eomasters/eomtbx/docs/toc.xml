@@ -3,8 +3,8 @@
   "http://java.sun.com/products/javahelp/toc_2_0.dtd">
 
 <toc categoryclosedimage="folder" categoryopenimage="folder" topicimage="doc" version="2.0">
-  <tocitem target="eomtbx.intro" text="EOMasters Toolbox Free" image="eomtbx.icon">
-    <tocitem target="eomtbx.overview" text="Overview"/>
+  <tocitem target="eomtbx.overview.free" text="EOMasters Toolbox Free" image="eomtbx.icon">
+    <tocitem target="eomtbx.overview.free" text="Overview"/>
     <tocitem target="eomtbx.quickMenu" text="Quick Menu"/>
     <tocitem target="eomtbx.loopGPT" text="Loop GPT"/>
     <tocitem target="eomtbx.ioFormats" text="IO-Formats Listing"/>
@@ -13,9 +13,7 @@
     <tocitem target="eomtbx.closeProductNoView" text="Close Products without a View"/>
     <tocitem target="eomtbx.systemReport" text="Create System Report"/>
     <tocitem target="eomtbx.errorHandler" text="Error Handler"/>
-    <tocitem target="eomtbx.options" text="EOMTBX Options">
-      <tocitem target="eomtbx.options.general" text="General Options"/>
-    </tocitem>
-    <tocitem target="eomtbx.credits" text="Credits"/>
+    <tocitem target="eomtbx.options.free" text="Options"/>
+    <tocitem target="eomtbx.about.free" text="About"/>
   </tocitem>
 </toc>
