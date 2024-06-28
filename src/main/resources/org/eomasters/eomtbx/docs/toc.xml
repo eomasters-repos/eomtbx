@@ -3,7 +3,7 @@
   "http://java.sun.com/products/javahelp/toc_2_0.dtd">
 
 <toc categoryclosedimage="folder" categoryopenimage="folder" topicimage="doc" version="2.0">
-  <tocitem target="eomtbx.intro" text="EOM Toolbox" image="eomtbx.icon">
+  <tocitem target="eomtbx.intro" text="EOMasters Toolbox Free" image="eomtbx.icon">
     <tocitem target="eomtbx.overview" text="Overview"/>
     <tocitem target="eomtbx.quickMenu" text="Quick Menu"/>
     <tocitem target="eomtbx.loopGPT" text="Loop GPT"/>
