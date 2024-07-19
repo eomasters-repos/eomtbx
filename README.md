@@ -11,7 +11,7 @@ EOMasters Toolbox Basic for SNAP
 The EOMasters Toolbox Basic (EOMTBX) is a collection of various tools which help to ease the daily work and to save valuable
 time while working with ESA's SNAP.
 
-![about-eomtbx-logo.png](src/main/resources/org/eomasters/eomtbx/icons/eomtbx_logo_text_below.svg)
+![eomtbx_basic_logo_365.png](src/main/resources/org/eomasters/eomtbx/eomtbx_basic_logo_365.png)
 
 The toolbox comprises for example the following tools, features and options:
 
