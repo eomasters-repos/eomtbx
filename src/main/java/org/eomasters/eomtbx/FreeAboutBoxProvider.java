@@ -31,6 +31,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
+import org.eomasters.icons.RasterIcon;
 import org.esa.snap.rcp.util.BrowserUtils;
 import org.openide.modules.ModuleInfo;
 import org.openide.modules.Modules;
@@ -47,7 +48,7 @@ public class FreeAboutBoxProvider implements AboutBoxProvider {
 
   @Override
   public ImageIcon getLogoImage() {
-    return EomtbxIcons.EOMTBX_TEXT_BELOW.getImageIcon(365);
+    return new RasterIcon("eomtbx_basic_logo", getClass()).getImageIcon(365);
   }
 
   @Override
