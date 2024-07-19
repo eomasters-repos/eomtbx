@@ -1,4 +1,4 @@
-EOMasters Toolbox Free for SNAP
+EOMasters Toolbox Basic for SNAP
 ===============================
 [![Maven Build](https://github.com/eomasters-repos/eomtbx/actions/workflows/maven.yml/badge.svg?branch=master&event=push)](https://github.com/eomasters-repos/eomtbx/actions/workflows/maven.yml)
 [![Static Badge](https://img.shields.io/badge/FOR%20ESA%20SNAP-Version%2010-00AA89?labelColor=5A5A5A)](https://step.esa.int/main/)
@@ -8,7 +8,7 @@ EOMasters Toolbox Free for SNAP
 [![X Follow](https://img.shields.io/badge/Twitter-000000?style=for-the-badge&logo=x&logoColor=white)](https://twitter.com/eomasters)
 [![Mastodon Follow](https://img.shields.io/badge/Mastodon-6364FF?style=for-the-badge&logo=Mastodon&logoColor=white)](https://mastodon.green/@EOMasters)
 
-The EOMasters Toolbox Free (EOMTBX) is a collection of various tools which help to ease the daily work and to save valuable
+The EOMasters Toolbox Basic (EOMTBX) is a collection of various tools which help to ease the daily work and to save valuable
 time while working with ESA's SNAP.
 
 ![about-eomtbx-logo.png](src/main/resources/org/eomasters/eomtbx/icons/eomtbx_logo_text_below.svg)
