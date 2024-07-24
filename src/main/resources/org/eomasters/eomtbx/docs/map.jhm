@@ -14,6 +14,8 @@
   <mapID target="eomtbx.wvlEditor" url="pages/WvlEditor.html"/>
   <mapID target="eomtbx.closeProductNoView" url="pages/CloseProductNoView.html"/>
   <mapID target="eomtbx.systemReport" url="pages/CreateSystemReport.html"/>
+  <mapID target="eomtbx.eoddb" url="pages/Eoddb.html"/>
+  <mapID target="eomtbx.coastalMap" url="pages/CoastalMap.html"/>
   <mapID target="eomtbx.errorHandler" url="pages/ErrorHandler.html"/>
 
   <mapID target="eomtbx.options.free" url="pages/OptionsFree.html"/>

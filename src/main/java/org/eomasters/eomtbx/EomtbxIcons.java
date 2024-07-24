@@ -41,6 +41,8 @@ public class EomtbxIcons {
    */
   public static final Icon WVL_EDITOR = new SvgIcon("/org/eomasters/eomtbx/icons/WvlEditor", EomtbxIcons.class);
 
+  public static final Icon COASTAL_MAP = new SvgIcon("/org/eomasters/eomtbx/icons/CoastalMap", EomtbxIcons.class);
+
   protected EomtbxIcons() {
   }
 
