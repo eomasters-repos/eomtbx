@@ -64,9 +64,9 @@
       &lt;band_name&gt;, ...)</code></b> &nbsp;&nbsp;e.g.,&nbsp;&nbsp;--> <b><code>areValid(B2, B3, B4,
       B8)</code><br></b>
   </li>
-  <li><b>Min, Max and Mean</b><br> These functions return the minimum, maximum and mean of the
-    provided inputs. The functions exclude NaN, infinite and invalid values from the computation. They are used as
-    follows:<br> <b><code>&lt;func&gt;(&lt;value&gt;, &lt;value&gt;, ...)</code></b><br>
+  <li><b>Min, Max and Mean</b><br> These functions return the minimum, maximum and mean of the provided inputs. The
+    functions exclude NaN, infinite and invalid values from the computation. They are used as follows:<br> <b><code>&lt;func&gt;(&lt;value&gt;,
+      &lt;value&gt;, ...)</code></b><br>
     <ul>
       <li><b>minOf:</b> Returns the minimum of the provided inputs values.<br> e.g., --> <b><code>minOf(0.7, &lt;B7&gt;,
         &lt;B8&gt;, &lt;B8A&gt;)</code></b></li>
@@ -76,9 +76,9 @@
         &lt;B2&gt;, &lt;B3&gt;, &lt;B4&gt;, &lt;B5&gt;)</code></b></li>
     </ul>
   </li>
-  <li><b>Index of Min and Max</b><br> These functions return the index of the minimum or maximum value
-    within the list provided input values. The functions pixels values which are invalid. They are used as follows:<br>
-    <b><code>&lt;func&gt;(&lt;value&gt;, &lt;value&gt;, ...)</code></b><br>
+  <li><b>Index of Min and Max</b><br> These functions return the index of the minimum or maximum value within the list
+    provided input values. The functions pixels values which are invalid. They are used as follows:<br> <b><code>&lt;func&gt;(&lt;value&gt;,
+      &lt;value&gt;, ...)</code></b><br>
     <ul>
       <li><b>indexOfMin :</b> Returns the index of the minimum value among the inputs values.<br> e.g., --> <b><code>indexOfMin(0.7,
         &lt;B7&gt;, &lt;B8&gt;, &lt;B1&gt;)</code></b></li>
@@ -104,6 +104,29 @@
     </ul>
     The function can be selected from the drop-down list:<br>
     <div align="center"><br><img src="images/BmWndFunction.png" height="263" width="277"/></div>
+  </li>
+  <li><b>Statistical Raster Properties</b><br> Provides statistical properties of a raster. Optionally it can be
+    specified if accurate statistics shall be computed. By default, the accurate calculation is disabled and only
+    sub-sampled raster will be used to compute the statistical properties. If set to <code>true</code> all samples of
+    the raster are considered. If statistics have already been computed, then these are used and not recomputed. Except,
+    these have a low accuracy and accurate results are requested. <br/> Please note, that computing the statistics can
+    be time consuming, especially when requesting accurate results.<br/> The functions are used as follows: <b><code>stx(&lt;band_name&gt;,
+      "&lt;property&gt;", accurate)</code></b> <br/>The following functions are available:<br>
+    <ul>
+      <li><b>min</b>: Minimum value of the raster<br> e.g.,&nbsp;&nbsp;--> <b><code>stx(B2, "min")</code><br></b></li>
+      <li><b>max</b>: Maximum value of the raster<br> e.g.,&nbsp;&nbsp;--> <b><code>stx(B2, "max", true)</code><br></b>
+      </li>
+      <li><b>mean</b>: Mean value of the raster<br> e.g.,&nbsp;&nbsp;--> <b><code>stx(B2, "mean", false)</code><br></b>
+      </li>
+      <li><b>median</b>: Median value of the raster<br> e.g.,&nbsp;&nbsp;--> <b><code>stx(B3, "median")</code><br></b>
+      </li>
+      <li><b>sigma</b>: Standard deviation value of the raster<br> e.g.,&nbsp;&nbsp;--> <b><code>stx(B3, "sigma",
+        true)</code><br></b></li>
+      <li><b>rsd</b>: Coefficient of variation or relative standard deviation (RSD) value of the raster<br> e.g.,&nbsp;&nbsp;-->
+        <b><code>stx(B3, "rsd", false)</code><br></b></li>
+      <li><b>enl</b>: Equivalent number of looks (ENL) value of the raster<br> e.g.,&nbsp;&nbsp;--> <b><code>stx(B3,
+        "enl")</code><br></b></li>
+    </ul>
   </li>
 </ul>
 
