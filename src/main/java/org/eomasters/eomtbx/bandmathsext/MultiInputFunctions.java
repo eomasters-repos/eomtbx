@@ -24,7 +24,9 @@
 package org.eomasters.eomtbx.bandmathsext;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 import java.util.stream.DoubleStream;
 import org.esa.snap.core.datamodel.RasterDataNode;
 import org.esa.snap.core.dataop.barithm.RasterDataEvalEnv;
@@ -68,6 +70,42 @@ class MultiInputFunctions {
   };
 
   /**
+   * Function that returns the index of the minimum value of the arguments.
+   */
+  static final Function INDEX_OF_MIN = new AbstractFunction.I("indexOfMin", -1) {
+
+    public int evalI(final EvalEnv env, final Term[] args) {
+      List<Double> valueList = Arrays.stream(args).map(new ReplaceInvalidTermsByNaN(env)).
+                                     map(term -> term.evalD(env)).collect(Collectors.toList());
+
+      int minIndex = -1;
+      for (int i = 0; i < valueList.size(); i++) {
+        if (!Double.isNaN(valueList.get(i)) && (minIndex == -1 || valueList.get(i) < valueList.get(minIndex))) {
+          minIndex = i;
+        }
+      }
+      return minIndex;
+    }
+  };
+
+  /**
+   * Function that returns the index of the maximum value of the arguments.
+   */
+  static final Function INDEX_OF_MAX = new AbstractFunction.I("indexOfMax", -1) {
+    public int evalI(final EvalEnv env, final Term[] args) {
+      List<Double> valueList = Arrays.stream(args).map(new ReplaceInvalidTermsByNaN(env)).
+                                     map(term -> term.evalD(env)).collect(Collectors.toList());
+      int maxIndex = -1;
+      for (int i = 0; i < valueList.size(); i++) {
+        if (!Double.isNaN(valueList.get(i)) && (maxIndex == -1 || valueList.get(i) > valueList.get(maxIndex))) {
+          maxIndex = i;
+        }
+      }
+      return maxIndex;
+    }
+  };
+
+  /**
    * Function that returns the mean value of the arguments.
    */
   static final Function MEAN = new AbstractFunction.D("meanOf", -1) {
@@ -102,6 +140,26 @@ class MultiInputFunctions {
         return raster.isPixelValid(dataEvalEnv.getPixelX(), dataEvalEnv.getPixelY());
       }
       return true; // okay, not a raster
+    }
+  }
+
+  private static class ReplaceInvalidTermsByNaN implements java.util.function.Function<Term, Term> {
+
+    private final EvalEnv env;
+
+    public ReplaceInvalidTermsByNaN(EvalEnv env) {
+      this.env = env;
+    }
+
+    @Override
+    public Term apply(Term term) {
+      RasterDataNode raster = TermUtils.getRaster(term);
+      if (raster != null) {
+        RasterDataEvalEnv dataEvalEnv = (RasterDataEvalEnv) env;
+        boolean pixelValid = raster.isPixelValid(dataEvalEnv.getPixelX(), dataEvalEnv.getPixelY());
+        return pixelValid ? term : Term.ConstD.NAN;
+      }
+      return term; // okay, not a raster
     }
   }
 }

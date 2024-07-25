@@ -32,8 +32,8 @@
 <body>
 <table class="header">
   <tr class="header">
-    <td align="left" class="header" width="40"><a
-        href="Overview.html"><img border=0 src="../images/EomToolbox_32.png"></a></td>
+    <td align="left" class="header" width="40"><a href="Overview.html"><img border=0 src="../images/EomToolbox_32.png"></a>
+    </td>
     <td class="header">EOMasters Toolbox Basic</td>
     <td align="right" class="header"><a
         href="nbdocs://org.esa.snap.snap.help/org/esa/snap/snap/help/docs/general/overview/SnapOverview.html"><img
@@ -45,59 +45,62 @@
 <p>These extensions provide new functionalities for the Band Maths expressions. The following functionalities are
   available:</p>
 <ul>
-  <li><b>Valid</b><br>
-    This attribute returns true if the current pixel is valid. Valid means that the pixel value is not equal to the
-    no-data value (if used) and the pixel matches the valid-pixel expression of the band. NaN values are considered as
-    valid except the no-data value of the band is set to NaN. It is used as follows:<br>
-    <b><code>&lt;band-name&gt;.valid</code></b> &nbsp;&nbsp;e.g.,&nbsp;&nbsp;--> <b><code>Oa10_radiance.valid</code><br></b>
+  <li><b>Valid</b><br> This attribute returns true if the current pixel is valid. Valid means that the pixel value is
+    not equal to the no-data value (if used) and the pixel matches the valid-pixel expression of the band. NaN values
+    are considered as valid except the no-data value of the band is set to NaN. It is used as follows:<br> <b><code>&lt;band-name&gt;.valid</code></b>
+    &nbsp;&nbsp;e.g.,&nbsp;&nbsp;--> <b><code>Oa10_radiance.valid</code><br></b>
   </li>
-  <li><b>Map Coordinates</b><br>
-    It is already possible to get the pixel (<code>X,Y</code>) and the geographic coordinates (<code>LAT,LON</code>) in
-    a Band Maths Expression. With these two new symbols you can also access the map coordinates of the product scene.
-    The returned coordinate represents the center of the pixel. If the scene is not reprojected to a map, the geographic
-    coordinates are returned. The X and Y map coordinates are returned by the symbols: <b><code>MAPX</code></b> and
-    <b><code>MAPY</code><br></b>
+  <li><b>Map Coordinates</b><br> It is already possible to get the pixel (<code>X,Y</code>) and the geographic
+    coordinates (<code>LAT,LON</code>) in a Band Maths Expression. With these two new symbols you can also access the
+    map coordinates of the product scene. The returned coordinate represents the center of the pixel. If the scene is
+    not reprojected to a map, the geographic coordinates are returned. The X and Y map coordinates are returned by the
+    symbols: <b><code>MAPX</code></b> and <b><code>MAPY</code><br></b>
   </li>
-  <div class="attention"><b class="note">Note!</b><br>
-    The valid attribute and the map attributes are not selectable from the drop-down boxes in the GUI. But they can be
-    used in the expression.
+  <div class="attention"><b class="note">Note!</b><br> The valid attribute and the map attributes are not selectable
+    from the drop-down boxes in the GUI. But they can be used in the expression.
   </div>
-  <li><b>AreValid Function</b><br>
-    Similar to the <b>valid</b> attribute, this function returns true if all provided bands are valid.<br> Only bands
-    are allowed as arguments. It is used as follows:<br>
-    <b><code>areValid(&lt;band_name&gt;, &lt;band_name&gt;, ...)</code></b> &nbsp;&nbsp;e.g.,&nbsp;&nbsp;--> <b><code>areValid(B2,
-      B3, B4, B8)</code><br></b>
+  <li><b>AreValid Function</b><br> Similar to the <b>valid</b> attribute, this function returns true if all provided
+    bands are valid.<br> Only bands are allowed as arguments. It is used as follows:<br> <b><code>areValid(&lt;band_name&gt;,
+      &lt;band_name&gt;, ...)</code></b> &nbsp;&nbsp;e.g.,&nbsp;&nbsp;--> <b><code>areValid(B2, B3, B4,
+      B8)</code><br></b>
   </li>
-  <li><b>Min, Max and Mean of multiple inputs</b><br>
-    These functions return the minimum, maximum and mean of the provided inputs. The functions exclude NaN, infinite and
-    invalid values from the computation. It is used as follows:<br>
-    <b><code>&lt;func&gt;(&lt;value&gt;, &lt;value&gt;, ...)</code></b><br>
+  <li><b>Min, Max and Mean</b><br> These functions return the minimum, maximum and mean of the
+    provided inputs. The functions exclude NaN, infinite and invalid values from the computation. They are used as
+    follows:<br> <b><code>&lt;func&gt;(&lt;value&gt;, &lt;value&gt;, ...)</code></b><br>
     <ul>
-      <li><b>minOf:</b> Returns the minimum of the provided inputs values.<br>
-        e.g., --> <b><code>minOf(0.7, &lt;B7&gt;, &lt;B8&gt;, &lt;B8A&gt;)</code></b></li>
-      <li><b>maxOf:</b> Returns the maximum of the provided inputs values.<br>
-        e.g., --> <b><code>maxOf(&lt;B1&gt;, &lt;B2&gt;, 0.2)</code></b></li>
-      <li><b>meanOf:</b> Returns the mean value of the provided inputs values.<br>
-        e.g., --> <b><code>meanOf(&lt;B1&gt;, &lt;B2&gt;, &lt;B3&gt;, &lt;B4&gt;, &lt;B5&gt;)</code></b></li>
+      <li><b>minOf:</b> Returns the minimum of the provided inputs values.<br> e.g., --> <b><code>minOf(0.7, &lt;B7&gt;,
+        &lt;B8&gt;, &lt;B8A&gt;)</code></b></li>
+      <li><b>maxOf:</b> Returns the maximum of the provided inputs values.<br> e.g., --> <b><code>maxOf(&lt;B1&gt;, &lt;B2&gt;,
+        0.2)</code></b></li>
+      <li><b>meanOf:</b> Returns the mean value of the provided inputs values.<br> e.g., --> <b><code>meanOf(&lt;B1&gt;,
+        &lt;B2&gt;, &lt;B3&gt;, &lt;B4&gt;, &lt;B5&gt;)</code></b></li>
     </ul>
   </li>
-  <li><b>Window Functions</b><br>
-    The window is centered on the current pixel and the window size must be <b>3, 5 or 7</b>.
-    NaN and invalid values are ignored. If all values in the window are NaN or invalid, the result is NaN.
-    The functions are used as follows:<br>
-    <b><code>wnd(&lt;band_name&gt;, &lt;window_size&gt;, "&lt;function&gt;")</code></b>
-    The following functions are available:<br>
+  <li><b>Index of Min and Max</b><br> These functions return the index of the minimum or maximum value
+    within the list provided input values. The functions pixels values which are invalid. They are used as follows:<br>
+    <b><code>&lt;func&gt;(&lt;value&gt;, &lt;value&gt;, ...)</code></b><br>
     <ul>
-      <li><b>sum</b>: Sum of all valid pixels in the window<br>
-        e.g.,&nbsp;&nbsp;--> <b><code>wnd(B8A, 3, "sum")</code><br></b></li>
-      <li><b>min</b>: Minimum of all valid pixels in the window<br>
-        e.g.,&nbsp;&nbsp;--> <b><code>wnd(B2, 3, "min")</code><br></b></li>
-      <li><b>max</b>: Maximum of all valid pixels in the window<br>
-        e.g.,&nbsp;&nbsp;--> <b><code>wnd(B2, 7, "max")</code><br></b></li>
-      <li><b>mean</b>: Mean of all valid pixels in the window<br>
-        e.g.,&nbsp;&nbsp;--> <b><code>wnd(B2, 7, "mean")</code><br></b></li>
-      <li><b>median</b>: Median of all valid pixels in the window<br>
-        e.g.,&nbsp;&nbsp;--> <b><code>wnd(B3, 5, "median")</code><br></b></li>
+      <li><b>indexOfMin :</b> Returns the index of the minimum value among the inputs values.<br> e.g., --> <b><code>indexOfMin(0.7,
+        &lt;B7&gt;, &lt;B8&gt;, &lt;B1&gt;)</code></b></li>
+      <li><b>indexOfMax:</b> Returns the maximum of the provided inputs values.<br> e.g., --> <b><code>indexOfMax(&lt;B1&gt;,
+        &lt;B2&gt;, 0.2)</code></b></li>
+    </ul>
+  </li>
+  <li><b>Window Functions</b><br> The window is centered on the current pixel and the window size must be <b>3, 5 or
+    7</b>. NaN and invalid values are ignored. If all values in the window are NaN or invalid, the result is NaN. The
+    functions are used as follows:<br> <b><code>wnd(&lt;band_name&gt;, &lt;window_size&gt;,
+      "&lt;function&gt;")</code></b> The following functions are available:<br>
+    <ul>
+      <li><b>sum</b>: Sum of all valid pixels in the window<br> e.g.,&nbsp;&nbsp;--> <b><code>wnd(B8A, 3,
+        "sum")</code><br></b></li>
+      <li><b>min</b>: Minimum of all valid pixels in the window<br> e.g.,&nbsp;&nbsp;--> <b><code>wnd(B2, 3,
+        "min")</code><br></b></li>
+      <li><b>max</b>: Maximum of all valid pixels in the window<br> e.g.,&nbsp;&nbsp;--> <b><code>wnd(B2, 7,
+        "max")</code><br></b></li>
+      <li><b>mean</b>: Mean of all valid pixels in the window<br> e.g.,&nbsp;&nbsp;--> <b><code>wnd(B2, 7,
+        "mean")</code><br></b></li>
+      <li><b>median</b>: Median of all valid pixels in the window<br> e.g.,&nbsp;&nbsp;--> <b><code>wnd(B3, 5,
+        "median")</code><br></b></li>
     </ul>
     The function can be selected from the drop-down list:<br>
     <div align="center"><br><img src="images/BmWndFunction.png" height="263" width="277"/></div>
