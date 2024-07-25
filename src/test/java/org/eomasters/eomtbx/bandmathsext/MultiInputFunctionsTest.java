@@ -27,7 +27,6 @@ import static org.eomasters.eomtbx.TestUtils.toElemIndex;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.awt.image.Raster;
-import java.io.IOException;
 import org.eomasters.eomtbx.TestUtils;
 import org.esa.snap.core.datamodel.Product;
 import org.esa.snap.core.datamodel.ProductData;
@@ -51,7 +50,7 @@ class MultiInputFunctionsTest {
   }
 
   @Test
-  void testMin_withBandsOnly() throws ParseException, IOException {
+  void testMin_withBandsOnly() throws ParseException {
     Term term = BandArithmetic.parseExpression("minOf(B1, B2)", new Product[]{product}, 0);
 
     fillRasterSymbols(term, evalEnv);
@@ -64,7 +63,7 @@ class MultiInputFunctionsTest {
   }
 
   @Test
-  void testMin_withBandsAndValues() throws ParseException, IOException {
+  void testMin_withBandsAndValues() throws ParseException {
     Term term = BandArithmetic.parseExpression("minOf(B1, 30, B2, 86)", new Product[]{product}, 0);
 
     fillRasterSymbols(term, evalEnv);
@@ -77,7 +76,7 @@ class MultiInputFunctionsTest {
   }
 
   @Test
-  void testMin_withScaledBandAndValue() throws ParseException, IOException {
+  void testMin_withScaledBandAndValue() throws ParseException {
     product.getBand("B1").setScalingFactor(0.1);
     Term term = BandArithmetic.parseExpression("minOf(B1, 5)", new Product[]{product}, 0);
 
@@ -87,7 +86,7 @@ class MultiInputFunctionsTest {
   }
 
   @Test
-  void testMinIndex_withBandsOnly() throws ParseException, IOException {
+  void testMinIndex_withBandsOnly() throws ParseException {
     Term term = BandArithmetic.parseExpression("indexOfMin(B1, B2)", new Product[]{product}, 0);
 
     fillRasterSymbols(term, evalEnv);
@@ -100,7 +99,7 @@ class MultiInputFunctionsTest {
   }
 
   @Test
-  void testMinIndex_withBandsAndValues() throws ParseException, IOException {
+  void testMinIndex_withBandsAndValues() throws ParseException {
     Term term = BandArithmetic.parseExpression("indexOfMin(B1, 30, B2, 86)", new Product[]{product}, 0);
 
     fillRasterSymbols(term, evalEnv);
@@ -113,7 +112,7 @@ class MultiInputFunctionsTest {
   }
 
   @Test
-  void testMinIndex_withScaledBandAndValue() throws ParseException, IOException {
+  void testMinIndex_withScaledBandAndValue() throws ParseException {
     product.getBand("B1").setScalingFactor(0.1);
     Term term = BandArithmetic.parseExpression("indexOfMin(B1, 5)", new Product[]{product}, 0);
 
@@ -125,7 +124,7 @@ class MultiInputFunctionsTest {
   }
 
   @Test
-  void testMax_withBandsOnly() throws ParseException, IOException {
+  void testMax_withBandsOnly() throws ParseException {
     Term term = BandArithmetic.parseExpression("maxOf(B1, B2)", new Product[]{product}, 0);
 
     fillRasterSymbols(term, evalEnv);
@@ -138,7 +137,7 @@ class MultiInputFunctionsTest {
   }
 
   @Test
-  void testMax_withBandsAndValues() throws ParseException, IOException {
+  void testMax_withBandsAndValues() throws ParseException {
     Term term = BandArithmetic.parseExpression("maxOf(B1, 30, B2, 86)", new Product[]{product}, 0);
 
     fillRasterSymbols(term, evalEnv);
@@ -151,7 +150,7 @@ class MultiInputFunctionsTest {
   }
 
   @Test
-  void testMax_withScaledBandAndValue() throws ParseException, IOException {
+  void testMax_withScaledBandAndValue() throws ParseException {
     product.getBand("B1").setScalingFactor(0.1);
     Term term = BandArithmetic.parseExpression("maxOf(B1, 5)", new Product[]{product}, 0);
 
@@ -163,7 +162,7 @@ class MultiInputFunctionsTest {
   }
 
   @Test
-  void testMaxIndex_withBandsOnly() throws ParseException, IOException {
+  void testMaxIndex_withBandsOnly() throws ParseException {
     Term term = BandArithmetic.parseExpression("indexOfMax(B1, B2)", new Product[]{product}, 0);
 
     fillRasterSymbols(term, evalEnv);
@@ -176,7 +175,7 @@ class MultiInputFunctionsTest {
   }
 
   @Test
-  void testMaxIndex_withBandsAndValues() throws ParseException, IOException {
+  void testMaxIndex_withBandsAndValues() throws ParseException {
     Term term = BandArithmetic.parseExpression("indexOfMax(B1, 30, B2, 86)", new Product[]{product}, 0);
 
     fillRasterSymbols(term, evalEnv);
@@ -189,7 +188,7 @@ class MultiInputFunctionsTest {
   }
 
   @Test
-  void testMaxIndex_withScaledBandAndValue() throws ParseException, IOException {
+  void testMaxIndex_withScaledBandAndValue() throws ParseException {
     product.getBand("B1").setScalingFactor(0.1);
     Term term = BandArithmetic.parseExpression("indexOfMax(B1, 5)", new Product[]{product}, 0);
 
@@ -201,7 +200,7 @@ class MultiInputFunctionsTest {
   }
 
   @Test
-  void testMean_withBandsOnly() throws ParseException, IOException {
+  void testMean_withBandsOnly() throws ParseException {
     Term term = BandArithmetic.parseExpression("meanOf(B1, B2)", new Product[]{product}, 0);
 
     fillRasterSymbols(term, evalEnv);
@@ -215,7 +214,7 @@ class MultiInputFunctionsTest {
 
 
   @Test
-  void testMean_withBandsAndValues() throws ParseException, IOException {
+  void testMean_withBandsAndValues() throws ParseException {
     Term term = BandArithmetic.parseExpression("meanOf(B1, 30, B2, 86)", new Product[]{product}, 0);
 
     fillRasterSymbols(term, evalEnv);
@@ -228,7 +227,7 @@ class MultiInputFunctionsTest {
   }
 
   @Test
-  void testMean_withScaledBandAndValue() throws ParseException, IOException {
+  void testMean_withScaledBandAndValue() throws ParseException {
     product.getBand("B1").setScalingFactor(0.1);
     Term term = BandArithmetic.parseExpression("meanOf(B1, 5)", new Product[]{product}, 0);
 
