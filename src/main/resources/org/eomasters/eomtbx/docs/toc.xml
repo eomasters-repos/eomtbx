@@ -10,12 +10,15 @@
     <tocitem target="eomtbx.ioFormats" text="IO-Formats Listing"/>
     <tocitem target="eomtbx.mathsExtensions" text="BandMaths Extension"/>
     <tocitem target="eomtbx.wvlEditor" text="Wavelength Editor"/>
-    <tocitem target="eomtbx.closeProductNoView" text="Close Products without a View"/>
-    <tocitem target="eomtbx.systemReport" text="Create System Report"/>
-    <tocitem target="eomtbx.eoddb" text="EO Data Database"/>
-    <tocitem target="eomtbx.coastalMap" text="Coastal Map Data"/>
     <tocitem target="eomtbx.errorHandler" text="Error Handler"/>
     <tocitem target="eomtbx.options.free" text="Options"/>
+    <tocitem text="Menu Actions">
+      <tocitem target="eomtbx.closeProductNoView" text="Close Products without a View"/>
+      <tocitem target="eomtbx.systemReport" text="Create System Report"/>
+      <tocitem target="eomtbx.eoddb" text="EO Data Database"/>
+      <tocitem target="eomtbx.coastalMap" text="Coastal Map Data"/>
+      <tocitem target="eomtbx.crsWkt" text="Copy CRS WKT to Clipboard"/>
+    </tocitem>
     <tocitem target="eomtbx.about.free" text="About"/>
   </tocitem>
 </toc>
