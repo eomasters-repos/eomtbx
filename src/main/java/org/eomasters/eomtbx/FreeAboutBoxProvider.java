@@ -1,6 +1,6 @@
 /*-
  * ========================LICENSE_START=================================
- * EOMTBX - EOMasters Toolbox for SNAP
+ * EOMTBX - EOMasters Toolbox Basic for SNAP
  * -> https://www.eomasters.org/sw/EOMTBX
  * ======================================================================
  * Copyright (C) 2023 - 2024 Marco Peters
@@ -9,12 +9,12 @@
  * it under the terms of the GNU General Public License as
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public
  * License along with this program.  If not, see
  * -> http://www.gnu.org/licenses/gpl-3.0.html
@@ -27,9 +27,11 @@ import java.awt.Component;
 import java.awt.Cursor;
 import java.net.URI;
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
+import org.eomasters.icons.RasterIcon;
 import org.esa.snap.rcp.util.BrowserUtils;
 import org.openide.modules.ModuleInfo;
 import org.openide.modules.Modules;
@@ -37,11 +39,16 @@ import org.openide.modules.Modules;
 /**
  * Provides the AboutBox for the EOMasters Toolbox Basic.
  */
-public class BasicAboutBoxProvider implements AboutBoxProvider {
+public class FreeAboutBoxProvider implements AboutBoxProvider {
 
   @Override
   public String getTitle() {
-    return "Basic";
+    return "Free";
+  }
+
+  @Override
+  public ImageIcon getLogoImage() {
+    return new RasterIcon("eomtbx_basic_logo", getClass()).getImageIcon(365);
   }
 
   @Override
@@ -72,8 +79,10 @@ public class BasicAboutBoxProvider implements AboutBoxProvider {
   }
 
   private static JLabel getVersionLabel() {
-    ModuleInfo moduleInfo = Modules.getDefault().ownerOf(BasicAboutBoxProvider.class);;
+    ModuleInfo moduleInfo = Modules.getDefault().ownerOf(FreeAboutBoxProvider.class);
+    ;
     return new JLabel(String.format("<html><b>EOMasters Toolbox Basic version %s</b>",
         moduleInfo.getImplementationVersion()), SwingConstants.CENTER);
   }
+
 }

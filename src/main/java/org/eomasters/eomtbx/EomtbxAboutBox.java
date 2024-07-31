@@ -1,6 +1,6 @@
 /*-
  * ========================LICENSE_START=================================
- * EOMTBX - EOMasters Toolbox for SNAP
+ * EOMTBX - EOMasters Toolbox Basic for SNAP
  * -> https://www.eomasters.org/sw/EOMTBX
  * ======================================================================
  * Copyright (C) 2023 - 2024 Marco Peters
@@ -24,9 +24,11 @@
 package org.eomasters.eomtbx;
 
 import java.awt.BorderLayout;
+import java.awt.CardLayout;
 import java.awt.Component;
 import java.util.Optional;
 import java.util.ServiceLoader;
+import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
@@ -34,8 +36,8 @@ import javax.swing.border.EmptyBorder;
 import org.esa.snap.rcp.about.AboutBox;
 
 /**
- * The common {@link AboutBox} which is registered to SNAP/NetBeans.
- * It provides an extension point usgin the {@link AboutBoxProvider} for variants of the EOMTBX.
+ * The common {@link AboutBox} which is registered to SNAP/NetBeans. It provides an extension point usgin the
+ * {@link AboutBoxProvider} for variants of the EOMTBX.
  */
 @AboutBox(displayName = "EOMTBX", position = 500)
 public class EomtbxAboutBox extends JPanel {
@@ -48,24 +50,38 @@ public class EomtbxAboutBox extends JPanel {
     setBorder(new EmptyBorder(4, 4, 4, 4));
     ServiceLoader<AboutBoxProvider> eomToolboxServiceLoader = ServiceLoader.load(AboutBoxProvider.class);
     long numBoxes = eomToolboxServiceLoader.stream().count();
-    Component boxPanel = null;
+    Component infoPanel = null;
+    CardLayout logoCards = new CardLayout();
+    JPanel logoCardsPanel = new JPanel(logoCards);
     if (numBoxes == 1) {
       Optional<AboutBoxProvider> first = eomToolboxServiceLoader.findFirst();
       if (first.isPresent()) {
-        boxPanel = first.get().getAboutPanel();
+        AboutBoxProvider provider = first.get();
+        infoPanel = provider.getAboutPanel();
+        ImageIcon logoImage = provider.getLogoImage();
+        JLabel label = new JLabel(logoImage);
+        logoCardsPanel.add(label, provider.getTitle());
       }
     } else {
-      JTabbedPane tabbedPane = new JTabbedPane();
+      JTabbedPane tabbedInfoPanel = new JTabbedPane();
       eomToolboxServiceLoader.forEach(provider -> {
-        tabbedPane.addTab(provider.getTitle(), provider.getAboutPanel());
+        tabbedInfoPanel.addTab(provider.getTitle(), provider.getAboutPanel());
+        ImageIcon logoImage = provider.getLogoImage();
+        JLabel label = new JLabel(logoImage);
+        logoCardsPanel.add(label, provider.getTitle());
       });
-      boxPanel = tabbedPane;
+      tabbedInfoPanel.getModel().addChangeListener(e -> {
+        String name = tabbedInfoPanel.getTitleAt(tabbedInfoPanel.getSelectedIndex());
+        logoCards.show(logoCardsPanel, name);
+      });
+
+      infoPanel = tabbedInfoPanel;
     }
 
-    JLabel label = new JLabel(EomtbxIcons.EOMTBX_TEXT_BELOW.getImageIcon(365));
-    add(label, BorderLayout.CENTER);
-    if (boxPanel != null) {
-      add(boxPanel, BorderLayout.SOUTH);
+    add(logoCardsPanel, BorderLayout.CENTER);
+    if (infoPanel != null) {
+      add(infoPanel, BorderLayout.SOUTH);
     }
   }
+
 }

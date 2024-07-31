@@ -1,0 +1,113 @@
+<!--
+  ========================LICENSE_START=================================
+  EOMTBX - EOMasters Toolbox Basic for SNAP
+  -> https://www.eomasters.org/sw/EOMTBX
+  ======================================================================
+  Copyright (C) 2023 - 2024 Marco Peters
+  ======================================================================
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as
+  published by the Free Software Foundation, either version 3 of the
+  License, or (at your option) any later version.
+  
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+  
+  You should have received a copy of the GNU General Public
+  License along with this program.  If not, see
+  -> http://www.gnu.org/licenses/gpl-3.0.html
+  =========================LICENSE_END==================================
+  -->
+
+<html>
+<head>
+  <title>EOMasters Toolbox Basic - Copy CRS WKT to Clipboard</title>
+  <meta content="text/html; charset=iso-8859-1" http-equiv="Content-Type">
+  <link href="../../style/style.css" rel="stylesheet">
+  <link href="../../style/eomastersstyle.css" rel="stylesheet">
+</head>
+
+<body>
+<table class="header">
+  <tr class="header">
+    <td align="left" class="header" width="40"><a href="../Overview.html"><img border=0
+                                                                               src="../../images/EomToolbox_32.png"></a>
+    </td>
+    <td class="header">EOMasters Toolbox Basic</td>
+    <td align="right" class="header"><a
+        href="nbdocs://org.esa.snap.snap.help/org/esa/snap/snap/help/docs/general/overview/SnapOverview.html"><img
+        border=0 src="../../images/snap_header.jpg"></a></td>
+  </tr>
+</table>
+
+<h1>Copy CRS WKT to Clipboard</h1>
+<p>This transfers the CRS of the currently chosen node in the product tree as a WKT representation to the clipboard.
+  When a raster is selected with a CRS, it will be used, otherwise, the product's CRS is used. A CRS WKT representation
+  from a Sentinel-2 product:</p>
+<pre class="code">PROJCS["WGS 84 / UTM zone 30N",
+  GEOGCS["WGS 84",
+    DATUM["World Geodetic System 1984",
+      SPHEROID["WGS 84", 6378137.0, 298.257223563, AUTHORITY["EPSG","7030"]],
+      AUTHORITY["EPSG","6326"]],
+    PRIMEM["Greenwich", 0.0, AUTHORITY["EPSG","8901"]],
+    UNIT["degree", 0.017453292519943295],
+    AXIS["Geodetic longitude", EAST],
+    AXIS["Geodetic latitude", NORTH],
+    AUTHORITY["EPSG","4326"]],
+  PROJECTION["Transverse_Mercator", AUTHORITY["EPSG","9807"]],
+  PARAMETER["central_meridian", -3.0],
+  PARAMETER["latitude_of_origin", 0.0],
+  PARAMETER["scale_factor", 0.9996],
+  PARAMETER["false_easting", 500000.0],
+  PARAMETER["false_northing", 0.0],
+  UNIT["m", 1.0],
+  AXIS["Easting", EAST],
+  AXIS["Northing", NORTH],
+  AUTHORITY["EPSG","32630"]]</pre>
+
+<h2>References</h2>
+<ul>
+  <li>
+    <object classid="java:eu.esa.snap.netbeans.javahelp.BrowserDisplayer">
+      <param name="content"
+             value="https://en.wikipedia.org/wiki/Well-known_text_representation_of_coordinate_reference_systems">
+      <param name="text" value="<html><u>WKT representation of CRS on Wikipedia</u></html>">
+      <param name="textFontSize" value="bigger">
+    </object>
+  </li>
+  <li>
+    <object classid="java:eu.esa.snap.netbeans.javahelp.BrowserDisplayer">
+      <param name="content" value="https://www.ogc.org/standard/wkt-crs/">
+      <param name="text" value="<html><u>WKT representation of CRS specification by OGC</u></html>">
+      <param name="textFontSize" value="bigger">
+    </object>
+  </li>
+</ul>
+
+<footer>
+  <hr>
+  <table class="eom_ft">
+    <tr>
+      <td rowspan="2" class="eom_ft">
+        <img alt="EOMasters Logo" src="../../images/EOMasters_50.png">
+      </td>
+      <td width="100%" class="eom_ft">
+        <div class="eom_ft">EOMasters Toolbox Basic<br></div>
+      </td>
+    </tr>
+    <tr>
+      <td class="eom_ft"> Provided by
+        <object classid="java:eu.esa.snap.netbeans.javahelp.BrowserDisplayer">
+          <param name="content" value="https://www.eomasters.org/">
+          <param name="text" value="<html><u>www.eomasters.org</u></html>">
+          <param name="textFontSize" value="bigger">
+        </object>
+      </td>
+    </tr>
+  </table>
+</footer>
+</body>
+</html>
+

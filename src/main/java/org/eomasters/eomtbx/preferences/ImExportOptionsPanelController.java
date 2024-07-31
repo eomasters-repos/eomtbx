@@ -1,6 +1,6 @@
 /*-
  * ========================LICENSE_START=================================
- * EOMTBX PRO - EOMasters Toolbox PRO for SNAP
+ * EOMTBX PRO - EOMasters Toolbox Basic for SNAP
  * -> https://www.eomasters.org/sw/EOMTBX
  * ======================================================================
  * Copyright (C) 2023 - 2024 Marco Peters
@@ -47,7 +47,7 @@ import org.openide.util.Lookup;
  */
 class ImExportOptionsPanelController extends PropertyChangeOptionsPanelController {
 
-  public static final String HID_EOMTBX_PREFERENCES = "eomtbx.options";
+  public static final String HID_EOMTBX_PREFERENCES = "eomtbx.options.free";
   private static final FileFilter PREFERENCES_FILE_FILTER = FileIo.createFileFilter("Preferences file",
       "prefs");
   private final Preferences preferences = EomToolbox.getPreferences();
@@ -63,7 +63,7 @@ class ImExportOptionsPanelController extends PropertyChangeOptionsPanelControlle
     try {
       preferences.flush();
     } catch (BackingStoreException e) {
-      EomToolbox.reportError("Could not store options for EOMasters Toolbox", e);
+      EomToolbox.reportError("Could not store options for EOMasters Toolbox Basic", e);
     }
 
   }

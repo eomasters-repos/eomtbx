@@ -3,19 +3,22 @@
   "http://java.sun.com/products/javahelp/toc_2_0.dtd">
 
 <toc categoryclosedimage="folder" categoryopenimage="folder" topicimage="doc" version="2.0">
-  <tocitem target="eomtbx.intro" text="EOM Toolbox" image="eomtbx.icon">
-    <tocitem target="eomtbx.overview" text="Overview"/>
+  <tocitem target="eomtbx.overview.free" text="EOMasters Toolbox Basic" image="eomtbx.icon">
+    <tocitem target="eomtbx.overview.free" text="Overview"/>
     <tocitem target="eomtbx.quickMenu" text="Quick Menu"/>
     <tocitem target="eomtbx.loopGPT" text="Loop GPT"/>
     <tocitem target="eomtbx.ioFormats" text="IO-Formats Listing"/>
     <tocitem target="eomtbx.mathsExtensions" text="BandMaths Extension"/>
     <tocitem target="eomtbx.wvlEditor" text="Wavelength Editor"/>
-    <tocitem target="eomtbx.closeProductNoView" text="Close Products without a View"/>
-    <tocitem target="eomtbx.systemReport" text="Create System Report"/>
     <tocitem target="eomtbx.errorHandler" text="Error Handler"/>
-    <tocitem target="eomtbx.options" text="EOMTBX Options">
-      <tocitem target="eomtbx.options.general" text="General Options"/>
+    <tocitem target="eomtbx.options.free" text="Options"/>
+    <tocitem text="Menu Actions">
+      <tocitem target="eomtbx.closeProductNoView" text="Close Products without a View"/>
+      <tocitem target="eomtbx.systemReport" text="Create System Report"/>
+      <tocitem target="eomtbx.eoddb" text="EO Data Database"/>
+      <tocitem target="eomtbx.coastalMap" text="Coastal Map Data"/>
+      <tocitem target="eomtbx.crsWkt" text="Copy CRS WKT to Clipboard"/>
     </tocitem>
-    <tocitem target="eomtbx.credits" text="Credits"/>
+    <tocitem target="eomtbx.about.free" text="About"/>
   </tocitem>
 </toc>

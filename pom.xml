@@ -5,17 +5,23 @@
   <modelVersion>4.0.0</modelVersion>
 
   <name>EOMTBX</name>
-  <description>EOMasters Toolbox for SNAP</description>
+  <description>EOMasters Toolbox Basic for SNAP</description>
   <url>https://www.eomasters.org/eomtbx</url>
   <inceptionYear>2023</inceptionYear>
   <organization>
     <name>EOMasters</name>
     <url>https://www.eomasters.org</url>
   </organization>
+  <licenses>
+    <license>
+      <name>GPL 3</name>
+      <url>https://www.gnu.org/licenses/gpl-3.0.html</url>
+    </license>
+  </licenses>
 
   <groupId>org.eomasters</groupId>
   <artifactId>eomtbx</artifactId>
-  <version>1.0.1</version>
+  <version>1.1</version>
   <packaging>nbm</packaging>
 
 
@@ -25,8 +31,8 @@
     <javahelp.version>2.0.05</javahelp.version>
     <maven.compiler.release>11</maven.compiler.release>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <eom-commons.version>0.3.3</eom-commons.version>
-    <eom-commons-snap.version>0.2.4</eom-commons-snap.version>
+    <eom-commons.version>0.3.4</eom-commons.version>
+    <eom-commons-snap.version>0.2.5</eom-commons-snap.version>
     <deploy.dir>${project.build.directory}/mvn-repo</deploy.dir>
   </properties>
 

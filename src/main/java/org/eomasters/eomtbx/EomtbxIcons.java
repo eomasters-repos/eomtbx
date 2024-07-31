@@ -1,6 +1,6 @@
 /*-
  * ========================LICENSE_START=================================
- * EOMTBX - EOMasters Toolbox for SNAP
+ * EOMTBX - EOMasters Toolbox Basic for SNAP
  * -> https://www.eomasters.org/sw/EOMTBX
  * ======================================================================
  * Copyright (C) 2023 - 2024 Marco Peters
@@ -23,14 +23,6 @@
 
 package org.eomasters.eomtbx;
 
-import java.awt.Container;
-import java.awt.Dimension;
-import java.awt.GridLayout;
-import java.lang.reflect.Field;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.SwingUtilities;
-import javax.swing.WindowConstants;
 import org.eomasters.icons.Icon;
 import org.eomasters.icons.SvgIcon;
 
@@ -39,54 +31,17 @@ import org.eomasters.icons.SvgIcon;
  */
 public class EomtbxIcons {
 
-  /**
-   * Shows the icons in a new window.
-   *
-   * @param args the command line arguments
-   * @throws IllegalAccessException if the icons are not accessible
-   */
-  public static void main(String[] args) throws IllegalAccessException {
-    final JFrame frame = new JFrame("Icons");
-    frame.setPreferredSize(new Dimension(400, 400));
-    Container contentPane = frame.getContentPane();
-    Field[] fields = EomtbxIcons.class.getFields();
-    for (Field field : fields) {
-      if (Icon.class.isAssignableFrom(field.getType())) {
-        contentPane.add(new JLabel(((Icon) field.get(null)).getImageIcon(Icon.SIZE_48)));
-      }
-    }
-    int gridsize = (int) Math.ceil(Math.sqrt(contentPane.getComponents().length));
-    contentPane.setLayout(new GridLayout(gridsize, gridsize));
-    frame.setLocationRelativeTo(null);
-    frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-    frame.pack();
-    SwingUtilities.invokeLater(() -> frame.setVisible(true));
-  }
-
 
   /**
    * The EOMTBX icon, clean without text.
    */
   public static final Icon EOMTBX = new SvgIcon("/org/eomasters/eomtbx/icons/eomtbx_logo", EomtbxIcons.class);
   /**
-   * The EOMTBX icon with short EOMTBX text on it.
-   */
-  public static final Icon EOMTBX_SHORT = new SvgIcon("/org/eomasters/eomtbx/icons/eomtbx_logo_shortText",
-      EomtbxIcons.class);
-  /**
-   * The EOMTBX icon with long EOMAsters Toolbox text on it.
-   */
-  public static final Icon EOMTBX_TEXT = new SvgIcon("/org/eomasters/eomtbx/icons/eomtbx_logo_text",
-      EomtbxIcons.class);
-  /**
-   * The EOMTBX icon with long EOMAsters Toolbox text below.
-   */
-  public static final Icon EOMTBX_TEXT_BELOW = new SvgIcon("/org/eomasters/eomtbx/icons/eomtbx_logo_text_below",
-      EomtbxIcons.class);
-  /**
    * An icon for the Wavelength Editor.
    */
   public static final Icon WVL_EDITOR = new SvgIcon("/org/eomasters/eomtbx/icons/WvlEditor", EomtbxIcons.class);
+
+  public static final Icon COASTAL_MAP = new SvgIcon("/org/eomasters/eomtbx/icons/CoastalMap", EomtbxIcons.class);
 
   protected EomtbxIcons() {
   }

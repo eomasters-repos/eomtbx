@@ -1,6 +1,6 @@
 /*-
  * ========================LICENSE_START=================================
- * EOMTBX - EOMasters Toolbox for SNAP
+ * EOMTBX - EOMasters Toolbox Basic for SNAP
  * -> https://www.eomasters.org/sw/EOMTBX
  * ======================================================================
  * Copyright (C) 2023 - 2024 Marco Peters
@@ -46,12 +46,15 @@ public class BandMathsExtender implements ProductNamespaceExtender {
     namespace.registerSymbol(new SymbolMapY(product.getSceneGeoCoding(), product.getSceneRasterSize()));
 
     namespace.registerFunction(new WindowFunctions());
+    namespace.registerFunction(new StxFunctions());
 
     namespace.registerFunction(new AreValidFunction());
 
     namespace.registerFunction(MultiInputFunctions.MIN);
     namespace.registerFunction(MultiInputFunctions.MAX);
     namespace.registerFunction(MultiInputFunctions.MEAN);
+    namespace.registerFunction(MultiInputFunctions.INDEX_OF_MIN);
+    namespace.registerFunction(MultiInputFunctions.INDEX_OF_MAX);
   }
 
 }

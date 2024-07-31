@@ -1,6 +1,6 @@
 /*-
  * ========================LICENSE_START=================================
- * EOMTBX - EOMasters Toolbox for SNAP
+ * EOMTBX - EOMasters Toolbox Basic for SNAP
  * -> https://www.eomasters.org/sw/EOMTBX
  * ======================================================================
  * Copyright (C) 2023 - 2024 Marco Peters
@@ -9,12 +9,12 @@
  * it under the terms of the GNU General Public License as
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public
  * License along with this program.  If not, see
  * -> http://www.gnu.org/licenses/gpl-3.0.html
@@ -27,7 +27,6 @@ import static org.eomasters.eomtbx.TestUtils.toElemIndex;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.awt.image.Raster;
-import java.io.IOException;
 import org.eomasters.eomtbx.TestUtils;
 import org.esa.snap.core.datamodel.Product;
 import org.esa.snap.core.datamodel.ProductData;
@@ -51,7 +50,7 @@ class MultiInputFunctionsTest {
   }
 
   @Test
-  void testMin_withBandsOnly() throws ParseException, IOException {
+  void testMin_withBandsOnly() throws ParseException {
     Term term = BandArithmetic.parseExpression("minOf(B1, B2)", new Product[]{product}, 0);
 
     fillRasterSymbols(term, evalEnv);
@@ -64,33 +63,7 @@ class MultiInputFunctionsTest {
   }
 
   @Test
-  void testMax_withBandsOnly() throws ParseException, IOException {
-    Term term = BandArithmetic.parseExpression("maxOf(B1, B2)", new Product[]{product}, 0);
-
-    fillRasterSymbols(term, evalEnv);
-    evalEnv.setElemIndex(toElemIndex(0, 0)); // Both bands are nan
-    assertEquals(Double.NaN, term.evalD(evalEnv));
-    evalEnv.setElemIndex(toElemIndex(4, 4)); // B2 valid
-    assertEquals(88.0, term.evalD(evalEnv));
-    evalEnv.setElemIndex(toElemIndex(8, 4)); // both valid
-    assertEquals(96, term.evalD(evalEnv));
-  }
-
-  @Test
-  void testMean_withBandsOnly() throws ParseException, IOException {
-    Term term = BandArithmetic.parseExpression("meanOf(B1, B2)", new Product[]{product}, 0);
-
-    fillRasterSymbols(term, evalEnv);
-    evalEnv.setElemIndex(toElemIndex(0, 0)); // Both bands are nan
-    assertEquals(Double.NaN, term.evalD(evalEnv));
-    evalEnv.setElemIndex(toElemIndex(4, 4)); // B2 valid
-    assertEquals(88.0, term.evalD(evalEnv));
-    evalEnv.setElemIndex(toElemIndex(8, 4)); // both valid
-    assertEquals(72, term.evalD(evalEnv)); // 48.0 + 96.0 = 144.0 / 2 = 72.0
-  }
-
-  @Test
-  void testMin_withBandsAndValues() throws ParseException, IOException {
+  void testMin_withBandsAndValues() throws ParseException {
     Term term = BandArithmetic.parseExpression("minOf(B1, 30, B2, 86)", new Product[]{product}, 0);
 
     fillRasterSymbols(term, evalEnv);
@@ -103,7 +76,68 @@ class MultiInputFunctionsTest {
   }
 
   @Test
-  void testMax_withBandsAndValues() throws ParseException, IOException {
+  void testMin_withScaledBandAndValue() throws ParseException {
+    product.getBand("B1").setScalingFactor(0.1);
+    Term term = BandArithmetic.parseExpression("minOf(B1, 5)", new Product[]{product}, 0);
+
+    fillRasterSymbols(term, evalEnv);
+    evalEnv.setElemIndex(toElemIndex(4, 1));
+    assertEquals(1.4, term.evalD(evalEnv), 1e-8); // B1.raw = 14 scaled = 1.4
+  }
+
+  @Test
+  void testMinIndex_withBandsOnly() throws ParseException {
+    Term term = BandArithmetic.parseExpression("indexOfMin(B1, B2)", new Product[]{product}, 0);
+
+    fillRasterSymbols(term, evalEnv);
+    evalEnv.setElemIndex(toElemIndex(0, 0)); // Both bands are nan
+    assertEquals(-1, term.evalI(evalEnv));
+    evalEnv.setElemIndex(toElemIndex(4, 4)); // B2 valid
+    assertEquals(1, term.evalI(evalEnv));
+    evalEnv.setElemIndex(toElemIndex(8, 4)); // both valid
+    assertEquals(0, term.evalI(evalEnv));
+  }
+
+  @Test
+  void testMinIndex_withBandsAndValues() throws ParseException {
+    Term term = BandArithmetic.parseExpression("indexOfMin(B1, 30, B2, 86)", new Product[]{product}, 0);
+
+    fillRasterSymbols(term, evalEnv);
+    evalEnv.setElemIndex(toElemIndex(0, 0)); // Both bands are nan
+    assertEquals(1, term.evalI(evalEnv));
+    evalEnv.setElemIndex(toElemIndex(4, 4)); // B2 valid
+    assertEquals(1, term.evalI(evalEnv));
+    evalEnv.setElemIndex(toElemIndex(8, 4)); // both valid
+    assertEquals(1, term.evalI(evalEnv));
+  }
+
+  @Test
+  void testMinIndex_withScaledBandAndValue() throws ParseException {
+    product.getBand("B1").setScalingFactor(0.1);
+    Term term = BandArithmetic.parseExpression("indexOfMin(B1, 5)", new Product[]{product}, 0);
+
+    fillRasterSymbols(term, evalEnv);
+    evalEnv.setElemIndex(toElemIndex(4, 1));
+    assertEquals(0, term.evalI(evalEnv)); // B1.raw = 14 scaled = 1.4
+    evalEnv.setElemIndex(toElemIndex(8, 6));
+    assertEquals(1, term.evalI(evalEnv)); // B1.raw = 68 scaled = 6.8
+  }
+
+  @Test
+  void testMax_withBandsOnly() throws ParseException {
+    Term term = BandArithmetic.parseExpression("maxOf(B1, B2)", new Product[]{product}, 0);
+
+    fillRasterSymbols(term, evalEnv);
+    evalEnv.setElemIndex(toElemIndex(0, 0)); // Both bands are nan
+    assertEquals(Double.NaN, term.evalD(evalEnv));
+    evalEnv.setElemIndex(toElemIndex(4, 4)); // B2 valid
+    assertEquals(88.0, term.evalD(evalEnv));
+    evalEnv.setElemIndex(toElemIndex(8, 4)); // both valid
+    assertEquals(96, term.evalD(evalEnv));
+  }
+
+  @Test
+  void testMax_withBandsAndValues() throws ParseException {
     Term term = BandArithmetic.parseExpression("maxOf(B1, 30, B2, 86)", new Product[]{product}, 0);
 
     fillRasterSymbols(term, evalEnv);
@@ -116,7 +150,71 @@ class MultiInputFunctionsTest {
   }
 
   @Test
-  void testMean_withBandsAndValues() throws ParseException, IOException {
+  void testMax_withScaledBandAndValue() throws ParseException {
+    product.getBand("B1").setScalingFactor(0.1);
+    Term term = BandArithmetic.parseExpression("maxOf(B1, 5)", new Product[]{product}, 0);
+
+    fillRasterSymbols(term, evalEnv);
+    evalEnv.setElemIndex(toElemIndex(4, 1));
+    assertEquals(5, term.evalD(evalEnv), 1e-8); // B1.raw = 14 scaled = 1.4
+    evalEnv.setElemIndex(toElemIndex(8, 6));
+    assertEquals(6.8, term.evalD(evalEnv), 1e-8); // B1.raw = 68 scaled = 6.8
+  }
+
+  @Test
+  void testMaxIndex_withBandsOnly() throws ParseException {
+    Term term = BandArithmetic.parseExpression("indexOfMax(B1, B2)", new Product[]{product}, 0);
+
+    fillRasterSymbols(term, evalEnv);
+    evalEnv.setElemIndex(toElemIndex(0, 0)); // Both bands are nan
+    assertEquals(-1, term.evalI(evalEnv));
+    evalEnv.setElemIndex(toElemIndex(4, 4)); // B2 valid
+    assertEquals(1, term.evalI(evalEnv));
+    evalEnv.setElemIndex(toElemIndex(8, 4)); // both valid
+    assertEquals(1, term.evalI(evalEnv));
+  }
+
+  @Test
+  void testMaxIndex_withBandsAndValues() throws ParseException {
+    Term term = BandArithmetic.parseExpression("indexOfMax(B1, 30, B2, 86)", new Product[]{product}, 0);
+
+    fillRasterSymbols(term, evalEnv);
+    evalEnv.setElemIndex(toElemIndex(0, 0)); // Both bands are nan
+    assertEquals(3, term.evalI(evalEnv));
+    evalEnv.setElemIndex(toElemIndex(4, 4)); // B2 valid
+    assertEquals(2, term.evalI(evalEnv));
+    evalEnv.setElemIndex(toElemIndex(8, 4)); // both valid
+    assertEquals(2, term.evalI(evalEnv));
+  }
+
+  @Test
+  void testMaxIndex_withScaledBandAndValue() throws ParseException {
+    product.getBand("B1").setScalingFactor(0.1);
+    Term term = BandArithmetic.parseExpression("indexOfMax(B1, 5)", new Product[]{product}, 0);
+
+    fillRasterSymbols(term, evalEnv);
+    evalEnv.setElemIndex(toElemIndex(4, 1));
+    assertEquals(1, term.evalI(evalEnv)); // B1.raw = 14 scaled = 1.4
+    evalEnv.setElemIndex(toElemIndex(8, 6));
+    assertEquals(0, term.evalI(evalEnv)); // B1.raw = 68 scaled = 6.8
+  }
+
+  @Test
+  void testMean_withBandsOnly() throws ParseException {
+    Term term = BandArithmetic.parseExpression("meanOf(B1, B2)", new Product[]{product}, 0);
+
+    fillRasterSymbols(term, evalEnv);
+    evalEnv.setElemIndex(toElemIndex(0, 0)); // Both bands are nan
+    assertEquals(Double.NaN, term.evalD(evalEnv));
+    evalEnv.setElemIndex(toElemIndex(4, 4)); // B2 valid
+    assertEquals(88.0, term.evalD(evalEnv));
+    evalEnv.setElemIndex(toElemIndex(8, 4)); // both valid
+    assertEquals(72, term.evalD(evalEnv)); // 48.0 + 96.0 = 144.0 / 2 = 72.0
+  }
+
+
+  @Test
+  void testMean_withBandsAndValues() throws ParseException {
     Term term = BandArithmetic.parseExpression("meanOf(B1, 30, B2, 86)", new Product[]{product}, 0);
 
     fillRasterSymbols(term, evalEnv);
@@ -129,29 +227,7 @@ class MultiInputFunctionsTest {
   }
 
   @Test
-  void testMin_withScaledBandAndValue() throws ParseException, IOException {
-    product.getBand("B1").setScalingFactor(0.1);
-    Term term = BandArithmetic.parseExpression("minOf(B1, 5)", new Product[]{product}, 0);
-
-    fillRasterSymbols(term, evalEnv);
-    evalEnv.setElemIndex(toElemIndex(4, 1));
-    assertEquals(1.4, term.evalD(evalEnv), 1e-8); // B1.raw = 14 scaled = 1.4
-  }
-
-  @Test
-  void testMax_withScaledBandAndValue() throws ParseException, IOException {
-    product.getBand("B1").setScalingFactor(0.1);
-    Term term = BandArithmetic.parseExpression("maxOf(B1, 5)", new Product[]{product}, 0);
-
-    fillRasterSymbols(term, evalEnv);
-    evalEnv.setElemIndex(toElemIndex(4, 1));
-    assertEquals(5, term.evalD(evalEnv), 1e-8); // B1.raw = 14 scaled = 1.4
-    evalEnv.setElemIndex(toElemIndex(8, 6));
-    assertEquals(6.8, term.evalD(evalEnv), 1e-8); // B1.raw = 68 scaled = 6.8
-  }
-
-  @Test
-  void testMean_withScaledBandAndValue() throws ParseException, IOException {
+  void testMean_withScaledBandAndValue() throws ParseException {
     product.getBand("B1").setScalingFactor(0.1);
     Term term = BandArithmetic.parseExpression("meanOf(B1, 5)", new Product[]{product}, 0);
 
