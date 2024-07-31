@@ -2,7 +2,7 @@ name: Maven Deploy
 
 on:
   release:
-    types: [created]
+    types: [published]
     branches: [ "master" ]
   workflow_dispatch:
 
