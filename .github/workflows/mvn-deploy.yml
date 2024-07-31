@@ -1,0 +1,53 @@
+name: Maven Deploy
+
+on:
+  release:
+    types: [created]
+    branches: [ "master" ]
+  workflow_dispatch:
+
+jobs:
+  Deploy:
+
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Checkout mvn-repo
+        uses: actions/checkout@v4
+        with:
+          repository: eomasters-repos/mvn-repo
+          path: mvn-repo
+          token: ${{ secrets.REPO_PUSH_TOKEN }}
+
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          path: this-repo
+
+
+      - name: Set up JDK 11
+        uses: actions/setup-java@v4
+        with:
+          java-version: '11'
+          distribution: 'liberica'
+          cache: 'maven'
+          settings-path: ${{ github.workspace }} # location for the settings.xml file
+
+      - name: Local Artifact Deployment
+        run: |
+          cd ${{ github.workspace }}/this-repo
+          mvn -B deploy -Ddeploy.dir=${{ github.workspace }}/mvn-repo --file pom.xml
+
+
+      - name: Push artifacts
+        run: |
+          cd ${{ github.workspace }}/mvn-repo
+          git config --local user.name Github Action
+          git config user.email ${{ github.repository }}@github.com
+          git add .
+          git commit -m "${{ github.repository }} ${{ github.ref }} deployed"
+          git push
+
