@@ -42,7 +42,7 @@ import org.openide.util.NbBundle;
 @ActionID(category = "Help", id = "EOMTBX_SystemReport")
 @ActionRegistration(displayName = "#SystemReportActionName", lazy = false)
 //#Action 'Report an Issue' is at 305, and 'Tutorials' is 310, so we use 306
-@ActionReference(path = "Menu/Help", position = 308)
+@ActionReference(path = "Menu/Help", position = 309)
 @NbBundle.Messages({"SystemReportActionName=Create System Report"})
 public class SystemReportAction extends AbstractAction {
 
