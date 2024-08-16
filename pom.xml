@@ -21,7 +21,7 @@
 
   <groupId>org.eomasters</groupId>
   <artifactId>eomtbx</artifactId>
-  <version>1.1</version>
+  <version>1.1.1</version>
   <packaging>nbm</packaging>
 
 
@@ -32,7 +32,7 @@
     <maven.compiler.release>11</maven.compiler.release>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <eom-commons.version>0.3.4</eom-commons.version>
-    <eom-commons-snap.version>0.2.5</eom-commons-snap.version>
+    <eom-commons-snap.version>0.2.6</eom-commons-snap.version>
     <deploy.dir>${project.build.directory}/mvn-repo</deploy.dir>
   </properties>
 

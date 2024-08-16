@@ -40,7 +40,7 @@ import org.openide.util.NbBundle;
 @ActionID(category = "Tools", id = "EOMTBX_CoastalMap")
 @ActionRegistration(displayName = "#CoastalMapName", lazy = false)
 //#Action 'Report an Issue' is at 305, and 'Tutorials' is 310, so we use 306
-@ActionReference(path = "Menu/Help", position = 307)
+@ActionReference(path = "Menu/Help", position = 308)
 @NbBundle.Messages({"CoastalMapName=Coastal Map Data"})
 public class CoastalMapAction extends AbstractAction {
 
