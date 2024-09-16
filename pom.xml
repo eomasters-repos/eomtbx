@@ -370,7 +370,7 @@
         </dependencies>
         <configuration>
           <publicPackages>
-            <package>org.eomasters.*</package>
+            <package>org.eomasters.eomtbx.*</package>
             <package>org.apache.commons.io.*</package>
             <package>com.google.gson.*</package>
           </publicPackages>
