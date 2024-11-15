@@ -26,9 +26,9 @@ package org.eomasters.eomtbx.wvleditor;
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import eu.esa.snap.core.datamodel.group.BandGroup;
 import org.eomasters.eomtbx.TestUtils;
 import org.esa.snap.core.datamodel.Product;
-import org.esa.snap.core.datamodel.Product.AutoGrouping;
 import org.junit.jupiter.api.Test;
 
 class WvlEditorTableModelTest {
@@ -57,8 +57,8 @@ class WvlEditorTableModelTest {
   void sortBandNamesByAutoGrouping() {
     Product product = new Product("name", "type");
     product.setAutoGrouping("radiance_unc:FWMH:radiance:");
-    AutoGrouping autoGrouping = product.getAutoGrouping();
-    String[] sorted = WvlEditorTableModel.sortBandNames(bandNames, autoGrouping::indexOf);
+    BandGroup bandGroup = product.getAutoGrouping();
+    String[] sorted = WvlEditorTableModel.sortBandNames(bandNames, bandGroup::indexOf);
     assertArrayEquals(
         new String[]{"Oa01_radiance", "Oa02_radiance", "Oa03_radiance", "Oa01_radiance_unc", "Oa02_radiance_unc",
             "Oa03_radiance_unc", "altitude", "latitude", "longitude", "detector_index", "FWHM_band_1", "FWHM_band_2",

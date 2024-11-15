@@ -119,9 +119,10 @@ public class LoopGptOptionProcessor extends OptionProcessor {
 
         runLoopGpt(env, commands);
       } finally {
-        System.setProperty(PROP_PLUGIN_MANAGER_CHECK_INTERVAL, actualUpdateIternal);
+        if (actualUpdateIternal != null) {
+          System.setProperty(PROP_PLUGIN_MANAGER_CHECK_INTERVAL, actualUpdateIternal);
+        }
       }
-
     }
   }
 
