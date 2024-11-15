@@ -21,18 +21,18 @@
 
   <groupId>org.eomasters</groupId>
   <artifactId>eomtbx</artifactId>
-  <version>1.1.2-SNAPSHOT</version>
+  <version>1.1.2</version>
   <packaging>nbm</packaging>
 
 
   <properties>
-    <snap.version>11.0.0-SNAPSHOT</snap.version>
+    <snap.version>11.0.0</snap.version>
     <netbeans.version>RELEASE113</netbeans.version>
     <javahelp.version>2.0.05</javahelp.version>
     <maven.compiler.release>11</maven.compiler.release>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <eom-commons.version>0.3.4</eom-commons.version>
-    <eom-commons-snap.version>0.2.7-SNAPSHOT</eom-commons-snap.version>
+    <eom-commons-snap.version>0.2.7</eom-commons-snap.version>
     <deploy.dir>${project.build.directory}/mvn-repo</deploy.dir>
   </properties>
 
