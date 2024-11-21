@@ -86,7 +86,27 @@
     </dependency>
     <dependency>
       <groupId>org.esa.snap</groupId>
+      <artifactId>lib-openjpeg</artifactId>
+      <version>${snap.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.esa.snap</groupId>
+      <artifactId>snap-engine-utilities</artifactId>
+      <version>${snap.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.esa.snap</groupId>
       <artifactId>snap-gpf</artifactId>
+      <version>${snap.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.esa.snap</groupId>
+      <artifactId>snap-geotiff</artifactId>
+      <version>${snap.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.esa.snap</groupId>
+      <artifactId>snap-gdal-reader</artifactId>
       <version>${snap.version}</version>
     </dependency>
     <dependency>
@@ -120,6 +140,13 @@
       <artifactId>snap-help-system</artifactId>
       <version>1.0.0</version>
     </dependency>
+
+    <dependency>
+      <groupId>eu.esa.opt</groupId>
+      <artifactId>opttbx-s2msi-reader</artifactId>
+      <version>${snap.version}</version>
+    </dependency>
+
     <dependency>
       <groupId>org.netbeans.api</groupId>
       <artifactId>org-openide-filesystems</artifactId>
