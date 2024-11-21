@@ -94,7 +94,7 @@ class ImExportOptionsPanelController extends PropertyChangeOptionsPanelControlle
     JPanel eomtbxPanel = new JPanel(new MigLayout("gap 5, insets 5"));
     eomtbxPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Import / Export"));
     eomtbxPanel.add(new JLabel("Import/Export EOMTBX options:"), "gapright 10");
-    JButton importButton = new JButton("Import", Icons.IMPORT.getImageIcon(Icon.SIZE_48));
+    JButton importButton = new JButton("Import", Icons.IMPORT.getImageIcon(Icon.SIZE_24));
     JButton exportButton = new JButton("Export", Icons.EXPORT.getImageIcon(Icon.SIZE_24));
     eomtbxPanel.add(importButton);
     eomtbxPanel.add(exportButton, "wrap");
