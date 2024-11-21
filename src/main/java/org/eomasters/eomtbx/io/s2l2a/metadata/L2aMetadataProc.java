@@ -1,26 +1,3 @@
-/*-
- * ========================LICENSE_START=================================
- * EOMTBX Basic - EOMasters Toolbox Basic for SNAP
- * -> https://www.eomasters.org/eomtbx
- * ======================================================================
- * Copyright (C) 2023 - 2024 Marco Peters
- * ======================================================================
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as
- * published by the Free Software Foundation, either version 3 of the
- * License, or (at your option) any later version.
- * 
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- * 
- * You should have received a copy of the GNU General Public
- * License along with this program.  If not, see
- * -> http://www.gnu.org/licenses/gpl-3.0.html
- * =========================LICENSE_END==================================
- */
-
 /*
  * Copyright (C) 2014-2015 CS-SI (foss-contact@thor.si.c-s.fr)
  * Copyright (C) 2013-2015 Brockmann Consult GmbH (info@brockmann-consult.de)
@@ -59,16 +36,16 @@ public class L2aMetadataProc extends S2OrthoMetadataProc {
 
     private static S2SpectralInformation makeSpectralInformation(String format, S2BandConstants bandConstant, S2SpatialResolution resolution, double quantification) {
         return new S2SpectralInformation(
-                bandConstant.getPhysicalName(),
-                resolution,
-                NamingConventionFactory.getSpectralBandImageTemplate_L2a(format, bandConstant.getFilenameBandId()),
-                "Reflectance in band " + bandConstant.getPhysicalName(),
-                "dl",
-                quantification,
-                bandConstant.getBandIndex(),
-                bandConstant.getWavelengthMin(),
-                bandConstant.getWavelengthMax(),
-                bandConstant.getWavelengthCentral());
+            bandConstant.getPhysicalName(),
+            resolution,
+            NamingConventionFactory.getSpectralBandImageTemplate_L2a(format, bandConstant.getFilenameBandId()),
+            "Reflectance in band " + bandConstant.getPhysicalName(),
+            "dl",
+            quantification,
+            bandConstant.getBandIndex(),
+            bandConstant.getWavelengthMin(),
+            bandConstant.getWavelengthMax(),
+            bandConstant.getWavelengthCentral());
     }
 
     private static S2BandInformation makeAOTInformation(String format, S2SpatialResolution resolution, double quantification) {
@@ -137,10 +114,7 @@ public class L2aMetadataProc extends S2OrthoMetadataProc {
         List<S2BandInformation> aInfo = new ArrayList<>();
         switch (resolution) {
             case R10M:
-                if(psd>147)
-                    aInfo.add(makeSpectralInformation(format, S2BandConstants.B1, S2SpatialResolution.R20M, boaQuantification));
-                else
-                    aInfo.add(makeSpectralInformation(format, S2BandConstants.B1, S2SpatialResolution.R60M, boaQuantification));
+                aInfo.add(makeSpectralInformation(format, S2BandConstants.B1, S2SpatialResolution.R60M, boaQuantification));
                 aInfo.add(makeSpectralInformation(format, S2BandConstants.B2, S2SpatialResolution.R10M, boaQuantification));
                 aInfo.add(makeSpectralInformation(format, S2BandConstants.B3, S2SpatialResolution.R10M, boaQuantification));
                 aInfo.add(makeSpectralInformation(format, S2BandConstants.B4, S2SpatialResolution.R10M, boaQuantification));
@@ -164,10 +138,7 @@ public class L2aMetadataProc extends S2OrthoMetadataProc {
                 aInfo.add(makeSCLInformation(format, S2SpatialResolution.R20M, psd));
                 break;
             case R20M:
-                if(psd>147)
-                    aInfo.add(makeSpectralInformation(format, S2BandConstants.B1, S2SpatialResolution.R20M, boaQuantification));
-                else
-                    aInfo.add(makeSpectralInformation(format, S2BandConstants.B1, S2SpatialResolution.R60M, boaQuantification));
+                aInfo.add(makeSpectralInformation(format, S2BandConstants.B1, S2SpatialResolution.R60M, boaQuantification));
                 aInfo.add(makeSpectralInformation(format, S2BandConstants.B2, S2SpatialResolution.R20M, boaQuantification));
                 aInfo.add(makeSpectralInformation(format, S2BandConstants.B3, S2SpatialResolution.R20M, boaQuantification));
                 aInfo.add(makeSpectralInformation(format, S2BandConstants.B4, S2SpatialResolution.R20M, boaQuantification));
@@ -190,10 +161,7 @@ public class L2aMetadataProc extends S2OrthoMetadataProc {
                 aInfo.add(makeSCLInformation(format, S2SpatialResolution.R20M, psd));
                 break;
             case R60M:
-                if(psd > 147)
-                    aInfo.add(makeSpectralInformation(format, S2BandConstants.B1, S2SpatialResolution.R20M, boaQuantification));
-                else
-                    aInfo.add(makeSpectralInformation(format, S2BandConstants.B1, S2SpatialResolution.R60M, boaQuantification));
+                aInfo.add(makeSpectralInformation(format, S2BandConstants.B1, S2SpatialResolution.R60M, boaQuantification));
                 aInfo.add(makeSpectralInformation(format, S2BandConstants.B2, S2SpatialResolution.R60M, boaQuantification));
                 aInfo.add(makeSpectralInformation(format, S2BandConstants.B3, S2SpatialResolution.R60M, boaQuantification));
                 aInfo.add(makeSpectralInformation(format, S2BandConstants.B4, S2SpatialResolution.R60M, boaQuantification));
