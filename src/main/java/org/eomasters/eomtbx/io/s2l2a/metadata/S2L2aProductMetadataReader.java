@@ -26,7 +26,6 @@ package org.eomasters.eomtbx.io.s2l2a.metadata;
 import eu.esa.opt.dataio.s2.S2Config;
 import eu.esa.opt.dataio.s2.S2SpatialResolution;
 import eu.esa.opt.dataio.s2.VirtualPath;
-import eu.esa.opt.dataio.s2.l2a.metadata.L2aMetadata;
 import eu.esa.opt.dataio.s2.ortho.metadata.AbstractS2OrthoMetadataReader;
 import eu.esa.opt.dataio.s2.ortho.metadata.S2OrthoMetadata;
 import java.io.IOException;

@@ -25,16 +25,7 @@ package org.eomasters.eomtbx.io.s2l2a.metadata;
 
 import eu.esa.opt.dataio.s2.S2Metadata;
 import eu.esa.opt.dataio.s2.VirtualPath;
-import eu.esa.opt.dataio.s2.l2a.metadata.IL2aDatastripMetadata;
-import eu.esa.opt.dataio.s2.l2a.metadata.IL2aGranuleMetadata;
-import eu.esa.opt.dataio.s2.l2a.metadata.IL2aProductMetadata;
-import eu.esa.opt.dataio.s2.l2a.metadata.L2aDatastripMetadataGenericPSD;
-import eu.esa.opt.dataio.s2.l2a.metadata.L2aGranuleMetadataGenericPSD;
-import eu.esa.opt.dataio.s2.l2a.metadata.L2aMetadataPathsProviderPSD13;
-import eu.esa.opt.dataio.s2.l2a.metadata.L2aMetadataPathsProviderPSD143;
-import eu.esa.opt.dataio.s2.l2a.metadata.L2aMetadataPathsProviderPSD148;
-import eu.esa.opt.dataio.s2.l2a.metadata.L2aMetadataPathsProviderPSD150;
-import eu.esa.opt.dataio.s2.l2a.metadata.L2aProductMetadataGenericPSD;
+
 import java.io.IOException;
 import javax.xml.parsers.ParserConfigurationException;
 import org.xml.sax.SAXException;
@@ -47,13 +38,13 @@ public class L2aMetadataFactory {
     public static IL2aProductMetadata createL2aProductMetadata(VirtualPath metadataPath) throws IOException, ParserConfigurationException, SAXException {
         int psd = S2Metadata.getFullPSDversion(metadataPath);
         if(psd == 14 || psd == 13 || psd == 12 || psd == 0 )  {
-            return eu.esa.opt.dataio.s2.l2a.metadata.L2aProductMetadataGenericPSD.create(metadataPath, new eu.esa.opt.dataio.s2.l2a.metadata.L2aMetadataPathsProviderPSD13());
+            return L2aProductMetadataGenericPSD.create(metadataPath, new L2aMetadataPathsProviderPSD13());
         } else if (psd == 143) {
-            return eu.esa.opt.dataio.s2.l2a.metadata.L2aProductMetadataGenericPSD.create(metadataPath, new L2aMetadataPathsProviderPSD143());
+            return L2aProductMetadataGenericPSD.create(metadataPath, new L2aMetadataPathsProviderPSD143());
         }else if (psd > 147 && psd < 150) {
-            return eu.esa.opt.dataio.s2.l2a.metadata.L2aProductMetadataGenericPSD.create(metadataPath, new L2aMetadataPathsProviderPSD148());
+            return L2aProductMetadataGenericPSD.create(metadataPath, new L2aMetadataPathsProviderPSD148());
         } else if (psd >= 150) {
-            return L2aProductMetadataGenericPSD.create(metadataPath, new eu.esa.opt.dataio.s2.l2a.metadata.L2aMetadataPathsProviderPSD150());
+            return L2aProductMetadataGenericPSD.create(metadataPath, new L2aMetadataPathsProviderPSD150());
         } else {
             //TODO
             return null;
@@ -63,13 +54,13 @@ public class L2aMetadataFactory {
     public static IL2aGranuleMetadata createL2aGranuleMetadata(VirtualPath metadataPath) throws IOException, ParserConfigurationException, SAXException {
         int psd = S2Metadata.getFullPSDversion(metadataPath);
         if(psd == 14 || psd == 13 || psd == 12 || psd == 0 )  {
-            return eu.esa.opt.dataio.s2.l2a.metadata.L2aGranuleMetadataGenericPSD.create(metadataPath, new eu.esa.opt.dataio.s2.l2a.metadata.L2aMetadataPathsProviderPSD13());
+            return L2aGranuleMetadataGenericPSD.create(metadataPath, new L2aMetadataPathsProviderPSD13());
         } else if (psd == 143) {
-            return eu.esa.opt.dataio.s2.l2a.metadata.L2aGranuleMetadataGenericPSD.create(metadataPath, new L2aMetadataPathsProviderPSD143());
+            return L2aGranuleMetadataGenericPSD.create(metadataPath, new L2aMetadataPathsProviderPSD143());
         } else if (psd > 147 && psd < 150) {
-            return eu.esa.opt.dataio.s2.l2a.metadata.L2aGranuleMetadataGenericPSD.create(metadataPath, new L2aMetadataPathsProviderPSD148());
+            return L2aGranuleMetadataGenericPSD.create(metadataPath, new L2aMetadataPathsProviderPSD148());
         } else if (psd >= 150) {
-            return L2aGranuleMetadataGenericPSD.create(metadataPath, new eu.esa.opt.dataio.s2.l2a.metadata.L2aMetadataPathsProviderPSD150());
+            return L2aGranuleMetadataGenericPSD.create(metadataPath, new L2aMetadataPathsProviderPSD150());
         } else {
             //TODO
             return null;
@@ -80,11 +71,11 @@ public class L2aMetadataFactory {
     public static IL2aDatastripMetadata createL2aDatastripMetadata(VirtualPath metadataPath) throws IOException, ParserConfigurationException, SAXException {
         int psd = S2Metadata.getFullPSDversion(metadataPath);
         if(psd == 14 || psd == 13 || psd == 12 || psd == 0 )  {
-            return eu.esa.opt.dataio.s2.l2a.metadata.L2aDatastripMetadataGenericPSD.create(metadataPath, new L2aMetadataPathsProviderPSD13());
+            return L2aDatastripMetadataGenericPSD.create(metadataPath, new L2aMetadataPathsProviderPSD13());
         } else if (psd == 143) {
-            return eu.esa.opt.dataio.s2.l2a.metadata.L2aDatastripMetadataGenericPSD.create(metadataPath, new L2aMetadataPathsProviderPSD143());
+            return L2aDatastripMetadataGenericPSD.create(metadataPath, new L2aMetadataPathsProviderPSD143());
         } else if (psd >147 && psd < 150) {
-            return eu.esa.opt.dataio.s2.l2a.metadata.L2aDatastripMetadataGenericPSD.create(metadataPath, new L2aMetadataPathsProviderPSD148());
+            return L2aDatastripMetadataGenericPSD.create(metadataPath, new L2aMetadataPathsProviderPSD148());
         } else if (psd >= 150) {
             return L2aDatastripMetadataGenericPSD.create(metadataPath, new L2aMetadataPathsProviderPSD150());
         } else {

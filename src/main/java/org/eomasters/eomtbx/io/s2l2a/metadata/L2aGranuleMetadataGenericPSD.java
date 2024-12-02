@@ -30,9 +30,7 @@ import eu.esa.opt.dataio.s2.S2SpatialResolution;
 import eu.esa.opt.dataio.s2.VirtualPath;
 import eu.esa.opt.dataio.s2.filepatterns.NamingConventionFactory;
 import eu.esa.opt.dataio.s2.filepatterns.SAFECOMPACTNamingConvention;
-import eu.esa.opt.dataio.s2.l2a.metadata.IL2aGranuleMetadata;
-import eu.esa.opt.dataio.s2.l2a.metadata.IL2aMetadataPathsProvider;
-import eu.esa.opt.dataio.s2.l2a.metadata.L2aMetadataProc;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Paths;
@@ -58,7 +56,7 @@ public class L2aGranuleMetadataGenericPSD extends GenericXmlMetadata implements 
 
     private static class L2aGranuleMetadataGenericPSDParser extends XmlMetadataParser<L2aGranuleMetadataGenericPSD> {
 
-        public L2aGranuleMetadataGenericPSDParser(Class metadataFileClass, eu.esa.opt.dataio.s2.l2a.metadata.IL2aMetadataPathsProvider metadataPathProvider) {
+        public L2aGranuleMetadataGenericPSDParser(Class metadataFileClass, IL2aMetadataPathsProvider metadataPathProvider) {
             super(metadataFileClass);
             setSchemaLocations(metadataPathProvider.getGranuleSchemaLocations());
             setSchemaBasePath(metadataPathProvider.getGranuleSchemaBasePath());
@@ -70,7 +68,7 @@ public class L2aGranuleMetadataGenericPSD extends GenericXmlMetadata implements 
         }
     }
 
-    public static L2aGranuleMetadataGenericPSD create(VirtualPath path, eu.esa.opt.dataio.s2.l2a.metadata.IL2aMetadataPathsProvider metadataPathProvider) throws IOException, ParserConfigurationException, SAXException {
+    public static L2aGranuleMetadataGenericPSD create(VirtualPath path, IL2aMetadataPathsProvider metadataPathProvider) throws IOException, ParserConfigurationException, SAXException {
         Assert.notNull(path);
         L2aGranuleMetadataGenericPSD result = null;
         InputStream stream = null;
@@ -89,10 +87,10 @@ public class L2aGranuleMetadataGenericPSD extends GenericXmlMetadata implements 
         return result;
     }
 
-    private eu.esa.opt.dataio.s2.l2a.metadata.IL2aMetadataPathsProvider metadataPathProvider = null;
+    private IL2aMetadataPathsProvider metadataPathProvider = null;
 
     private void setMetadataPathsProvider(
-        eu.esa.opt.dataio.s2.l2a.metadata.IL2aMetadataPathsProvider metadataPathProvider) {
+        IL2aMetadataPathsProvider metadataPathProvider) {
         this.metadataPathProvider = metadataPathProvider;
     }
     public L2aGranuleMetadataGenericPSD(String name) {

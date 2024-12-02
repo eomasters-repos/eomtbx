@@ -40,63 +40,33 @@
 
 package org.eomasters.eomtbx.io.s2l2a;
 
-import eu.esa.opt.dataio.s2.S2Config.Sentinel2ProductLevel;
-import eu.esa.opt.dataio.s2.S2ProductReaderPlugIn;
-import java.io.File;
-import java.nio.file.FileSystems;
-import java.nio.file.Path;
-import java.util.Locale;
-import java.util.regex.Pattern;
-import org.esa.snap.core.dataio.DecodeQualification;
-import org.esa.snap.core.dataio.ProductReader;
-import org.esa.snap.core.metadata.MetadataInspector;
+import eu.esa.opt.dataio.s2.VirtualPath;
+import eu.esa.opt.dataio.s2.l2a.metadata.S2L2aProductMetadataReader;
+import eu.esa.opt.dataio.s2.masks.MaskInfo;
+import java.io.IOException;
+import org.esa.snap.core.dataio.ProductReaderPlugIn;
 
-public class EomBasicS2L2AProductReaderPlugIn extends S2ProductReaderPlugIn {
+public class S2L2AScaledB1FootprintProductReader extends S2L2AScaledB1FootprintOrthoProductReader {
 
-  public static final String PRODUCT_NAME_REGEX = "S2([AB])_MSIL2A_[0-9]{8}T[0-9]{6}_N[0-9]{4}_R[0-9]{3}_T[0-9]{2}[A-Z]{3}_[0-9]{8}T[0-9]{6}.*";
-  private static final Pattern PRODUCT_NAME_PATTERN = Pattern.compile(PRODUCT_NAME_REGEX);
-  private static final String FORMAT_NAME = "EOM_BASIC_S2L2A";
+    private static final String L2A_CACHE_DIR = "l2a-reader";
 
-  @Override
-  public MetadataInspector getMetadataInspector() {
-    return new EomS2L2aMetadataInspector(Sentinel2ProductLevel.L2A);
-  }
-
-
-  @Override
-  public DecodeQualification getDecodeQualification(Object input) {
-    if (!(input instanceof File)) {
-      return DecodeQualification.UNABLE;
-    }
-    File file = (File) input;
-    Path inputPath = file.toPath();
-    boolean isLocalFileSystem = inputPath.getFileSystem().provider() == FileSystems.getDefault().provider();
-    if (!isLocalFileSystem && !inputPath.isAbsolute()) {
-      return DecodeQualification.UNABLE;
-    }
-    if (!isValidExtension(file)) {
-      return DecodeQualification.UNABLE;
+    public S2L2AScaledB1FootprintProductReader(ProductReaderPlugIn readerPlugIn) {
+        super(readerPlugIn);
     }
 
-    String productName = EomS2L2AUtils.getProductName(inputPath);
-    if (PRODUCT_NAME_PATTERN.matcher(productName).matches()) {
-      return DecodeQualification.SUITABLE;
+    @Override
+    protected S2L2aProductMetadataReader buildMetadataReader(VirtualPath virtualPath) throws IOException {
+        String epsgCode = EomS2L2AUtils.getEpsgCode(virtualPath);
+        return new S2L2aProductMetadataReader(virtualPath, epsgCode);
     }
-    return DecodeQualification.UNABLE;
-  }
 
-  @Override
-  public ProductReader createReaderInstance() {
-    return new EomS2L2AProductReader(this);
-  }
+    @Override
+    protected String getReaderCacheDir() {
+        return L2A_CACHE_DIR;
+    }
 
-  @Override
-  public String[] getFormatNames() {
-    return new String[]{FORMAT_NAME};
-  }
-
-  @Override
-  public String getDescription(Locale locale) {
-    return "Sentinel-2 L2A - fixed B1 geometry";
-  }
+    @Override
+    protected int getMaskLevel() {
+        return MaskInfo.L2A;
+    }
 }

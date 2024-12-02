@@ -25,7 +25,6 @@ package org.eomasters.eomtbx.io.s2l2a.metadata;
 
 import eu.esa.opt.dataio.s2.l2a.L2aPSD143Constants;
 import eu.esa.opt.dataio.s2.l2a.L2aPSD148Constants;
-import eu.esa.opt.dataio.s2.l2a.metadata.IL2aMetadataPathsProvider;
 
 /**
  * Created by obarrile on 06/02/2018.

@@ -1,0 +1,44 @@
+<filesystem>
+
+  <folder name="Actions">
+    <folder name="Readers">
+      <file name="org-eomasters-eomtbx-io-s2l2a-ImportS2l2aNativeB1Product.instance">
+        <attr name="instanceCreate" methodvalue="org.openide.awt.Actions.alwaysEnabled"/>
+        <attr name="delegate" methodvalue="org.esa.snap.rcp.actions.file.ImportProductAction.create"/>
+        <attr name="displayName" stringvalue="S2-MSI L2A - B1 at native resolution"/>
+        <attr name="formatName" stringvalue="S2L2A_NATIVE_B1"/>
+        <attr name="useAllFileFilter" boolvalue="false"/>
+        <attr name="helpId" stringvalue="eomtbx.io.s2l2aB1Reader"/>
+      </file>
+      <file name="org-eomasters-eomtbx-io-s2l2a-ImportS2l2aScaledB1Product.instance">
+        <attr name="instanceCreate" methodvalue="org.openide.awt.Actions.alwaysEnabled"/>
+        <attr name="delegate" methodvalue="org.esa.snap.rcp.actions.file.ImportProductAction.create"/>
+        <attr name="displayName" stringvalue="S2-MSI L2A - B1 scaled det_footprint"/>
+        <attr name="formatName" stringvalue="S2L2A_SCALED_B1_FOOTPRINT"/>
+        <attr name="useAllFileFilter" boolvalue="false"/>
+        <attr name="helpId" stringvalue="eomtbx.io.s2l2aB1Reader"/>
+      </file>
+    </folder>
+  </folder>
+
+  <folder name="Menu">
+    <folder name="File">
+      <folder name="Import">
+        <folder name="Optical Sensors">
+          <folder name="Sentinel-2">
+            <file name="org-eomasters-eomtbx-io-s2l2a-ImportS2l2aNativeB1Product.shadow">
+              <attr name="originalFile"
+                stringvalue="Actions/Readers/org-eomasters-eomtbx-io-s2l2a-ImportS2l2aNativeB1Product.instance"/>
+            </file>
+            <file name="org-eomasters-eomtbx-io-s2l2a-ImportS2l2aScaledB1Product.shadow">
+              <attr name="originalFile"
+                stringvalue="Actions/Readers/org-eomasters-eomtbx-io-s2l2a-ImportS2l2aScaledB1Product.instance"/>
+            </file>
+
+          </folder>
+        </folder>
+      </folder>
+    </folder>
+  </folder>
+
+</filesystem>

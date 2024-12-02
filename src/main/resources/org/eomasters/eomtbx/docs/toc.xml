@@ -10,6 +10,7 @@
     <tocitem target="eomtbx.ioFormats" text="IO-Formats Listing"/>
     <tocitem target="eomtbx.mathsExtensions" text="BandMaths Extension"/>
     <tocitem target="eomtbx.wvlEditor" text="Wavelength Editor"/>
+    <tocitem target="eomtbx.io.s2l2aB1Reader" text="S2-MSI L2A Reader - Fixed B1 Footprint"/>
     <tocitem target="eomtbx.errorHandler" text="Error Handler"/>
     <tocitem target="eomtbx.options.free" text="Options"/>
     <tocitem text="Menu Actions">

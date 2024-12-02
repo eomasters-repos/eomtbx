@@ -31,8 +31,6 @@ import eu.esa.opt.dataio.s2.VirtualPath;
 import eu.esa.opt.dataio.s2.filepatterns.NamingConventionFactory;
 import eu.esa.opt.dataio.s2.filepatterns.SAFECOMPACTNamingConvention;
 import eu.esa.opt.dataio.s2.l2a.L2aPSD13Constants;
-import eu.esa.opt.dataio.s2.l2a.metadata.IL2aGranuleMetadata;
-import eu.esa.opt.dataio.s2.l2a.metadata.L2aMetadataProc;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Paths;

@@ -25,8 +25,6 @@ package org.eomasters.eomtbx.io.s2l2a.metadata;
 
 import com.bc.ceres.core.Assert;
 import eu.esa.opt.dataio.s2.VirtualPath;
-import eu.esa.opt.dataio.s2.l2a.metadata.IL2aDatastripMetadata;
-import eu.esa.opt.dataio.s2.l2a.metadata.IL2aMetadataPathsProvider;
 import java.io.IOException;
 import java.io.InputStream;
 import javax.xml.parsers.ParserConfigurationException;
@@ -43,7 +41,7 @@ public class L2aDatastripMetadataGenericPSD extends GenericXmlMetadata implement
 
     private static class L2aDatastripMetadataGenericPSDParser extends XmlMetadataParser<L2aDatastripMetadataGenericPSD> {
 
-        public L2aDatastripMetadataGenericPSDParser(Class metadataFileClass, eu.esa.opt.dataio.s2.l2a.metadata.IL2aMetadataPathsProvider metadataPathProvider) {
+        public L2aDatastripMetadataGenericPSDParser(Class metadataFileClass, IL2aMetadataPathsProvider metadataPathProvider) {
             super(metadataFileClass);
             setSchemaLocations(metadataPathProvider.getDatastripSchemaLocations());
             setSchemaBasePath(metadataPathProvider.getDatastripSchemaBasePath());
@@ -55,7 +53,7 @@ public class L2aDatastripMetadataGenericPSD extends GenericXmlMetadata implement
         }
     }
 
-    public static L2aDatastripMetadataGenericPSD create(VirtualPath path, eu.esa.opt.dataio.s2.l2a.metadata.IL2aMetadataPathsProvider metadataPathProvider) throws IOException, ParserConfigurationException, SAXException {
+    public static L2aDatastripMetadataGenericPSD create(VirtualPath path, IL2aMetadataPathsProvider metadataPathProvider) throws IOException, ParserConfigurationException, SAXException {
         Assert.notNull(path);
         L2aDatastripMetadataGenericPSD result = null;
         InputStream stream = null;
@@ -73,10 +71,10 @@ public class L2aDatastripMetadataGenericPSD extends GenericXmlMetadata implement
         return result;
     }
 
-    private eu.esa.opt.dataio.s2.l2a.metadata.IL2aMetadataPathsProvider metadataPathProvider = null;
+    private IL2aMetadataPathsProvider metadataPathProvider = null;
 
     private void setMetadataPathsProvider(
-        eu.esa.opt.dataio.s2.l2a.metadata.IL2aMetadataPathsProvider metadataPathProvider) {
+        IL2aMetadataPathsProvider metadataPathProvider) {
         this.metadataPathProvider = metadataPathProvider;
     }
     public L2aDatastripMetadataGenericPSD(String name) {

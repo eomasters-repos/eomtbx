@@ -44,10 +44,6 @@ import eu.esa.opt.dataio.s2.S2Config;
 import eu.esa.opt.dataio.s2.S2SpatialResolution;
 import eu.esa.opt.dataio.s2.VirtualPath;
 import eu.esa.opt.dataio.s2.filepatterns.INamingConvention;
-import eu.esa.opt.dataio.s2.l2a.metadata.IL2aDatastripMetadata;
-import eu.esa.opt.dataio.s2.l2a.metadata.IL2aGranuleMetadata;
-import eu.esa.opt.dataio.s2.l2a.metadata.IL2aProductMetadata;
-import eu.esa.opt.dataio.s2.l2a.metadata.L2aMetadataFactory;
 import eu.esa.opt.dataio.s2.ortho.metadata.S2OrthoMetadata;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -58,7 +54,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.xml.parsers.ParserConfigurationException;
 import org.esa.snap.core.datamodel.MetadataElement;
-import org.esa.snap.core.gpf.Tile;
 import org.esa.snap.core.util.SystemUtils;
 import org.xml.sax.SAXException;
 

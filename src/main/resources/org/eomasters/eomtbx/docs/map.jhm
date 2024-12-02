@@ -14,6 +14,7 @@
   <mapID target="eomtbx.wvlEditor" url="pages/WvlEditor.html"/>
   <mapID target="eomtbx.errorHandler" url="pages/ErrorHandler.html"/>
   <mapID target="eomtbx.options.free" url="pages/OptionsFree.html"/>
+  <mapID target="eomtbx.io.s2l2aB1Reader" url="pages/S2L2AFixedB1FootprintReader.html"/>
 
   <mapID target="eomtbx.closeProductNoView" url="pages/actions/CloseProductNoView.html"/>
   <mapID target="eomtbx.systemReport" url="pages/actions/CreateSystemReport.html"/>

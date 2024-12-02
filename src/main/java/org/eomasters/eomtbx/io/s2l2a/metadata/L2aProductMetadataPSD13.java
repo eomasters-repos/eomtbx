@@ -31,8 +31,6 @@ import eu.esa.opt.dataio.s2.VirtualPath;
 import eu.esa.opt.dataio.s2.filepatterns.S2DatastripDirFilename;
 import eu.esa.opt.dataio.s2.filepatterns.S2DatastripFilename;
 import eu.esa.opt.dataio.s2.l2a.L2aPSD13Constants;
-import eu.esa.opt.dataio.s2.l2a.metadata.IL2aProductMetadata;
-import eu.esa.opt.dataio.s2.l2a.metadata.L2aMetadataProc;
 import eu.esa.opt.dataio.s2.ortho.filepatterns.S2OrthoDatastripFilename;
 import eu.esa.opt.dataio.s2.ortho.filepatterns.S2OrthoGranuleDirFilename;
 import java.io.IOException;

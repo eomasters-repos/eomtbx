@@ -26,7 +26,7 @@
 
 
   <properties>
-    <snap.version>11.0.0</snap.version>
+    <snap.version>11.0.1-SNAPSHOT</snap.version>
     <netbeans.version>RELEASE113</netbeans.version>
     <javahelp.version>2.0.05</javahelp.version>
     <maven.compiler.release>11</maven.compiler.release>
@@ -49,6 +49,11 @@
   </dependencyManagement>
 
   <dependencies>
+    <dependency>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-io</artifactId>
+      <version>1.3.2</version>
+    </dependency>
     <dependency>
       <groupId>org.esa.snap</groupId>
       <artifactId>ceres-core</artifactId>

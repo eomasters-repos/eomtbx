@@ -26,7 +26,6 @@ package org.eomasters.eomtbx.io.s2l2a.metadata;
 import com.bc.ceres.core.Assert;
 import eu.esa.opt.dataio.s2.VirtualPath;
 import eu.esa.opt.dataio.s2.l2a.L2aPSD148Constants;
-import eu.esa.opt.dataio.s2.l2a.metadata.IL2aDatastripMetadata;
 import java.io.IOException;
 import java.io.InputStream;
 import javax.xml.parsers.ParserConfigurationException;

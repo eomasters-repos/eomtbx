@@ -25,6 +25,7 @@ The toolbox comprises for example the following tools, features and options:
   Adds new functionalities to Band Maths, like window calculations and checking if pixels are invalid.
 * Wavelength Editor<br>
   Allows to edit the wavelength properties of multiple bands and apply the changes to compatible products.
+* Sentinel-2 MSI L2A reader fixing issue of B1 detector footprint
 * Close Product Without a View<br>
   Simply closes all products which are not used by a Scene View.
 * Generate System Report<br>

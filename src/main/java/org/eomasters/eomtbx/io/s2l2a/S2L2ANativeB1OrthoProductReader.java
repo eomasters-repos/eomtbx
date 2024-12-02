@@ -164,7 +164,7 @@ import org.opengis.referencing.operation.TransformException;
  * @author Nicolas Ducoin modified 20200113 to support the advanced dialog for
  *         readers by Denisa Stefanescu
  */
-public abstract class EomS2OrthoProductReader extends Sentinel2ProductReader implements S2AnglesGeometry {
+public abstract class S2L2ANativeB1OrthoProductReader extends Sentinel2ProductReader implements S2AnglesGeometry {
 
     public static final String VIEW_ZENITH_PREFIX = "view_zenith";
     public static final String VIEW_AZIMUTH_PREFIX = "view_azimuth";
@@ -175,7 +175,7 @@ public abstract class EomS2OrthoProductReader extends Sentinel2ProductReader imp
 
     private final boolean useNativeBlockSize = Boolean.parseBoolean(System.getenv("SNAP_GDAL_USE_NATIVE_BLOCKS"));
 
-    protected EomS2OrthoProductReader(ProductReaderPlugIn readerPlugIn) {
+    protected S2L2ANativeB1OrthoProductReader(ProductReaderPlugIn readerPlugIn) {
         super(readerPlugIn);
 
     }

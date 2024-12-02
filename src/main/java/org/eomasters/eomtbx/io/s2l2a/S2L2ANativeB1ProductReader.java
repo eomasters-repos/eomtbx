@@ -46,11 +46,11 @@ import java.io.IOException;
 import org.eomasters.eomtbx.io.s2l2a.metadata.S2L2aProductMetadataReader;
 import org.esa.snap.core.dataio.ProductReaderPlugIn;
 
-public class EomS2L2AProductReader extends EomS2OrthoProductReader {
+public class S2L2ANativeB1ProductReader extends S2L2ANativeB1OrthoProductReader {
 
     private static final String L2A_CACHE_DIR = "l2a-reader";
 
-    public EomS2L2AProductReader(ProductReaderPlugIn readerPlugIn) {
+    public S2L2ANativeB1ProductReader(ProductReaderPlugIn readerPlugIn) {
         super(readerPlugIn);
     }
 
