@@ -39,7 +39,7 @@ If you find issues or have suggestions for improvements and extensions, please u
 post on the [EOMasters forum](https://www.eomasters.org/forum).
 
 ## Issues
-If you have found an issue either a bug or you are missing a feature, plese report it in the [issue tracker](https://github.com/eomasters-repos/issue-tracker/issues).
+If you have found an issue either a bug or you are missing a feature, please report it in the [issue tracker](https://github.com/eomasters-repos/eomtbx-issues/issues).
 
 ## Release Notes
 
