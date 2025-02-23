@@ -38,6 +38,9 @@ The toolbox comprises for example the following tools, features and options:
 If you find issues or have suggestions for improvements and extensions, please use the issue tracker on GitHub or
 post on the [EOMasters forum](https://www.eomasters.org/forum).
 
+## Issues
+If you have found an issue either a bug or you are missing a feature, plese report it in the [issue tracker](https://github.com/eomasters-repos/issue-tracker/issues).
+
 ## Release Notes
 
 The release notes can be found [here](https://github.com/eomasters-repos/eomtbx/releases).
