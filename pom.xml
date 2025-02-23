@@ -33,7 +33,7 @@
     <maven.compiler.release>11</maven.compiler.release>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <eom-commons.version>0.3.4</eom-commons.version>
-    <eom-commons-snap.version>0.2.7</eom-commons-snap.version>
+    <eom-commons-snap.version>0.2.8</eom-commons-snap.version>
     <deploy.dir>${project.build.directory}/mvn-repo</deploy.dir>
   </properties>
 
@@ -484,7 +484,7 @@
   <repositories>
     <repository>
       <id>mvn-repo</id>
-      <url>https://raw.githubusercontent.com/eomasters-repos/mvn-repo/main/</url>
+      <url>https://github.com/eomasters-repos/mvn-repo/raw/refs/heads/main/</url>
       <releases>
         <enabled>true</enabled>
       </releases>
