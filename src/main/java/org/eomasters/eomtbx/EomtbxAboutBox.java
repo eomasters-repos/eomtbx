@@ -36,7 +36,7 @@ import javax.swing.border.EmptyBorder;
 import org.esa.snap.rcp.about.AboutBox;
 
 /**
- * The common {@link AboutBox} which is registered to SNAP/NetBeans. It provides an extension point usgin the
+ * The common {@link AboutBox} which is registered to SNAP/NetBeans. It provides an extension point using the
  * {@link AboutBoxProvider} for variants of the EOMTBX.
  */
 @AboutBox(displayName = "EOMTBX", position = 500)
