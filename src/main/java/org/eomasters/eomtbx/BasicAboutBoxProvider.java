@@ -9,12 +9,12 @@
  * it under the terms of the GNU General Public License as
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public
  * License along with this program.  If not, see
  * -> http://www.gnu.org/licenses/gpl-3.0.html
@@ -64,7 +64,7 @@ public class BasicAboutBoxProvider implements AboutBoxProvider {
   private static JLabel getCopyrightLabel() {
     String eomLink = "<a href=\"" + EomToolbox.EOMASTERS_URL + "\">EOMasters</a>";
     JLabel copyrightLabel = new JLabel("<html><b>©2023-2025 Marco Peters from " + eomLink + "</b>",
-        SwingConstants.CENTER);
+                                       SwingConstants.CENTER);
     copyrightLabel.addMouseListener(new BrowserUtils.URLClickAdaptor(EomToolbox.EOMASTERS_URL.toString()));
     return copyrightLabel;
   }
@@ -72,7 +72,7 @@ public class BasicAboutBoxProvider implements AboutBoxProvider {
   private static JLabel getReleaseNotesLabel() {
     URI changelogUri = URI.create("https://github.com/eomasters-repos/eomtbx/releases");
     final JLabel releaseNotesLabel = new JLabel(String.format("<html><a href=\"%s\">Release Notes</a>", changelogUri),
-        SwingConstants.CENTER);
+                                                SwingConstants.CENTER);
     releaseNotesLabel.setCursor(new Cursor(Cursor.HAND_CURSOR));
     releaseNotesLabel.addMouseListener(new BrowserUtils.URLClickAdaptor(changelogUri.toString()));
     return releaseNotesLabel;
@@ -80,9 +80,8 @@ public class BasicAboutBoxProvider implements AboutBoxProvider {
 
   private static JLabel getVersionLabel() {
     ModuleInfo moduleInfo = Modules.getDefault().ownerOf(BasicAboutBoxProvider.class);
-    ;
     return new JLabel(String.format("<html><b>EOMasters Toolbox Basic version %s</b>",
-        moduleInfo.getImplementationVersion()), SwingConstants.CENTER);
+                                    moduleInfo.getImplementationVersion()), SwingConstants.CENTER);
   }
 
 }
