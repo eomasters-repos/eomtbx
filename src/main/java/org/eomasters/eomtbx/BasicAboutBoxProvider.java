@@ -63,7 +63,7 @@ public class BasicAboutBoxProvider implements AboutBoxProvider {
 
   private static JLabel getCopyrightLabel() {
     String eomLink = "<a href=\"" + EomToolbox.EOMASTERS_URL + "\">EOMasters</a>";
-    JLabel copyrightLabel = new JLabel("<html><b>©2023-2024 Marco Peters from " + eomLink + "</b>",
+    JLabel copyrightLabel = new JLabel("<html><b>©2023-2025 Marco Peters from " + eomLink + "</b>",
         SwingConstants.CENTER);
     copyrightLabel.addMouseListener(new BrowserUtils.URLClickAdaptor(EomToolbox.EOMASTERS_URL.toString()));
     return copyrightLabel;
