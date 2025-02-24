@@ -43,7 +43,7 @@ public class BasicAboutBoxProvider implements AboutBoxProvider {
 
   @Override
   public String getTitle() {
-    return "Free";
+    return "Basic";
   }
 
   @Override
