@@ -39,7 +39,7 @@ import org.openide.modules.Modules;
 /**
  * Provides the AboutBox for the EOMasters Toolbox Basic.
  */
-public class FreeAboutBoxProvider implements AboutBoxProvider {
+public class BasicAboutBoxProvider implements AboutBoxProvider {
 
   @Override
   public String getTitle() {
@@ -79,7 +79,7 @@ public class FreeAboutBoxProvider implements AboutBoxProvider {
   }
 
   private static JLabel getVersionLabel() {
-    ModuleInfo moduleInfo = Modules.getDefault().ownerOf(FreeAboutBoxProvider.class);
+    ModuleInfo moduleInfo = Modules.getDefault().ownerOf(BasicAboutBoxProvider.class);
     ;
     return new JLabel(String.format("<html><b>EOMasters Toolbox Basic version %s</b>",
         moduleInfo.getImplementationVersion()), SwingConstants.CENTER);
