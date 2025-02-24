@@ -39,11 +39,11 @@ import org.openide.modules.Modules;
 /**
  * Provides the AboutBox for the EOMasters Toolbox Basic.
  */
-public class FreeAboutBoxProvider implements AboutBoxProvider {
+public class BasicAboutBoxProvider implements AboutBoxProvider {
 
   @Override
   public String getTitle() {
-    return "Free";
+    return "Basic";
   }
 
   @Override
@@ -63,8 +63,8 @@ public class FreeAboutBoxProvider implements AboutBoxProvider {
 
   private static JLabel getCopyrightLabel() {
     String eomLink = "<a href=\"" + EomToolbox.EOMASTERS_URL + "\">EOMasters</a>";
-    JLabel copyrightLabel = new JLabel("<html><b>©2023-2024 Marco Peters from " + eomLink + "</b>",
-        SwingConstants.CENTER);
+    JLabel copyrightLabel = new JLabel("<html><b>©2023-2025 Marco Peters from " + eomLink + "</b>",
+                                       SwingConstants.CENTER);
     copyrightLabel.addMouseListener(new BrowserUtils.URLClickAdaptor(EomToolbox.EOMASTERS_URL.toString()));
     return copyrightLabel;
   }
@@ -72,17 +72,16 @@ public class FreeAboutBoxProvider implements AboutBoxProvider {
   private static JLabel getReleaseNotesLabel() {
     URI changelogUri = URI.create("https://github.com/eomasters-repos/eomtbx/releases");
     final JLabel releaseNotesLabel = new JLabel(String.format("<html><a href=\"%s\">Release Notes</a>", changelogUri),
-        SwingConstants.CENTER);
+                                                SwingConstants.CENTER);
     releaseNotesLabel.setCursor(new Cursor(Cursor.HAND_CURSOR));
     releaseNotesLabel.addMouseListener(new BrowserUtils.URLClickAdaptor(changelogUri.toString()));
     return releaseNotesLabel;
   }
 
   private static JLabel getVersionLabel() {
-    ModuleInfo moduleInfo = Modules.getDefault().ownerOf(FreeAboutBoxProvider.class);
-    ;
+    ModuleInfo moduleInfo = Modules.getDefault().ownerOf(BasicAboutBoxProvider.class);
     return new JLabel(String.format("<html><b>EOMasters Toolbox Basic version %s</b>",
-        moduleInfo.getImplementationVersion()), SwingConstants.CENTER);
+                                    moduleInfo.getImplementationVersion()), SwingConstants.CENTER);
   }
 
 }

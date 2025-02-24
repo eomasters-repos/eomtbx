@@ -10,7 +10,8 @@ EOMasters Toolbox Basic for SNAP
 [![Mastodon](https://img.shields.io/badge/Mastodon-6364FF?style=for-the-badge&logo=Mastodon&logoColor=white)](https://mastodon.green/@EOMasters)
 [![ko-fi](https://img.shields.io/badge/Ko--fi-F16061?style=for-the-badge&logo=ko-fi&logoColor=white)](https://ko-fi.com/eomasters)
 
-The EOMasters Toolbox Basic (EOMTBX) is a collection of various tools which help to ease the daily work and to save valuable
+The EOMasters Toolbox Basic (EOMTBX) is a collection of various tools which help to ease the daily work and to save
+valuable
 time while working with ESA's SNAP.
 
 ![eomtbx_basic_logo_365.png](src/main/resources/org/eomasters/eomtbx/eomtbx_basic_logo_365.png)
@@ -35,8 +36,8 @@ The toolbox comprises for example the following tools, features and options:
 
 ## Feedback
 
-If you find issues or have suggestions for improvements and extensions, please use the issue tracker on GitHub or
-post on the [EOMasters forum](https://www.eomasters.org/forum).
+If you have suggestions for improvements and extensions, please use the 
+[issue tracker](https://github.com/eomasters-repos/eomtbx-issues/issues) or post on the [EOMasters forum](https://www.eomasters.org/forum).
 
 ## Release Notes
 
