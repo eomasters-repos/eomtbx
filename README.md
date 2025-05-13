@@ -16,7 +16,7 @@ time while working with ESA's SNAP.
 
 ![eomtbx_basic_logo_365.png](src/main/resources/org/eomasters/eomtbx/eomtbx_basic_logo_365.png)
 
-The toolbox comprises for example the following tools, features and options:
+The toolbox comprises, for example, the following tools, features and options:
 
 * Quick Menu<br>
   Provides quick access to the most often used menu actions.
@@ -25,14 +25,14 @@ The toolbox comprises for example the following tools, features and options:
 * Band Maths Extensions<br>
   Adds new functionalities to Band Maths, like window calculations and checking if pixels are invalid.
 * Wavelength Editor<br>
-  Allows to edit the wavelength properties of multiple bands and apply the changes to compatible products.
+  Allows editing the wavelength properties of multiple bands and applying the changes to compatible products.
 * Sentinel-2 MSI L2A reader fixing issue of B1 detector footprint
 * Close Product Without a View<br>
-  Simply closes all products which are not used by a Scene View.
+  Simply closes all products that are not used by a Scene View.
 * Generate System Report<br>
   Generates a system report usable for error reports to the developers.
 * Options<br>
-  Allows to change the settings of the tools and to export them into a separate file, which can later be imported.
+  Allow changing the settings of the tools and exporting them into a separate file, which can later be imported.
 
 ## Feedback
 
