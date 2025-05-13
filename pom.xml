@@ -21,19 +21,19 @@
 
   <groupId>org.eomasters</groupId>
   <artifactId>eomtbx</artifactId>
-  <version>1.1.4</version>
+  <version>1.2-SNAPSHOT</version>
   <packaging>nbm</packaging>
 
 
   <properties>
-    <snap.version>11.0.1</snap.version>
-    <opttbx.version>11.0.1</opttbx.version>
-    <netbeans.version>RELEASE113</netbeans.version>
+    <snap.version>12.0.0</snap.version>
+    <opttbx.version>12.0.0</opttbx.version>
+    <netbeans.version>RELEASE210</netbeans.version>
     <javahelp.version>2.0.05</javahelp.version>
-    <maven.compiler.release>11</maven.compiler.release>
+    <maven.compiler.release>21</maven.compiler.release>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <eom-commons.version>0.3.4</eom-commons.version>
-    <eom-commons-snap.version>0.2.8</eom-commons-snap.version>
+    <eom-commons.version>0.4-SNAPSHOT</eom-commons.version>
+    <eom-commons-snap.version>0.3-SNAPSHOT</eom-commons-snap.version>
     <deploy.dir>${project.build.directory}/mvn-repo</deploy.dir>
   </properties>
 
@@ -124,7 +124,7 @@
     <dependency>
       <groupId>eu.esa.snap.netbeans</groupId>
       <artifactId>snap-gui-lib</artifactId>
-      <version>1.2.0</version>
+      <version>1.3.0</version>
     </dependency>
     <dependency>
       <groupId>org.esa.snap</groupId>
@@ -144,7 +144,7 @@
     <dependency>
       <groupId>eu.esa.snap.netbeans</groupId>
       <artifactId>snap-help-system</artifactId>
-      <version>1.0.0</version>
+      <version>1.0.2</version>
     </dependency>
 
     <dependency>

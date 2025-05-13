@@ -3,7 +3,7 @@ EOMasters Toolbox Basic for SNAP
 [![Static Badge](https://img.shields.io/badge/%F0%9F%8C%90-eo?style=for-the-badge&logoSize=auto&label=EOMasters&color=262626)](https://www.eomasters.org)
 
 [![Maven Build](https://github.com/eomasters-repos/eomtbx/actions/workflows/mvn-build.yml/badge.svg)](https://github.com/eomasters-repos/eomtbx/actions/workflows/mvn-build.yml)
-[![Static Badge](https://img.shields.io/badge/FOR%20ESA%20SNAP-Version%2011-00AA89?labelColor=5A5A5A)](https://step.esa.int/main/)
+[![Static Badge](https://img.shields.io/badge/FOR%20ESA%20SNAP-Version%2012-00AA89?labelColor=5A5A5A)](https://step.esa.int/main/)
 
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/company/eomasters)
 [![Bluesky](https://img.shields.io/badge/Bluesky-0285FF?style=for-the-badge&logo=bluesky&logoColor=fff&labelColor=0285FF)](https://bsky.app/profile/eomasters.org)
