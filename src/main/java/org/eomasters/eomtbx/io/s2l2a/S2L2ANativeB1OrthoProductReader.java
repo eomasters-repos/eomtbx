@@ -45,9 +45,9 @@ import static org.eomasters.eomtbx.io.s2l2a.EomS2OrthoMetadataProc.makeTileInfor
 import static org.esa.snap.core.util.DateTimeUtils.parseDate;
 
 import com.bc.ceres.core.ProgressMonitor;
-import com.bc.ceres.glevel.MultiLevelImage;
-import com.bc.ceres.glevel.support.DefaultMultiLevelImage;
-import com.bc.ceres.glevel.support.DefaultMultiLevelModel;
+import com.bc.ceres.multilevel.MultiLevelImage;
+import com.bc.ceres.multilevel.support.DefaultMultiLevelImage;
+import com.bc.ceres.multilevel.support.DefaultMultiLevelModel;
 import eu.esa.opt.dataio.s2.CAMSReader;
 import eu.esa.opt.dataio.s2.ColorIterator;
 import eu.esa.opt.dataio.s2.ECMWFTReader;
@@ -226,7 +226,7 @@ public abstract class S2L2ANativeB1OrthoProductReader extends Sentinel2ProductRe
         // because the tile layout is obtained with the tile in zone UTM 30.
         // But the sceneLayout is computed with the tiles that are in the zone UTM 31 if
         // we select this PlugIn
-        if (sceneDescription.getTileIds().size() == 0) {
+        if (sceneDescription.getTileIds().isEmpty()) {
             throw new IOException(String.format("No valid tiles associated to product [%s]",
                                                 rootMetadataPath.getFileName().toString()));
         }
@@ -290,7 +290,7 @@ public abstract class S2L2ANativeB1OrthoProductReader extends Sentinel2ProductRe
             if (!isMultiResolution()) {
                 scaleBands(product, bandInfoList, productResolution);
             }
-            S2Metadata.Tile tile = tileList.get(0);
+            S2Metadata.Tile tile = tileList.getFirst();
             if (tile.getMaskFilenames() != null && (!tile.getMaskFilenames()[0].getPath().getFullPathString().endsWith(".gml"))) {
                 addRasterMasks(tileList, product, mapCRS, bandInfoList, sceneDescription, productResolution,
                                productDefaultGeoCoding, subsetDef, defaultJAIReadTileSize);
@@ -315,7 +315,7 @@ public abstract class S2L2ANativeB1OrthoProductReader extends Sentinel2ProductRe
                     resolutions.add(bandInfo.getBandInformation().getResolution());
                 }
             }
-            if (tileList.size() > 0) {
+            if (!tileList.isEmpty()) {
                 addTileIndexes(product, mapCRS, resolutions, tileList, sceneDescription, productResolution,
                                productDefaultGeoCoding, subsetDef);
             }
@@ -329,7 +329,7 @@ public abstract class S2L2ANativeB1OrthoProductReader extends Sentinel2ProductRe
                 }
             }
             if ((!productLevel.matches(S2Constant.LevelL2H) && !productLevel.matches(S2Constant.LevelL2F))
-                    || anglesGridsMap.size() > 0) {
+                    || !anglesGridsMap.isEmpty()) {
                 addAnglesBands(mapCRS, defaultProductSize, product, sceneDescription, anglesGridsMap,
                                productDefaultGeoCoding, subsetDef);
 //            } else {
@@ -666,11 +666,10 @@ public abstract class S2L2ANativeB1OrthoProductReader extends Sentinel2ProductRe
                                EomS2OrthoSceneLayout sceneDescription, S2SpatialResolution productResolution,
                                GeoCoding productDefaultGeoCoding, ProductSubsetDef subsetDef) throws IOException {
         for (BandInfo bandInfo : bandInfoList) {
-            if (bandInfo.getBandInformation() instanceof S2IndexBandInformation) {
+            if (bandInfo.getBandInformation() instanceof S2IndexBandInformation indexBandInformation) {
                 Dimension defaultBandSize = sceneDescription
                         .getSceneDimension(bandInfo.getBandInformation().getResolution());
-                S2IndexBandInformation indexBandInformation = (S2IndexBandInformation) bandInfo.getBandInformation();
-                IndexCoding indexCoding = indexBandInformation.getIndexCoding();
+              IndexCoding indexCoding = indexBandInformation.getIndexCoding();
                 product.getIndexCodingGroup().add(indexCoding);
 
                 double pixelSize;

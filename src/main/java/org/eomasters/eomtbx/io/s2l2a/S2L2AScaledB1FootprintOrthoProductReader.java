@@ -9,12 +9,12 @@
  * it under the terms of the GNU General Public License as
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public
  * License along with this program.  If not, see
  * -> http://www.gnu.org/licenses/gpl-3.0.html
@@ -45,10 +45,10 @@ import static org.eomasters.eomtbx.io.s2l2a.EomS2OrthoMetadataProc.makeTileInfor
 import static org.esa.snap.core.util.DateTimeUtils.parseDate;
 
 import com.bc.ceres.core.ProgressMonitor;
-import com.bc.ceres.glevel.MultiLevelImage;
-import com.bc.ceres.glevel.support.DefaultMultiLevelImage;
-import com.bc.ceres.glevel.support.DefaultMultiLevelModel;
-import com.bc.ceres.glevel.support.DefaultMultiLevelSource;
+import com.bc.ceres.multilevel.MultiLevelImage;
+import com.bc.ceres.multilevel.support.DefaultMultiLevelImage;
+import com.bc.ceres.multilevel.support.DefaultMultiLevelModel;
+import com.bc.ceres.multilevel.support.DefaultMultiLevelSource;
 import eu.esa.opt.dataio.s2.CAMSReader;
 import eu.esa.opt.dataio.s2.ColorIterator;
 import eu.esa.opt.dataio.s2.ECMWFTReader;
@@ -108,7 +108,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.logging.Level;
-import java.util.stream.Collectors;
 import javax.media.jai.ImageLayout;
 import javax.media.jai.Interpolation;
 import javax.media.jai.JAI;
@@ -163,7 +162,8 @@ import org.opengis.referencing.operation.TransformException;
  * @author Norman Fomferra
  * @author Nicolas Ducoin modified 20200113 to support the advanced dialog for readers by Denisa Stefanescu
  */
-public abstract class S2L2AScaledB1FootprintOrthoProductReader extends Sentinel2ProductReader implements S2AnglesGeometry {
+public abstract class S2L2AScaledB1FootprintOrthoProductReader extends Sentinel2ProductReader implements
+    S2AnglesGeometry {
 
   public static final String VIEW_ZENITH_PREFIX = "view_zenith";
   public static final String VIEW_AZIMUTH_PREFIX = "view_azimuth";
@@ -226,7 +226,7 @@ public abstract class S2L2AScaledB1FootprintOrthoProductReader extends Sentinel2
     // because the tile layout is obtained with the tile in zone UTM 30.
     // But the sceneLayout is computed with the tiles that are in the zone UTM 31 if
     // we select this PlugIn
-    if (sceneDescription.getTileIds().size() == 0) {
+    if (sceneDescription.getTileIds().isEmpty()) {
       throw new IOException(String.format("No valid tiles associated to product [%s]",
                                           rootMetadataPath.getFileName().toString()));
     }
@@ -291,7 +291,7 @@ public abstract class S2L2AScaledB1FootprintOrthoProductReader extends Sentinel2
       if (!isMultiResolution()) {
         scaleBands(product, bandInfoList, productResolution);
       }
-      S2Metadata.Tile tile = tileList.get(0);
+      S2Metadata.Tile tile = tileList.getFirst();
       if (tile.getMaskFilenames() != null && (!tile.getMaskFilenames()[0].getPath()
                                                                          .getFullPathString()
                                                                          .endsWith(".gml"))) {
@@ -317,7 +317,7 @@ public abstract class S2L2AScaledB1FootprintOrthoProductReader extends Sentinel2
           resolutions.add(bandInfo.getBandInformation().getResolution());
         }
       }
-      if (tileList.size() > 0) {
+      if (!tileList.isEmpty()) {
         addTileIndexes(product, mapCRS, resolutions, tileList, sceneDescription, productResolution,
                        productDefaultGeoCoding, subsetDef);
       }
@@ -331,7 +331,7 @@ public abstract class S2L2AScaledB1FootprintOrthoProductReader extends Sentinel2
         }
       }
       if ((!productLevel.matches(S2Constant.LevelL2H) && !productLevel.matches(S2Constant.LevelL2F))
-          || anglesGridsMap.size() > 0) {
+          || !anglesGridsMap.isEmpty()) {
         addAnglesBands(mapCRS, defaultProductSize, product, sceneDescription, anglesGridsMap,
                        productDefaultGeoCoding, subsetDef);
 //            } else {
@@ -679,11 +679,10 @@ public abstract class S2L2AScaledB1FootprintOrthoProductReader extends Sentinel2
                              EomS2OrthoSceneLayout sceneDescription, S2SpatialResolution productResolution,
                              GeoCoding productDefaultGeoCoding, ProductSubsetDef subsetDef) throws IOException {
     for (BandInfo bandInfo : bandInfoList) {
-      if (bandInfo.getBandInformation() instanceof S2IndexBandInformation) {
+      if (bandInfo.getBandInformation() instanceof S2IndexBandInformation indexBandInformation) {
+        IndexCoding indexCoding = indexBandInformation.getIndexCoding();
         Dimension defaultBandSize = sceneDescription
             .getSceneDimension(bandInfo.getBandInformation().getResolution());
-        S2IndexBandInformation indexBandInformation = (S2IndexBandInformation) bandInfo.getBandInformation();
-        IndexCoding indexCoding = indexBandInformation.getIndexCoding();
         product.getIndexCodingGroup().add(indexCoding);
 
         double pixelSize;
@@ -979,7 +978,7 @@ public abstract class S2L2AScaledB1FootprintOrthoProductReader extends Sentinel2
                                                           band.getNoDataValue(), maskPath.getLocalFile());
               RenderedImage levelZeroImage = multiLevelSource.getImage(0);
               float scaleFactor = 60f / 20;
-              RenderedImage scaledImage = ScaleDescriptor.create(levelZeroImage,scaleFactor, scaleFactor,
+              RenderedImage scaledImage = ScaleDescriptor.create(levelZeroImage, scaleFactor, scaleFactor,
                                                                  0f, 0f,
                                                                  NEAREST_NEIGHBOR_INTERPOLATION, null);
 
@@ -1048,7 +1047,7 @@ public abstract class S2L2AScaledB1FootprintOrthoProductReader extends Sentinel2
 
   private static ImageLayout getOrAddImageLayout(RenderingHints hints) {
     ImageLayout layout;
-    if(hints.containsKey(JAI.KEY_IMAGE_LAYOUT)) {
+    if (hints.containsKey(JAI.KEY_IMAGE_LAYOUT)) {
       layout = (ImageLayout) hints.get(JAI.KEY_IMAGE_LAYOUT);
     } else {
       layout = new ImageLayout();
@@ -1121,7 +1120,7 @@ public abstract class S2L2AScaledB1FootprintOrthoProductReader extends Sentinel2
           final int pos = i;
           productPolygons[i].addAll(polygonsForTile.stream()
                                                    .filter(p -> p.getType().equals(maskInfo.getSubType()[pos]))
-                                                   .collect(Collectors.toList()));
+                                                   .toList());
         }
       }
     }
