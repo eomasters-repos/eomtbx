@@ -42,7 +42,7 @@
       <dependency>
         <groupId>org.junit</groupId>
         <artifactId>junit-bom</artifactId>
-        <version>5.10.0</version>
+        <version>5.12.1</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
@@ -50,11 +50,6 @@
   </dependencyManagement>
 
   <dependencies>
-    <dependency>
-      <groupId>commons-io</groupId>
-      <artifactId>commons-io</artifactId>
-      <version>2.18.0</version>
-    </dependency>
     <dependency>
       <groupId>org.esa.snap</groupId>
       <artifactId>ceres-core</artifactId>
@@ -264,16 +259,25 @@
 
       <plugins>
         <plugin>
-          <artifactId>maven-checkstyle-plugin</artifactId>
-          <version>3.3.0</version>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-toolchains-plugin</artifactId>
+          <version>3.1.0</version>
         </plugin>
         <plugin>
           <artifactId>maven-compiler-plugin</artifactId>
-          <version>3.11.0</version>
+          <version>3.14.0</version>
+        </plugin>
+        <plugin>
+          <artifactId>maven-source-plugin</artifactId>
+          <version>3.3.1</version>
+        </plugin>
+        <plugin>
+          <artifactId>maven-jar-plugin</artifactId>
+          <version>3.4.2</version>
         </plugin>
         <plugin>
           <artifactId>maven-surefire-plugin</artifactId>
-          <version>3.1.2</version>
+          <version>3.5.3</version>
         </plugin>
         <plugin>
           <groupId>org.codehaus.mojo</groupId>
@@ -281,14 +285,18 @@
           <version>2.4.0</version>
         </plugin>
         <plugin>
+          <artifactId>maven-checkstyle-plugin</artifactId>
+          <version>3.4.0</version>
+        </plugin>
+        <plugin>
           <groupId>org.apache.netbeans.utilities</groupId>
           <artifactId>nbm-maven-plugin</artifactId>
-          <version>14.0</version>
+          <version>14.3</version>
         </plugin>
         <plugin>
           <groupId>org.jacoco</groupId>
           <artifactId>jacoco-maven-plugin</artifactId>
-          <version>0.8.10</version>
+          <version>0.8.12</version>
         </plugin>
       </plugins>
     </pluginManagement>
@@ -359,17 +367,13 @@
 
       <plugin>
         <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.11.0</version>
         <configuration>
-          <source>${maven.compiler.release}</source>
-          <target>${maven.compiler.release}</target>
           <debug>true</debug>
-          <encoding>UTF-8</encoding>
+          <proc>full</proc> <!-- Is necessary that annotation is working with JDK 23 -->
         </configuration>
       </plugin>
       <plugin>
         <artifactId>maven-source-plugin</artifactId>
-        <version>3.3.0</version>
         <executions>
           <execution>
             <id>attach-sources</id>
@@ -382,7 +386,6 @@
       </plugin>
       <plugin>
         <artifactId>maven-jar-plugin</artifactId>
-        <version>3.3.0</version>
         <configuration>
           <archive>
             <manifestFile>${project.build.directory}/classes/META-INF/MANIFEST.MF</manifestFile>
@@ -404,7 +407,6 @@
         <configuration>
           <publicPackages>
             <package>org.eomasters.*</package>
-            <package>org.apache.commons.io.*</package>
             <package>com.google.gson.*</package>
           </publicPackages>
           <homePageUrl>https://www.eomasters.org</homePageUrl>
