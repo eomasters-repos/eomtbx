@@ -3,7 +3,7 @@ name: Maven Deploy
 on:
   release:
     types: [published]
-    branches: [ "master" ]
+    branches: [ "main" ]
   workflow_dispatch:
 
 jobs:
@@ -48,6 +48,6 @@ jobs:
           git config --local user.name Github Action
           git config user.email ${{ github.repository }}@github.com
           git add .
-          git commit -m "${{ github.repository }} ${{ github.ref }} deployed"
+          git commit -m "${{ github.repository }} ${{ github.ref_name }} deployed"
           git push
 
