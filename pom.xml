@@ -21,7 +21,7 @@
 
   <groupId>org.eomasters</groupId>
   <artifactId>eomtbx</artifactId>
-  <version>1.2</version>
+  <version>1.2.1-SNAPSHOT</version>
   <packaging>nbm</packaging>
 
 
@@ -29,8 +29,8 @@
     <snap.version>12.0.0</snap.version>
     <opttbx.version>12.0.0</opttbx.version>
     <netbeans.version>RELEASE210</netbeans.version>
-    <eom-commons.version>0.4</eom-commons.version>
-    <eom-commons-snap.version>0.3</eom-commons-snap.version>
+    <eom-commons.version>0.4.1-SNAPSHOT</eom-commons.version>
+    <eom-commons-snap.version>0.3.1-SNAPSHOT</eom-commons-snap.version>
     <javahelp.version>2.0.05</javahelp.version>
     <maven.compiler.release>21</maven.compiler.release>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
