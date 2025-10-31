@@ -56,8 +56,6 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.logging.Logger;
-import java.util.stream.Collectors;
 import org.esa.snap.core.datamodel.GeoCoding;
 import org.esa.snap.core.datamodel.IndexCoding;
 import org.esa.snap.core.datamodel.Placemark;
@@ -71,8 +69,6 @@ import org.opengis.feature.simple.SimpleFeatureType;
  * @author Denisa Stefanescu
  */
 public class EomS2L2aMetadataInspector implements MetadataInspector {
-    protected Logger logger = Logger.getLogger(getClass().getName());
-
     public static final String VIEW_ZENITH_PREFIX = "view_zenith";
     public static final String VIEW_AZIMUTH_PREFIX = "view_azimuth";
     public static final String SUN_ZENITH_PREFIX = "sun_zenith";
@@ -138,9 +134,8 @@ public class EomS2L2aMetadataInspector implements MetadataInspector {
             }
             for (Sentinel2ProductReader.BandInfo bandInfo : bandInfoList) {
                 metadata.getBandList().add(bandInfo.getBandName());
-                if (bandInfo.getBandInformation() instanceof S2IndexBandInformation) {
-                    S2IndexBandInformation indexBandInformation = (S2IndexBandInformation) bandInfo.getBandInformation();
-                    IndexCoding indexCoding = indexBandInformation.getIndexCoding();
+                if (bandInfo.getBandInformation() instanceof S2IndexBandInformation indexBandInformation) {
+                  IndexCoding indexCoding = indexBandInformation.getIndexCoding();
                     Arrays.stream(indexCoding.getIndexNames()).forEach(index -> metadata.getMaskList().add(indexBandInformation.getPrefix() + index.toLowerCase()));
                 }
             }
@@ -242,7 +237,7 @@ public class EomS2L2aMetadataInspector implements MetadataInspector {
 
                 for (int i = 0; i < maskInfo.getSubType().length; i++) {
                     final int pos = i;
-                    productPolygons[i].addAll(polygonsForTile.stream().filter(p -> p.getType().equals(maskInfo.getSubType()[pos])).collect(Collectors.toList()));
+                    productPolygons[i].addAll(polygonsForTile.stream().filter(p -> p.getType().equals(maskInfo.getSubType()[pos])).toList());
                 }
             }
         }
@@ -342,9 +337,8 @@ public class EomS2L2aMetadataInspector implements MetadataInspector {
 
     private void addIndexMasks(List<Sentinel2ProductReader.BandInfo> bandInfoList, Metadata metadata) {
         for (Sentinel2ProductReader.BandInfo bandInfo : bandInfoList) {
-            if (bandInfo.getBandInformation() instanceof S2IndexBandInformation) {
-                S2IndexBandInformation indexBandInformation = (S2IndexBandInformation) bandInfo.getBandInformation();
-                IndexCoding indexCoding = indexBandInformation.getIndexCoding();
+            if (bandInfo.getBandInformation() instanceof S2IndexBandInformation indexBandInformation) {
+              IndexCoding indexCoding = indexBandInformation.getIndexCoding();
                 for (String indexName : indexCoding.getIndexNames()) {
                     String maskName = indexBandInformation.getPrefix() + indexName.toLowerCase();
                     metadata.getMaskList().add(maskName);
