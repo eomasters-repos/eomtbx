@@ -18,6 +18,11 @@
       <url>https://www.gnu.org/licenses/gpl-3.0.html</url>
     </license>
   </licenses>
+  <scm>
+    <url>https://github.com/eomasters-repos/eomtbx</url>
+    <connection>scm:git:https://github.com/eomasters-repos/eomtbx.git</connection>
+    <tag>main</tag>
+  </scm>
 
   <groupId>org.eomasters</groupId>
   <artifactId>eomtbx</artifactId>
