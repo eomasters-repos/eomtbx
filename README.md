@@ -11,10 +11,12 @@ EOMasters Toolbox Basic for SNAP
 [![ko-fi](https://img.shields.io/badge/Ko--fi-F16061?style=for-the-badge&logo=ko-fi&logoColor=white)](https://ko-fi.com/eomasters)
 
 The EOMasters Toolbox Basic (EOMTBX) is a collection of various tools which help to ease the daily work and to save
-valuable
-time while working with ESA's SNAP.
+valuable time while working with ESA's SNAP.
 
 ![eomtbx_basic_logo_365.png](src/main/resources/org/eomasters/eomtbx/eomtbx_basic_logo_365.png)
+
+I am proud to have been awarded a grant from the German “Bescheinigungsstelle Forschungszulage”—which roughly translates to “Research Grant Certification Office” or something along those lines.
+I'm now allowed to ware this badge.
 
 The toolbox comprises, for example, the following tools, features and options:
 
