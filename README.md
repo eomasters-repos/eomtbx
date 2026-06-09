@@ -10,13 +10,16 @@ EOMasters Toolbox Basic for SNAP
 [![Mastodon](https://img.shields.io/badge/Mastodon-6364FF?style=for-the-badge&logo=Mastodon&logoColor=white)](https://mastodon.green/@EOMasters)
 [![ko-fi](https://img.shields.io/badge/Ko--fi-F16061?style=for-the-badge&logo=ko-fi&logoColor=white)](https://ko-fi.com/eomasters)
 
-The EOMasters Toolbox Basic (EOMTBX) is a collection of various tools which help to ease the daily work and to save
-valuable time while working with ESA's SNAP.
+I am proud to have been awarded a grant from the German “Bescheinigungsstelle Forschungszulage” — which roughly<br>
+translates to “Research Grant Certification Office” or something along those lines. I'm now allowed to ware this badge.
 
-![eomtbx_basic_logo_365.png](src/main/resources/org/eomasters/eomtbx/eomtbx_basic_logo_365.png)
+![BSFZ_Siegel_RGB.png](BSFZ_Siegel_RGB.png)
 
-I am proud to have been awarded a grant from the German “Bescheinigungsstelle Forschungszulage”—which roughly translates to “Research Grant Certification Office” or something along those lines.
-I'm now allowed to ware this badge.
+
+The EOMasters Toolbox Basic (EOMTBX) is a collection of various tools which help to ease the daily work and to <br>
+save valuable time while working with ESA's SNAP.
+
+![eomtbx_basic_logo_365.png](src/main/resources/org/eomasters/eomtbx/eomtbx_basic_logo_365.png) 
 
 The toolbox comprises, for example, the following tools, features and options:
 
@@ -38,8 +41,9 @@ The toolbox comprises, for example, the following tools, features and options:
 
 ## Feedback
 
-If you have suggestions for improvements and extensions, please use the 
-[issue tracker](https://github.com/eomasters-repos/eomtbx-issues/issues) or post on the [EOMasters forum](https://www.eomasters.org/forum).
+If you have suggestions for improvements and extensions, please use the
+[issue tracker](https://github.com/eomasters-repos/eomtbx-issues/issues) or post on
+the [EOMasters forum](https://www.eomasters.org/forum).
 
 ## Release Notes
 
