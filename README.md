@@ -9,8 +9,8 @@ EOMasters Toolbox Basic for SNAP
 [![Static Badge](https://img.shields.io/badge/FOR%20ESA%20SNAP-Version%2013-00AA89?labelColor=5A5A5A)](https://step.esa.int/main/)
 
 <div align="center">
-I am proud to have been awarded a grant from the German “Bescheinigungsstelle Forschungszulage” — which roughly<br>
-translates to “Research Grant Certification Office” or something along those lines. I'm now allowed to ware this badge.
+I'm proud to have been awarded a grant from the German “Bescheinigungsstelle Forschungszulage” — which roughly<br>
+translates to “Research Grant Certification Office” or something along those lines. I am now allowed to ware this badge.
   <img src="BSFZ_Siegel_RGB.png" alt="BSFZ_Siegel_RGB.pn" width="300">
 </div>
 
