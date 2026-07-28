@@ -4,8 +4,8 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <name>EOMTBX Basic</name>
-  <description>EOMasters Toolbox Basic for SNAP</description>
+  <name>EOMTBX</name>
+  <description>EOMasters Toolbox for SNAP</description>
   <url>https://www.eomasters.org/eomtbx</url>
   <inceptionYear>2023</inceptionYear>
   <organization>
@@ -21,7 +21,7 @@
 
   <groupId>org.eomasters</groupId>
   <artifactId>eomtbx</artifactId>
-  <version>1.2.1</version>
+  <version>2.0.0-SNAPSHOT</version>
   <packaging>nbm</packaging>
 
 
@@ -31,6 +31,7 @@
     <netbeans.version>RELEASE210</netbeans.version>
     <eom-commons.version>0.4</eom-commons.version>
     <eom-commons-snap.version>0.3</eom-commons-snap.version>
+    <graalpy.version>24.2.2</graalpy.version>
     <javahelp.version>2.0.05</javahelp.version>
     <maven.compiler.release>21</maven.compiler.release>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -246,8 +247,166 @@
     </dependency>
 
     <dependency>
+      <groupId>org.glassfish.jaxb</groupId>
+      <artifactId>jaxb-runtime</artifactId>
+      <version>4.0.4</version>
+    </dependency>
+    <dependency>
+      <groupId>it.geosolutions.imageio-ext</groupId>
+      <artifactId>imageio-ext-tiff</artifactId>
+      <version>1.3.3.2-SNAP</version>
+    </dependency>
+    <dependency>
+      <groupId>javax.media.jai</groupId>
+      <artifactId>jai-core-openjdk</artifactId>
+      <version>1.1.4</version>
+    </dependency>
+    <dependency>
+      <!-- Keep this version until the upstream CUDA loading regression is resolved. -->
+      <groupId>com.microsoft.onnxruntime</groupId>
+      <artifactId>onnxruntime_gpu</artifactId>
+      <version>1.20.0</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.graalvm.polyglot</groupId>
+      <artifactId>polyglot</artifactId>
+      <version>${graalpy.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.graalvm.polyglot</groupId>
+      <artifactId>python-community</artifactId>
+      <version>${graalpy.version}</version>
+      <type>pom</type>
+    </dependency>
+    <dependency>
+      <groupId>org.graalvm.python</groupId>
+      <artifactId>python-language</artifactId>
+      <version>${graalpy.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-compress</artifactId>
+      <version>1.28.0</version>
+    </dependency>
+    <dependency>
+      <groupId>com.fifesoft</groupId>
+      <artifactId>rsyntaxtextarea</artifactId>
+      <version>3.6.0</version>
+    </dependency>
+    <dependency>
+      <groupId>org.kordamp.ikonli</groupId>
+      <artifactId>ikonli-swing</artifactId>
+      <version>12.4.0</version>
+    </dependency>
+    <dependency>
+      <groupId>org.kordamp.ikonli</groupId>
+      <artifactId>ikonli-materialdesign2-pack</artifactId>
+      <version>12.4.0</version>
+    </dependency>
+    <dependency>
+      <groupId>com.vladsch.flexmark</groupId>
+      <artifactId>flexmark-all</artifactId>
+      <version>0.64.8</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.esa.snap</groupId>
+      <artifactId>snap-bigtiff</artifactId>
+      <version>${snap.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.esa.snap</groupId>
+      <artifactId>snap-dem</artifactId>
+      <version>${snap.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.esa.snap</groupId>
+      <artifactId>snap-getasse30-dem</artifactId>
+      <version>${snap.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.esa.snap</groupId>
+      <artifactId>snap-znap</artifactId>
+      <version>${snap.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>edu.ucar</groupId>
+      <artifactId>cdm-core</artifactId>
+      <version>5.3.3</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.netbeans.api</groupId>
+      <artifactId>org-netbeans-api-progress</artifactId>
+      <version>${netbeans.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.netbeans.api</groupId>
+      <artifactId>org-openide-explorer</artifactId>
+      <version>${netbeans.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.netbeans.api</groupId>
+      <artifactId>org-openide-nodes</artifactId>
+      <version>${netbeans.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.netbeans.modules</groupId>
+      <artifactId>org-netbeans-bootstrap</artifactId>
+      <version>${netbeans.version}</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.netbeans.api</groupId>
+      <artifactId>org-netbeans-libs-asm</artifactId>
+      <version>${netbeans.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>commons-io</groupId>
+      <artifactId>commons-io</artifactId>
+      <version>2.12.0</version>
+    </dependency>
+    <dependency>
+      <groupId>com.google.code.findbugs</groupId>
+      <artifactId>jsr305</artifactId>
+      <version>3.0.2</version>
+    </dependency>
+    <dependency>
+      <groupId>eu.esa.opt</groupId>
+      <artifactId>opttbx-olci-preprocessing</artifactId>
+      <version>${opttbx.version}</version>
+    </dependency>
+
+    <dependency>
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.mockito</groupId>
+      <artifactId>mockito-core</artifactId>
+      <version>5.15.2</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.google.jimfs</groupId>
+      <artifactId>jimfs</artifactId>
+      <version>1.3.0</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>eu.esa.opt</groupId>
+      <artifactId>opttbx-muscate-reader</artifactId>
+      <version>${opttbx.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>eu.esa.opt</groupId>
+      <artifactId>opttbx-s2msi-resampler</artifactId>
+      <version>${opttbx.version}</version>
       <scope>test</scope>
     </dependency>
 
@@ -299,7 +458,7 @@
         </plugin>
         <plugin>
           <artifactId>maven-checkstyle-plugin</artifactId>
-          <version>3.4.0</version>
+          <version>3.6.0</version>
         </plugin>
         <plugin>
           <groupId>org.apache.netbeans.utilities</groupId>
@@ -357,7 +516,7 @@
           <dependency>
             <groupId>com.puppycrawl.tools</groupId>
             <artifactId>checkstyle</artifactId>
-            <version>10.12.2</version>
+            <version>10.12.7</version>
           </dependency>
         </dependencies>
         <configuration>
@@ -407,6 +566,28 @@
       </plugin>
 
       <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>exec-maven-plugin</artifactId>
+        <version>3.1.0</version>
+        <executions>
+          <execution>
+            <id>generate-python-docs</id>
+            <phase>process-classes</phase>
+            <goals>
+              <goal>java</goal>
+            </goals>
+            <configuration>
+              <mainClass>org.eomasters.eomtbx.build.PythonDocGenerator</mainClass>
+              <arguments>
+                <argument>${project.basedir}/src/main/resources/org/eomasters/eomtbx/pyeditor/pycode/snapkit</argument>
+                <argument>${project.basedir}/src/main/resources/org/eomasters/eomtbx/docs/pages/pyeditor/snapkit/api</argument>
+              </arguments>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+
+      <plugin>
         <groupId>org.apache.netbeans.utilities</groupId>
         <artifactId>nbm-maven-plugin</artifactId>
         <extensions>true</extensions>
@@ -421,7 +602,16 @@
           <publicPackages>
             <package>org.eomasters.*</package>
             <package>com.google.gson.*</package>
+            <package>org.graalvm.python.*</package>
+            <package>com.oracle.truffle.python.*</package>
           </publicPackages>
+          <moduleDependencies>
+            <dependency>
+              <id>org.graalvm.python:python-language</id>
+              <type>impl</type>
+            </dependency>
+          </moduleDependencies>
+          <useOSGiDependencies>false</useOSGiDependencies>
           <homePageUrl>https://www.eomasters.org</homePageUrl>
           <licenseName>GPL 3</licenseName>
           <licenseFile>${project.basedir}/LICENSE.html</licenseFile>

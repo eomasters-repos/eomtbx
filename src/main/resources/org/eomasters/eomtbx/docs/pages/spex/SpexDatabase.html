@@ -1,0 +1,170 @@
+<!--
+  ========================LICENSE_START=================================
+  EOMTBX - EOMasters Toolbox for SNAP
+  -> https://www.eomasters.org/eomtbx
+  ======================================================================
+  Copyright (C) 2023 - 2026 Marco Peters
+  ======================================================================
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as
+  published by the Free Software Foundation, either version 3 of the
+  License, or (at your option) any later version.
+  
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+  
+  You should have received a copy of the GNU General Public
+  License along with this program.  If not, see
+  -> http://www.gnu.org/licenses/gpl-3.0.html
+  =========================LICENSE_END==================================
+  -->
+
+<html>
+<head>
+  <title>EOMasters Toolbox - SpeX Options</title>
+   <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+  <link href="../../style/style.css" rel="stylesheet">
+  <link href="../../style/eomastersstyle.css" rel="stylesheet">
+</head>
+
+<body>
+<table class="header">
+  <tr class="header">
+    <td align="left" class="header" width="40"><a href="../Overview.html"><img border=0
+                                                                               src="../../images/EomToolbox_32.png"></a>
+    </td>
+    <td class="header">EOMasters Toolbox</td>
+    <td align="right" class="header"><a
+        href="nbdocs://org.esa.snap.snap.help/org/esa/snap/snap/help/docs/general/overview/SnapOverview.html"><img
+        border=0 src="../../images/snap_header.jpg"></a></td>
+  </tr>
+</table>
+
+<h1><img class="vCenter" src="images/SpexDb.png"/> SpeX Options</h1>
+<h2>Database</h2>
+<p>The database used by the <a href="SpexProcessor_GUI.html">SpeX Processor</a> can be managed in the options. The
+  options are accessible by the standard way in the menu <code>Tools / Options</code> and then you need to select the
+  category <code>EOMTBX</code> and the tab <code>SpeX DB Manager</code>. Alternative you can access it directly via the
+  menu <code>Optical / Spex / Manage SpeX Database</code>. </p>
+<div align="center"><img src="images/SpexDbManager.png"></div>
+<p>On the left side all available spectral indices are listed in a tree view, on the right side the details of the
+  currently selected index are shown. In the middle three buttons allow to add, remove and edit user defined
+  indices.</p>
+<p>The tree view can be filtered by entering text into the filter field at the top. The list of indices will be reduced
+  to those indices which contain the text in the name, the description, the domain, the formula or the platforms.
+  Capitalisation is ignored for the filtering. Beside the filter field you can toggle how the indices are grouped.</p>
+<table>
+  <thead>
+  <tr>
+    <th>Grouping</th>
+    <th>Icon</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td>Domain</td>
+    <td><img src="images/Group_Domain_40.png" width="40"></td>
+    <td>The indices are grouped by their domain (Default).</td>
+  </tr>
+  <tr>
+    <td>Name</td>
+    <td><img src="images/Group_Name_40.png"></td>
+    <td>The indices are grouped alphabetically by the first letter of their name.</td>
+  </tr>
+  <tr>
+    <td>Source</td>
+    <td><img src="images/Group_Source_40.png"></td>
+    <td>The indices are grouped by their source where they have been taken from.</td>
+  </tr>
+  <tr>
+    <td>None</td>
+    <td><img src="images/Cancel_40.png"></td>
+    <td>The indices are not grouped at all. Only sorted by name.</td>
+  </tr>
+</table>
+
+<p>For each spectral index the following information is available and displayed on the right side when selected Some are
+  only displayed when the additional attributes panel is expanded (clicked):</p>
+<ul>
+  <li><b>Name</b>: The name of the spectral index.</li>
+  <li><b>Formula</b>: The formula of the spectral index. This formula must be compatible with the Band Maths of SNAP
+    after the symbols have been replaced with the respective value.
+  </li>
+  <li><b>Domain</b>: The application domain of the spectral index. This can be one of <code>Burn, Radar, Snow, Soil,
+    Undefined, Urban, Vegetation, Water</code></li>
+  <li><b>Symbols</b>: The symbols used in the formula and how they are defined. Each row starts with the symbol itself
+    and then displays the common name and in case of optical bands the min and max wavelength.
+  </li>
+  <li><b>Description</b>: A short description of the spectral index.</li>
+  <li><b>Reference</b>: A reference link to a paper where the spectral index is discussed.</li>
+  <li><b>Platforms</b>: Some example platforms the selected index can be used with.</li>
+  <li><b>Source</b>: The source of the spectral index where its definition has been taken from.</li>
+</ul>
+
+<h2>User Defined Spectral Indices</h2>
+<p>Beside the predefined indices it is possible to add your own user indices. The three buttons in the middle are used
+  to maintain your user defined indices.</p>
+<table>
+  <thead>
+  <tr>
+    <th>Button</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td><img src="images/Plus_40.png" width="40"></td>
+    <td>This button allows to add a new spectral index to the database.</td>
+  </tr>
+  <tr>
+    <td><img src="images/Minus_40.png"></td>
+    <td>This button removes a spectral index. It is only enabled if a user defined index is selected and disabled if a
+      predefined index is selected.
+    </td>
+  </tr>
+  <tr>
+    <td><img src="images/Pen_40.png"></td>
+    <td>This button allows to edit a spectral index. It is only enabled if a user defined index is selected and disabled
+      if a predefined index is selected.
+    </td>
+  </tr>
+</table>
+<h3>Add/Edit User Defined Spectral Index</h3>
+<p>When adding or editing a user defined spectral index the following dialog is shown:</p>
+<div align="center"><img src="images/AddEditUserIndex.png"></div>
+<p>You can edit the 5 attributes Name, Formula, Domain, Description and the Reference. The Source attribute will be set
+  automatically.The formula must be compatible with the Band Maths of SNAP after the symbols have been replaced with the
+  respective value.</p>
+<p>You can use the <img src="images/SpexPrefillButton.png"/> button next to the name field to select an existing
+  spectral index and prefill all fields.
+<div align="center"><img src="images/SpexSelector.png"/></div>
+
+<p>In order to write the formula you can hover over the <img src="images/Info_40.png" width="20"/> next to the Formula
+  field. It will show a panel with the usable symbols.</p>
+<div align="center"><img src="images/SymbolsPanel.png"></div>
+<p>The available symbols are also listed on the <a href="SpexFormulaSymbols.html">SpeX Formula Symbols</a> page.</p>
+
+<footer>
+  <hr>
+  <table class="eom_ft">
+    <tr>
+      <td width="60" rowspan="2" class="eom_ft">
+        <img alt="EOMasters Logo" src="../../images/EOMasters_50.png">
+      </td>
+      <td width="*" class="eom_ft">
+        <div class="eom_ft">EOMasters Toolbox<br></div>
+      </td>
+    </tr>
+    <tr>
+      <td class="eom_ft"> Provided by
+        <object classid="java:eu.esa.snap.netbeans.javahelp.BrowserDisplayer">
+          <param name="content" value="https://www.eomasters.org/">
+          <param name="text" value="<html><u>www.eomasters.org</u></html>">
+          <param name="textFontSize" value="bigger">
+        </object>
+      </td>
+    </tr>
+  </table>
+</footer>
+</body>
+</html>
+

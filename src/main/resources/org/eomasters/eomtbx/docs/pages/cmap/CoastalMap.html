@@ -1,0 +1,122 @@
+<!--
+  ========================LICENSE_START=================================
+  EOMTBX - EOMasters Toolbox for SNAP
+  -> https://www.eomasters.org/eomtbx
+  ======================================================================
+  Copyright (C) 2023 - 2026 Marco Peters
+  ======================================================================
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as
+  published by the Free Software Foundation, either version 3 of the
+  License, or (at your option) any later version.
+  
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+  
+  You should have received a copy of the GNU General Public
+  License along with this program.  If not, see
+  -> http://www.gnu.org/licenses/gpl-3.0.html
+  =========================LICENSE_END==================================
+  -->
+
+<html>
+<head>
+  <title>EOMasters Toolbox - Coastal Map</title>
+   <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+  <link href="../../style/style.css" rel="stylesheet">
+  <link href="../../style/eomastersstyle.css" rel="stylesheet">
+</head>
+
+<body>
+<table class="header">
+  <tr class="header">
+    <td align="left" class="header" width="40"><a href="../Overview.html"><img border=0
+                                                                               src="../../images/EomToolbox_32.png"></a>
+    </td>
+    <td class="header">EOMasters Toolbox</td>
+    <td align="right" class="header"><a
+        href="nbdocs://org.esa.snap.snap.help/org/esa/snap/snap/help/docs/general/overview/SnapOverview.html"><img
+        border=0 src="../../images/snap_header.jpg"></a></td>
+  </tr>
+</table>
+
+<h1><img class="vCenter" src="images/CoastalMap_60.png">&nbsp;&nbsp;Coastal Map</h1>
+<p>Satellites monitor coastal areas, which are important ecosystems for plants and animals. This allows us to study and
+  protect these natural wonders. The provided coastal area map facilitates the analysis of Earth observation data. It
+  offers data that is essential for processing coastal area information. This lowers the workload and the computing
+  time, and thus speeds up the delivery of the ecological coastal map to customers and decision makers.</p>
+<p>
+  The map provides 4 important indicators for coastal areas.
+<ul>
+  <li>a land-water indicator</li>
+  <li>a coastline indicator</li>
+  <li>a tidal flat indicator</li>
+  <li>a vicinity indicator for land close to water and water close to land</li>
+</ul>
+<p>The generation of the indicators is described in the
+  <object classid="java:eu.esa.snap.netbeans.javahelp.BrowserDisplayer">
+    <param name="content" value="https://doi.org/10.5281/zenodo.10548225">
+    <param name="text" value="<html><u>technical note</u></html>">
+    <param name="textFontSize" value="bigger">
+  </object>
+  .
+</p>
+
+<div align="center"><img src="images/frontpaper_image.png" width="540"/></div>
+
+<h2>Generated Data</h2>
+<p>After generating coastal map data the product will contain the following items. </p>
+
+<h3>Flag Band</h3>
+<p>A new band contains the flag data named '<b>eom_cm_flags</b>'</p>
+
+<h3>Flag Coding</h3>
+<p>A new Flag Coding named '<b>EOM_CoastalFlags</b>' is created and defines the following flags.<br> <b>LAND, WATER,
+  COASTLINE, INTERTIDAL,<br> COASTAL_WATER_VICINITY_LOW, COASTAL_WATER_VICINITY_MID, COASTAL_WATER_VICINITY_HIGH,<br>
+  COASTAL_LAND_VICINITY_LOW, COASTAL_LAND_VICINITY_MID, COASTAL_LAND_VICINITY_HIGH</b>
+</p>
+
+<h3>Masks</h3>
+<p>For each flag a mask is created for visualisation in the scene view of snap. The default appearance of the masks can
+  be changed in the <a href="CoastalMapOptions.html">options</a>. </p>
+
+<div class="attention">
+  <div class="note">Note:</div>
+  It is recommended to utilize the <b>ZNAP data format</b> when saving the product to disk. Other data formats, like
+  BEAM-DIMAP and NetCDF4 do not preserve the flagging correctly. This problem has no effect on the actual data in the
+  band. You can therefore use different data formats if you are simply concerned with the flag data and don't care how
+  SNAP interprets it. The issue is already
+  <object classid="java:eu.esa.snap.netbeans.javahelp.BrowserDisplayer">
+    <param name="content" value="https://forum.step.esa.int/t/bug-when-writing-flags-to-dimap-netcdf-and-other-formats">
+    <param name="text" value="<html><u>reported to the SNAP Team</u>.</html>">
+    <param name="textFontSize" value="bigger">
+  </object>
+</div>
+
+<footer>
+  <hr>
+  <table class="eom_ft">
+    <tr>
+      <td class="eom_ft" rowspan="2" width="60">
+        <img alt="EOMasters Logo" src="../../images/EOMasters_50.png">
+      </td>
+      <td class="eom_ft" width="*">
+        <div class="eom_ft">EOMasters Toolbox<br></div>
+      </td>
+    </tr>
+    <tr>
+      <td class="eom_ft"> Provided by
+        <object classid="java:eu.esa.snap.netbeans.javahelp.BrowserDisplayer">
+          <param name="content" value="https://www.eomasters.org/">
+          <param name="text" value="<html><u>www.eomasters.org</u></html>">
+          <param name="textFontSize" value="bigger">
+        </object>
+      </td>
+    </tr>
+  </table>
+</footer>
+</body>
+</html>
+

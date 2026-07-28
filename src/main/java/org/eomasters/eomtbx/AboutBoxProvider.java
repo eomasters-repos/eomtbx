@@ -1,9 +1,9 @@
 /*-
  * ========================LICENSE_START=================================
- * EOMTBX - EOMasters Toolbox Basic for SNAP
- * -> https://www.eomasters.org/sw/EOMTBX
+ * EOMTBX - EOMasters Toolbox for SNAP
+ * -> https://www.eomasters.org/eomtbx
  * ======================================================================
- * Copyright (C) 2023 - 2025 Marco Peters
+ * Copyright (C) 2023 - 2026 Marco Peters
  * ======================================================================
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as
@@ -27,7 +27,7 @@ import java.awt.Component;
 import javax.swing.ImageIcon;
 
 /**
- * Interface for providing a component for the EOMasters Toolbox Basic AboutBox. The fully qualified name of
+ * Interface for providing a component for the EOMasters Toolbox AboutBox. The fully qualified name of
  * implementations of this interface must be added in a file named
  * {@code META-INF/services/org.eomasters.eomtbx.AboutBoxProvider}}. The provided GUI component provided by
  * {@link #getAboutPanel()}will be displayed in a Tab named using the text returned by {@link #getTitle()}.

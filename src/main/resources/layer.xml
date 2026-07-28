@@ -1,8 +1,57 @@
 <filesystem>
 
   <folder name="Actions">
+    <folder name="Operators">
+      <file name="org-eomasters-eomtbx-cmap-CoastalMapOp-Action.instance">
+        <attr name="instanceCreate" methodvalue="org.openide.awt.Actions.alwaysEnabled"/>
+        <attr name="delegate" methodvalue="org.eomasters.eomtbx.gui.ExtendedOperatorAction.create"/>
+        <attr name="iconBase" stringvalue="org/eomasters/eomtbx/icons/CoastalMap_16.png"/>
+        <attr name="displayName" stringvalue="EOM Coastal Map"/>
+        <attr name="dialogTitle" stringvalue="EOMasters Coastal Map"/>
+        <attr name="operatorName" stringvalue="EOM_CoastalMap"/>
+        <attr name="helpId" stringvalue="eomtbx.cmap.operator"/>
+        <attr name="targetProductNameSuffix" stringvalue="_eom_cm"/>
+      </file>
+      <file name="org-eomasters-eomtbx-s2norm-S2NormSRSperator-Action.instance">
+        <attr name="instanceCreate" methodvalue="org.openide.awt.Actions.alwaysEnabled"/>
+        <attr name="delegate" methodvalue="org.esa.snap.core.gpf.ui.DefaultOperatorAction.create"/>
+        <attr name="displayName" stringvalue="Normalise SR for Sentinel-2"/>
+        <attr name="dialogTitle" stringvalue="Normalise SR for Sentinel-2"/>
+        <attr name="operatorName" stringvalue="S2NormSR"/>
+        <attr name="helpId" stringvalue="eomtbx.s2normSR.processor.gui"/>
+        <attr name="targetProductNameSuffix" stringvalue="_normSR"/>
+      </file>
+      <file name="org-eomasters-eomtbx-s2geom-S2GeometryUpscalerOperator-Action.instance">
+        <attr name="instanceCreate" methodvalue="org.openide.awt.Actions.alwaysEnabled"/>
+        <attr name="delegate" methodvalue="org.esa.snap.core.gpf.ui.DefaultOperatorAction.create"/>
+        <attr name="displayName" stringvalue="S2 Geometry Up-Scaling"/>
+        <attr name="dialogTitle" stringvalue="S2 Geometry Up-Scaling"/>
+        <attr name="operatorName" stringvalue="S2GeometryUpscaler"/>
+        <attr name="helpId" stringvalue="eomtbx.s2geom.processor.gui"/>
+        <attr name="targetProductNameSuffix" stringvalue="_s2geom"/>
+      </file>
+      <file name="org-eomasters-eomtbx-s2superres-S2SuperResOp-Action.instance">
+        <attr name="instanceCreate" methodvalue="org.openide.awt.Actions.alwaysEnabled"/>
+        <attr name="delegate" methodvalue="org.esa.snap.core.gpf.ui.DefaultOperatorAction.create"/>
+        <attr name="displayName" stringvalue="S2 Super-Resolution"/>
+        <attr name="dialogTitle" stringvalue="S2 Super-Resolution"/>
+        <attr name="operatorName" stringvalue="S2SuperRes"/>
+        <attr name="helpId" stringvalue="eomtbx.s2superres.processor.gui"/>
+        <attr name="targetProductNameSuffix" stringvalue="_superres"/>
+      </file>
+      <file name="org-eomasters-eomtbx-s2b620-S2B620Operator-Action.instance">
+        <attr name="instanceCreate" methodvalue="org.openide.awt.Actions.alwaysEnabled"/>
+        <attr name="delegate" methodvalue="org.esa.snap.core.gpf.ui.DefaultOperatorAction.create"/>
+        <attr name="displayName" stringvalue="Estimate B620 for S2"/>
+        <attr name="dialogTitle" stringvalue="Estimate B620 for S2"/>
+        <attr name="operatorName" stringvalue="S2B620"/>
+        <attr name="helpId" stringvalue="eomtbx.s2b620.processor.gui"/>
+        <attr name="targetProductNameSuffix" stringvalue="_s2b620"/>
+      </file>
+    </folder>
+
     <folder name="Readers">
-      <file name="org-eomasters-eomtbx-io-s2l2a-ImportS2l2aNativeB1Product.instance">
+<file name="org-eomasters-eomtbx-io-s2l2a-ImportS2l2aNativeB1Product.instance">
         <attr name="instanceCreate" methodvalue="org.openide.awt.Actions.alwaysEnabled"/>
         <attr name="delegate" methodvalue="org.esa.snap.rcp.actions.file.ImportProductAction.create"/>
         <attr name="displayName" stringvalue="S2-MSI L2A - B1 at native resolution"/>
@@ -18,6 +67,31 @@
         <attr name="useAllFileFilter" boolvalue="false"/>
         <attr name="helpId" stringvalue="eomtbx.io.s2l2aB1Reader"/>
       </file>
+
+      <file name="org-eomasters-eomtbx-io-aster-ImportAsterProduct.instance">
+        <attr name="instanceCreate" methodvalue="org.openide.awt.Actions.alwaysEnabled"/>
+        <attr name="delegate" methodvalue="org.esa.snap.rcp.actions.file.ImportProductAction.create"/>
+        <attr name="displayName" stringvalue="ASTER L1T"/>
+        <attr name="formatName" stringvalue="AST_L1T"/>
+        <attr name="useAllFileFilter" boolvalue="false"/>
+        <attr name="helpId" stringvalue="eomtbx.io.aster"/>
+      </file>
+      <file name="org-eomasters-eomtbx-io-emit-ImportEmitL1bProduct.instance">
+        <attr name="instanceCreate" methodvalue="org.openide.awt.Actions.alwaysEnabled"/>
+        <attr name="delegate" methodvalue="org.esa.snap.rcp.actions.file.ImportProductAction.create"/>
+        <attr name="displayName" stringvalue="EMIT L1B"/>
+        <attr name="formatName" stringvalue="EMIT_L1B"/>
+        <attr name="useAllFileFilter" boolvalue="false"/>
+        <attr name="helpId" stringvalue="eomtbx.io.emit"/>
+      </file>
+      <file name="org-eomasters-eomtbx-io-emit-ImportEmitL2aProduct.instance">
+        <attr name="instanceCreate" methodvalue="org.openide.awt.Actions.alwaysEnabled"/>
+        <attr name="delegate" methodvalue="org.esa.snap.rcp.actions.file.ImportProductAction.create"/>
+        <attr name="displayName" stringvalue="EMIT L2A"/>
+        <attr name="formatName" stringvalue="EMIT_L2A"/>
+        <attr name="useAllFileFilter" boolvalue="false"/>
+        <attr name="helpId" stringvalue="eomtbx.io.emit"/>
+      </file>
     </folder>
   </folder>
 
@@ -26,19 +100,80 @@
       <folder name="Import">
         <folder name="Optical Sensors">
           <folder name="Sentinel-2">
-            <file name="org-eomasters-eomtbx-io-s2l2a-ImportS2l2aNativeB1Product.shadow">
-              <attr name="originalFile"
-                stringvalue="Actions/Readers/org-eomasters-eomtbx-io-s2l2a-ImportS2l2aNativeB1Product.instance"/>
-            </file>
-            <file name="org-eomasters-eomtbx-io-s2l2a-ImportS2l2aScaledB1Product.shadow">
-              <attr name="originalFile"
-                stringvalue="Actions/Readers/org-eomasters-eomtbx-io-s2l2a-ImportS2l2aScaledB1Product.instance"/>
-            </file>
+                      <file name="org-eomasters-eomtbx-io-s2l2a-ImportS2l2aNativeB1Product.shadow">
+                        <attr name="originalFile"
+                          stringvalue="Actions/Readers/org-eomasters-eomtbx-io-s2l2a-ImportS2l2aNativeB1Product.instance"/>
+                      </file>
+                      <file name="org-eomasters-eomtbx-io-s2l2a-ImportS2l2aScaledB1Product.shadow">
+                        <attr name="originalFile"
+                          stringvalue="Actions/Readers/org-eomasters-eomtbx-io-s2l2a-ImportS2l2aScaledB1Product.instance"/>
+                      </file>
 
+                    </folder>
+
+          <file name="org-eomasters-eomtbx-io-aster-ImportAsterProduct.shadow">
+            <attr name="originalFile"
+              stringvalue="Actions/Readers/org-eomasters-eomtbx-io-aster-ImportAsterProduct.instance"/>
+          </file>
+          <folder name="EMIT">
+            <file name="org-eomasters-eomtbx-io-emit-ImportEmitL1bProduct.shadow">
+              <attr name="originalFile"
+                stringvalue="Actions/Readers/org-eomasters-eomtbx-io-emit-ImportEmitL1bProduct.instance"/>
+            </file>
+            <file name="org-eomasters-eomtbx-io-emit-ImportEmitL2aProduct.shadow">
+              <attr name="originalFile"
+                stringvalue="Actions/Readers/org-eomasters-eomtbx-io-emit-ImportEmitL2aProduct.instance"/>
+            </file>
           </folder>
         </folder>
       </folder>
     </folder>
+
+    <folder name="Raster">
+      <folder name="Masks">
+        <file name="org-eomasters-eomtbx-cmap-CoastalMapOp-Action.shadow">
+          <attr name="originalFile"
+            stringvalue="Actions/Operators/org-eomasters-eomtbx-cmap-CoastalMapOp-Action.instance"/>
+          <attr name="position" intvalue="1000"/>
+        </file>
+      </folder>
+    </folder>
+    <folder name="Optical">
+      <folder name="Geometric">
+        <file name="org-eomasters-eomtbx-s2superres-S2SuperResOp-Action.shadow">
+          <attr name="originalFile"
+            stringvalue="Actions/Operators/org-eomasters-eomtbx-s2superres-S2SuperResOp-Action.instance"/>
+          <attr name="position" intvalue="2"/>
+        </file>
+      </folder>
+      <folder name="Preprocessing">
+        <file name="org-eomasters-eomtbx-s2geom-S2GeometryUpscalerOperator-Action.shadow">
+          <attr name="originalFile"
+            stringvalue="Actions/Operators/org-eomasters-eomtbx-s2geom-S2GeometryUpscalerOperator-Action.instance"/>
+          <attr name="position" intvalue="490"/>
+        </file>
+        <file name="org-eomasters-eomtbx-s2norm-S2NormSRSperator-Action.shadow">
+          <attr name="originalFile"
+            stringvalue="Actions/Operators/org-eomasters-eomtbx-s2norm-S2NormSRSperator-Action.instance"/>
+          <attr name="position" intvalue="500"/>
+        </file>
+        <file name="org-eomasters-eomtbx-s2b620-S2B620Operator-Action.shadow">
+          <attr name="originalFile"
+            stringvalue="Actions/Operators/org-eomasters-eomtbx-s2b620-S2B620Operator-Action.instance"/>
+          <attr name="position" intvalue="510"/>
+        </file>
+      </folder>
+    </folder>
+  </folder>
+
+  <!-- Removes Ops from Graph Builder
+    see https://senbox.atlassian.net/browse/SNAP-395
+-->
+  <folder name="OperatorUIs">
+    <file name="org.eomasters.eomtbx.spex.SpexOperator">
+      <attr name="operatorName" stringvalue="Spex"/>
+      <attr name="disableFromGraphBuilder" stringvalue="true"/>
+    </file>
   </folder>
 
 </filesystem>

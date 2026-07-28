@@ -1,0 +1,202 @@
+<!--
+  ========================LICENSE_START=================================
+  EOMTBX - EOMasters Toolbox for SNAP
+  -> https://www.eomasters.org/eomtbx
+  ======================================================================
+  Copyright (C) 2023 - 2026 Marco Peters
+  ======================================================================
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as
+  published by the Free Software Foundation, either version 3 of the
+  License, or (at your option) any later version.
+  
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+  
+  You should have received a copy of the GNU General Public
+  License along with this program.  If not, see
+  -> http://www.gnu.org/licenses/gpl-3.0.html
+  =========================LICENSE_END==================================
+  -->
+
+<html>
+<head>
+  <title>EOMasters Toolbox - SnapKit Examples</title>
+  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+  <link href="../../../../style/style.css" rel="stylesheet">
+  <link href="../../../../style/eomastersstyle.css" rel="stylesheet">
+</head>
+
+<body>
+<table class="header">
+  <tr class="header">
+    <td align="left" class="header" width="40"><a href="../../../Overview.html"><img border=0
+                                                                                     src="../../../../images/EomToolbox_32.png"></a>
+    </td>
+    <td class="header">EOMasters Toolbox</td>
+    <td align="right" class="header"><a
+        href="nbdocs://org.esa.snap.snap.help/org/esa/snap/snap/help/docs/general/overview/SnapOverview.html"><img
+        border=0 src="../../../../images/snap_header.jpg"></a></td>
+  </tr>
+</table>
+
+<h1>&nbsp;SnapKit Examples</h1>
+
+<p>The following examples show how to use the SnapKit API.</p>
+<ul>
+  <li><a href="#productIO">Product IO</a></li>
+  <li><a href="#graphProcessing">Graph Processing</a></li>
+  <li><a href="#computeBand">Band Computation</a></li>
+  <li><a href="#snapInteraction">SNAP Interaction</a></li>
+</ul>
+
+<h2 id="productIO">Product IO</h2>
+<h3>Read Product</h3>
+<pre class="codenote">
+  from snapkit import Product
+  product = Product.read('/path/to/product.dim')
+  # or
+  from snapkit import ProductIO
+  product = ProductIO.read('/path/to/product.tif')
+</pre>
+<h3>Write Product</h3>
+<pre class="codenote">
+  from snapkit import Product
+  product = Product('My Product', 'MyType', [10,10])
+  product.saveAs('/path/to/output.tif', 'GeoTIFF')
+  # or
+  from snapkit import ProductIO
+  ProductIO.save(product, product.file_location)
+</pre>
+<h3>Data Format</h3>
+<pre class="codenote">
+  from snapkit import ProductIO
+  in_formats = ProductIO.input_formats()
+  print(in_formats)
+  out_formats = ProductIO.output_formats()
+  print(out_formats)
+</pre>
+
+<h2 id="graphProcessing">Graph Processing</h2>
+<h3>Setup and Execute a Graph</h3>
+<pre class="codenote">
+  from snapkit import Graph
+
+  # Create a graph
+  graph = Graph()
+
+  # Add operators
+  read_id = graph.read("path/S1/file.zip")
+  calibrate_id = graph.add_operator("calibrate", "Calibration", {
+      "outputSigmaBand": True,
+      "outputBetaBand": False,
+      "outputGammaBand": False
+  })
+  terrain_id = graph.add_operator("terrain", "Terrain-Correction", {
+      "demName": "SRTM 3Sec",
+      "pixelSpacingInMeter": 10.0
+  })
+  write_id = graph.write("output.dim")
+
+  # Connect operators
+  graph.connect(read_id, calibrate_id, terrain_id, write_id)
+
+  print("Graph has been setup and connected.")
+
+  # export the graph as XML file
+  graph.export_xml("myGraph.xml")
+
+  product = graph.execute()
+  product.saveAs("output.dim", "NetCDF4-CF")
+</pre>
+
+<h2 id="computeBand">Band Computation</h2>
+<h3>Compute Band</h3>
+<pre class="codenote">
+  from snapkit import SNAP, Raster
+  from math import nan
+
+  b8 = product["B8"].fetch(geophysical=True)
+  b4 = product["B4"].fetch(geophysical=True)
+
+  ndvi = product.add_band("ndvi", Raster.TYPE_FLOAT32)
+
+  ndvi_data = ndvi.fetch()
+  for i, (x, y) in enumerate(zip(b8, b4)):
+      d = x + y
+      ndvi_data[i] = (x - y) / d if d != 0 else nan
+
+  ndvi.apply(ndvi_data)
+</pre>
+<h3>Compute Band with numpy</h3>
+<pre class="codenote">
+  from snapkit import SNAP, Raster
+  import numpy as np
+
+  b8 = product["B8"].fetch(geophysical=True)
+  b4 = product["B4"].fetch(geophysical=True)
+
+  b8 = np.asarray(b8, dtype=float)
+  b4 = np.asarray(b4, dtype=float)
+
+  den = b8 + b4
+  with np.errstate(divide='ignore', invalid='ignore'):
+      ndvi_data = (b8 - b4) / den
+      ndvi_data[den == 0] = np.nan
+
+  ndvi = product.add_band("ndvi", Raster.float64)
+  ndvi.apply(ndvi_data)
+</pre>
+
+<h2 id="snapInteraction">SNAP Interaction</h2>
+<pre class="codenote">
+  from snapkit import SNAP
+  # check if SNAP is available, if script is running from command line SNAP is not available.
+  if SNAP.is_available():
+    # get the currently selected product
+    product = SNAP.selected_product()
+
+    # open a raster in SNAP
+    SNAP.view_raster("Sigma0_VH", product)
+
+    # open a RGB composite in SNAP
+    SNAP.view_rgb('B4', 'B3', 'B2', product, 'view_name')
+    # or
+    b4 = product['B4']
+    b2 = product['B3']
+    b2 = product['B2']
+    SNAP.view_rgb(b4, b3, b2, 'my_rgb_view')
+
+    # read a product and add it to SNAP
+    SNAP.product_manager().add(ProductIO.read('/path/to/product.tif'))
+  else:
+    print("SNAP not available.")
+</pre>
+
+<footer>
+  <hr>
+  <table class="eom_ft">
+    <tr>
+      <td class="eom_ft" rowspan="2" width="60">
+        <img alt="EOMasters Logo" src="../../../../images/EOMasters_50.png">
+      </td>
+      <td class="eom_ft" width="*">
+        <div class="eom_ft">EOMasters Toolbox<br></div>
+      </td>
+    </tr>
+    <tr>
+      <td class="eom_ft"> Provided by
+        <object classid="java:eu.esa.snap.netbeans.javahelp.BrowserDisplayer">
+          <param name="content" value="https://www.eomasters.org/">
+          <param name="text" value="<html><u>www.eomasters.org</u></html>">
+          <param name="textFontSize" value="bigger">
+        </object>
+      </td>
+    </tr>
+  </table>
+</footer>
+</body>
+</html>
+

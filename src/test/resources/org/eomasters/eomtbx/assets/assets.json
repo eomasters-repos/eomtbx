@@ -1,0 +1,42 @@
+[
+  {
+    "name": "item1",
+    "type": "DummyType",
+    "description": "",
+    "tags": [
+      "Water",
+      "Elbe"
+    ],
+    "userNotes": "",
+    "attributes": {
+      "Abc": "123",
+      "Second": "Something",
+      "3": "true"
+    }
+  },
+  {
+    "name": "item2",
+    "type": "DummyType",
+    "description": "",
+    "tags": [
+      "Water",
+      "Colorado"
+    ],
+    "userNotes": "belongs to:\nProject A\nProject B",
+    "attributes": {
+      "Abc": "123",
+      "Second": "notLast",
+      "3": "true"
+    }
+  },
+  {
+    "name": "item3",
+    "type": "AnotherDummyType",
+    "description": "",
+    "tags": [],
+    "userNotes": "",
+    "attributes": {
+      "Color": "0,0,255"
+    }
+  }
+]

@@ -1,0 +1,112 @@
+<!--
+  ========================LICENSE_START=================================
+  EOMTBX - EOMasters Toolbox for SNAP
+  -> https://www.eomasters.org/eomtbx
+  ======================================================================
+  Copyright (C) 2023 - 2026 Marco Peters
+  ======================================================================
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as
+  published by the Free Software Foundation, either version 3 of the
+  License, or (at your option) any later version.
+  
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+  
+  You should have received a copy of the GNU General Public
+  License along with this program.  If not, see
+  -> http://www.gnu.org/licenses/gpl-3.0.html
+  =========================LICENSE_END==================================
+  -->
+
+<html>
+<head>
+  <title>EOMasters Toolbox - Cyanobacteria Index (GUI)</title>
+   <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+  <link href="../../style/style.css" rel="stylesheet">
+  <link href="../../style/eomastersstyle.css" rel="stylesheet">
+</head>
+
+<body>
+<table class="header">
+  <tr class="header">
+    <td align="left" class="header" width="40"><a href="../Overview.html"><img border=0
+                                                                               src="../../images/EomToolbox_32.png"></a>
+    </td>
+    <td class="header">EOMasters Toolbox</td>
+    <td align="right" class="header"><a
+        href="nbdocs://org.esa.snap.snap.help/org/esa/snap/snap/help/docs/general/overview/SnapOverview.html"><img
+        border=0 src="../../images/snap_header.jpg"></a></td>
+  </tr>
+</table>
+
+<h1>Cyanobacteria Index Processor (GUI)</h1>
+<p>The Cyanobacteria Index processor GUI consists of two tabs. The first tab, <code>I/O Parameters</code>, allows to
+  specify the input and output parameters. The second tab, <code>Processing Parameters</code>, allows to specify the
+  parameters for the processing. </p>
+
+<h2>I/O Parameters</h2>
+<div align="center"><img height="405" src="images/CyanoIndexIOParameters.png" width="375"/></div>
+<h3>Source Product</h3>
+<p>This defines the source product on which the cyano index processing is performed. Either select one of the products
+  already opened in the application or select a new one by opening a product selection dialog. See the <a
+      href="CyanoIndex.html#inputRequirements"> input requirements</a> on the product.</p>
+
+<h4>Resampling of source data</h4>
+<p>If the used bands have different sizes they are resampled to the resolution of the center band. This is done by using
+  the SNAP Resample operation with the default parameters. If a different resampling is required the source product
+  should be resampled first.</p>
+
+<h3>Target Product</h3>
+<p><b>Name</b> - Used to specify the name of the target product. By default, it is set to the name of the source product
+  with the suffix '_cyanoindex' appended.</p>
+
+<p><b>Save as</b> - Used to specify whether the target product should be saved to the file system. The dropdown list
+  provides a list of available file formats. The text field shows the path to the directory where the processing result
+  will be saved. You can edit the text field directly or select a directory via the '...' button.</p></p>
+
+<p><b>Open in SNAP</b> - Used to specify whether the target product should be opened in SNAP. If the target product is
+  not saved, it is opened in SNAP automatically.</p>
+
+<h2>Processing Parameters</h2>
+<div align="center"><img height="405" src="images/CyanoIndexProcessParameters.png" width="375"/></div>
+
+<p>Masks can be specified by <b>expression</b>, <b>WKT</b> or <b>shapefile</b>. The masks are applied to all selected
+  indices.</p>
+<p><b>Valid Expression</b> - This expression defines which pixels are valid for processing. It must follow the rules of
+  Band Maths. If a source product is selected an edit dialog can be opened to ease the writing of the expression.</p>
+<p><b>Shapefile</b> - A shapefile can be selected to define the valid region for the processing.</p>
+<p><b>WKT</b> - A geometry using WGS84 coordinates can be specified following the
+  <object classid="java:eu.esa.snap.netbeans.javahelp.BrowserDisplayer">
+    <param name="content" value="http://giswiki.org/wiki/Well_Known_Text">
+    <param name="text" value="<html><u>WKT Format</u></html>">
+    <param name="textFontSize" value="bigger">
+  </object>.
+</p>
+<footer>
+  <hr>
+  <table class="eom_ft">
+    <tr>
+      <td class="eom_ft" rowspan="2" width="60">
+        <img alt="EOMasters Logo" src="../../images/EOMasters_50.png">
+      </td>
+      <td class="eom_ft" width="*">
+        <div class="eom_ft">EOMasters Toolbox<br></div>
+      </td>
+    </tr>
+    <tr>
+      <td class="eom_ft"> Provided by
+        <object classid="java:eu.esa.snap.netbeans.javahelp.BrowserDisplayer">
+          <param name="content" value="https://www.eomasters.org/">
+          <param name="text" value="<html><u>www.eomasters.org</u></html>">
+          <param name="textFontSize" value="bigger">
+        </object>
+      </td>
+    </tr>
+  </table>
+</footer>
+</body>
+</html>
+

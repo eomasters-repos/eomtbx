@@ -1,9 +1,9 @@
 /*-
  * ========================LICENSE_START=================================
- * EOMTBXP Toolbox Module - Toolbox Module for the EOMasters Pro Toolbox for SNAP
- * -> https://www.eomasters.org/eomtbx/modules/eomtbxp-toolbox
+ * EOMTBX - EOMasters Toolbox for SNAP
+ * -> https://www.eomasters.org/eomtbx
  * ======================================================================
- * Copyright (C) 2023 - 2025 Marco Peters
+ * Copyright (C) 2023 - 2026 Marco Peters
  * ======================================================================
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as

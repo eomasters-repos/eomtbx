@@ -1,0 +1,142 @@
+<!--
+  ========================LICENSE_START=================================
+  EOMTBX - EOMasters Toolbox for SNAP
+  -> https://www.eomasters.org/eomtbx
+  ======================================================================
+  Copyright (C) 2023 - 2026 Marco Peters
+  ======================================================================
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as
+  published by the Free Software Foundation, either version 3 of the
+  License, or (at your option) any later version.
+  
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+  
+  You should have received a copy of the GNU General Public
+  License along with this program.  If not, see
+  -> http://www.gnu.org/licenses/gpl-3.0.html
+  =========================LICENSE_END==================================
+  -->
+
+<html>
+<head>
+  <title>EOMasters Toolbox - Cyanobacteria Index (CLI)</title>
+   <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+  <link href="../../style/style.css" rel="stylesheet">
+  <link href="../../style/eomastersstyle.css" rel="stylesheet">
+</head>
+
+<body>
+<table class="header">
+  <tr class="header">
+    <td align="left" class="header" width="40"><a href="../Overview.html"><img border=0
+                                                                               src="../../images/EomToolbox_32.png"></a>
+    </td>
+    <td class="header">EOMasters Toolbox</td>
+    <td align="right" class="header"><a
+        href="nbdocs://org.esa.snap.snap.help/org/esa/snap/snap/help/docs/general/overview/SnapOverview.html"><img
+        border=0 src="../../images/snap_header.jpg"></a></td>
+  </tr>
+</table>
+
+<h1>Cyanobacteria Index Processor (CLI)</h1>
+<h2>Overview</h2>
+<p>The Cyanobacteria Index processor can be used with the command line tool <code>gpt</code>. General information about
+  GPF and GPT can be found on their <a
+      href="nbdocs://org.esa.snap.snap.gpf.ui/org/esa/snap/core/gpf/docs/gpf/GpfOverview.html">help pages</a>. Specific
+  help for the Cyanobacteria Index processor can be obtained with: <code>${SNAP-INSTALL-DIR}/bin/gpt -h
+    CyanoIndex</code><br> This will show the following help:</p>
+
+<pre class="codenote">Usage:
+  gpt CyanoIndex [options]
+
+Description:
+  Cyanobacteria index (CI) for detection of cyanobacteria blooms.
+
+
+Source Options:
+  -SsourceProduct=&lt;file&gt;    The source product
+                            This is a mandatory source.
+
+Parameter Options:
+  -Pshapefile=&lt;path&gt;            An ESRI shapefile, providing the considered geographical region(s).
+  -PvalidExpression=&lt;string&gt;    The valid expression to be used for the spectral index.
+  -PwktRegion=&lt;geometry&gt;        The considered geographical region as a geometry in well-known text format (WKT).
+
+Graph XML Format:
+  &lt;graph id="someGraphId"&gt;
+    &lt;version&gt;1.0&lt;/version&gt;
+    &lt;node id="someNodeId"&gt;
+      &lt;operator&gt;CyanoIndex&lt;/operator&gt;
+      &lt;sources&gt;
+        &lt;sourceProduct&gt;${sourceProduct}&lt;/sourceProduct&gt;
+      &lt;/sources&gt;
+      &lt;parameters&gt;
+        &lt;validExpression&gt;string&lt;/validExpression&gt;
+        &lt;shapefile&gt;path&lt;/shapefile&gt;
+        &lt;wktRegion&gt;geometry&lt;/wktRegion&gt;
+      &lt;/parameters&gt;
+    &lt;/node&gt;
+  &lt;/graph&gt;
+</pre>
+
+<h2>Parameters</h2>
+<table>
+  <tr>
+    <td><b>sourceProduct</b></td>
+    <td>This defines the source product on which the processing is performed. See the <a
+        href="CyanoIndex.html#inputRequirements"> input requirements</a> on the product.
+    </td>
+  </tr>
+  <tr>
+    <td><b>shapefile</b></td>
+    <td>A shapefile can be selected to define the valid region for the processing.</td>
+  </tr>
+  <tr>
+    <td><b>validExpression</b></td>
+    <td>This expression defines which pixels are valid for processing. It must follow the rules of Band Maths.</td>
+  </tr>
+  <tr>
+    <td><b>wktRegion</b></td>
+    <td>A geometry using WGS84 coordinates can be specified following the WKT format.</td>
+  </tr>
+</table>
+
+<h2>Mask Combination</h2>
+<p>The invalid pixels of bands used in the CI calculation, defined by the bands no-data value and valid-pixel
+  expression, are used as masks by default. These masks are combined with the masks (shapefile, validExpression,
+  wktRegion) using the logical AND operator. </p>
+
+<h2>Resampling of source data</h2>
+<p>If the used bands have different sizes they are resampled to the resolution of the center band. This is done by using
+  the SNAP Resample operation with the default parameters. If a different resampling is required the source product
+  should be resampled first.</p>
+
+<footer>
+  <hr>
+  <table class="eom_ft">
+    <tr>
+      <td class="eom_ft" rowspan="2" width="60">
+        <img alt="EOMasters Logo" src="../../images/EOMasters_50.png">
+      </td>
+      <td class="eom_ft" width="*">
+        <div class="eom_ft">EOMasters Toolbox<br></div>
+      </td>
+    </tr>
+    <tr>
+      <td class="eom_ft"> Provided by
+        <object classid="java:eu.esa.snap.netbeans.javahelp.BrowserDisplayer">
+          <param name="content" value="https://www.eomasters.org/">
+          <param name="text" value="<html><u>www.eomasters.org</u></html>">
+          <param name="textFontSize" value="bigger">
+        </object>
+      </td>
+    </tr>
+  </table>
+</footer>
+</body>
+</html>
+

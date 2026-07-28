@@ -1,0 +1,959 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>product - SnapKit API Documentation</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="navigation">
+            <a href="index.html">← Back to Index</a>
+        </div>
+        
+        <h1>Module: product</h1>
+        <div class="module-description"><pre>Remote sensing product management and manipulation module.
+
+This module provides a Python interface for working with remote sensing products
+wrapping SNAP&#x27;s Java API. It offers comprehensive functionality for loading, creating,
+manipulating, and saving remote sensing datasets with their associated metadata,
+raster data, and geospatial information.
+
+The main component is the Product class, which serves as a wrapper around SNAP&#x27;s
+Java Product class, providing convenient Pythonic access to:
+- Raster data (bands, tie-point grids, masks)
+- Product metadata and properties
+- Geolocation and coordinate transformations
+- Placemarks (pins and ground control points)
+- Virtual band creation and mathematical operations
+- Product I/O operations in various formats
+
+Key Features:
+    - Load products from various formats (BEAM-DIMAP, GeoTIFF, NetCDF, etc.)
+    - Create new products from scratch with custom dimensions
+    - Add and manipulate raster bands, including virtual bands with expressions
+    - Manage metadata and product properties
+    - Handle coordinate transformations between pixel and geographic coordinates
+    - Create and manage placemarks for reference points
+    - Save products in multiple output formats
+
+Usage:
+    Basic product operations:
+
+    from snapkit.product import Product
+    
+    # Load an existing product
+    product = Product.read(&#x27;/path/to/product.dim&#x27;)
+    print(f&quot;Product: {product.name}, Size: {product.width}x{product.height}&quot;)
+    
+    # Access raster data
+    band1 = product[&#x27;B1&#x27;]  # Get specific band
+    all_bands = product.rasters  # Get all bands as dictionary
+    
+    # Work with coordinates (if geo-coded)
+    if product.is_geo_coded:
+        pixel_x, pixel_y = product.pixel_pos(52.5, 13.4)  # Berlin coordinates
+        lat, lon = product.geo_pos(100, 200)  # Convert pixel to geo
+    
+    # Add placemarks
+    product.add_pin(&quot;POI&quot;, 100, 200, &quot;Point of Interest&quot;)
+    product.add_gcp(&quot;GCP1&quot;, 150, 250, 52.5, 13.4, &quot;Control Point&quot;)
+    
+    # Create virtual bands
+    ndvi = product.add_virtual_band(&quot;NDVI&quot;, &quot;(B8 - B4) / (B8 + B4)&quot;)
+    
+    # Save in different formats
+    product.save_as(&#x27;/path/to/output.dim&#x27;)  # BEAM-DIMAP format
+    product.save_as(&#x27;/path/to/output.tif&#x27;, &#x27;GeoTIFF&#x27;)
+
+    Creating new products:
+
+    # Create empty product
+    new_product = Product(&quot;MyProduct&quot;, &quot;Custom&quot;)
+    
+    # Create product with dimensions
+    sized_product = Product(&quot;SizedProduct&quot;, &quot;Custom&quot;, [1024, 1024])
+    
+    # Add bands to new product
+    data_band = sized_product.add_band(&quot;temperature&quot;, &#x27;d&#x27;)  # double precision
+    class_band = sized_product.add_band(&quot;classification&quot;, &#x27;b&#x27;)  # byte
+    
+    # Add masks
+    cloud_mask = sized_product.add_mask(&quot;clouds&quot;, &quot;temperature &gt; 273&quot;,
+                                        &quot;Cloud pixels&quot;, (255, 255, 255, 128))</pre></div>
+
+        <div class="class-section" id="Product">
+            <h2>Class: Product</h2>
+        <div class="module-description"><pre>Represents a remote sensing product with raster data, metadata, and geolocation information.
+
+This class serves as a Python wrapper around SNAP&#x27;s Java Product class, providing
+convenient access to remote sensing product data including raster bands, metadata,
+and geolocation information. Products can be created from scratch or loaded from
+existing files, and support various operations like adding/removing raster data,
+managing placemarks (pins and GCPs), and saving to different formats.
+
+The Product class acts as a container for all data associated with a remote sensing
+dataset, including multiple raster bands, tie-point grids, masks, and associated
+metadata. It provides both low-level access to the underlying SNAP functionality
+and high-level convenience methods for common operations.
+
+Example:
+    # Create a new product
+    product = Product(&quot;MyProduct&quot;, &quot;Custom&quot;, [512, 512])
+    
+    # Load an existing product
+    product = Product.read(&#x27;/path/to/product.dim&#x27;)
+    
+    # Access product properties
+    print(f&quot;Product: {product.name}, Size: {product.width}x{product.height}&quot;)
+    
+    # Work with rasters
+    band = product[&#x27;band_1&#x27;]  # Access band by name
+    all_bands = product.rasters  # Get all bands as dictionary</pre></div>            <h3>Overview</h3>
+            <div class="overview-section">
+                <h4>Properties</h4>
+                <div class="overview-list">
+                    <span class="overview-item">&nbsp;<a href="#Product-name">name</a>&nbsp;</span>
+                    <span class="overview-item">&nbsp;<a href="#Product-width">width</a>&nbsp;</span>
+                    <span class="overview-item">&nbsp;<a href="#Product-height">height</a>&nbsp;</span>
+                    <span class="overview-item">&nbsp;<a href="#Product-is_geo_coded">is_geo_coded</a>&nbsp;</span>
+                    <span class="overview-item">&nbsp;<a href="#Product-rasters">rasters</a>&nbsp;</span>
+                    <span class="overview-item">&nbsp;<a href="#Product-file_location">file_location</a>&nbsp;</span>
+                    <span class="overview-item">&nbsp;<a href="#Product-pins">pins</a>&nbsp;</span>
+                    <span class="overview-item">&nbsp;<a href="#Product-gcps">gcps</a>&nbsp;</span>
+                </div>
+                <h4>Methods</h4>
+                <div class="overview-list">
+                    <span class="overview-item">&nbsp;<a href="#Product-__init__">__init__</a>&nbsp;</span>
+                    <span class="overview-item">&nbsp;<a href="#Product-__getitem__">__getitem__</a>&nbsp;</span>
+                    <span class="overview-item">&nbsp;<a href="#Product-pixel_pos">pixel_pos</a>&nbsp;</span>
+                    <span class="overview-item">&nbsp;<a href="#Product-geo_pos">geo_pos</a>&nbsp;</span>
+                    <span class="overview-item">&nbsp;<a href="#Product-add_pin">add_pin</a>&nbsp;</span>
+                    <span class="overview-item">&nbsp;<a href="#Product-add_gcp">add_gcp</a>&nbsp;</span>
+                    <span class="overview-item">&nbsp;<a href="#Product-get_metadata">get_metadata</a>&nbsp;</span>
+                    <span class="overview-item">&nbsp;<a href="#Product-add_virtual_band">add_virtual_band</a>&nbsp;</span>
+                    <span class="overview-item">&nbsp;<a href="#Product-add_band">add_band</a>&nbsp;</span>
+                    <span class="overview-item">&nbsp;<a href="#Product-add_mask">add_mask</a>&nbsp;</span>
+                    <span class="overview-item">&nbsp;<a href="#Product-del_raster">del_raster</a>&nbsp;</span>
+                    <span class="overview-item">&nbsp;<a href="#Product-del_pin">del_pin</a>&nbsp;</span>
+                    <span class="overview-item">&nbsp;<a href="#Product-del_gcp">del_gcp</a>&nbsp;</span>
+                    <span class="overview-item">&nbsp;<a href="#Product-save_as">save_as</a>&nbsp;</span>
+                    <span class="overview-item">&nbsp;<a href="#Product-read">read</a>&nbsp;</span>
+                </div>
+            </div>
+            <h3>Properties</h3>
+            <div class="properties-section">
+                <div class="function-item" id="Product-name">
+                    <h4 class="function-signature">name</h4>
+                    <span class="function-type">property</span>
+                    <div class="function-description">
+                        <div class="docstring-description">
+                            <pre>Get the name of the product.</pre>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Returns:</h5>
+                            <div class="returns-info">
+                                <strong>str</strong>: <pre>The name of the product as set during creation or loading.</pre>
+                            </div>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Example:</h5>
+                            <div class="section-content">
+                                <pre>    product = Product(&quot;Sentinel2_L1C&quot;, &quot;S2_MSI_Level-1C&quot;)
+    print(product.name)  # &quot;Sentinel2_L1C&quot;</pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="function-item" id="Product-width">
+                    <h4 class="function-signature">width</h4>
+                    <span class="function-type">property</span>
+                    <div class="function-description">
+                        <div class="docstring-description">
+                            <pre>Get the width of the product&#x27;s scene raster.</pre>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Returns:</h5>
+                            <div class="returns-info">
+                                <strong>int</strong>: <pre>The width of the scene raster in pixels.</pre>
+                            </div>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Example:</h5>
+                            <div class="section-content">
+                                <pre>    product = Product.read(&#x27;/path/to/product.dim&#x27;)
+    print(f&quot;Product width: {product.width} pixels&quot;)</pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="function-item" id="Product-height">
+                    <h4 class="function-signature">height</h4>
+                    <span class="function-type">property</span>
+                    <div class="function-description">
+                        <div class="docstring-description">
+                            <pre>Get the height of the product&#x27;s scene raster.</pre>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Returns:</h5>
+                            <div class="returns-info">
+                                <strong>int</strong>: <pre>The height of the scene raster in pixels.</pre>
+                            </div>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Example:</h5>
+                            <div class="section-content">
+                                <pre>    product = Product.read(&#x27;/path/to/product.dim&#x27;)
+    print(f&quot;Product height: {product.height} pixels&quot;)</pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="function-item" id="Product-is_geo_coded">
+                    <h4 class="function-signature">is_geo_coded</h4>
+                    <span class="function-type">property</span>
+                    <div class="function-description">
+                        <div class="docstring-description">
+                            <pre>Check if the product has valid geo-coding information.</pre>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Returns:</h5>
+                            <div class="returns-info">
+                                <strong>bool</strong>: <pre>True if the product has geo-coding information that allows conversion between pixel and geographic coordinates, False otherwise.</pre>
+                            </div>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Example:</h5>
+                            <div class="section-content">
+                                <pre>    product = Product.read(&#x27;/path/to/product.dim&#x27;)
+    if product.is_geo_coded:
+        lat_lon = product.geo_pos(100, 100)
+        print(f&quot;Pixel (100,100) is at {lat_lon}&quot;)</pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="function-item" id="Product-rasters">
+                    <h4 class="function-signature">rasters</h4>
+                    <span class="function-type">property</span>
+                    <div class="function-description">
+                        <div class="docstring-description">
+                            <pre>Get all raster data nodes as a dictionary mapping names to Raster objects.
+
+This property provides access to all raster data nodes (bands, tie-point grids,
+masks, etc.) contained in the product as a convenient dictionary structure.</pre>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Returns:</h5>
+                            <div class="returns-info">
+                                <strong>dict[str, Raster]</strong>: <pre>A dictionary where keys are raster names and values are Raster objects wrapping the underlying SNAP raster data nodes.</pre>
+                            </div>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Example:</h5>
+                            <div class="section-content">
+                                <pre>    product = Product.read(&#x27;/path/to/product.dim&#x27;)
+    rasters = product.rasters
+    print(f&quot;Available rasters: {list(rasters.keys())}&quot;)
+    band1 = rasters[&#x27;B1&#x27;]  # Access specific band
+    for name, raster in rasters.items():
+        print(f&quot;Raster {name}: {raster.width}x{raster.height}&quot;)</pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="function-item" id="Product-file_location">
+                    <h4 class="function-signature">file_location</h4>
+                    <span class="function-type">property</span>
+                    <div class="function-description">
+                        <div class="docstring-description">
+                            <pre>Get the file location of the product.</pre>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Returns:</h5>
+                            <div class="returns-info">
+                                <strong>str</strong>: <pre>The file location of the product as a string.</pre>
+                            </div>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Example:</h5>
+                            <div class="section-content">
+                                <pre>    product = Product.read(&#x27;/path/to/product.dim&#x27;)
+    file = product.file_location  # Get file location as string
+    product.save_as(file)</pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="function-item" id="Product-pins">
+                    <h4 class="function-signature">pins</h4>
+                    <span class="function-type">property</span>
+                    <div class="function-description">
+                        <div class="docstring-description">
+                            <pre>Get all pin placemarks as a dictionary mapping names to placemark objects.
+
+Pins are point placemarks that mark specific pixel locations within the product.
+They are useful for marking points of interest or reference locations.</pre>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Returns:</h5>
+                            <div class="returns-info">
+                                <strong>dict[str, object]</strong>: <pre>A dictionary where keys are pin names and values are placemark objects representing the pins.</pre>
+                            </div>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Example:</h5>
+                            <div class="section-content">
+                                <pre>    product = Product.read(&#x27;/path/to/product.dim&#x27;)
+    product.add_pin(&quot;POI1&quot;, 100, 200, &quot;Point of Interest&quot;)
+    pins = product.pins
+    print(f&quot;Available pins: {list(pins.keys())}&quot;)</pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="function-item" id="Product-gcps">
+                    <h4 class="function-signature">gcps</h4>
+                    <span class="function-type">property</span>
+                    <div class="function-description">
+                        <div class="docstring-description">
+                            <pre>Get all ground control point placemarks as a dictionary mapping names to placemark objects.
+
+Ground Control Points (GCPs) are placemarks that contain both pixel coordinates
+and geographic coordinates, used for geo-referencing and accuracy assessment.</pre>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Returns:</h5>
+                            <div class="returns-info">
+                                <strong>dict[str, object]</strong>: <pre>A dictionary where keys are GCP names and values are placemark objects representing the ground control points.</pre>
+                            </div>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Example:</h5>
+                            <div class="section-content">
+                                <pre>    product = Product.read(&#x27;/path/to/product.dim&#x27;)
+    product.add_gcp(&quot;GCP1&quot;, 100, 200, 52.5, 13.4, &quot;Control Point&quot;)
+    gcps = product.gcps
+    print(f&quot;Available GCPs: {list(gcps.keys())}&quot;)</pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <h3>Methods</h3>
+            <div class="methods-section">
+                <div class="function-item" id="Product-__init__">
+                    <h4 class="function-signature">__init__(name, product_type, size)</h4>
+                    <span class="function-type">constructor</span>
+                    <div class="function-description">
+                        <div class="docstring-description">
+                            <pre>Initialize a new Product instance or wrap an existing Java Product.Creates a new SNAP Product with a name,
+a product type, and an optional size.</pre>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Arguments:</h5>
+                            <ul class="args-list">
+                                <li>
+                                    <strong>name (str)</strong>: <pre>The name identifier for the product.</pre>
+                                </li>
+                                <li>
+                                    <strong>product_type (str)</strong>: <pre>The type/format identifier of the product (e.g., &#x27;Sentinel-2&#x27;, &#x27;Landsat-8&#x27;).</pre>
+                                </li>
+                                <li>
+                                    <strong>size (list[int])</strong>: <pre>Raster dimensions as [width, height] in pixels.
+        If None, creates a product without predefined dimensions. Defaults to None.</pre>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Example:</h5>
+                            <div class="section-content">
+                                <pre>    # Create a new empty product
+    product = Product(&quot;MyProduct&quot;, &quot;Custom&quot;)
+    
+    # Create a product with specific dimensions
+    product = Product(&quot;MyProduct&quot;, &quot;Custom&quot;, [1024, 1024])</pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="function-item" id="Product-__getitem__">
+                    <h4 class="function-signature">__getitem__(key)</h4>
+                    <span class="function-type">method</span>
+                    <div class="function-description">
+                        <div class="docstring-description">
+                            <pre>Access a raster data node by name using dictionary-like syntax.
+
+This method enables dictionary-style access to raster data nodes (bands, masks,
+tie-point grids) within the product using square bracket notation.</pre>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Arguments:</h5>
+                            <ul class="args-list">
+                                <li>
+                                    <strong>key (str)</strong>: <pre>The name of the raster data node to retrieve.</pre>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Returns:</h5>
+                            <div class="returns-info">
+                                <strong>Raster</strong>: <pre>A Raster object wrapping the requested raster data node.</pre>
+                            </div>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Raises:</h5>
+                            <ul class="raises-list">
+                                <li>
+                                    <strong>KeyError</strong>: <pre>If no raster data node with the specified name exists in the product.</pre>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Example:</h5>
+                            <div class="section-content">
+                                <pre>    product = Product.read(&#x27;/path/to/product.dim&#x27;)
+    band1 = product[&#x27;B1&#x27;]  # Access band named &#x27;B1&#x27;
+    mask = product[&#x27;cloud_mask&#x27;]  # Access mask named &#x27;cloud_mask&#x27;
+    print(f&quot;Band shape: {band1.width}x{band1.height}&quot;)</pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="function-item" id="Product-pixel_pos">
+                    <h4 class="function-signature">pixel_pos(lat, lon)</h4>
+                    <span class="function-type">method</span>
+                    <div class="function-description">
+                        <div class="docstring-description">
+                            <pre>Convert geographic coordinates to pixel coordinates.
+
+This method transforms latitude/longitude coordinates to pixel coordinates
+using the product&#x27;s geo-coding information. Requires the product to have
+valid geo-coding.</pre>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Arguments:</h5>
+                            <ul class="args-list">
+                                <li>
+                                    <strong>lat (float)</strong>: <pre>Latitude in decimal degrees.</pre>
+                                </li>
+                                <li>
+                                    <strong>lon (float)</strong>: <pre>Longitude in decimal degrees.</pre>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Returns:</h5>
+                            <div class="returns-info">
+                                <strong>tuple[float, float]</strong>: <pre>Pixel coordinates as (x, y) tuple in pixels, or None if conversion fails or product lacks geo-coding.</pre>
+                            </div>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Example:</h5>
+                            <div class="section-content">
+                                <pre>    product = Product.read(&#x27;/path/to/geocoded_product.dim&#x27;)
+    if product.is_geo_coded:
+        pixel_x, pixel_y = product.pixel_pos(52.5, 13.4)
+        print(f&quot;Berlin is at pixel ({pixel_x}, {pixel_y})&quot;)</pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="function-item" id="Product-geo_pos">
+                    <h4 class="function-signature">geo_pos(x, y)</h4>
+                    <span class="function-type">method</span>
+                    <div class="function-description">
+                        <div class="docstring-description">
+                            <pre>Convert pixel coordinates to geographic coordinates.</pre>
+                        </div>
+                    </div>
+                </div>
+                <div class="function-item" id="Product-add_pin">
+                    <h4 class="function-signature">add_pin(name, x, y, label)</h4>
+                    <span class="function-type">method</span>
+                    <div class="function-description">
+                        <div class="docstring-description">
+                            <pre>Add a pin placemark to the product at the specified pixel coordinates.
+
+Pins are point placemarks that mark specific pixel locations within the product
+for reference or analysis purposes. They are stored in the product&#x27;s pin group
+and can be accessed later through the pins property.</pre>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Arguments:</h5>
+                            <ul class="args-list">
+                                <li>
+                                    <strong>name (str)</strong>: <pre>Unique name identifier for the pin.</pre>
+                                </li>
+                                <li>
+                                    <strong>x (float)</strong>: <pre>Pixel x-coordinate (column) where to place the pin.</pre>
+                                </li>
+                                <li>
+                                    <strong>y (float)</strong>: <pre>Pixel y-coordinate (row) where to place the pin.</pre>
+                                </li>
+                                <li>
+                                    <strong>label (str)</strong>: <pre>Optional descriptive label for the pin.
+        If None, the name will be used as the label. Defaults to None.</pre>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Example:</h5>
+                            <div class="section-content">
+                                <pre>    product = Product.read(&#x27;/path/to/product.dim&#x27;)
+    product.add_pin(&quot;POI1&quot;, 100, 200, &quot;Point of Interest 1&quot;)
+    product.add_pin(&quot;Center&quot;, product.width//2, product.height//2)
+    print(f&quot;Added {len(product.pins)} pins&quot;)</pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="function-item" id="Product-add_gcp">
+                    <h4 class="function-signature">add_gcp(name, x, y, lat, lon, label)</h4>
+                    <span class="function-type">method</span>
+                    <div class="function-description">
+                        <div class="docstring-description">
+                            <pre>Add a ground control point (GCP) to the product with pixel and geographic coordinates.
+
+Ground Control Points are placemarks that contain both pixel coordinates and
+corresponding geographic coordinates. They are essential for geo-referencing,
+orthorectification, and accuracy assessment of remote sensing products.</pre>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Arguments:</h5>
+                            <ul class="args-list">
+                                <li>
+                                    <strong>name (str)</strong>: <pre>Unique name identifier for the GCP.</pre>
+                                </li>
+                                <li>
+                                    <strong>x (float)</strong>: <pre>Pixel x-coordinate (column) of the GCP location.</pre>
+                                </li>
+                                <li>
+                                    <strong>y (float)</strong>: <pre>Pixel y-coordinate (row) of the GCP location.</pre>
+                                </li>
+                                <li>
+                                    <strong>lat (float)</strong>: <pre>Latitude of the GCP in decimal degrees.</pre>
+                                </li>
+                                <li>
+                                    <strong>lon (float)</strong>: <pre>Longitude of the GCP in decimal degrees.</pre>
+                                </li>
+                                <li>
+                                    <strong>label (str)</strong>: <pre>Optional descriptive label for the GCP.
+        If None, the name will be used as the label. Defaults to None.</pre>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Example:</h5>
+                            <div class="section-content">
+                                <pre>    product = Product.read(&#x27;/path/to/product.dim&#x27;)
+    # Add GCP for Berlin Brandenburg Gate
+    product.add_gcp(&quot;Berlin_Gate&quot;, 1250, 800, 52.5163, 13.3777, &quot;Brandenburg Gate&quot;)
+    # Add GCP for London Big Ben
+    product.add_gcp(&quot;London_BigBen&quot;, 2100, 1200, 51.4994, -0.1245, &quot;Big Ben&quot;)
+    print(f&quot;Added {len(product.gcps)} GCPs&quot;)</pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="function-item" id="Product-get_metadata">
+                    <h4 class="function-signature">get_metadata(path)</h4>
+                    <span class="function-type">method</span>
+                    <div class="function-description">
+                        <div class="docstring-description">
+                            <pre>Retrieve metadata attribute value from the product using a hierarchical path.
+
+This method searches the product&#x27;s metadata tree using a slash-separated path
+to locate and retrieve specific metadata attributes. The path follows the
+hierarchical structure of the metadata tree.</pre>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Arguments:</h5>
+                            <ul class="args-list">
+                                <li>
+                                    <strong>path (str)</strong>: <pre>Slash-separated path to the metadata attribute (e.g.,
+        &#x27;General_Info/Product_Info.PRODUCT_TYPE&#x27; or &#x27;Processing_Info/PROCESSING_LEVEL&#x27;).</pre>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Returns:</h5>
+                            <div class="returns-info">
+                                <strong>str</strong>: <pre>The metadata value as a string if found and not None, otherwise None if the attribute doesn&#x27;t exist or has no value.</pre>
+                            </div>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Example:</h5>
+                            <div class="section-content">
+                                <pre>    product = Product.read(&#x27;/path/to/sentinel2_product.dim&#x27;)
+    product_type = product.get_metadata(&#x27;General_Info.Product_Info.PRODUCT_TYPE&#x27;)
+    print(f&quot;Product type: {product_type}&quot;)
+    
+    processing_level = product.get_metadata(&#x27;Processing_Info/PROCESSING_LEVEL&#x27;)
+    if processing_level:
+        print(f&quot;Processing level: {processing_level}&quot;)</pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="function-item" id="Product-add_virtual_band">
+                    <h4 class="function-signature">add_virtual_band(name, expression)</h4>
+                    <span class="function-type">method</span>
+                    <div class="function-description">
+                        <div class="docstring-description">
+                            <pre>Add a virtual band to the product using a mathematical expression.
+
+Virtual bands are computed on-the-fly using mathematical expressions that can
+reference other bands and constants. They don&#x27;t store data directly but calculate
+values dynamically when accessed, saving memory and storage space.</pre>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Arguments:</h5>
+                            <ul class="args-list">
+                                <li>
+                                    <strong>name (str)</strong>: <pre>Unique name for the new virtual band.</pre>
+                                </li>
+                                <li>
+                                    <strong>expression (str)</strong>: <pre>Mathematical expression defining how the band values are computed.
+        Can reference existing bands using their names (e.g., &#x27;B1 + B2&#x27;, &#x27;sqrt(B3 * B4)&#x27;).</pre>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Returns:</h5>
+                            <div class="returns-info">
+                                <strong>Raster</strong>: <pre>A Raster object wrapping the newly created virtual band.</pre>
+                            </div>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Example:</h5>
+                            <div class="section-content">
+                                <pre>    product = Product.read(&#x27;/path/to/sentinel2_product.dim&#x27;)
+    # Create NDVI virtual band
+    ndvi = product.add_virtual_band(&quot;NDVI&quot;, &quot;(B8 - B4) / (B8 + B4)&quot;)
+    # Create a custom ratio band
+    ratio = product.add_virtual_band(&quot;Green_Red_Ratio&quot;, &quot;B3 / B2&quot;)
+    print(f&quot;Added virtual band: {ndvi.name}&quot;)</pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="function-item" id="Product-add_band">
+                    <h4 class="function-signature">add_band(name, data_type, size)</h4>
+                    <span class="function-type">method</span>
+                    <div class="function-description">
+                        <div class="docstring-description">
+                            <pre>Add a new empty band to the product with specified data type.
+
+This method creates a new raster band with the same dimensions as the product&#x27;s
+scene raster. The band is initially filled with no-data values and can be
+populated with data after creation.</pre>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Arguments:</h5>
+                            <ul class="args-list">
+                                <li>
+                                    <strong>name (str)</strong>: <pre>Unique name for the new band.</pre>
+                                </li>
+                                <li>
+                                    <strong>data_type (str, optional)</strong>: <pre>Data type for the band values. Valid options:
+            TYPE_BYTE = &#x27;b&#x27; = byte (8-bit signed),
+            TYPE_UBYTE = &#x27;B&#x27; = unsigned byte (8-bit unsigned),
+            TYPE_SHORT = &#x27;h&#x27; = short (16-bit signed),
+            TYPE_USHORT = &#x27;H&#x27; = unsigned short (16-bit unsigned),
+            TYPE_INT = &#x27;i&#x27; = int (32-bit signed),
+            TYPE_UINT &#x27;I&#x27; = unsigned int (32-bit unsigned),
+            TYPE_FLOAT= &#x27;f&#x27; = float (32-bit),
+            TYPE_DOUBLE = &#x27;d&#x27; = double (64-bit).
+        Defaults to &#x27;f&#x27;.</pre>
+                                </li>
+                                <li>
+                                    <strong>size (list[int])</strong>: <pre>Raster dimensions as [width, height] in pixels.
+        If None, uses the scene raster size of the product. Defaults to None.</pre>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Returns:</h5>
+                            <div class="returns-info">
+                                <strong>Raster</strong>: <pre>A Raster object wrapping the newly created band.</pre>
+                            </div>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Raises:</h5>
+                            <ul class="raises-list">
+                                <li>
+                                    <strong>ValueError</strong>: <pre>If size is None and product has no scene raster size or of data type is not supported.</pre>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Example:</h5>
+                            <div class="section-content">
+                                <pre>    product = Product(&quot;MyProduct&quot;, &quot;Custom&quot;, [512, 512])
+    # Add a single precision band
+    data_band = product.add_band(&quot;temperature&quot;, &#x27;f&#x27;, [10, 10])
+    # Add a byte band for classification results
+    class_band = product.add_band(&quot;classification&quot;, Raster.TYPE_BYTE))
+    print(f&quot;Added band: {data_band.name} with type {data_band.data_type}&quot;)</pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="function-item" id="Product-add_mask">
+                    <h4 class="function-signature">add_mask(name, expression, description, color)</h4>
+                    <span class="function-type">method</span>
+                    <div class="function-description">
+                        <div class="docstring-description">
+                            <pre>Add a mask to the product using a boolean expression.
+
+Masks are boolean raster layers that identify pixels meeting certain criteria.
+They are commonly used for cloud masking, water detection, quality flags, etc.
+Masks can be visualized with custom colors and transparency.</pre>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Arguments:</h5>
+                            <ul class="args-list">
+                                <li>
+                                    <strong>name (str)</strong>: <pre>Unique name for the new mask.</pre>
+                                </li>
+                                <li>
+                                    <strong>expression (str)</strong>: <pre>Boolean expression defining the mask condition. Should evaluate
+        to true/false for each pixel (e.g., &#x27;B1 &gt; 0.3&#x27;, &#x27;B4 &lt; 0.1 AND B3 &gt; 0.2&#x27;).</pre>
+                                </li>
+                                <li>
+                                    <strong>description (str, optional)</strong>: <pre>Descriptive text explaining the mask purpose.
+        Defaults to empty string.</pre>
+                                </li>
+                                <li>
+                                    <strong>color (tuple[int, int, int] | tuple[int, int, int, int], optional)</strong>: <pre>RGB or RGBA
+        color tuple for mask visualization. Values should be 0-255. If RGB provided,
+        transparency defaults to 128. Defaults to (255, 0, 0, 128) - semi-transparent red.</pre>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Returns:</h5>
+                            <div class="returns-info">
+                                <strong>object</strong>: <pre>The newly created mask object from the underlying SNAP API.</pre>
+                            </div>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Raises:</h5>
+                            <ul class="raises-list">
+                                <li>
+                                    <strong>ValueError</strong>: <pre>If color tuple has less than 3 elements.</pre>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Example:</h5>
+                            <div class="section-content">
+                                <pre>    product = Product.read(&#x27;/path/to/product.dim&#x27;)
+    # Add cloud mask with blue color
+    cloud_mask = product.add_mask(&quot;clouds&quot;, &quot;B1 &gt; 0.3&quot;, &quot;Cloud pixels&quot;, (0, 0, 255, 100))
+    # Add water mask with cyan color
+    water_mask = product.add_mask(&quot;water&quot;, &quot;B3 &lt; 0.1&quot;, &quot;Water bodies&quot;, (0, 255, 255))
+    print(f&quot;Added mask: {cloud_mask.getName()}&quot;)</pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="function-item" id="Product-del_raster">
+                    <h4 class="function-signature">del_raster(name)</h4>
+                    <span class="function-type">method</span>
+                    <div class="function-description">
+                        <div class="docstring-description">
+                            <pre>Remove a raster data node from the product by name.
+
+This method removes raster data nodes (bands, masks, or tie-point grids) from
+the product. It searches all raster groups and removes the first match found.
+The removal is permanent and cannot be undone.</pre>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Arguments:</h5>
+                            <ul class="args-list">
+                                <li>
+                                    <strong>name (str)</strong>: <pre>Name of the raster data node to remove.</pre>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Example:</h5>
+                            <div class="section-content">
+                                <pre>    product = Product.read(&#x27;/path/to/product.dim&#x27;)
+    # Remove a band
+    product.del_raster(&quot;B1&quot;)
+    # Remove a mask
+    product.del_raster(&quot;cloud_mask&quot;)
+    print(f&quot;Remaining rasters: {list(product.rasters.keys())}&quot;)</pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="function-item" id="Product-del_pin">
+                    <h4 class="function-signature">del_pin(name)</h4>
+                    <span class="function-type">method</span>
+                    <div class="function-description">
+                        <div class="docstring-description">
+                            <pre>Remove a pin placemark from the product by name.
+
+This method removes a pin placemark from the product&#x27;s pin group. The removal
+is permanent and cannot be undone.</pre>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Arguments:</h5>
+                            <ul class="args-list">
+                                <li>
+                                    <strong>name (str)</strong>: <pre>Name of the pin placemark to remove.</pre>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Returns:</h5>
+                            <div class="returns-info">
+                                <strong>object</strong>: <pre>The removed pin placemark object if found and removed, None if no pin with the specified name exists.</pre>
+                            </div>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Example:</h5>
+                            <div class="section-content">
+                                <pre>    product = Product.read(&#x27;/path/to/product.dim&#x27;)
+    product.add_pin(&quot;temp_pin&quot;, 100, 100)
+    removed_pin = product.del_pin(&quot;temp_pin&quot;)
+    if removed_pin:
+        print(&quot;Pin successfully removed&quot;)
+    print(f&quot;Remaining pins: {list(product.pins.keys())}&quot;)</pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="function-item" id="Product-del_gcp">
+                    <h4 class="function-signature">del_gcp(name)</h4>
+                    <span class="function-type">method</span>
+                    <div class="function-description">
+                        <div class="docstring-description">
+                            <pre>Remove a ground control point (GCP) placemark from the product by name.
+
+This method removes a GCP placemark from the product&#x27;s GCP group. The removal
+is permanent and cannot be undone.</pre>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Arguments:</h5>
+                            <ul class="args-list">
+                                <li>
+                                    <strong>name (str)</strong>: <pre>Name of the GCP placemark to remove.</pre>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Returns:</h5>
+                            <div class="returns-info">
+                                <strong>Placemark</strong>: <pre>The removed GCP placemark object if found and removed, None if no GCP with the specified name exists.</pre>
+                            </div>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Example:</h5>
+                            <div class="section-content">
+                                <pre>    product = Product.read(&#x27;/path/to/product.dim&#x27;)
+    product.add_gcp(&quot;temp_gcp&quot;, 100, 100, 52.5, 13.4)
+    removed_gcp = product.del_gcp(&quot;temp_gcp&quot;)
+    if removed_gcp:
+        print(&quot;GCP successfully removed&quot;)
+    print(f&quot;Remaining GCPs: {list(product.gcps.keys())}&quot;)</pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="function-item" id="Product-save_as">
+                    <h4 class="function-signature">save_as(file_path, format_name)</h4>
+                    <span class="function-type">method</span>
+                    <div class="function-description">
+                        <div class="docstring-description">
+                            <pre>Save the product to a file in the specified format.
+
+This method saves the product to disk using SNAP&#x27;s ProductIO functionality.
+The output format is determined by the format_name parameter or defaults
+to BEAM-DIMAP format if not specified.</pre>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Arguments:</h5>
+                            <ul class="args-list">
+                                <li>
+                                    <strong>file_path (str)</strong>: <pre>Path where the product file will be written. The file
+        extension should match the chosen format.</pre>
+                                </li>
+                                <li>
+                                    <strong>format_name (str)</strong>: <pre>Name of the output format (e.g.,
+        &#x27;BEAM-DIMAP&#x27;, &#x27;GeoTIFF&#x27;, &#x27;NetCDF&#x27;). If None, defaults to &#x27;BEAM-DIMAP&#x27;.
+        Use ProductIO.output_formats() to see available formats.</pre>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Example:</h5>
+                            <div class="section-content">
+                                <pre>    product = Product.read(&#x27;/path/to/input.dim&#x27;)
+    # Save in BEAM-DIMAP format (default)
+    product.save_as(&#x27;/path/to/output.dim&#x27;)
+    # Save in GeoTIFF format
+    product.save_as(&#x27;/path/to/output.tif&#x27;, &#x27;GeoTIFF&#x27;)
+    # Save in NetCDF format
+    product.save_as(&#x27;/path/to/output.nc&#x27;, &#x27;NetCDF&#x27;)</pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="function-item" id="Product-read">
+                    <h4 class="function-signature">read(file_path)</h4>
+                    <span class="function-type">static method</span>
+                    <div class="function-description">
+                        <div class="docstring-description">
+                            <pre>Read a product from a file using SNAP&#x27;s ProductIO functionality.
+
+This static method creates a new Product instance by loading data from the
+specified file path. The format is automatically detected based on the file
+content and extension.</pre>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Arguments:</h5>
+                            <ul class="args-list">
+                                <li>
+                                    <strong>file_path (str)</strong>: <pre>Path to the product file to be read. Can be any format
+        supported by SNAP&#x27;s reader plugins (e.g., .dim, .nc, .tif, .zip).</pre>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Returns:</h5>
+                            <div class="returns-info">
+                                <strong>Product</strong>: <pre>A new Product instance wrapping the loaded data.</pre>
+                            </div>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Raises:</h5>
+                            <ul class="raises-list">
+                                <li>
+                                    <strong>FileNotFoundError</strong>: <pre>If the file cannot be read or does not exist.</pre>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Example:</h5>
+                            <div class="section-content">
+                                <pre>    # Read various product formats
+    sentinel2 = Product.read(&#x27;/path/to/sentinel2.zip&#x27;)
+    landsat = Product.read(&#x27;/path/to/landsat.tar.gz&#x27;)
+    dimap = Product.read(&#x27;/path/to/product.dim&#x27;)
+    geotiff = Product.read(&#x27;/path/to/raster.tif&#x27;)
+    print(f&quot;Loaded product: {sentinel2.name}&quot;)</pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
