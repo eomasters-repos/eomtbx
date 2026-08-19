@@ -6,7 +6,7 @@ EOMasters Toolbox for SNAP
 [![Mastodon](https://img.shields.io/badge/Mastodon-6364FF?style=for-the-badge&logo=Mastodon&logoColor=white)](https://mastodon.green/@EOMasters)
 [![ko-fi](https://img.shields.io/badge/Ko--fi-F16061?style=for-the-badge&logo=ko-fi&logoColor=white)](https://ko-fi.com/eomasters)
 [![Maven Build](https://github.com/eomasters-repos/eomtbx/actions/workflows/mvn-build.yml/badge.svg)](https://github.com/eomasters-repos/eomtbx/actions/workflows/mvn-build.yml)
-[![Static Badge](https://img.shields.io/badge/FOR%20ESA%20SNAP-Version%2013-00AA89?labelColor=5A5A5A)](https://step.esa.int/main/)
+[![Static Badge](https://img.shields.io/badge/FOR%20ESA%20SNAP-Version%2014-00AA89?labelColor=5A5A5A)](https://step.esa.int/main/)
 
 <div align="center">
 I'm proud to have been awarded a grant from the German “Bescheinigungsstelle Forschungszulage” — which roughly<br>
