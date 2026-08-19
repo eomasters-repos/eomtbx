@@ -1,0 +1,258 @@
+<!--
+  ========================LICENSE_START=================================
+  EOMTBX - EOMasters Toolbox for SNAP
+  -> https://www.eomasters.org/eomtbx
+  ======================================================================
+  Copyright (C) 2023 - 2026 Marco Peters
+  ======================================================================
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as
+  published by the Free Software Foundation, either version 3 of the
+  License, or (at your option) any later version.
+  
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+  
+  You should have received a copy of the GNU General Public
+  License along with this program.  If not, see
+  -> http://www.gnu.org/licenses/gpl-3.0.html
+  =========================LICENSE_END==================================
+  -->
+
+<html>
+<head>
+  <title>EOMasters Toolbox - SpeX Formula Symbols</title>
+   <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+  <link href="../../style/style.css" rel="stylesheet">
+  <link href="../../style/eomastersstyle.css" rel="stylesheet">
+</head>
+
+<body>
+<table class="header">
+  <tr class="header">
+    <td align="left" class="header" width="40"><a href="../Overview.html"><img border=0
+                                                                               src="../../images/EomToolbox_32.png"></a>
+    </td>
+    <td class="header">EOMasters Toolbox</td>
+    <td align="right" class="header"><a
+        href="nbdocs://org.esa.snap.snap.help/org/esa/snap/snap/help/docs/general/overview/SnapOverview.html"><img
+        border=0 src="../../images/snap_header.jpg"></a></td>
+  </tr>
+</table>
+
+<h1>SpeX Formula Symbols</h1>
+<h3>Band Symbols</h3>
+<table>
+  <thead>
+  <tr style="font-weight: bold">
+    <td>Symbol</td>
+    <td>Description</td>
+  </tr>
+  </thead>
+  <tr>
+    <td>A</td>
+    <td>Aerosols - [400:455]</td>
+  </tr>
+  <tr>
+    <td>B</td>
+    <td>Blue - [450:530]</td>
+  </tr>
+  <tr>
+    <td>G</td>
+    <td>Green - [510:600]</td>
+  </tr>
+  <tr>
+    <td>G1</td>
+    <td>Green 1 - [510:550]</td>
+  </tr>
+  <tr>
+    <td>N</td>
+    <td>Near-Infrared (NIR) - [760:900]</td>
+  </tr>
+  <tr>
+    <td>N2</td>
+    <td>Near-Infrared (NIR) 2 - [850:880]</td>
+  </tr>
+  <tr>
+    <td>R</td>
+    <td>Red - [620:690]</td>
+  </tr>
+  <tr>
+    <td>RE1</td>
+    <td>Red Edge 1 - [695:715]</td>
+  </tr>
+  <tr>
+    <td>RE2</td>
+    <td>Red Edge 2 - [730:750]</td>
+  </tr>
+  <tr>
+    <td>RE3</td>
+    <td>Red Edge 3 - [765:795]</td>
+  </tr>
+  <tr>
+    <td>S1</td>
+    <td>Short-wave Infrared (SWIR) 1 - [1550:1750]</td>
+  </tr>
+  <tr>
+    <td>S2</td>
+    <td>Short-wave Infrared (SWIR) 2 - [2080:2350]</td>
+  </tr>
+  <tr>
+    <td>T</td>
+    <td>Thermal Infrared - [10400:12500]</td>
+  </tr>
+  <tr>
+    <td>T1</td>
+    <td>Thermal Infrared 1 - [10600:11190]</td>
+  </tr>
+  <tr>
+    <td>T2</td>
+    <td>Thermal Infrared 2 - [11500:12510]</td>
+  </tr>
+  <tr>
+    <td>WV</td>
+    <td>Water Vapour - [930:960]</td>
+  </tr>
+  <tr>
+    <td>Y</td>
+    <td>Yellow - [585:625]</td>
+  </tr>
+  <tr>
+    <td>HV</td>
+    <td>Backscattering Coefficient HV</td>
+  </tr>
+  <tr>
+    <td>VH</td>
+    <td>Backscattering Coefficient VH</td>
+  </tr>
+  <tr>
+    <td>HH</td>
+    <td>Backscattering Coefficient HH</td>
+  </tr>
+  <tr>
+    <td>VV</td>
+    <td>Backscattering Coefficient VV</td>
+  </tr>
+</table>
+<h3>Constant Symbols</h3>
+<table>
+  <thead>
+  <tr style="font-weight: bold">
+    <td>Symbol</td>
+    <td>Description</td>
+  </tr>
+  </thead>
+  <tr>
+    <td>C1</td>
+    <td>6.0 - Coefficient 1 for the aerosol resistance term</td>
+  </tr>
+  <tr>
+    <td>C2</td>
+    <td>7.5 - Coefficient 2 for the aerosol resistance term</td>
+  </tr>
+  <tr>
+    <td>L</td>
+    <td>1.0 - Canopy background adjustment</td>
+  </tr>
+  <tr>
+    <td>alpha</td>
+    <td>0.1 - Weighting coefficient used for WDRVI</td>
+  </tr>
+  <tr>
+    <td>beta</td>
+    <td>0.05 - Calibration parameter used for NDSInw</td>
+  </tr>
+  <tr>
+    <td>c</td>
+    <td>1.0 - Trade-off parameter in the polynomial kernel</td>
+  </tr>
+  <tr>
+    <td>cexp</td>
+    <td>1.16 - Exponent used for OCVI</td>
+  </tr>
+  <tr>
+    <td>epsilon</td>
+    <td>1.0 - Adjustment constant used for EBI</td>
+  </tr>
+  <tr>
+    <td>fdelta</td>
+    <td>0.581 - Adjustment factor used for SEVI</td>
+  </tr>
+  <tr>
+    <td>g</td>
+    <td>2.5 - Gain factor</td>
+  </tr>
+  <tr>
+    <td>gamma</td>
+    <td>1.0 - Weighting coefficient used for ARVI</td>
+  </tr>
+  <tr>
+    <td>k</td>
+    <td>0.0 - Slope parameter by soil used for NIRvH2</td>
+  </tr>
+  <tr>
+    <td>nexp</td>
+    <td>2.0 - Exponent used for GDVI</td>
+  </tr>
+  <tr>
+    <td>omega</td>
+    <td>2.0 - Weighting coefficient used for MBWI</td>
+  </tr>
+  <tr>
+    <td>p</td>
+    <td>2.0 - Kernel degree in the polynomial kernel</td>
+  </tr>
+  <tr>
+    <td>sigma</td>
+    <td>0.5 - Length-scale parameter in the RBF kernel</td>
+  </tr>
+  <tr>
+    <td>sla</td>
+    <td>1.0 - Soil line slope</td>
+  </tr>
+  <tr>
+    <td>slb</td>
+    <td>0.0 - Soil line intercept</td>
+  </tr>
+</table>
+<h3>Band Function</h3>
+<table>
+  <thead>
+  <tr style="font-weight: bold">
+    <td>Symbol</td>
+    <td>Description</td>
+  </tr>
+  </thead>
+  <tr>
+    <td>bnd(minWvl:maxWvl)</td>
+    <td>Band closest to the center of the wavelength range</td>
+  </tr>
+</table>
+
+<footer>
+  <hr>
+  <table class="eom_ft">
+    <tr>
+      <td width="60" rowspan="2" class="eom_ft">
+        <img alt="EOMasters Logo" src="../../images/EOMasters_50.png">
+      </td>
+      <td width="*" class="eom_ft">
+        <div class="eom_ft">EOMasters Toolbox<br></div>
+      </td>
+    </tr>
+    <tr>
+      <td class="eom_ft"> Provided by
+        <object classid="java:eu.esa.snap.netbeans.javahelp.BrowserDisplayer">
+          <param name="content" value="https://www.eomasters.org/">
+          <param name="text" value="<html><u>www.eomasters.org</u></html>">
+          <param name="textFontSize" value="bigger">
+        </object>
+      </td>
+    </tr>
+  </table>
+</footer>
+</body>
+</html>
+

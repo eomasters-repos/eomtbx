@@ -1,0 +1,221 @@
+<!--
+  ========================LICENSE_START=================================
+  EOMTBX - EOMasters Toolbox for SNAP
+  -> https://www.eomasters.org/eomtbx
+  ======================================================================
+  Copyright (C) 2023 - 2026 Marco Peters
+  ======================================================================
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as
+  published by the Free Software Foundation, either version 3 of the
+  License, or (at your option) any later version.
+  
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+  
+  You should have received a copy of the GNU General Public
+  License along with this program.  If not, see
+  -> http://www.gnu.org/licenses/gpl-3.0.html
+  =========================LICENSE_END==================================
+  -->
+
+<html>
+<head>
+  <title>EOMasters Toolbox - SpeX Processor (GUI)</title>
+   <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+  <link href="../../style/style.css" rel="stylesheet">
+  <link href="../../style/eomastersstyle.css" rel="stylesheet">
+</head>
+
+<body>
+<table class="header">
+  <tr class="header">
+    <td align="left" class="header" width="40"><a href="../Overview.html"><img border=0
+                                                                               src="../../images/EomToolbox_32.png"></a>
+    </td>
+    <td class="header">EOMasters Toolbox</td>
+    <td align="right" class="header"><a
+        href="nbdocs://org.esa.snap.snap.help/org/esa/snap/snap/help/docs/general/overview/SnapOverview.html"><img
+        border=0 src="../../images/snap_header.jpg"></a></td>
+  </tr>
+</table>
+
+<h1><img class="vCenter" src="images/SpexOp.png" width="60"/>&nbsp;&nbsp;SpeX Processor - Graphical User Interface</h1>
+<h2>Overview</h2>
+<p>The SpeX Processor allows to compute multiple spectral indices with general masks (expression/WKT/shapefile) at once.
+  In addition, it is possible to specify masks for each selected spectral index. The SpeX Processor can be accessed via
+  the menu <code>Optical / SpeX / SpeX Processor</code>. The following dialog is shown:</p>
+<p>The SpeX Processor consists of two tabs. The first tab <code>I/O Parameters</code> allows to specify the input and
+  output parameters. The second tab <code>Processing Parameters</code> allows to specify the parameters for the
+  processing.</p>
+
+<h2>I/O Parameters</h2>
+<div align="center"><img src="images/SpexIOParameters.png" height="662" width="793"/></div>
+<p>The <code>I/O Parameters</code> tab allows to specify the input and output parameters.</p>
+<h3>Source Product</h3>
+<p>This defines the source product on which the spectral index processing is performed. Either select one of the products
+  already opened in the application or select a new one by opening a product selection dialog.</p>
+<h4>Resampling of source data</h4>
+<p>If a source product has bands of different sizes, e.g. Sentinel-2 products, they are resampled to the highest
+  resolution of the product. This is done by using the SNAP Resample operation with the default parameters. If a
+  different resampling is required the source product should be resampled first. </p>
+
+<h3>Target Product</h3>
+<p><b>Name</b> - Used to specify the name of the target product. By default, it is set to the name of the source product
+  with the suffix '_spex' appended.</p>
+
+<p><b>Save as</b> - Used to specify whether the target product should be saved to the file system. The dropdown list
+  provides a list of available file formats. The text field shows the path to the directory where the processing result
+  will be saved. You can edit the text field directly or select a directory via the '...' button.</p></p>
+
+<p><b>Open in SNAP</b> - Used to specify whether the target product should be opened in SNAP. If the target product is
+  not saved, it is opened in SNAP automatically.</p>
+
+<h2>Processing Parameters</h2>
+<div align="center"><img src="images/SpexProcParameters.png" height="662" width="793"/></div>
+<p>The <code>Processing Parameters</code> tab allows to specify the parameters for the processing.On the left side all
+  available spectral indices are listed in a tree view. On the right side the details of the currently selected index
+  are shown. And beneath masks can be specified which are applied to all selected indices. The <a
+      href="SpexDatabase.html">SpeX Database Manager</a> can be opened by clicking on the <img
+      src="images/ViewDbManager.png" width="20"/> button. It allows to add custom indices to the database. </p>
+<h3>Selection, Grouping and Filtering</h3>
+<p>The tree view can be filtered by entering text into the filter field at the top. The list of indices will be reduced
+  to those indices which contain the text in the name, the description, the domain, the formula or the platforms.
+  Capitalisation is ignored for the filtering. Beside the filter field you can toggle how the indices are grouped. You
+  can click on the barrel symbol <img src="images/Database_40.png" width="20"/> to filter the list of indices so that it
+  only shows indices compatible with the currently selected source product. Beside the filter field you can toggle how
+  the indices are grouped.</p>
+
+<div align="center">
+  <table width="50%">
+    <thead>
+    <tr>
+      <th>Grouping</th>
+      <th>Icon</th>
+      <th>Description</th>
+    </tr>
+    <tr>
+      <td>Domain</td>
+      <td><img src="images/Group_Domain_40.png" width="40"></td>
+      <td>The indices are grouped by their domain (Default).</td>
+    </tr>
+    <tr>
+      <td>Name</td>
+      <td><img src="images/Group_Name_40.png"></td>
+      <td>The indices are grouped alphabetically by the first letter of their name.</td>
+    </tr>
+    <tr>
+      <td>Source</td>
+      <td><img src="images/Group_Source_40.png"></td>
+      <td>The indices are grouped by their source where they have been taken from.</td>
+    </tr>
+    <tr>
+      <td>None</td>
+      <td><img src="images/Cancel_40.png"></td>
+      <td>The indices are not grouped at all. Only sorted by name.</td>
+    </tr>
+  </table>
+</div>
+
+
+<h3>Specifying General Masks</h3>
+<p>General masks can be specified by <b>expression</b>, <b>WKT</b> or <b>shapefile</b>. The masks are applied to all
+  selected indices.</p>
+<p><b>Valid Expression</b> - This expression defines which pixels are valid for processing. It must follow the rules of
+  Band Maths. If a source product is selected an edit dialog can be opened to ease the writing of the expression.</p>
+<p><b>Shapefile</b> - A shapefile can be selected to define the valid region for the processing.</p>
+<p><b>WKT</b> - A geometry using WGS84 coordinates can be specified following the
+  <object classid="java:eu.esa.snap.netbeans.javahelp.BrowserDisplayer">
+    <param name="content" value="http://giswiki.org/wiki/Well_Known_Text">
+    <param name="text" value="<html><u>WKT Format</u></html>">
+    <param name="textFontSize" value="bigger">
+  </object>.
+</p>
+
+<h3>Define Custom SpeX</h3>
+<p>Custom SpeX can be defined in the lower area of the Processing Parameters tab. Custom Spex can override the values of
+  predefined spectral indices and each can have its own set of masks.</p>
+<div align="center"><img src="images/CustomSpexTable.png"/></div>
+<p>The table shows the most important information of th custom spectral indices defined. Further information is shown in
+  the tool tip when hovering over the row of the spectral index. The four buttons on the right side can be used to
+  modify the list of custom spectral indices.</p>
+<div align="center">
+  <table width="50%">
+    <thead>
+    <tr>
+      <th>Button</th>
+      <th>Description</th>
+    </tr>
+    <tr>
+      <td><img src="images/Plus_40.png" width="40"></td>
+      <td>This button allows to add a new custom spectral index to the database.</td>
+    </tr>
+    <tr>
+      <td><img src="images/Minus_40.png"></td>
+      <td>This button removes the currently selected spectral index.
+      </td>
+    </tr>
+    <tr>
+      <td><img src="images/Pen_40.png"></td>
+      <td>This button allows to edit the selected custom spectral index.
+      </td>
+    </tr>
+    <tr>
+      <td><img src="images/AddCustomToDb.png"></td>
+      <td>With this button the currently selected index can be added to the SpeX Database. Before adding it to the
+        database the attributes are shown for verification and can be modified if necessary. The masks associated with
+        the index are not added to the database.
+      </td>
+    </tr>
+  </table>
+</div>
+<h4>Add/Edit Custom SpeX</h4>
+<p>The add/edit dialog is similar allows to edit the attributes of the spectral index and also the masks which shall be
+  used.</p>
+<div align="center"><img src="images/AddEditCustomSpex.png"/></div>
+<table style="border-style:none">
+  <td><p>You can use the <img src="images/SpexPrefillButton.png"/> button next to the name field to select an existing
+    spectral index and prefill all fields.
+    <div align="center"><img src="images/SpexSelector.png"/></div>
+  </td>
+  <td><p>In order to write the formula you can hover over the <img src="images/Info_40.png" width="20"/> next to the
+    Formula field. It will show a panel with the usable symbols.</p>
+    <div align="center"><img src="images/SymbolsPanel.png"></div>
+  </td>
+</table>
+
+<h2>Mask Combination</h2>
+<p>The general masks apply to all indices, either specified in the <i>spexList</i> or one of the custom indices. When
+  multiple masks are specified, they are combined using the logical <b>AND</b> operator. This means that a pixel is only
+  valid if it is valid for all masks. For example, if the general <i>validExpression</i> mask is set to
+  <code>flags.LAND</code> and the shapefile mask of an index ist set to cover a city, only the land pixels covered by
+  this city shape are processed. The invalid pixels of bands used in the formulas, defined by the bands no-data value
+  and valid expression, are not considered by default.</p>
+
+<footer>
+  <hr>
+  <table class="eom_ft">
+    <tr>
+      <td width="60" rowspan="2" class="eom_ft">
+        <img alt="EOMasters Logo" src="../../images/EOMasters_50.png">
+      </td>
+      <td width="*" class="eom_ft">
+        <div class="eom_ft">EOMasters Toolbox<br></div>
+      </td>
+    </tr>
+    <tr>
+      <td class="eom_ft"> Provided by
+        <object classid="java:eu.esa.snap.netbeans.javahelp.BrowserDisplayer">
+          <param name="content" value="https://www.eomasters.org/">
+          <param name="text" value="<html><u>www.eomasters.org</u></html>">
+          <param name="textFontSize" value="bigger">
+        </object>
+      </td>
+    </tr>
+  </table>
+</footer>
+</body>
+</html>
+

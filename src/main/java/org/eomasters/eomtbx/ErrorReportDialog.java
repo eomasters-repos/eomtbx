@@ -1,9 +1,9 @@
 /*-
  * ========================LICENSE_START=================================
- * EOMTBX - EOMasters Toolbox Basic for SNAP
- * -> https://www.eomasters.org/sw/EOMTBX
+ * EOMTBX - EOMasters Toolbox for SNAP
+ * -> https://www.eomasters.org/eomtbx
  * ======================================================================
- * Copyright (C) 2023 - 2025 Marco Peters
+ * Copyright (C) 2023 - 2026 Marco Peters
  * ======================================================================
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as
@@ -53,7 +53,7 @@ import org.eomasters.utils.MailTo;
 import org.hsqldb.lib.StringInputStream;
 
 /**
- * A dialog that displays an error report and allows to report it in the EOMasters forum or by mail.
+ * A dialog that displays an error report and allows to report it in the EOMasters Group or by mail.
  */
 class ErrorReportDialog {
 
@@ -109,15 +109,15 @@ class ErrorReportDialog {
     JButton byMail = createMailButton(errorReport);
     byMail.requestFocusInWindow();
     btnPanel.add(byMail, "right");
-    JButton reportInForum = new JButton("Report in Forum");
-    reportInForum.addActionListener(e -> {
+    JButton reportInGroups = new JButton("Report in Groups");
+    reportInGroups.addActionListener(e -> {
       try {
-        Desktop.getDesktop().browse(EomToolbox.FORUM_URL);
+        Desktop.getDesktop().browse(EomToolbox.GROUPS_URL);
       } catch (IOException ex) {
         Dialogs.error("Error opening browser", "Could not open browser:\n" + ex.getMessage());
       }
     });
-    btnPanel.add(reportInForum, "right");
+    btnPanel.add(reportInGroups, "right");
 
     JButton close = new JButton("Close");
     btnPanel.add(close, "right, wrap");

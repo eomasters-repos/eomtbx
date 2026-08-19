@@ -1,0 +1,2207 @@
+{
+  "AFRI1600": {
+    "name": "AFRI1600",
+    "domain": "Vegetation",
+    "formula": "(N - 0.66 * S1) / (N + 0.66 * S1)",
+    "description": "Aerosol Free Vegetation Index (1600 nm)",
+    "reference": "https://doi.org/10.1016/S0034-4257(01)00190-0",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "AFRI2100": {
+    "name": "AFRI2100",
+    "domain": "Vegetation",
+    "formula": "(N - 0.5 * S2) / (N + 0.5 * S2)",
+    "description": "Aerosol Free Vegetation Index (2100 nm)",
+    "reference": "https://doi.org/10.1016/S0034-4257(01)00190-0",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "ANDWI": {
+    "name": "ANDWI",
+    "domain": "Water",
+    "formula": "(B + G + R - N - S1 - S2)/(B + G + R + N + S1 + S2)",
+    "description": "Augmented Normalized Difference Water Index",
+    "reference": "https://doi.org/10.1016/j.envsoft.2021.105030",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "ARI": {
+    "name": "ARI",
+    "domain": "Vegetation",
+    "formula": "(1 / G) - (1 / RE1)",
+    "description": "Anthocyanin Reflectance Index",
+    "reference": "https://doi.org/10.1562/0031-8655(2001)074%3C0038:OPANEO%3E2.0.CO;2",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "ARI2": {
+    "name": "ARI2",
+    "domain": "Vegetation",
+    "formula": "N * ((1 / G) - (1 / RE1))",
+    "description": "Anthocyanin Reflectance Index 2",
+    "reference": "https://doi.org/10.1562/0031-8655(2001)074%3C0038:OPANEO%3E2.0.CO;2",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "ARVI": {
+    "name": "ARVI",
+    "domain": "Vegetation",
+    "formula": "(N - (R - gamma * (R - B))) / (N + (R - gamma * (R - B)))",
+    "description": "Atmospherically Resistant Vegetation Index",
+    "reference": "https://doi.org/10.1109/36.134076",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "ATSAVI": {
+    "name": "ATSAVI",
+    "domain": "Vegetation",
+    "formula": "sla * (N - sla * R - slb) / (sla * N + R - sla * slb + 0.08 * (1 + pow(sla, 2.0)))",
+    "description": "Adjusted Transformed Soil-Adjusted Vegetation Index",
+    "reference": "https://doi.org/10.1016/0034-4257(91)90009-U",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "AVI": {
+    "name": "AVI",
+    "domain": "Vegetation",
+    "formula": "pow(N * (1.0 - R) * (N - R), 1/3)",
+    "description": "Advanced Vegetation Index",
+    "reference": "http://citeseerx.ist.psu.edu/viewdoc/download?doi\u003d10.1.1.465.8749\u0026rep\u003drep1\u0026type\u003dpdf",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "AWEInsh": {
+    "name": "AWEInsh",
+    "domain": "Water",
+    "formula": "4.0 * (G - S1) - 0.25 * N + 2.75 * S2",
+    "description": "Automated Water Extraction Index",
+    "reference": "https://doi.org/10.1016/j.rse.2013.08.029",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "AWEIsh": {
+    "name": "AWEIsh",
+    "domain": "Water",
+    "formula": "B + 2.5 * G - 1.5 * (N + S1) - 0.25 * S2",
+    "description": "Automated Water Extraction Index with Shadows Elimination",
+    "reference": "https://doi.org/10.1016/j.rse.2013.08.029",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "BAI": {
+    "name": "BAI",
+    "domain": "Burn",
+    "formula": "1.0 / (pow(0.1 - R, 2.0) + pow(0.06 - N, 2.0))",
+    "description": "Burned Area Index",
+    "reference": "https://digital.csic.es/bitstream/10261/6426/1/Martin_Isabel_Serie_Geografica.pdf",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "BAIM": {
+    "name": "BAIM",
+    "domain": "Burn",
+    "formula": "1.0 / (pow(0.05 - N, 2.0) + pow(0.2 - S2, 2.0))",
+    "description": "Burned Area Index adapted to MODIS",
+    "reference": "https://doi.org/10.1016/j.foreco.2006.08.248",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "BAIS2": {
+    "name": "BAIS2",
+    "domain": "Burn",
+    "formula": "(1.0 - pow((RE2 * RE3 * N2) / R, 0.5)) * (((S2 - N2) / pow(S2 + N2, 0.5) + 1.0)",
+    "description": "Burned Area Index for Sentinel 2",
+    "reference": "https://doi.org/10.3390/ecrs-2-05177",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "BCC": {
+    "name": "BCC",
+    "domain": "Vegetation",
+    "formula": "B / (R + G + B)",
+    "description": "Blue Chromatic Coordinate",
+    "reference": "https://doi.org/10.1016/0034-4257(87)90088-5",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "BI": {
+    "name": "BI",
+    "domain": "Soil",
+    "formula": "((S1 + R) - (N + B))/((S1 + R) + (N + B))",
+    "description": "Bare Soil Index",
+    "reference": "http://citeseerx.ist.psu.edu/viewdoc/download?doi\u003d10.1.1.465.8749\u0026rep\u003drep1\u0026type\u003dpdf",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "BITM": {
+    "name": "BITM",
+    "domain": "Soil",
+    "formula": "pow( (pow(B,2.0) + pow(G,2.0) + pow(R,2.0)) / 3.0, 0.5)",
+    "description": "Landsat TM-based Brightness Index",
+    "reference": "https://doi.org/10.1016/S0034-4257(98)00030-3",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "BIXS": {
+    "name": "BIXS",
+    "domain": "Soil",
+    "formula": "pow( (pow(G,2.0) + pow(R,2.0)) / 2.0, 0.5)",
+    "description": "SPOT HRV XS-based Brightness Index",
+    "reference": "https://doi.org/10.1016/S0034-4257(98)00030-3",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "BLFEI": {
+    "name": "BLFEI",
+    "domain": "Urban",
+    "formula": "(((G + R + S2) / 3.0) - S1) / (((G + R + S2) / 3.0) + S1)",
+    "description": "Built-Up Land Features Extraction Index",
+    "reference": "https://doi.org/10.1080/10106049.2018.1497094",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "BNDVI": {
+    "name": "BNDVI",
+    "domain": "Vegetation",
+    "formula": "(N - B)/(N + B)",
+    "description": "Blue Normalized Difference Vegetation Index",
+    "reference": "https://doi.org/10.1016/S1672-6308(07)60027-4",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "BRBA": {
+    "name": "BRBA",
+    "domain": "Urban",
+    "formula": "R / S1",
+    "description": "Band Ratio for Built-up Area",
+    "reference": "https://www.omicsonline.org/scientific-reports/JGRS-SR136.pdf",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "BWDRVI": {
+    "name": "BWDRVI",
+    "domain": "Vegetation",
+    "formula": "(alpha * N - B) / (alpha * N + B)",
+    "description": "Blue Wide Dynamic Range Vegetation Index",
+    "reference": "https://doi.org/10.2135/cropsci2007.01.0031",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "BaI": {
+    "name": "BaI",
+    "domain": "Soil",
+    "formula": "R + S1 - N",
+    "description": "Bareness Index",
+    "reference": "https://doi.org/10.1109/IGARSS.2005.1525743",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "CCI": {
+    "name": "CCI",
+    "domain": "Vegetation",
+    "formula": "(G1 - R)/(G1 + R)",
+    "description": "Chlorophyll Carotenoid Index",
+    "reference": "https://doi.org/10.1073/pnas.1606162113",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "CIG": {
+    "name": "CIG",
+    "domain": "Vegetation",
+    "formula": "(N / G) - 1.0",
+    "description": "Chlorophyll Index Green",
+    "reference": "https://doi.org/10.1078/0176-1617-00887",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "CIRE": {
+    "name": "CIRE",
+    "domain": "Vegetation",
+    "formula": "(N / RE1) - 1",
+    "description": "Chlorophyll Index Red Edge",
+    "reference": "https://doi.org/10.1078/0176-1617-00887",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "CRI550": {
+    "name": "CRI550",
+    "domain": "Vegetation",
+    "formula": "(1 / B) - (1 / G)",
+    "description": "Carotenoid Reflectance Index using 550 nm",
+    "reference": "https://doi.org/10.1562/0031-8655(2002)0750272ACCIPL2.0.CO2",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "CRI700": {
+    "name": "CRI700",
+    "domain": "Vegetation",
+    "formula": "(1 / B) - (1 / RE1)",
+    "description": "Carotenoid Reflectance Index using 700 nm",
+    "reference": "https://doi.org/10.1562/0031-8655(2002)0750272ACCIPL2.0.CO2",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "CSI": {
+    "name": "CSI",
+    "domain": "Burn",
+    "formula": "N / S2",
+    "description": "Char Soil Index",
+    "reference": "https://doi.org/10.1016/j.rse.2005.04.014",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "CSIT": {
+    "name": "CSIT",
+    "domain": "Burn",
+    "formula": "N / (S2 * T / 10000.0)",
+    "description": "Char Soil Index Thermal",
+    "reference": "https://doi.org/10.1080/01431160600954704",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "CVI": {
+    "name": "CVI",
+    "domain": "Vegetation",
+    "formula": "(N * R) / pow(G, 2.0)",
+    "description": "Chlorophyll Vegetation Index",
+    "reference": "https://doi.org/10.1007/s11119-010-9204-3",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "DBI": {
+    "name": "DBI",
+    "domain": "Urban",
+    "formula": "((B - T1)/(B + T1)) - ((N - R)/(N + R))",
+    "description": "Dry Built-Up Index",
+    "reference": "https://doi.org/10.3390/land7030081",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "DBSI": {
+    "name": "DBSI",
+    "domain": "Soil",
+    "formula": "((S1 - G)/(S1 + G)) - ((N - R)/(N + R))",
+    "description": "Dry Bareness Index",
+    "reference": "https://doi.org/10.3390/land7030081",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "DPDD": {
+    "name": "DPDD",
+    "domain": "Radar",
+    "formula": "pow((VV + VH)/2.0, 0.5)",
+    "description": "Dual-Pol Diagonal Distance",
+    "reference": "https://doi.org/10.1016/j.rse.2018.09.003",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "DSI": {
+    "name": "DSI",
+    "domain": "Vegetation",
+    "formula": "S1/N",
+    "description": "Drought Stress Index",
+    "reference": "https://www.asprs.org/wp-content/uploads/pers/1999journal/apr/1999_apr_495-501.pdf",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "DSWI1": {
+    "name": "DSWI1",
+    "domain": "Vegetation",
+    "formula": "N/S1",
+    "description": "Disease-Water Stress Index 1",
+    "reference": "https://doi.org/10.1080/01431160310001618031",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "DSWI2": {
+    "name": "DSWI2",
+    "domain": "Vegetation",
+    "formula": "S1/G",
+    "description": "Disease-Water Stress Index 2",
+    "reference": "https://doi.org/10.1080/01431160310001618031",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "DSWI3": {
+    "name": "DSWI3",
+    "domain": "Vegetation",
+    "formula": "S1/R",
+    "description": "Disease-Water Stress Index 3",
+    "reference": "https://doi.org/10.1080/01431160310001618031",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "DSWI4": {
+    "name": "DSWI4",
+    "domain": "Vegetation",
+    "formula": "G/R",
+    "description": "Disease-Water Stress Index 4",
+    "reference": "https://doi.org/10.1080/01431160310001618031",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "DSWI5": {
+    "name": "DSWI5",
+    "domain": "Vegetation",
+    "formula": "(N + G)/(S1 + R)",
+    "description": "Disease-Water Stress Index 5",
+    "reference": "https://doi.org/10.1080/01431160310001618031",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "DVI": {
+    "name": "DVI",
+    "domain": "Vegetation",
+    "formula": "N - R",
+    "description": "Difference Vegetation Index",
+    "reference": "https://doi.org/10.1016/0034-4257(94)00114-3",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "DpRVIHH": {
+    "name": "DpRVIHH",
+    "domain": "Radar",
+    "formula": "(4.0 * HV)/(HH + HV)",
+    "description": "Dual-Polarized Radar Vegetation Index HH",
+    "reference": "https://www.tandfonline.com/doi/abs/10.5589/m12-043",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "DpRVIVV": {
+    "name": "DpRVIVV",
+    "domain": "Radar",
+    "formula": "(4.0 * VH)/(VV + VH)",
+    "description": "Dual-Polarized Radar Vegetation Index VV",
+    "reference": "https://doi.org/10.3390/app9040655",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "EBBI": {
+    "name": "EBBI",
+    "domain": "Urban",
+    "formula": "(S1 - N) / (10.0 * pow(S1 + T, 0.5))",
+    "description": "Enhanced Built-Up and Bareness Index",
+    "reference": "https://doi.org/10.3390/rs4102957",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "EBI": {
+    "name": "EBI",
+    "domain": "Vegetation",
+    "formula": "(R + G + B)/((G/B) * (R - B + epsilon))",
+    "description": "Enhanced Bloom Index",
+    "reference": "https://doi.org/10.1016/j.isprsjprs.2019.08.006",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "EMBI": {
+    "name": "EMBI",
+    "domain": "Soil",
+    "formula": "((((S1 - S2 - N)/(S1 + S2 + N)) + 0.5) - ((G - S1)/(G + S1)) - 0.5)/((((S1 - S2 - N)/(S1 + S2 + N)) + 0.5) + ((G - S1)/(G + S1)) + 1.5)",
+    "description": "Enhanced Modified Bare Soil Index",
+    "reference": "https://doi.org/10.1016/j.jag.2022.102703",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "ENDVI": {
+    "name": "ENDVI",
+    "domain": "Vegetation",
+    "formula": "((N + G) - (2 * B)) / ((N + G) + (2 * B))",
+    "description": "Enhanced Normalized Difference Vegetation Index",
+    "reference": "https://doi.org/10.1371/journal.pone.0186193",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "EVI": {
+    "name": "EVI",
+    "domain": "Vegetation",
+    "formula": "g * (N - R) / (N + C1 * R - C2 * B + L)",
+    "description": "Enhanced Vegetation Index",
+    "reference": "https://doi.org/10.1016/S0034-4257(96)00112-5",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "EVI2": {
+    "name": "EVI2",
+    "domain": "Vegetation",
+    "formula": "g * (N - R) / (N + 2.4 * R + L)",
+    "description": "Two-Band Enhanced Vegetation Index",
+    "reference": "https://doi.org/10.1016/j.rse.2008.06.006",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "EVIv": {
+    "name": "EVIv",
+    "domain": "Vegetation",
+    "formula": "2.5 * ((N - R)/(N + 6 * R - 7.5 * B + 1.0)) * N",
+    "description": "Two-Band Enhanced Vegetation Index",
+    "reference": "https://doi.org/10.1029/2024JG008240",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "ExG": {
+    "name": "ExG",
+    "domain": "Vegetation",
+    "formula": "2 * G - R - B",
+    "description": "Excess Green Index",
+    "reference": "https://doi.org/10.13031/2013.27838",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "ExGR": {
+    "name": "ExGR",
+    "domain": "Vegetation",
+    "formula": "(2.0 * G - R - B) - (1.3 * R - G)",
+    "description": "ExG - ExR Vegetation Index",
+    "reference": "https://doi.org/10.1016/j.compag.2008.03.009",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "ExR": {
+    "name": "ExR",
+    "domain": "Vegetation",
+    "formula": "1.3 * R - G",
+    "description": "Excess Red Index",
+    "reference": "https://doi.org/10.1117/12.336896",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "FCVI": {
+    "name": "FCVI",
+    "domain": "Vegetation",
+    "formula": "N - ((R + G + B)/3.0)",
+    "description": "Fluorescence Correction Vegetation Index",
+    "reference": "https://doi.org/10.1016/j.rse.2020.111676",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "FWEI": {
+    "name": "FWEI",
+    "domain": "Water",
+    "formula": "(((B + G + R) / 3.0) - N)/(((B + G + R) / 3.0) + N)",
+    "description": "Flood/Water Extraction Index",
+    "reference": "https://doi.org/10.1007/s00477-024-02660-z",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "GARI": {
+    "name": "GARI",
+    "domain": "Vegetation",
+    "formula": "(N - (G - (B - R))) / (N - (G + (B - R)))",
+    "description": "Green Atmospherically Resistant Vegetation Index",
+    "reference": "https://doi.org/10.1016/S0034-4257(96)00072-7",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "GBNDVI": {
+    "name": "GBNDVI",
+    "domain": "Vegetation",
+    "formula": "(N - (G + B))/(N + (G + B))",
+    "description": "Green-Blue Normalized Difference Vegetation Index",
+    "reference": "https://doi.org/10.1016/S1672-6308(07)60027-4",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "GCC": {
+    "name": "GCC",
+    "domain": "Vegetation",
+    "formula": "G / (R + G + B)",
+    "description": "Green Chromatic Coordinate",
+    "reference": "https://doi.org/10.1016/0034-4257(87)90088-5",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "GDVI": {
+    "name": "GDVI",
+    "domain": "Vegetation",
+    "formula": "(pow(N, nexp) - pow(R, nexp)) / (pow(N, nexp) + pow(R, nexp))",
+    "description": "Generalized Difference Vegetation Index",
+    "reference": "https://doi.org/10.3390/rs6021211",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "GEMI": {
+    "name": "GEMI",
+    "domain": "Vegetation",
+    "formula": "((2.0*(pow(N, 2.0) - pow(R, 2.0)) + 1.5*N + 0.5*R)/(N + R + 0.5))*(1.0 - 0.25*((2.0 * (pow(N, 2.0) - pow(R, 2)) + 1.5 * N + 0.5 * R)/(N + R + 0.5)))-((R - 0.125)/(1 - R))",
+    "description": "Global Environment Monitoring Index",
+    "reference": "http://dx.doi.org/10.1007/bf00031911",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "GLI": {
+    "name": "GLI",
+    "domain": "Vegetation",
+    "formula": "(2.0 * G - R - B) / (2.0 * G + R + B)",
+    "description": "Green Leaf Index",
+    "reference": "http://dx.doi.org/10.1080/10106040108542184",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "GM1": {
+    "name": "GM1",
+    "domain": "Vegetation",
+    "formula": "RE2/G",
+    "description": "Gitelson and Merzlyak Index 1",
+    "reference": "https://doi.org/10.1016/S0176-1617(96)80284-7",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "GM2": {
+    "name": "GM2",
+    "domain": "Vegetation",
+    "formula": "RE2/RE1",
+    "description": "Gitelson and Merzlyak Index 2",
+    "reference": "https://doi.org/10.1016/S0176-1617(96)80284-7",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "GNDVI": {
+    "name": "GNDVI",
+    "domain": "Vegetation",
+    "formula": "(N - G)/(N + G)",
+    "description": "Green Normalized Difference Vegetation Index",
+    "reference": "https://doi.org/10.1016/S0034-4257(96)00072-7",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "GOSAVI": {
+    "name": "GOSAVI",
+    "domain": "Vegetation",
+    "formula": "(N - G) / (N + G + 0.16)",
+    "description": "Green Optimized Soil Adjusted Vegetation Index",
+    "reference": "https://doi.org/10.2134/agronj2004.0314",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "GRNDVI": {
+    "name": "GRNDVI",
+    "domain": "Vegetation",
+    "formula": "(N - (G + R))/(N + (G + R))",
+    "description": "Green-Red Normalized Difference Vegetation Index",
+    "reference": "https://doi.org/10.1016/S1672-6308(07)60027-4",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "GRVI": {
+    "name": "GRVI",
+    "domain": "Vegetation",
+    "formula": "N/G",
+    "description": "Green Ratio Vegetation Index",
+    "reference": "https://doi.org/10.2134/agronj2004.0314",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "GSAVI": {
+    "name": "GSAVI",
+    "domain": "Vegetation",
+    "formula": "(1.0 + L) * (N - G) / (N + G + L)",
+    "description": "Green Soil Adjusted Vegetation Index",
+    "reference": "https://doi.org/10.2134/agronj2004.0314",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "GVMI": {
+    "name": "GVMI",
+    "domain": "Vegetation",
+    "formula": "((N + 0.1) - (S2 + 0.02)) / ((N + 0.1) + (S2 + 0.02))",
+    "description": "Global Vegetation Moisture Index",
+    "reference": "https://doi.org/10.1016/S0034-4257(02)00037-8",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "IAVI": {
+    "name": "IAVI",
+    "domain": "Vegetation",
+    "formula": "(N - (R - gamma * (B - R)))/(N + (R - gamma * (B - R)))",
+    "description": "New Atmospherically Resistant Vegetation Index",
+    "reference": "https://www.jipb.net/EN/abstract/abstract23925.shtml",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "IBI": {
+    "name": "IBI",
+    "domain": "Urban",
+    "formula": "(((S1-N)/(S1+N))-(((N-R)*(1.0+L)/(N+R+L))+((G-S1)/(G+S1)))/2.0)/(((S1-N)/(S1+N))+(((N-R)*(1.0+L)/(N+R+L))+((G-S1)/(G+S1)))/2.0)",
+    "description": "Index-Based Built-Up Index",
+    "reference": "https://doi.org/10.1080/01431160802039957",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "IKAW": {
+    "name": "IKAW",
+    "domain": "Vegetation",
+    "formula": "(R - B)/(R + B)",
+    "description": "Kawashima Index",
+    "reference": "https://doi.org/10.1006/anbo.1997.0544",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "IPVI": {
+    "name": "IPVI",
+    "domain": "Vegetation",
+    "formula": "N/(N + R)",
+    "description": "Infrared Percentage Vegetation Index",
+    "reference": "https://doi.org/10.1016/0034-4257(90)90085-Z",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "IRECI": {
+    "name": "IRECI",
+    "domain": "Vegetation",
+    "formula": "(RE3 - R) / (RE1 / RE2)",
+    "description": "Inverted Red-Edge Chlorophyll Index",
+    "reference": "https://doi.org/10.1016/j.isprsjprs.2013.04.007",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "IRGBVI": {
+    "name": "IRGBVI",
+    "domain": "Vegetation",
+    "formula": "(5.0 * pow(G, 2.0) - 2.0 * pow(R, 2.0) - 5.0 * pow(B, 2.0)) / (5.0 * pow(G, 2.0) + 2.0 * pow(R, 2.0) + 5.0 * pow(B, 2.0))",
+    "description": "Improved-Red-Green-Blue Vegetation Index",
+    "reference": "https://doi.org/10.1016/j.jag.2024.103668",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "LSWI": {
+    "name": "LSWI",
+    "domain": "Water",
+    "formula": "(N - S1)/(N + S1)",
+    "description": "Land Surface Water Index",
+    "reference": "https://doi.org/10.1016/j.rse.2003.11.008",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "MBI": {
+    "name": "MBI",
+    "domain": "Soil",
+    "formula": "((S1 - S2 - N)/(S1 + S2 + N)) + 0.5",
+    "description": "Modified Bare Soil Index",
+    "reference": "https://doi.org/10.3390/land10030231",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "MBWI": {
+    "name": "MBWI",
+    "domain": "Water",
+    "formula": "(omega * G) - R - N - S1 - S2",
+    "description": "Multi-Band Water Index",
+    "reference": "https://doi.org/10.1016/j.jag.2018.01.018",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "MCARI": {
+    "name": "MCARI",
+    "domain": "Vegetation",
+    "formula": "((RE1 - R) - 0.2 * (RE1 - G)) * (RE1 / R)",
+    "description": "Modified Chlorophyll Absorption in Reflectance Index",
+    "reference": "http://dx.doi.org/10.1016/S0034-4257(00)00113-9",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "MCARI1": {
+    "name": "MCARI1",
+    "domain": "Vegetation",
+    "formula": "1.2 * (2.5 * (N - R) - 1.3 * (N - G))",
+    "description": "Modified Chlorophyll Absorption in Reflectance Index 1",
+    "reference": "https://doi.org/10.1016/j.rse.2003.12.013",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "MCARI2": {
+    "name": "MCARI2",
+    "domain": "Vegetation",
+    "formula": "(1.5 * (2.5 * (N - R) - 1.3 * (N - G))) / pow((pow(2.0 * N + 1, 2)) - (6.0 * N - 5 * pow(R, 0.5)) - 0.5), 0.5)",
+    "description": "Modified Chlorophyll Absorption in Reflectance Index 2",
+    "reference": "https://doi.org/10.1016/j.rse.2003.12.013",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "MCARI705": {
+    "name": "MCARI705",
+    "domain": "Vegetation",
+    "formula": "((RE2 - RE1) - 0.2 * (RE2 - G)) * (RE2 / RE1)",
+    "description": "Modified Chlorophyll Absorption in Reflectance Index (705 and 750 nm)",
+    "reference": "https://doi.org/10.1016/j.agrformet.2008.03.005",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "MCARIOSAVI": {
+    "name": "MCARIOSAVI",
+    "domain": "Vegetation",
+    "formula": "(((RE1 - R) - 0.2 * (RE1 - G)) * (RE1 / R)) / (1.16 * (N - R) / (N + R + 0.16))",
+    "description": "MCARI/OSAVI Ratio",
+    "reference": "https://doi.org/10.1016/S0034-4257(00)00113-9",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "MCARIOSAVI705": {
+    "name": "MCARIOSAVI705",
+    "domain": "Vegetation",
+    "formula": "(((RE2 - RE1) - 0.2 * (RE2 - G)) * (RE2 / RE1)) / (1.16 * (RE2 - RE1) / (RE2 + RE1 + 0.16))",
+    "description": "MCARI/OSAVI Ratio (705 and 750 nm)",
+    "reference": "https://doi.org/10.1016/j.agrformet.2008.03.005",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "MGRVI": {
+    "name": "MGRVI",
+    "domain": "Vegetation",
+    "formula": "pow(G, 2.0) - pow(R, 2.0) / pow(G, 2.0) + pow(R, 2.0)",
+    "description": "Modified Green Red Vegetation Index",
+    "reference": "https://doi.org/10.1016/j.jag.2015.02.012",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "MI": {
+    "name": "MI",
+    "domain": "Vegetation",
+    "formula": "(N - S1) / (N * S1)",
+    "description": "Mangrove Index",
+    "reference": "https://www.researchgate.net/profile/Gathot-Winarso/publication/277137915_NEW_MANGROVE_INDEX_AS_DEGRADATIONHEALTH_INDICATOR_USING_REMOTE_SENSING_DATA_SEGARA_ANAKAN_AND_ALAS_PURWO_CASE_STUDY/links/5562d90c08ae8c0cab333ab4/NEW-MANGROVE-INDEX-AS-DEGRADATION-HEALTH-INDICATOR-USING-REMOTE-SENSING-DATA-SEGARA-ANAKAN-AND-ALAS-PURWO-CASE-STUDY.pdf",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "MIRBI": {
+    "name": "MIRBI",
+    "domain": "Burn",
+    "formula": "10.0 * S2 - 9.8 * S1 + 2.0",
+    "description": "Mid-Infrared Burn Index",
+    "reference": "https://doi.org/10.1080/01431160110053185",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "MLSWI26": {
+    "name": "MLSWI26",
+    "domain": "Water",
+    "formula": "(1.0 - N - S1)/(1.0 - N + S1)",
+    "description": "Modified Land Surface Water Index (MODIS Bands 2 and 6)",
+    "reference": "https://doi.org/10.3390/rs71215805",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "MLSWI27": {
+    "name": "MLSWI27",
+    "domain": "Water",
+    "formula": "(1.0 - N - S2)/(1.0 - N + S2)",
+    "description": "Modified Land Surface Water Index (MODIS Bands 2 and 7)",
+    "reference": "https://doi.org/10.3390/rs71215805",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "MNDVI": {
+    "name": "MNDVI",
+    "domain": "Vegetation",
+    "formula": "(N - S2)/(N + S2)",
+    "description": "Modified Normalized Difference Vegetation Index",
+    "reference": "https://doi.org/10.1080/014311697216810",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "MNDWI": {
+    "name": "MNDWI",
+    "domain": "Water",
+    "formula": "(G - S1) / (G + S1)",
+    "description": "Modified Normalized Difference Water Index",
+    "reference": "https://doi.org/10.1080/01431160600589179",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "MNLI": {
+    "name": "MNLI",
+    "domain": "Vegetation",
+    "formula": "(1 + L) * (pow(N, 2) - R) / (pow(N, 2) + R + L)",
+    "description": "Modified Non-Linear Vegetation Index",
+    "reference": "https://doi.org/10.1109/TGRS.2003.812910",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "MRBVI": {
+    "name": "MRBVI",
+    "domain": "Vegetation",
+    "formula": "(pow(R, 2.0) - pow(B, 2.0)) / (pow(R, 2.0) + pow(B, 2.0))",
+    "description": "Modified Red Blue Vegetation Index",
+    "reference": "https://doi.org/10.3390/s20185055",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "MSAVI": {
+    "name": "MSAVI",
+    "domain": "Vegetation",
+    "formula": "0.5 * (2.0 * N + 1 - pow( pow(2 * N + 1, 2) - 8 * (N - R), 0.5) )",
+    "description": "Modified Soil-Adjusted Vegetation Index",
+    "reference": "https://doi.org/10.1016/0034-4257(94)90134-1",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "MSI": {
+    "name": "MSI",
+    "domain": "Vegetation",
+    "formula": "S1/N",
+    "description": "Moisture Stress Index",
+    "reference": "https://doi.org/10.1016/0034-4257(89)90046-1",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "MSR": {
+    "name": "MSR",
+    "domain": "Vegetation",
+    "formula": "(N / R - 1) / pow(N / R + 1, 0.5)",
+    "description": "Modified Simple Ratio",
+    "reference": "https://doi.org/10.1080/07038992.1996.10855178",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "MSR705": {
+    "name": "MSR705",
+    "domain": "Vegetation",
+    "formula": "(RE2 / RE1 - 1) / pow(RE2 / RE1 + 1, 0.5)",
+    "description": "Modified Simple Ratio (705 and 750 nm)",
+    "reference": "https://doi.org/10.1016/j.agrformet.2008.03.005",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "MTCI": {
+    "name": "MTCI",
+    "domain": "Vegetation",
+    "formula": "(RE2 - RE1) / (RE1 - R)",
+    "description": "MERIS Terrestrial Chlorophyll Index",
+    "reference": "https://doi.org/10.1080/0143116042000274015",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "MTVI1": {
+    "name": "MTVI1",
+    "domain": "Vegetation",
+    "formula": "1.2 * (1.2 * (N - G) - 2.5 * (R - G))",
+    "description": "Modified Triangular Vegetation Index 1",
+    "reference": "https://doi.org/10.1016/j.rse.2003.12.013",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "MTVI2": {
+    "name": "MTVI2",
+    "domain": "Vegetation",
+    "formula": "(1.5 * (1.2 * (N - G) - 2.5 * (R - G))) / pow(pow(2.0 * N + 1, 2) - (6.0 * N - 5 * pow(R, 0.5)) - 0.5), 0.5)",
+    "description": "Modified Triangular Vegetation Index 2",
+    "reference": "https://doi.org/10.1016/j.rse.2003.12.013",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "MVI": {
+    "name": "MVI",
+    "domain": "Vegetation",
+    "formula": "(N - G) / (S1 - G)",
+    "description": "Mangrove Vegetation Index",
+    "reference": "https://doi.org/10.1016/j.isprsjprs.2020.06.001",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "MuWIR": {
+    "name": "MuWIR",
+    "domain": "Water",
+    "formula": "-4.0 * ((B - G)/(B + G)) + 2.0 * ((G - N)/(G + N)) + 2.0 * ((G - S2)/(G + S2)) - ((G - S1)/(G + S1))",
+    "description": "Revised Multi-Spectral Water Index",
+    "reference": "https://doi.org/10.3390/rs10101643",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "NBAI": {
+    "name": "NBAI",
+    "domain": "Urban",
+    "formula": "((S2 - S1)/G)/((S2 + S1)/G)",
+    "description": "Normalized Built-up Area Index",
+    "reference": "https://www.omicsonline.org/scientific-reports/JGRS-SR136.pdf",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "NBLI": {
+    "name": "NBLI",
+    "domain": "Soil",
+    "formula": "(R - T)/(R + T)",
+    "description": "Normalized Difference Bare Land Index",
+    "reference": "https://doi.org/10.3390/rs9030249",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "NBLIOLI": {
+    "name": "NBLIOLI",
+    "domain": "Soil",
+    "formula": "(R - T1)/(R + T1)",
+    "description": "Normalized Difference Bare Land Index for Landsat-OLI",
+    "reference": "https://doi.org/10.3390/rs9030249",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "NBR": {
+    "name": "NBR",
+    "domain": "Burn",
+    "formula": "(N - S2) / (N + S2)",
+    "description": "Normalized Burn Ratio",
+    "reference": "https://doi.org/10.3133/ofr0211",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "NBR2": {
+    "name": "NBR2",
+    "domain": "Burn",
+    "formula": "(S1 - S2) / (S1 + S2)",
+    "description": "Normalized Burn Ratio 2",
+    "reference": "https://www.usgs.gov/core-science-systems/nli/landsat/landsat-normalized-burn-ratio-2",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "NBRSWIR": {
+    "name": "NBRSWIR",
+    "domain": "Burn",
+    "formula": "(S2 - S1 - 0.02)/(S2 + S1 + 0.1)",
+    "description": "Normalized Burn Ratio SWIR",
+    "reference": "https://doi.org/10.1080/22797254.2020.1738900",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "NBRT1": {
+    "name": "NBRT1",
+    "domain": "Burn",
+    "formula": "(N - (S2 * T / 10000.0)) / (N + (S2 * T / 10000.0))",
+    "description": "Normalized Burn Ratio Thermal 1",
+    "reference": "https://doi.org/10.1080/01431160500239008",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "NBRT2": {
+    "name": "NBRT2",
+    "domain": "Burn",
+    "formula": "((N / (T / 10000.0)) - S2) / ((N / (T / 10000.0)) + S2)",
+    "description": "Normalized Burn Ratio Thermal 2",
+    "reference": "https://doi.org/10.1080/01431160500239008",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "NBRT3": {
+    "name": "NBRT3",
+    "domain": "Burn",
+    "formula": "((N - (T / 10000.0)) - S2) / ((N - (T / 10000.0)) + S2)",
+    "description": "Normalized Burn Ratio Thermal 3",
+    "reference": "https://doi.org/10.1080/01431160500239008",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "NBRplus": {
+    "name": "NBRplus",
+    "domain": "Burn",
+    "formula": "(S2 - N2 - G - B)/(S2 + N2 + G + B)",
+    "description": "Normalized Burn Ratio Plus",
+    "reference": "https://doi.org/10.3390/rs14071727",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "NBSIMS": {
+    "name": "NBSIMS",
+    "domain": "Snow",
+    "formula": "0.36 * (G + R + N) - (((B + S2)/G) + S1)",
+    "description": "Non-Binary Snow Index for Multi-Component Surfaces",
+    "reference": "https://doi.org/10.3390/rs13142777",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "NBUI": {
+    "name": "NBUI",
+    "domain": "Urban",
+    "formula": "((S1 - N)/ (10.0 * pow(T + S1, 0.5))) - (((N - R) * (1.0 + L))/(N - R + L)) - (G - S1)/(G + S1)",
+    "description": "New Built-Up Index",
+    "reference": "https://hdl.handle.net/1959.11/29500",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "ND705": {
+    "name": "ND705",
+    "domain": "Vegetation",
+    "formula": "(RE2 - RE1)/(RE2 + RE1)",
+    "description": "Normalized Difference (705 and 750 nm)",
+    "reference": "https://doi.org/10.1016/S0034-4257(02)00010-X",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "NDBI": {
+    "name": "NDBI",
+    "domain": "Urban",
+    "formula": "(S1 - N) / (S1 + N)",
+    "description": "Normalized Difference Built-Up Index",
+    "reference": "http://dx.doi.org/10.1080/01431160304987",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "NDBaI": {
+    "name": "NDBaI",
+    "domain": "Soil",
+    "formula": "(S1 - T) / (S1 + T)",
+    "description": "Normalized Difference Bareness Index",
+    "reference": "https://doi.org/10.1109/IGARSS.2005.1526319",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "NDCI": {
+    "name": "NDCI",
+    "domain": "Water",
+    "formula": "(RE1 - R)/(RE1 + R)",
+    "description": "Normalized Difference Chlorophyll Index",
+    "reference": "https://doi.org/10.1016/j.rse.2011.10.016",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "NDDI": {
+    "name": "NDDI",
+    "domain": "Vegetation",
+    "formula": "(((N - R)/(N + R)) - ((G - N)/(G + N)))/(((N - R)/(N + R)) + ((G - N)/(G + N)))",
+    "description": "Normalized Difference Drought Index",
+    "reference": "https://doi.org/10.1029/2006GL029127",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "NDGlaI": {
+    "name": "NDGlaI",
+    "domain": "Snow",
+    "formula": "(G - R)/(G + R)",
+    "description": "Normalized Difference Glacier Index",
+    "reference": "https://doi.org/10.1080/01431160802385459",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "NDII": {
+    "name": "NDII",
+    "domain": "Vegetation",
+    "formula": "(N - S1)/(N + S1)",
+    "description": "Normalized Difference Infrared Index",
+    "reference": "https://www.asprs.org/wp-content/uploads/pers/1983journal/jan/1983_jan_77-83.pdf",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "NDISIb": {
+    "name": "NDISIb",
+    "domain": "Urban",
+    "formula": "(T - (B + N + S1) / 3.0)/(T + (B + N + S1) / 3.0)",
+    "description": "Normalized Difference Impervious Surface Index Blue",
+    "reference": "https://doi.org/10.14358/PERS.76.5.557",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "NDISIg": {
+    "name": "NDISIg",
+    "domain": "Urban",
+    "formula": "(T - (G + N + S1) / 3.0)/(T + (G + N + S1) / 3.0)",
+    "description": "Normalized Difference Impervious Surface Index Green",
+    "reference": "https://doi.org/10.14358/PERS.76.5.557",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "NDISImndwi": {
+    "name": "NDISImndwi",
+    "domain": "Urban",
+    "formula": "(T - (((G - S1)/(G + S1)) + N + S1) / 3.0)/(T + (((G - S1)/(G + S1)) + N + S1) / 3.0)",
+    "description": "Normalized Difference Impervious Surface Index with MNDWI",
+    "reference": "https://doi.org/10.14358/PERS.76.5.557",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "NDISIndwi": {
+    "name": "NDISIndwi",
+    "domain": "Urban",
+    "formula": "(T - (((G - N)/(G + N)) + N + S1) / 3.0)/(T + (((G - N)/(G + N)) + N + S1) / 3.0)",
+    "description": "Normalized Difference Impervious Surface Index with NDWI",
+    "reference": "https://doi.org/10.14358/PERS.76.5.557",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "NDISIr": {
+    "name": "NDISIr",
+    "domain": "Urban",
+    "formula": "(T - (R + N + S1) / 3.0)/(T + (R + N + S1) / 3.0)",
+    "description": "Normalized Difference Impervious Surface Index Red",
+    "reference": "https://doi.org/10.14358/PERS.76.5.557",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "NDMI": {
+    "name": "NDMI",
+    "domain": "Vegetation",
+    "formula": "(N - S1)/(N + S1)",
+    "description": "Normalized Difference Moisture Index",
+    "reference": "https://doi.org/10.1016/S0034-4257(01)00318-2",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "NDPI": {
+    "name": "NDPI",
+    "domain": "Vegetation",
+    "formula": "(N - (alpha * R + (1.0 - alpha) * S1))/(N + (alpha * R + (1.0 - alpha) * S1))",
+    "description": "Normalized Difference Phenology Index",
+    "reference": "https://doi.org/10.1016/j.rse.2017.04.031",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "NDPolI": {
+    "name": "NDPolI",
+    "domain": "Radar",
+    "formula": "(VV - VH)/(VV + VH)",
+    "description": "Normalized Difference Polarization Index",
+    "reference": "https://www.isprs.org/proceedings/XXXVII/congress/4_pdf/267.pdf",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "NDPonI": {
+    "name": "NDPonI",
+    "domain": "Water",
+    "formula": "(S1-G)/(S1+G)",
+    "description": "Normalized Difference Pond Index",
+    "reference": "https://doi.org/10.1016/j.rse.2006.07.012",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "NDREI": {
+    "name": "NDREI",
+    "domain": "Vegetation",
+    "formula": "(N - RE1) / (N + RE1)",
+    "description": "Normalized Difference Red Edge Index",
+    "reference": "https://doi.org/10.1016/1011-1344(93)06963-4",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "NDSI": {
+    "name": "NDSI",
+    "domain": "Snow",
+    "formula": "(G - S1) / (G + S1)",
+    "description": "Normalized Difference Snow Index",
+    "reference": "https://doi.org/10.1109/IGARSS.1994.399618",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "NDSII": {
+    "name": "NDSII",
+    "domain": "Snow",
+    "formula": "(G - N)/(G + N)",
+    "description": "Normalized Difference Snow Ice Index",
+    "reference": "https://doi.org/10.1080/01431160802385459",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "NDSIWV": {
+    "name": "NDSIWV",
+    "domain": "Soil",
+    "formula": "(G - Y)/(G + Y)",
+    "description": "WorldView Normalized Difference Soil Index",
+    "reference": "https://www.semanticscholar.org/paper/Using-WorldView-2-Vis-NIR-MSI-Imagery-to-Support-Wolf/5e5063ccc4ee76b56b721c866e871d47a77f9fb4",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "NDSInw": {
+    "name": "NDSInw",
+    "domain": "Snow",
+    "formula": "(N - S1 - beta)/(N + S1)",
+    "description": "Normalized Difference Snow Index with no Water",
+    "reference": "https://doi.org/10.3390/w12051339",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "NDSIITM": {
+    "name": "NDSIITM",
+    "domain": "Snow",
+    "formula": "(R - S1)/(R + S1)",
+    "description": "Normalized Difference Snow/Ice Index for Landsat TM",
+    "reference": "https://doi.org/10.1080/01431160119766",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "NDSWIR": {
+    "name": "NDSWIR",
+    "domain": "Burn",
+    "formula": "(N - S1)/(N + S1)",
+    "description": "Normalized Difference SWIR",
+    "reference": "https://doi.org/10.1109/TGRS.2003.819190",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "NDSaII": {
+    "name": "NDSaII",
+    "domain": "Snow",
+    "formula": "(R - S1) / (R + S1)",
+    "description": "Normalized Difference Snow and Ice Index",
+    "reference": "https://doi.org/10.1080/01431160119766",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "NDSoiI": {
+    "name": "NDSoiI",
+    "domain": "Soil",
+    "formula": "(S2 - G)/(S2 + G)",
+    "description": "Normalized Difference Soil Index",
+    "reference": "https://doi.org/10.1016/j.jag.2015.02.010",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "NDTI": {
+    "name": "NDTI",
+    "domain": "Water",
+    "formula": "(R-G)/(R+G)",
+    "description": "Normalized Difference Turbidity Index",
+    "reference": "https://doi.org/10.1016/j.rse.2006.07.012",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "NDTillI": {
+    "name": "NDTillI",
+    "domain": "Vegetation",
+    "formula": "(S1 - S2)/(S1 + S2)",
+    "description": "Normalized Difference Tillage Index",
+    "reference": "https://www.asprs.org/wp-content/uploads/pers/1997journal/jan/1997_jan_87-93.pdf",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "NDVI": {
+    "name": "NDVI",
+    "domain": "Vegetation",
+    "formula": "(N - R)/(N + R)",
+    "description": "Normalized Difference Vegetation Index",
+    "reference": "https://ntrs.nasa.gov/citations/19740022614",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "NDVI705": {
+    "name": "NDVI705",
+    "domain": "Vegetation",
+    "formula": "(RE2 - RE1) / (RE2 + RE1)",
+    "description": "Normalized Difference Vegetation Index (705 and 750 nm)",
+    "reference": "https://doi.org/10.1016/S0176-1617(11)81633-0",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "NDVIMNDWI": {
+    "name": "NDVIMNDWI",
+    "domain": "Water",
+    "formula": "((N - R)/(N + R)) - ((G - S1)/(G + S1))",
+    "description": "NDVI-MNDWI Model",
+    "reference": "https://doi.org/10.1007/978-3-662-45737-5_51",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "NDVIT": {
+    "name": "NDVIT",
+    "domain": "Burn",
+    "formula": "(N - (R * T / 10000.0))/(N + (R * T / 10000.0))",
+    "description": "Normalized Difference Vegetation Index Thermal",
+    "reference": "https://doi.org/10.1080/01431160600954704",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "NDWI": {
+    "name": "NDWI",
+    "domain": "Water",
+    "formula": "(G - N) / (G + N)",
+    "description": "Normalized Difference Water Index",
+    "reference": "https://doi.org/10.1080/01431169608948714",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "NDWIns": {
+    "name": "NDWIns",
+    "domain": "Water",
+    "formula": "(G - alpha * N)/(G + N)",
+    "description": "Normalized Difference Water Index with no Snow Cover and Glaciers",
+    "reference": "https://doi.org/10.3390/w12051339",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "NDYI": {
+    "name": "NDYI",
+    "domain": "Vegetation",
+    "formula": "(G - B) / (G + B)",
+    "description": "Normalized Difference Yellowness Index",
+    "reference": "https://doi.org/10.1016/j.rse.2016.06.016",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "NGRDI": {
+    "name": "NGRDI",
+    "domain": "Vegetation",
+    "formula": "(G - R) / (G + R)",
+    "description": "Normalized Green Red Difference Index",
+    "reference": "https://doi.org/10.1016/0034-4257(79)90013-0",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "NHFD": {
+    "name": "NHFD",
+    "domain": "Urban",
+    "formula": "(RE1 - A) / (RE1 + A)",
+    "description": "Non-Homogeneous Feature Difference",
+    "reference": "https://www.semanticscholar.org/paper/Using-WorldView-2-Vis-NIR-MSI-Imagery-to-Support-Wolf/5e5063ccc4ee76b56b721c866e871d47a77f9fb4",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "NIRv": {
+    "name": "NIRv",
+    "domain": "Vegetation",
+    "formula": "((N - R) / (N + R)) * N",
+    "description": "Near-Infrared Reflectance of Vegetation",
+    "reference": "https://doi.org/10.1126/sciadv.1602244",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "NLI": {
+    "name": "NLI",
+    "domain": "Vegetation",
+    "formula": "(pow(N, 2) - R) / (pow(N, 2) + R)",
+    "description": "Non-Linear Vegetation Index",
+    "reference": "https://doi.org/10.1080/02757259409532252",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "NMDI": {
+    "name": "NMDI",
+    "domain": "Vegetation",
+    "formula": "(N - (S1 - S2))/(N + (S1 - S2))",
+    "description": "Normalized Multi-band Drought Index",
+    "reference": "https://doi.org/10.1029/2007GL031021",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "NPCI": {
+    "name": "NPCI",
+    "domain": "Vegetation",
+    "formula": "(R - A) / (R + A)",
+    "long_name": "Normalized Pigments Chlorophyll Ratio Index",
+    "reference": "https://doi.org/10.1016/0034-4257(94)90136-8",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "NRFIg": {
+    "name": "NRFIg",
+    "domain": "Vegetation",
+    "formula": "(G - S2) / (G + S2)",
+    "description": "Normalized Rapeseed Flowering Index Green",
+    "reference": "https://doi.org/10.3390/rs13010105",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "NRFIr": {
+    "name": "NRFIr",
+    "domain": "Vegetation",
+    "formula": "(R - S2) / (R + S2)",
+    "description": "Normalized Rapeseed Flowering Index Red",
+    "reference": "https://doi.org/10.3390/rs13010105",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "NSDS": {
+    "name": "NSDS",
+    "domain": "Soil",
+    "formula": "(S1 - S2)/(S1 + S2)",
+    "description": "Normalized Shortwave Infrared Difference Soil-Moisture",
+    "reference": "https://doi.org/10.3390/land10030231",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "NSDSI1": {
+    "name": "NSDSI1",
+    "domain": "Soil",
+    "formula": "(S1-S2)/S1",
+    "description": "Normalized Shortwave-Infrared Difference Bare Soil Moisture Index 1",
+    "reference": "https://doi.org/10.1016/j.isprsjprs.2019.06.012",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "NSDSI2": {
+    "name": "NSDSI2",
+    "domain": "Soil",
+    "formula": "(S1-S2)/S2",
+    "description": "Normalized Shortwave-Infrared Difference Bare Soil Moisture Index 2",
+    "reference": "https://doi.org/10.1016/j.isprsjprs.2019.06.012",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "NSDSI3": {
+    "name": "NSDSI3",
+    "domain": "Soil",
+    "formula": "(S1-S2)/(S1+S2)",
+    "description": "Normalized Shortwave-Infrared Difference Bare Soil Moisture Index 3",
+    "reference": "https://doi.org/10.1016/j.isprsjprs.2019.06.012",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "NSTv1": {
+    "name": "NSTv1",
+    "domain": "Burn",
+    "formula": "((N-S2)/(N+S2))*T",
+    "description": "NIR-SWIR-Temperature Version 1",
+    "reference": "https://doi.org/10.1016/j.rse.2011.06.010",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "NSTv2": {
+    "name": "NSTv2",
+    "domain": "Burn",
+    "formula": "(N-(S2+T))/(N+(S2+T))",
+    "description": "NIR-SWIR-Temperature Version 2",
+    "reference": "https://doi.org/10.1016/j.rse.2011.06.010",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "NWI": {
+    "name": "NWI",
+    "domain": "Water",
+    "formula": "(B - (N + S1 + S2))/(B + (N + S1 + S2))",
+    "description": "New Water Index",
+    "reference": "https://doi.org/10.11873/j.issn.1004-0323.2009.2.167",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "NormG": {
+    "name": "NormG",
+    "domain": "Vegetation",
+    "formula": "G/(N + G + R)",
+    "description": "Normalized Green",
+    "reference": "https://doi.org/10.2134/agronj2004.0314",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "NormNIR": {
+    "name": "NormNIR",
+    "domain": "Vegetation",
+    "formula": "N/(N + G + R)",
+    "description": "Normalized NIR",
+    "reference": "https://doi.org/10.2134/agronj2004.0314",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "NormR": {
+    "name": "NormR",
+    "domain": "Vegetation",
+    "formula": "R/(N + G + R)",
+    "description": "Normalized Red",
+    "reference": "https://doi.org/10.2134/agronj2004.0314",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "OCVI": {
+    "name": "OCVI",
+    "domain": "Vegetation",
+    "formula": "(N / G) * pow(R / G, cexp)",
+    "description": "Optimized Chlorophyll Vegetation Index",
+    "reference": "http://dx.doi.org/10.1007/s11119-008-9075-z",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "OSAVI": {
+    "name": "OSAVI",
+    "domain": "Vegetation",
+    "formula": "(N - R) / (N + R + 0.16)",
+    "description": "Optimized Soil-Adjusted Vegetation Index",
+    "reference": "https://doi.org/10.1016/0034-4257(95)00186-7",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "OSI": {
+    "name": "OSI",
+    "domain": "Water",
+    "formula": "(G + R)/B",
+    "description": "Oil Spill Index",
+    "reference": "https://doi.org/10.1016/j.mex.2021.101327",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "PI": {
+    "name": "PI",
+    "domain": "Water",
+    "formula": "N/(N + R)",
+    "description": "Plastic Index",
+    "reference": "https://doi.org/10.3390/rs12162648",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "PISI": {
+    "name": "PISI",
+    "domain": "Urban",
+    "formula": "0.8192 * B - 0.5735 * N + 0.0750",
+    "description": "Perpendicular Impervious Surface Index",
+    "reference": "https://doi.org/10.3390/rs10101521",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "PSRI": {
+    "name": "PSRI",
+    "domain": "Vegetation",
+    "formula": "(R - B)/RE2",
+    "description": "Plant Senescing Reflectance Index",
+    "reference": "https://doi.org/10.1034/j.1399-3054.1999.106119.x",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "QpRVI": {
+    "name": "QpRVI",
+    "domain": "Radar",
+    "formula": "(8.0 * HV)/(HH + VV + 2.0 * HV)",
+    "description": "Quad-Polarized Radar Vegetation Index",
+    "reference": "https://doi.org/10.1109/IGARSS.2001.976856",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "RCC": {
+    "name": "RCC",
+    "domain": "Vegetation",
+    "formula": "R / (R + G + B)",
+    "description": "Red Chromatic Coordinate",
+    "reference": "https://doi.org/10.1016/0034-4257(87)90088-5",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "RDVI": {
+    "name": "RDVI",
+    "domain": "Vegetation",
+    "formula": "(N - R) / pow(N + R, 0.5)",
+    "description": "Renormalized Difference Vegetation Index",
+    "reference": "https://doi.org/10.1016/0034-4257(94)00114-3",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "REDSI": {
+    "name": "REDSI",
+    "domain": "Vegetation",
+    "formula": "((705.0 - 665.0) * (RE3 - R) - (783.0 - 665.0) * (RE1 - R)) / (2.0 * R)",
+    "description": "Red-Edge Disease Stress Index",
+    "reference": "https://doi.org/10.3390/s18030868",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "RENDVI": {
+    "name": "RENDVI",
+    "domain": "Vegetation",
+    "formula": "(RE2 - RE1)/(RE2 + RE1)",
+    "description": "Red Edge Normalized Difference Vegetation Index",
+    "reference": "https://doi.org/10.1016/S0176-1617(11)81633-0",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "RFDI": {
+    "name": "RFDI",
+    "domain": "Radar",
+    "formula": "(HH - HV)/(HH + HV)",
+    "description": "Radar Forest Degradation Index",
+    "reference": "https://doi.org/10.5194/bg-9-179-2012",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "RGBVI": {
+    "name": "RGBVI",
+    "domain": "Vegetation",
+    "formula": "(pow(G, 2.0) - B * R) / (pow(G, 2.0) + B * R)",
+    "description": "Red Green Blue Vegetation Index",
+    "reference": "https://doi.org/10.1016/j.jag.2015.02.012",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "RGRI": {
+    "name": "RGRI",
+    "domain": "Vegetation",
+    "formula": "R/G",
+    "description": "Red-Green Ratio Index",
+    "reference": "https://doi.org/10.1016/j.jag.2014.03.018",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "RI": {
+    "name": "RI",
+    "domain": "Vegetation",
+    "formula": "(R - G)/(R + G)",
+    "description": "Redness Index",
+    "reference": "https://www.documentation.ird.fr/hor/fdi:34390",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "RI4XS": {
+    "name": "RI4XS",
+    "domain": "Soil",
+    "formula": "pow(R,2.0) / pow(G, 4.0)",
+    "description": "SPOT HRV XS-based Redness Index 4",
+    "reference": "https://doi.org/10.1016/S0034-4257(98)00030-3",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "RNDVI": {
+    "name": "RNDVI",
+    "domain": "Water",
+    "formula": "(R - N)/(R + N)",
+    "description": "Reversed Normalized Difference Vegetation Index",
+    "reference": "https://doi.org/10.3390/rs12162648",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "RVI": {
+    "name": "RVI",
+    "domain": "Vegetation",
+    "formula": "RE2 / R",
+    "description": "Ratio Vegetation Index",
+    "reference": "https://doi.org/10.2134/agronj1968.00021962006000060016x",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "S2REP": {
+    "name": "S2REP",
+    "domain": "Vegetation",
+    "formula": "705.0 + 35.0 * ((((RE3 + R) / 2.0) - RE1) / (RE2 - RE1))",
+    "description": "Sentinel-2 Red-Edge Position",
+    "reference": "https://doi.org/10.1016/j.isprsjprs.2013.04.007",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "S2WI": {
+    "name": "S2WI",
+    "domain": "Water",
+    "formula": "(RE1 - S2)/(RE1 + S2)",
+    "description": "Sentinel-2 Water Index",
+    "reference": "https://doi.org/10.3390/w13121647",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "S3": {
+    "name": "S3",
+    "domain": "Snow",
+    "formula": "(N * (R - S1)) / ((N + R) * (N + S1))",
+    "description": "S3 Snow Index",
+    "reference": "https://doi.org/10.3178/jjshwr.12.28",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "SARVI": {
+    "name": "SARVI",
+    "domain": "Vegetation",
+    "formula": "(1 + L)*(N - (R - (R - B))) / (N + (R - (R - B)) + L)",
+    "description": "Soil Adjusted and Atmospherically Resistant Vegetation Index",
+    "reference": "https://doi.org/10.1109/36.134076",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "SAVI": {
+    "name": "SAVI",
+    "domain": "Vegetation",
+    "formula": "(1.0 + L) * (N - R) / (N + R + L)",
+    "description": "Soil-Adjusted Vegetation Index",
+    "reference": "https://doi.org/10.1016/0034-4257(88)90106-X",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "SAVI2": {
+    "name": "SAVI2",
+    "domain": "Vegetation",
+    "formula": "N / (R + (slb / sla))",
+    "description": "Soil-Adjusted Vegetation Index 2",
+    "reference": "https://doi.org/10.1080/01431169008955053",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "SAVIT": {
+    "name": "SAVIT",
+    "domain": "Burn",
+    "formula": "(1.0 + L) * (N - (R * T / 10000.0)) / (N + (R * T / 10000.0) + L)",
+    "description": "Soil-Adjusted Vegetation Index Thermal",
+    "reference": "https://doi.org/10.1080/01431160600954704",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "SEVI": {
+    "name": "SEVI",
+    "domain": "Vegetation",
+    "formula": "(N/R) + fdelta * (1.0/R)",
+    "description": "Shadow-Eliminated Vegetation Index",
+    "reference": "https://doi.org/10.1080/17538947.2018.1495770",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "SI": {
+    "name": "SI",
+    "domain": "Vegetation",
+    "formula": "pow((1.0 - B) * (1.0 - G) * (1.0 - R)), 1/3)",
+    "description": "Shadow Index",
+    "reference": "http://citeseerx.ist.psu.edu/viewdoc/download?doi\u003d10.1.1.465.8749\u0026rep\u003drep1\u0026type\u003dpdf",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "SIPI": {
+    "name": "SIPI",
+    "domain": "Vegetation",
+    "formula": "(N - A) / (N - R)",
+    "description": "Structure Insensitive Pigment Index",
+    "reference": "https://eurekamag.com/research/009/395/009395053.php",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "SLAVI": {
+    "name": "SLAVI",
+    "domain": "Vegetation",
+    "formula": "N/(R + S2)",
+    "description": "Specific Leaf Area Vegetation Index",
+    "reference": "https://www.asprs.org/wp-content/uploads/pers/2000journal/february/2000_feb_183-191.pdf",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "SR": {
+    "name": "SR",
+    "domain": "Vegetation",
+    "formula": "N/R",
+    "description": "Simple Ratio",
+    "reference": "https://doi.org/10.2307/1936256",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "SR2": {
+    "name": "SR2",
+    "domain": "Vegetation",
+    "formula": "N/G",
+    "description": "Simple Ratio (800 and 550 nm)",
+    "reference": "https://doi.org/10.1080/01431169308904370",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "SR3": {
+    "name": "SR3",
+    "domain": "Vegetation",
+    "formula": "N2/(G * RE1)",
+    "description": "Simple Ratio (860, 550 and 708 nm)",
+    "reference": "https://doi.org/10.1016/S0034-4257(98)00046-7",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "SR555": {
+    "name": "SR555",
+    "domain": "Vegetation",
+    "formula": "RE2 / G",
+    "description": "Simple Ratio (555 and 750 nm)",
+    "reference": "https://doi.org/10.1016/S0176-1617(11)81633-0",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "SR705": {
+    "name": "SR705",
+    "domain": "Vegetation",
+    "formula": "RE2 / RE1",
+    "description": "Simple Ratio (705 and 750 nm)",
+    "reference": "https://doi.org/10.1016/S0176-1617(11)81633-0",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "STI": {
+    "name": "STI",
+    "domain": "Vegetation",
+    "formula": "S1 / S2",
+    "description": "Simple Tillage Index",
+    "reference": "https://www.asprs.org/wp-content/uploads/pers/1997journal/jan/1997_jan_87-93.pdf",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "SWI": {
+    "name": "SWI",
+    "domain": "Snow",
+    "formula": "(G * (N - S1)) / ((G + N) * (N + S1))",
+    "description": "Snow Water Index",
+    "reference": "https://doi.org/10.3390/rs11232774",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "SWM": {
+    "name": "SWM",
+    "domain": "Water",
+    "formula": "(B + G)/(N + S1)",
+    "description": "Sentinel Water Mask",
+    "reference": "https://eoscience.esa.int/landtraining2017/files/posters/MILCZAREK.pdf",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "SeLI": {
+    "name": "SeLI",
+    "domain": "Vegetation",
+    "formula": "(N2 - RE1) / (N2 + RE1)",
+    "description": "Sentinel-2 LAI Green Index",
+    "reference": "https://doi.org/10.3390/s19040904",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "TCARI": {
+    "name": "TCARI",
+    "domain": "Vegetation",
+    "formula": "3 * ((RE1 - R) - 0.2 * (RE1 - G) * (RE1 / R))",
+    "description": "Transformed Chlorophyll Absorption in Reflectance Index",
+    "reference": "https://doi.org/10.1016/S0034-4257(02)00018-4",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "TCARIOSAVI": {
+    "name": "TCARIOSAVI",
+    "domain": "Vegetation",
+    "formula": "(3 * ((RE1 - R) - 0.2 * (RE1 - G) * (RE1 / R))) / (1.16 * (N - R) / (N + R + 0.16))",
+    "description": "TCARI/OSAVI Ratio",
+    "reference": "https://doi.org/10.1016/S0034-4257(02)00018-4",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "TCARIOSAVI705": {
+    "name": "TCARIOSAVI705",
+    "domain": "Vegetation",
+    "formula": "(3 * ((RE2 - RE1) - 0.2 * (RE2 - G) * (RE2 / RE1))) / (1.16 * (RE2 - RE1) / (RE2 + RE1 + 0.16))",
+    "description": "TCARI/OSAVI Ratio (705 and 750 nm)",
+    "reference": "https://doi.org/10.1016/j.agrformet.2008.03.005",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "TCI": {
+    "name": "TCI",
+    "domain": "Vegetation",
+    "formula": "1.2 * (RE1 - G) - 1.5 * (R - G) * pow(RE1 / R, 0.5)",
+    "description": "Triangular Chlorophyll Index",
+    "reference": "http://dx.doi.org/10.1109/TGRS.2007.904836",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "TDVI": {
+    "name": "TDVI",
+    "domain": "Vegetation",
+    "formula": "1.5 * ( (N - R) / pow( pow(N, 2.0) + R + 0.5, 0.5))",
+    "description": "Transformed Difference Vegetation Index",
+    "reference": "https://doi.org/10.1109/IGARSS.2002.1026867",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "TGI": {
+    "name": "TGI",
+    "domain": "Vegetation",
+    "formula": "- 0.5 * (190 * (R - G) - 120 * (R - B))",
+    "description": "Triangular Greenness Index",
+    "reference": "http://dx.doi.org/10.1016/j.jag.2012.07.020",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "TRRVI": {
+    "name": "TRRVI",
+    "domain": "Vegetation",
+    "formula": "((RE2 - R) / (RE2 + R)) / (((N - R) / (N + R)) + 1.0)",
+    "description": "Transformed Red Range Vegetation Index",
+    "reference": "https://doi.org/10.3390/rs12152359",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "TSAVI": {
+    "name": "TSAVI",
+    "domain": "Vegetation",
+    "formula": "sla * (N - sla * R - slb) / (sla * N + R - sla * slb)",
+    "description": "Transformed Soil-Adjusted Vegetation Index",
+    "reference": "https://doi.org/10.1109/IGARSS.1989.576128",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "TTVI": {
+    "name": "TTVI",
+    "domain": "Vegetation",
+    "formula": "0.5 * ((865.0 - 740.0) * (RE3 - RE2) - (N2 - RE2) * (783.0 - 740))",
+    "description": "Transformed Triangular Vegetation Index",
+    "reference": "https://doi.org/10.3390/rs12010016",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "TVI": {
+    "name": "TVI",
+    "domain": "Vegetation",
+    "formula": "pow( ((N - R)/(N + R)) + 0.5, 0.5)",
+    "description": "Transformed Vegetation Index",
+    "reference": "https://ntrs.nasa.gov/citations/19740022614",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "TWI": {
+    "name": "TWI",
+    "domain": "Water",
+    "formula": "(2.84 * (RE1 - RE2) / (G + S2)) + ((1.25 * (G - B) - (N - B)) / (N + 1.25 * G - 0.25 * B))",
+    "description": "Triangle Water Index",
+    "reference": "https://doi.org/10.3390/rs14215289",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "TriVI": {
+    "name": "TriVI",
+    "domain": "Vegetation",
+    "formula": "0.5 * (120 * (N - G) - 200 * (R - G))",
+    "description": "Triangular Vegetation Index",
+    "reference": "http://dx.doi.org/10.1016/S0034-4257(00)00197-8",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "UI": {
+    "name": "UI",
+    "domain": "Urban",
+    "formula": "(S2 - N)/(S2 + N)",
+    "description": "Urban Index",
+    "reference": "https://www.isprs.org/proceedings/XXXI/congress/part7/321_XXXI-part7.pdf",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "VARI": {
+    "name": "VARI",
+    "domain": "Vegetation",
+    "formula": "(G - R) / (G + R - B)",
+    "description": "Visible Atmospherically Resistant Index",
+    "reference": "https://doi.org/10.1016/S0034-4257(01)00289-9",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "VARI700": {
+    "name": "VARI700",
+    "domain": "Vegetation",
+    "formula": "(RE1 - 1.7 * R + 0.7 * B) / (RE1 + 1.3 * R - 1.3 * B)",
+    "description": "Visible Atmospherically Resistant Index (700 nm)",
+    "reference": "https://doi.org/10.1016/S0034-4257(01)00289-9",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "VDDPI": {
+    "name": "VDDPI",
+    "domain": "Radar",
+    "formula": "(VV + VH)/VV",
+    "description": "Vertical Dual De-Polarization Index",
+    "reference": "https://doi.org/10.1016/j.rse.2018.09.003",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "VHVVD": {
+    "name": "VHVVD",
+    "domain": "Radar",
+    "formula": "VH - VV",
+    "description": "VH-VV Difference",
+    "reference": "https://doi.org/10.3390/app9040655",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "VHVVP": {
+    "name": "VHVVP",
+    "domain": "Radar",
+    "formula": "VH * VV",
+    "description": "VH-VV Product",
+    "reference": "https://doi.org/10.1109/IGARSS47720.2021.9554099",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "VHVVR": {
+    "name": "VHVVR",
+    "domain": "Radar",
+    "formula": "VH/VV",
+    "description": "VH-VV Ratio",
+    "reference": "https://doi.org/10.1109/IGARSS47720.2021.9554099",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "VI6T": {
+    "name": "VI6T",
+    "domain": "Burn",
+    "formula": "(N - T/10000.0)/(N + T/10000.0)",
+    "description": "VI6T Index",
+    "reference": "https://doi.org/10.1080/01431160500239008",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "VI700": {
+    "name": "VI700",
+    "domain": "Vegetation",
+    "formula": "(RE1 - R) / (RE1 + R)",
+    "description": "Vegetation Index (700 nm)",
+    "reference": "https://doi.org/10.1016/S0034-4257(01)00289-9",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "VIBI": {
+    "name": "VIBI",
+    "domain": "Urban",
+    "formula": "((N-R)/(N+R))/(((N-R)/(N+R)) + ((S1-N)/(S1+N)))",
+    "description": "Vegetation Index Built-up Index",
+    "reference": "http://dx.doi.org/10.1080/01431161.2012.687842",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "VIG": {
+    "name": "VIG",
+    "domain": "Vegetation",
+    "formula": "(G - R) / (G + R)",
+    "description": "Vegetation Index Green",
+    "reference": "https://doi.org/10.1016/S0034-4257(01)00289-9",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "VVVHD": {
+    "name": "VVVHD",
+    "domain": "Radar",
+    "formula": "VV - VH",
+    "description": "VV-VH Difference",
+    "reference": "https://doi.org/10.1109/IGARSS47720.2021.9554099",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "VVVHR": {
+    "name": "VVVHR",
+    "domain": "Radar",
+    "formula": "VV/VH",
+    "description": "VV-VH Ratio",
+    "reference": "https://doi.org/10.3390/app9040655",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "VVVHS": {
+    "name": "VVVHS",
+    "domain": "Radar",
+    "formula": "VV + VH",
+    "description": "VV-VH Sum",
+    "reference": "https://doi.org/10.1109/IGARSS47720.2021.9554099",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "VgNIRBI": {
+    "name": "VgNIRBI",
+    "domain": "Urban",
+    "formula": "(G - N)/(G + N)",
+    "description": "Visible Green-Based Built-Up Index",
+    "reference": "https://doi.org/10.1016/j.ecolind.2015.03.037",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "VrNIRBI": {
+    "name": "VrNIRBI",
+    "domain": "Urban",
+    "formula": "(R - N)/(R + N)",
+    "description": "Visible Red-Based Built-Up Index",
+    "reference": "https://doi.org/10.1016/j.ecolind.2015.03.037",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "WDRVI": {
+    "name": "WDRVI",
+    "domain": "Vegetation",
+    "formula": "(alpha * N - R) / (alpha * N + R)",
+    "description": "Wide Dynamic Range Vegetation Index",
+    "reference": "https://doi.org/10.1078/0176-1617-01176",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "WDVI": {
+    "name": "WDVI",
+    "domain": "Vegetation",
+    "formula": "N - sla * R",
+    "description": "Weighted Difference Vegetation Index",
+    "reference": "https://doi.org/10.1016/0034-4257(89)90076-X",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "WI1": {
+    "name": "WI1",
+    "domain": "Water",
+    "formula": "(G - S2) / (G + S2)",
+    "description": "Water Index 1",
+    "reference": "https://doi.org/10.3390/rs11182186",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "WI2": {
+    "name": "WI2",
+    "domain": "Water",
+    "formula": "(B - S2) / (B + S2)",
+    "description": "Water Index 2",
+    "reference": "https://doi.org/10.3390/rs11182186",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "WI2015": {
+    "name": "WI2015",
+    "domain": "Water",
+    "formula": "1.7204 + 171 * G + 3 * R - 70 * N - 45 * S1 - 71 * S2",
+    "description": "Water Index 2015",
+    "reference": "https://doi.org/10.1016/j.rse.2015.12.055",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "WRI": {
+    "name": "WRI",
+    "domain": "Water",
+    "formula": "(G + R)/(N + S1)",
+    "description": "Water Ratio Index",
+    "reference": "https://doi.org/10.1109/GEOINFORMATICS.2010.5567762",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "bNIRv": {
+    "name": "bNIRv",
+    "domain": "Vegetation",
+    "formula": "((N - B)/(N + B)) * N",
+    "description": "Blue Near-Infrared Reflectance of Vegetation",
+    "reference": "https://doi.org/10.1029/2024JG008240",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "mND705": {
+    "name": "mND705",
+    "domain": "Vegetation",
+    "formula": "(RE2 - RE1)/(RE2 + RE1 - A)",
+    "description": "Modified Normalized Difference (705, 750 and 445 nm)",
+    "reference": "https://doi.org/10.1016/S0034-4257(02)00010-X",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "mSR705": {
+    "name": "mSR705",
+    "domain": "Vegetation",
+    "formula": "(RE2 - A)/(RE2 + A)",
+    "description": "Modified Simple Ratio (705 and 445 nm)",
+    "reference": "https://doi.org/10.1016/S0034-4257(02)00010-X",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "sNIRvLSWI": {
+    "name": "sNIRvLSWI",
+    "domain": "Vegetation",
+    "formula": "((N - S2)/(N + S2)) * N",
+    "description": "SWIR-enhanced Near-Infrared Reflectance of Vegetation for LSWI",
+    "reference": "https://doi.org/10.1029/2024JG008240",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "sNIRvNDPI": {
+    "name": "sNIRvNDPI",
+    "domain": "Vegetation",
+    "formula": "(N - (alpha * R + (1.0 - alpha) * S2))/(N + (alpha * R + (1.0 - alpha) * S2)) * N",
+    "description": "SWIR-enhanced Near-Infrared Reflectance of Vegetation for NDPI",
+    "reference": "https://doi.org/10.1029/2024JG008240",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "sNIRvNDVILSWIP": {
+    "name": "sNIRvNDVILSWIP",
+    "domain": "Vegetation",
+    "formula": "((N - R)/(N + R)) * ((N - S2)/(N + S2)) * N",
+    "description": "SWIR-enhanced Near-Infrared Reflectance of Vegetation for the NDVI-LSWI Product",
+    "reference": "https://doi.org/10.1029/2024JG008240",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "sNIRvNDVILSWIS": {
+    "name": "sNIRvNDVILSWIS",
+    "domain": "Vegetation",
+    "formula": "(((N - R)/(N + R)) + ((N - S2)/(N + S2))) * N",
+    "description": "SWIR-enhanced Near-Infrared Reflectance of Vegetation for the NDVI-LSWI Sum",
+    "reference": "https://doi.org/10.1029/2024JG008240",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "sNIRvSWIR": {
+    "name": "sNIRvSWIR",
+    "domain": "Vegetation",
+    "formula": "((N - R - S2 ** 2.0)/(N + R + S2 ** 2.0)) * N",
+    "description": "SWIR-enhanced Near-Infrared Reflectance of Vegetation",
+    "reference": "https://doi.org/10.1029/2024JG008240",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  }
+}

@@ -1,0 +1,928 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>raster - SnapKit API Documentation</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="navigation">
+            <a href="index.html">← Back to Index</a>
+        </div>
+        
+        <h1>Module: raster</h1>
+        <div class="module-description"><pre>Raster data management and manipulation module.
+
+This module provides a Python interface for working with raster data nodes within
+remote sensing products through SNAP&#x27;s Java API. It offers comprehensive functionality
+for accessing, manipulating, and analyzing raster data including spectral bands,
+tie-point grids, and masks with support for various data types and scaling operations.
+
+The main component is the Raster class, which serves as a wrapper around SNAP&#x27;s
+Java RasterDataNode class, providing convenient Pythonic access to:
+- Raster metadata (dimensions, data types, scaling factors)
+- Pixel value sampling and coordinate transformations
+- Raw and geophysically calibrated data access
+- Data retrieval and modification operations
+- Spectral properties for bands (wavelength, bandwidth, solar flux)
+- Sample coding for flag bands and classifications
+
+Key Features:
+    - Support for multiple data types (8-bit to 64-bit integers and floats)
+    - Raw and geophysically calibrated data access with automatic scaling
+    - Pixel coordinate to geographic coordinate transformations
+    - Efficient pixel sampling and bulk data operations
+    - Integration with numpy-compatible array structures
+    - Spectral band properties and metadata access
+    - Flag band and classification support with sample coding
+    - Automatic type conversion between SNAP and Python data types
+
+Supported Data Types:
+    - TYPE_INT8 (&#x27;b&#x27;): 8-bit signed integer
+    - TYPE_UINT8 (&#x27;B&#x27;): 8-bit unsigned integer
+    - TYPE_INT16 (&#x27;h&#x27;): 16-bit signed integer
+    - TYPE_UINT16 (&#x27;H&#x27;): 16-bit unsigned integer
+    - TYPE_INT32 (&#x27;i&#x27;): 32-bit signed integer
+    - TYPE_UINT32 (&#x27;I&#x27;): 32-bit unsigned integer
+    - TYPE_FLOAT32 (&#x27;f&#x27;): 32-bit floating point
+    - TYPE_FLOAT64 (&#x27;d&#x27;): 64-bit floating point
+
+Usage:
+    # Basic raster access and properties:
+    from snapkit import Product
+    
+    # Load product and access raster
+    product = Product.read(&#x27;/path/to/product.dim&#x27;)
+    band = product[&#x27;B1&#x27;]  # Access band by name
+    
+    # Check raster properties
+    print(f&quot;Band: {band.name}, Size: {band.width}x{band.height}&quot;)
+    print(f&quot;Data type: {band.data_type}, Unit: {band.unit}&quot;)
+    print(f&quot;Wavelength: {band.wavelength} nm, Bandwidth: {band.bandwidth} nm&quot;)
+
+    # Pixel sampling and data access:
+    # Sample individual pixels
+    raw_value = band.sample(100, 200)  # Raw pixel value
+    geo_value = band.sample(100, 200, geophysical=True)  # Calibrated value
+    
+    # Get entire raster data as arrays
+    raw_data = band.fetch()  # Raw data array
+    geo_data = band.fetch(geophysical=True)  # Calibrated data array
+    print(f&quot;Data shape: {raw_data.shape}, dtype: {raw_data.dtype}&quot;)
+
+    # Coordinate transformations (for geo-coded rasters):
+    if band.is_geo_coded:
+        # Convert geographic to pixel coordinates
+        pixel_x, pixel_y = band.pixel_pos(52.5, 13.4)  # Berlin coordinates
+        print(f&quot;Berlin is at pixel ({pixel_x}, {pixel_y})&quot;)
+    
+        # Convert pixel to geographic coordinates
+        lat, lon = band.geo_pos(100, 200)
+        print(f&quot;Pixel (100,200) is at {lat}°N, {lon}°E&quot;)
+
+    # Working with flag bands and sample coding:
+    flag_band = product[&#x27;quality_flags&#x27;]
+    if flag_band.is_flag_band:
+        coding = flag_band.sample_coding()
+        if coding:
+            flag_names = coding.get_flag_names()
+            print(f&quot;Available flags: {flag_names}&quot;)
+
+    # Data modification (numpy is only available on Linux):
+    import numpy as np
+    # Create new data array
+    new_data = np.random.random((band.height, band.width))
+    # Apply data to raster (as geophysical values)
+    band.apply(new_data, geophysical=True)</pre></div>
+
+        <div class="class-section" id="Raster">
+            <h2>Class: Raster</h2>
+        <div class="module-description"><pre>Represents a raster data node within a remote sensing product.
+
+This class serves as a Python wrapper around SNAP&#x27;s Java RasterDataNode class,
+providing convenient access to raster data including spectral bands, tie-point grids,
+and masks. It offers properties for accessing raster metadata (dimensions, data types,
+scaling factors) and methods for pixel sampling, coordinate transformations, and data
+retrieval/modification.
+
+The Raster class supports various data types from 8-bit integers to 64-bit floating
+point values, handles both raw and geophysically calibrated data access, and provides
+coordinate transformation capabilities for geo-coded rasters.
+
+Example:
+    # Access raster from product
+    product = Product.read(&#x27;/path/to/product.dim&#x27;)
+    band = product[&#x27;B1&#x27;]
+    
+    # Check raster properties
+    print(f&quot;Band: {band.name}, Size: {band.width}x{band.height}&quot;)
+    print(f&quot;Data type: {band.data_type}, Unit: {band.unit}&quot;)
+    
+    # Sample pixel values
+    value = band.sample(100, 200)
+    geo_value = band.sample(100, 200, geophysical=True)
+    
+    # Get entire raster data
+    data_array = band.fetch()
+    geo_data_array = band.fetch(geophysical=True)</pre></div>            <h3>Overview</h3>
+            <div class="overview-section">
+                <h4>Properties</h4>
+                <div class="overview-list">
+                    <span class="overview-item">&nbsp;<a href="#Raster-name">name</a>&nbsp;</span>
+                    <span class="overview-item">&nbsp;<a href="#Raster-description">description</a>&nbsp;</span>
+                    <span class="overview-item">&nbsp;<a href="#Raster-unit">unit</a>&nbsp;</span>
+                    <span class="overview-item">&nbsp;<a href="#Raster-width">width</a>&nbsp;</span>
+                    <span class="overview-item">&nbsp;<a href="#Raster-height">height</a>&nbsp;</span>
+                    <span class="overview-item">&nbsp;<a href="#Raster-wavelength">wavelength</a>&nbsp;</span>
+                    <span class="overview-item">&nbsp;<a href="#Raster-bandwidth">bandwidth</a>&nbsp;</span>
+                    <span class="overview-item">&nbsp;<a href="#Raster-solar_flux">solar_flux</a>&nbsp;</span>
+                    <span class="overview-item">&nbsp;<a href="#Raster-is_flag_band">is_flag_band</a>&nbsp;</span>
+                    <span class="overview-item">&nbsp;<a href="#Raster-is_index_band">is_index_band</a>&nbsp;</span>
+                    <span class="overview-item">&nbsp;<a href="#Raster-data_type">data_type</a>&nbsp;</span>
+                    <span class="overview-item">&nbsp;<a href="#Raster-geophysical_data_type">geophysical_data_type</a>&nbsp;</span>
+                    <span class="overview-item">&nbsp;<a href="#Raster-scale_factor">scale_factor</a>&nbsp;</span>
+                    <span class="overview-item">&nbsp;<a href="#Raster-scale_offset">scale_offset</a>&nbsp;</span>
+                    <span class="overview-item">&nbsp;<a href="#Raster-log10_scaled">log10_scaled</a>&nbsp;</span>
+                    <span class="overview-item">&nbsp;<a href="#Raster-is_scaled">is_scaled</a>&nbsp;</span>
+                    <span class="overview-item">&nbsp;<a href="#Raster-no_data_value">no_data_value</a>&nbsp;</span>
+                    <span class="overview-item">&nbsp;<a href="#Raster-geophysical_no_data_value">geophysical_no_data_value</a>&nbsp;</span>
+                    <span class="overview-item">&nbsp;<a href="#Raster-is_geo_coded">is_geo_coded</a>&nbsp;</span>
+                </div>
+                <h4>Methods</h4>
+                <div class="overview-list">
+                    <span class="overview-item">&nbsp;<a href="#Raster-__init__">__init__</a>&nbsp;</span>
+                    <span class="overview-item">&nbsp;<a href="#Raster-pixel_pos">pixel_pos</a>&nbsp;</span>
+                    <span class="overview-item">&nbsp;<a href="#Raster-geo_pos">geo_pos</a>&nbsp;</span>
+                    <span class="overview-item">&nbsp;<a href="#Raster-sample_coding">sample_coding</a>&nbsp;</span>
+                    <span class="overview-item">&nbsp;<a href="#Raster-sample">sample</a>&nbsp;</span>
+                    <span class="overview-item">&nbsp;<a href="#Raster-fetch">fetch</a>&nbsp;</span>
+                    <span class="overview-item">&nbsp;<a href="#Raster-apply">apply</a>&nbsp;</span>
+                </div>
+            </div>
+            <h3>Properties</h3>
+            <div class="properties-section">
+                <div class="function-item" id="Raster-name">
+                    <h4 class="function-signature">name</h4>
+                    <span class="function-type">property</span>
+                    <div class="function-description">
+                        <div class="docstring-description">
+                            <pre>Get the name of the raster data node.</pre>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Returns:</h5>
+                            <div class="returns-info">
+                                <strong>str</strong>: <pre>The name identifier of the raster data node as defined in the product.</pre>
+                            </div>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Example:</h5>
+                            <div class="section-content">
+                                <pre>    band = product[&#x27;B1&#x27;]
+    print(band.name)  # &quot;B1&quot;</pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="function-item" id="Raster-description">
+                    <h4 class="function-signature">description</h4>
+                    <span class="function-type">property</span>
+                    <div class="function-description">
+                        <div class="docstring-description">
+                            <pre>Get the description text of the raster data node.</pre>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Returns:</h5>
+                            <div class="returns-info">
+                                <strong>str</strong>: <pre>Optional description text for the raster, or empty string if not set.</pre>
+                            </div>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Example:</h5>
+                            <div class="section-content">
+                                <pre>    band = product[&#x27;B1&#x27;]
+    print(band.description)  # &quot;Blue band at 490 nm&quot;</pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="function-item" id="Raster-unit">
+                    <h4 class="function-signature">unit</h4>
+                    <span class="function-type">property</span>
+                    <div class="function-description">
+                        <div class="docstring-description">
+                            <pre>Get the physical unit of the raster values.
+
+This property returns the physical unit for band data (e.g., &quot;W/(m^2*sr*μm)&quot;
+for reflectance). Only available for Band objects, returns empty string for
+other raster types like masks or tie-point grids.</pre>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Returns:</h5>
+                            <div class="returns-info">
+                                <strong>str</strong>: <pre>Physical unit string for bands, empty string for non-band rasters.</pre>
+                            </div>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Example:</h5>
+                            <div class="section-content">
+                                <pre>    band = product[&#x27;B1&#x27;]
+    print(band.unit)  # &quot;W/(m^2*sr*μm)&quot;
+    mask = product[&#x27;cloud_mask&#x27;]
+    print(mask.unit)  # &quot;&quot;</pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="function-item" id="Raster-width">
+                    <h4 class="function-signature">width</h4>
+                    <span class="function-type">property</span>
+                    <div class="function-description">
+                        <div class="docstring-description">
+                            <pre>Get the width of the raster in pixels.</pre>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Returns:</h5>
+                            <div class="returns-info">
+                                <strong>int</strong>: <pre>Width of the raster data in pixels (columns).</pre>
+                            </div>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Example:</h5>
+                            <div class="section-content">
+                                <pre>    band = product[&#x27;B1&#x27;]
+    print(f&quot;Band width: {band.width} pixels&quot;)</pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="function-item" id="Raster-height">
+                    <h4 class="function-signature">height</h4>
+                    <span class="function-type">property</span>
+                    <div class="function-description">
+                        <div class="docstring-description">
+                            <pre>Get the height of the raster in pixels.</pre>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Returns:</h5>
+                            <div class="returns-info">
+                                <strong>int</strong>: <pre>Height of the raster data in pixels (rows).</pre>
+                            </div>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Example:</h5>
+                            <div class="section-content">
+                                <pre>    band = product[&#x27;B1&#x27;]
+    print(f&quot;Band height: {band.height} pixels&quot;)</pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="function-item" id="Raster-wavelength">
+                    <h4 class="function-signature">wavelength</h4>
+                    <span class="function-type">property</span>
+                    <div class="function-description">
+                        <div class="docstring-description">
+                            <pre>Get the spectral wavelength of the band.
+
+This property returns the central wavelength for spectral bands. Only
+available for Band objects, returns 0 for other raster types.</pre>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Returns:</h5>
+                            <div class="returns-info">
+                                <strong>float</strong>: <pre>Spectral wavelength in nanometers for bands, 0.0 for non-band rasters.</pre>
+                            </div>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Example:</h5>
+                            <div class="section-content">
+                                <pre>    band = product[&#x27;B1&#x27;]
+    print(f&quot;Band wavelength: {band.wavelength} nm&quot;)
+    mask = product[&#x27;cloud_mask&#x27;]
+    print(mask.wavelength)  # 0.0</pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="function-item" id="Raster-bandwidth">
+                    <h4 class="function-signature">bandwidth</h4>
+                    <span class="function-type">property</span>
+                    <div class="function-description">
+                        <div class="docstring-description">
+                            <pre>Get the spectral bandwidth of the band.
+
+This property returns the bandwidth (width of the spectral range) for
+spectral bands. Only available for Band objects, returns 0 for other raster types.</pre>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Returns:</h5>
+                            <div class="returns-info">
+                                <strong>float</strong>: <pre>Spectral bandwidth in nanometers for bands, 0.0 for non-band rasters.</pre>
+                            </div>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Example:</h5>
+                            <div class="section-content">
+                                <pre>    band = product[&#x27;B1&#x27;]
+    print(f&quot;Band bandwidth: {band.bandwidth} nm&quot;)
+    mask = product[&#x27;cloud_mask&#x27;]
+    print(mask.bandwidth)  # 0.0</pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="function-item" id="Raster-solar_flux">
+                    <h4 class="function-signature">solar_flux</h4>
+                    <span class="function-type">property</span>
+                    <div class="function-description">
+                        <div class="docstring-description">
+                            <pre>Get the solar irradiance value for the band.
+
+This property returns the solar flux (irradiance) value used for atmospheric
+correction calculations. Only available for Band objects, returns 0 for other raster types.</pre>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Returns:</h5>
+                            <div class="returns-info">
+                                <strong>float</strong>: <pre>Solar irradiance value in W/(m^2*μm) for bands, 0.0 for non-band rasters.</pre>
+                            </div>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Example:</h5>
+                            <div class="section-content">
+                                <pre>    band = product[&#x27;B1&#x27;]
+    print(f&quot;Solar flux: {band.solar_flux} W/(m^2*μm)&quot;)
+    mask = product[&#x27;cloud_mask&#x27;]
+    print(mask.solar_flux)  # 0.0</pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="function-item" id="Raster-is_flag_band">
+                    <h4 class="function-signature">is_flag_band</h4>
+                    <span class="function-type">property</span>
+                    <div class="function-description">
+                        <div class="docstring-description">
+                            <pre>Check if this is a flag/mask band.
+
+This property indicates whether the band contains flag or mask data rather
+than continuous measurements. Only available for Band objects, returns False
+for other raster types.</pre>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Returns:</h5>
+                            <div class="returns-info">
+                                <strong>bool</strong>: <pre>True if this is a flag band, False otherwise.</pre>
+                            </div>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Example:</h5>
+                            <div class="section-content">
+                                <pre>    flag_band = product[&#x27;quality_flags&#x27;]
+    print(flag_band.is_flag_band)  # True
+    data_band = product[&#x27;B1&#x27;]
+    print(data_band.is_flag_band)  # False</pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="function-item" id="Raster-is_index_band">
+                    <h4 class="function-signature">is_index_band</h4>
+                    <span class="function-type">property</span>
+                    <div class="function-description">
+                        <div class="docstring-description">
+                            <pre>Check if this is an index band.
+
+This property indicates whether the band contains index values that reference
+other data structures. Only available for Band objects, returns False for
+other raster types.</pre>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Returns:</h5>
+                            <div class="returns-info">
+                                <strong>bool</strong>: <pre>True if this is an index band, False otherwise.</pre>
+                            </div>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Example:</h5>
+                            <div class="section-content">
+                                <pre>    index_band = product[&#x27;pixel_classif_flags&#x27;]
+    print(index_band.is_index_band)  # True
+    data_band = product[&#x27;B1&#x27;]
+    print(data_band.is_index_band)  # False</pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="function-item" id="Raster-data_type">
+                    <h4 class="function-signature">data_type</h4>
+                    <span class="function-type">property</span>
+                    <div class="function-description">
+                        <div class="docstring-description">
+                            <pre>Get the raw data type of the raster values.
+
+This property returns a Python type code indicating the data type used
+to store raw (unscaled) raster values in memory and on disk.</pre>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Returns:</h5>
+                            <div class="returns-info">
+                                <strong>str</strong>: <pre>Python array type code (&#x27;b&#x27;=int8, &#x27;B&#x27;=uint8, &#x27;h&#x27;=int16, &#x27;H&#x27;=uint16, &#x27;i&#x27;=int32, &#x27;I&#x27;=uint32, &#x27;l&#x27;=int64, &#x27;f&#x27;=float32, &#x27;d&#x27;=float64).</pre>
+                            </div>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Example:</h5>
+                            <div class="section-content">
+                                <pre>    band = product[&#x27;B1&#x27;]
+    print(f&quot;Raw data type: {band.data_type}&quot;)  # &#x27;H&#x27; for uint16</pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="function-item" id="Raster-geophysical_data_type">
+                    <h4 class="function-signature">geophysical_data_type</h4>
+                    <span class="function-type">property</span>
+                    <div class="function-description">
+                        <div class="docstring-description">
+                            <pre>Get the geophysical data type of the raster values.
+
+This property returns a Python type code indicating the data type used
+for geophysically calibrated (scaled) raster values after applying
+scaling factors and offsets.</pre>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Returns:</h5>
+                            <div class="returns-info">
+                                <strong>str</strong>: <pre>Python array type code (&#x27;b&#x27;=int8, &#x27;B&#x27;=uint8, &#x27;h&#x27;=int16, &#x27;H&#x27;=uint16, &#x27;i&#x27;=int32, &#x27;I&#x27;=uint32, &#x27;l&#x27;=int64, &#x27;f&#x27;=float32, &#x27;d&#x27;=float64).</pre>
+                            </div>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Example:</h5>
+                            <div class="section-content">
+                                <pre>    band = product[&#x27;B1&#x27;]
+    print(f&quot;Geophysical data type: {band.geophysical_data_type}&quot;)  # &#x27;f&#x27; for float32</pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="function-item" id="Raster-scale_factor">
+                    <h4 class="function-signature">scale_factor</h4>
+                    <span class="function-type">property</span>
+                    <div class="function-description">
+                        <div class="docstring-description">
+                            <pre>Get or set the scaling factor applied to convert raw to geophysical values.
+
+This factor is multiplied with raw pixel values as part of the conversion
+to geophysically meaningful units. The conversion formula is:
+geophysical_value = (raw_value * scale_factor) + scale_offset
+If the log10_scaled property is true, the result is taken to the power of 10 after the actual scaling</pre>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Returns/Argument:</h5>
+                            <div class="returns-info">
+                                <strong>float</strong>: <pre>Scaling factor multiplier.</pre>
+                            </div>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Example:</h5>
+                            <div class="section-content">
+                                <pre>    band = product[&#x27;B1&#x27;]
+    print(f&quot;Scale factor: {band.scale_factor}&quot;)
+    # Set new scaling factor
+    band.scale_factor = 0.01</pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="function-item" id="Raster-scale_offset">
+                    <h4 class="function-signature">scale_offset</h4>
+                    <span class="function-type">property</span>
+                    <div class="function-description">
+                        <div class="docstring-description">
+                            <pre>Get or set the scaling offset applied to convert raw to geophysical values.
+
+This offset is added to scaled pixel values as part of the conversion
+to geophysically meaningful units. The conversion formula is:
+geophysical_value = (raw_value * scale_factor) + scale_offset
+If the log10_scaled property is true, the result is taken to the power of 10 after the actual scaling</pre>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Returns/Argument:</h5>
+                            <div class="returns-info">
+                                <strong>float</strong>: <pre>Scaling offset additive term.</pre>
+                            </div>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Example:</h5>
+                            <div class="section-content">
+                                <pre>    band = product[&#x27;B1&#x27;]
+    print(f&quot;Scale offset: {band.scale_offset}&quot;)
+    # Set new scaling offset
+    band.scale_offset = -1.0</pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="function-item" id="Raster-log10_scaled">
+                    <h4 class="function-signature">log10_scaled</h4>
+                    <span class="function-type">property</span>
+                    <div class="function-description">
+                        <div class="docstring-description">
+                            <pre>Get or set whether logarithmic scaling is applied to the raster values.
+
+This property controls whether base-10 logarithmic scaling is applied
+during the conversion from raw to geophysical values. When enabled,
+the conversion formula becomes:
+geophysical_value = 10^((raw_value * scale_factor) + scale_offset)</pre>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Returns/Argument:</h5>
+                            <div class="returns-info">
+                                <strong>bool</strong>: <pre>True if log10 scaling is applied, False otherwise.</pre>
+                            </div>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Example:</h5>
+                            <div class="section-content">
+                                <pre>    band = product[&#x27;B1&#x27;]
+    print(f&quot;Log10 scaled: {band.log10_scaled}&quot;)
+    # Enable logarithmic scaling
+    band.log10_scaled = True</pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="function-item" id="Raster-is_scaled">
+                    <h4 class="function-signature">is_scaled</h4>
+                    <span class="function-type">property</span>
+                    <div class="function-description">
+                        <div class="docstring-description">
+                            <pre>Check if any scaling is applied to the raster values.
+
+This property indicates whether scaling (linear or logarithmic) is applied
+during the conversion from raw to geophysical values.</pre>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Returns:</h5>
+                            <div class="returns-info">
+                                <strong>bool</strong>: <pre>True if any scaling is applied, False otherwise.</pre>
+                            </div>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Example:</h5>
+                            <div class="section-content">
+                                <pre>    band = product[&#x27;B1&#x27;]
+    print(f&quot;Is scaled: {band.is_scaled}&quot;)</pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="function-item" id="Raster-no_data_value">
+                    <h4 class="function-signature">no_data_value</h4>
+                    <span class="function-type">property</span>
+                    <div class="function-description">
+                        <div class="docstring-description">
+                            <pre>Get the no-data value for raw raster values.
+
+This value represents missing or invalid data in the raw (unscaled) raster.
+Pixels with this value should be treated as having no valid measurement.</pre>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Returns:</h5>
+                            <div class="returns-info">
+                                <strong>float</strong>: <pre>The no-data value for raw pixel values.</pre>
+                            </div>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Example:</h5>
+                            <div class="section-content">
+                                <pre>    band = product[&#x27;B1&#x27;]
+    print(f&quot;No-data value: {band.no_data_value}&quot;)</pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="function-item" id="Raster-geophysical_no_data_value">
+                    <h4 class="function-signature">geophysical_no_data_value</h4>
+                    <span class="function-type">property</span>
+                    <div class="function-description">
+                        <div class="docstring-description">
+                            <pre>Get the no-data value for geophysical raster values.
+
+This value represents missing or invalid data in the geophysically
+calibrated (scaled) raster. Pixels with this value should be treated
+as having no valid measurement.</pre>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Returns:</h5>
+                            <div class="returns-info">
+                                <strong>float</strong>: <pre>The no-data value for geophysical pixel values.</pre>
+                            </div>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Example:</h5>
+                            <div class="section-content">
+                                <pre>    band = product[&#x27;B1&#x27;]
+    print(f&quot;Geophysical no-data value: {band.geophysical_no_data_value}&quot;)</pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="function-item" id="Raster-is_geo_coded">
+                    <h4 class="function-signature">is_geo_coded</h4>
+                    <span class="function-type">property</span>
+                    <div class="function-description">
+                        <div class="docstring-description">
+                            <pre>Check if the raster has valid geo-coding information.
+
+This property indicates whether the raster has geo-coding that allows
+conversion between pixel coordinates and geographic coordinates.</pre>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Returns:</h5>
+                            <div class="returns-info">
+                                <strong>bool</strong>: <pre>True if geo-coding is available, False otherwise.</pre>
+                            </div>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Example:</h5>
+                            <div class="section-content">
+                                <pre>    band = product[&#x27;B1&#x27;]
+    if band.is_geo_coded:
+        lat, lon = band.geo_pos(100, 200)
+        print(f&quot;Pixel (100,200) is at {lat}°N, {lon}°E&quot;)</pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <h3>Methods</h3>
+            <div class="methods-section">
+                <div class="function-item" id="Raster-__init__">
+                    <h4 class="function-signature">__init__(java_raster)</h4>
+                    <span class="function-type">constructor</span>
+                    <div class="function-description">
+                        <div class="docstring-description">
+                            <pre>This is NOT intended to be called directly. You can create a new raster using a product.</pre>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Arguments:</h5>
+                            <ul class="args-list">
+                                <li>
+                                    <strong>java_raster (org.esa.snap.core.datamodel.RasterDataNode)</strong>: <pre>The Java
+        RasterDataNode object to wrap. This can be a Band, TiePointGrid,
+        or Mask from a SNAP Product.</pre>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Example:</h5>
+                            <div class="section-content">
+                                <pre>    # Usually called internally by Product class
+    band = product.add_Band(&#x27;B1&#x27;, Raster.TYPE_UINT16))
+    print(f&quot;Band name: {band.name}&quot;)
+    land_mask = product.add_mask(&#x27;land_mask&#x27;, &quot;B3 &gt; 0.1&quot;))
+    print(f&quot;Mask name: {land_mask.name}&quot;)</pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="function-item" id="Raster-pixel_pos">
+                    <h4 class="function-signature">pixel_pos(lat, lon)</h4>
+                    <span class="function-type">method</span>
+                    <div class="function-description">
+                        <div class="docstring-description">
+                            <pre>Convert geographic coordinates to pixel coordinates.
+
+This method transforms latitude/longitude coordinates to pixel coordinates
+using the raster&#x27;s geo-coding information. Requires the raster to have
+valid geo-coding.</pre>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Arguments:</h5>
+                            <ul class="args-list">
+                                <li>
+                                    <strong>lat (float)</strong>: <pre>Latitude in decimal degrees.</pre>
+                                </li>
+                                <li>
+                                    <strong>lon (float)</strong>: <pre>Longitude in decimal degrees.</pre>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Returns:</h5>
+                            <div class="returns-info">
+                                <strong>tuple[float, float] | None</strong>: <pre>Pixel coordinates as (x, y) tuple in pixels, or None if conversion fails or raster lacks geo-coding.</pre>
+                            </div>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Example:</h5>
+                            <div class="section-content">
+                                <pre>    band = product[&#x27;B1&#x27;]
+    if band.is_geo_coded:
+        pixel_x, pixel_y = band.pixel_pos(52.5, 13.4)
+        print(f&quot;Berlin is at pixel ({pixel_x}, {pixel_y})&quot;)</pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="function-item" id="Raster-geo_pos">
+                    <h4 class="function-signature">geo_pos(x, y)</h4>
+                    <span class="function-type">method</span>
+                    <div class="function-description">
+                        <div class="docstring-description">
+                            <pre>Convert pixel coordinates to geographic coordinates.
+
+This method transforms pixel coordinates to latitude/longitude coordinates
+using the raster&#x27;s geo-coding information. Requires the raster to have
+valid geo-coding.</pre>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Arguments:</h5>
+                            <ul class="args-list">
+                                <li>
+                                    <strong>x (float)</strong>: <pre>Pixel x-coordinate (column).</pre>
+                                </li>
+                                <li>
+                                    <strong>y (float)</strong>: <pre>Pixel y-coordinate (row).</pre>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Returns:</h5>
+                            <div class="returns-info">
+                                <strong>tuple[float, float] | None</strong>: <pre>Geographic coordinates as (latitude, longitude) tuple in decimal degrees, or None if conversion fails or raster lacks geo-coding.</pre>
+                            </div>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Example:</h5>
+                            <div class="section-content">
+                                <pre>    band = product[&#x27;B1&#x27;]
+    if band.is_geo_coded:
+        lat, lon = band.geo_pos(100, 200)
+        print(f&quot;Pixel (100,200) is at {lat}°N, {lon}°E&quot;)</pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="function-item" id="Raster-sample_coding">
+                    <h4 class="function-signature">sample_coding()</h4>
+                    <span class="function-type">method</span>
+                    <div class="function-description">
+                        <div class="docstring-description">
+                            <pre>Get the sample coding information for the raster.
+
+This method returns the sample coding that maps sample values to meaningful
+labels or categories. Typically used for flag bands or classification results.</pre>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Returns:</h5>
+                            <div class="returns-info">
+                                <strong>SampleCoding | None</strong>: <pre>SampleCoding object if available, None otherwise.</pre>
+                            </div>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Example:</h5>
+                            <div class="section-content">
+                                <pre>    flag_band = product[&#x27;quality_flags&#x27;]
+    coding = flag_band.sample_coding()
+    if coding:
+        print(f&quot;Flag definitions: {coding.get_flag_names()}&quot;)</pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="function-item" id="Raster-sample">
+                    <h4 class="function-signature">sample(x, y, geophysical)</h4>
+                    <span class="function-type">method</span>
+                    <div class="function-description">
+                        <div class="docstring-description">
+                            <pre>Sample a single pixel value from the raster.
+
+This method retrieves a single pixel value at the specified coordinates.
+It can return either raw or geophysically calibrated values based on the
+geophysical parameter. When y is None, x is treated as a linear index.</pre>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Arguments:</h5>
+                            <ul class="args-list">
+                                <li>
+                                    <strong>x (int | float)</strong>: <pre>Pixel x-coordinate (column) or linear pixel index if y is None.</pre>
+                                </li>
+                                <li>
+                                    <strong>y (int | float)</strong>: <pre>Pixel y-coordinate (row). If None, x is
+        treated as a linear index. Defaults to None.</pre>
+                                </li>
+                                <li>
+                                    <strong>geophysical (bool, optional)</strong>: <pre>If True, return geophysically calibrated values.
+        If False, return raw pixel values. Defaults to False.</pre>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Returns:</h5>
+                            <div class="returns-info">
+                                <strong>int | float</strong>: <pre>The pixel value at the specified coordinates. Type depends on the raster&#x27;s data type and geophysical parameter.</pre>
+                            </div>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Example:</h5>
+                            <div class="section-content">
+                                <pre>    band = product[&#x27;B1&#x27;]
+    # Sample pixel at coordinates (100, 200)
+    raw_value = band.sample(100, 200)
+    geo_value = band.sample(100, 200, geophysical=True)
+    # Sample using linear index
+    linear_value = band.sample(10000)  # 10000th pixel</pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="function-item" id="Raster-fetch">
+                    <h4 class="function-signature">fetch(geophysical)</h4>
+                    <span class="function-type">method</span>
+                    <div class="function-description">
+                        <div class="docstring-description">
+                            <pre>Retrieve the entire raster data as a python array.
+
+This method loads all pixel values from the raster into a python array
+structure. It can return either raw or geophysically calibrated data
+based on the geophysical parameter.</pre>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Arguments:</h5>
+                            <ul class="args-list">
+                                <li>
+                                    <strong>geophysical (bool, optional)</strong>: <pre>If True, return geophysically calibrated values
+        with applied scaling factors and offsets. If False, return raw pixel values
+        as stored on disk. Defaults to False.</pre>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Returns:</h5>
+                            <div class="returns-info">
+                                <strong>array</strong>: <pre>a 1D python array containing all raster pixel values.</pre>
+                            </div>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Example:</h5>
+                            <div class="section-content">
+                                <pre>    band = product[&#x27;B1&#x27;]
+    # Get raw data
+    raw_data = band.fetch()
+    print(f&quot;Raw data shape: {raw_data.shape}, dtype: {raw_data.dtype}&quot;)
+    # Get geophysical data
+    geo_data = band.fetch(geophysical=True)
+    print(f&quot;Geo data range: {geo_data.min()} to {geo_data.max()}&quot;)</pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="function-item" id="Raster-apply">
+                    <h4 class="function-signature">apply(data, geophysical)</h4>
+                    <span class="function-type">method</span>
+                    <div class="function-description">
+                        <div class="docstring-description">
+                            <pre>Apply new data values to the raster.
+
+This method replaces the raster&#x27;s pixel values with the provided data array.
+The data can be written as raw values or geophysically calibrated values
+based on the geophysical parameter.</pre>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Arguments:</h5>
+                            <ul class="args-list">
+                                <li>
+                                    <strong>data (array)</strong>: <pre>The data containing new pixel values. Either a list, a python array, or a Numpy array.
+        The Shape must match the raster dimensions (height, width).</pre>
+                                </li>
+                                <li>
+                                    <strong>geophysical (bool, optional)</strong>: <pre>If True, treat input data as geophysically
+        calibrated values that will be converted to raw values using inverse
+        scaling. If False, treat as raw values. Defaults to False.</pre>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Example:</h5>
+                            <div class="section-content">
+                                <pre>    band = product[&#x27;B1&#x27;]
+    import numpy as np
+    # Create new data
+    new_data = np.random.random((band.height, band.width))
+    # Apply as geophysical values
+    band.apply(new_data, geophysical=True)
+    # Apply as raw values
+    band.apply((new_data * 1000).astype(np.uint16))</pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

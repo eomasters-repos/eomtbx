@@ -1,2 +1,5 @@
 org.eomasters.eomtbx.io.s2l2a.S2L2ANativeB1ProductReaderPlugIn
 org.eomasters.eomtbx.io.s2l2a.S2L2AScaledB1FootprintProductReaderPlugIn
+org.eomasters.eomtbx.io.aster.AsterProductReaderPlugIn
+org.eomasters.eomtbx.io.emit.EmitL1bReaderPlugin
+org.eomasters.eomtbx.io.emit.EmitL2aReaderPlugin

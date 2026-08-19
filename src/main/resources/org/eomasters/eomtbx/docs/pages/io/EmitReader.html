@@ -1,0 +1,118 @@
+<!--
+  ========================LICENSE_START=================================
+  EOMTBX - EOMasters Toolbox for SNAP
+  -> https://www.eomasters.org/eomtbx
+  ======================================================================
+  Copyright (C) 2023 - 2026 Marco Peters
+  ======================================================================
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as
+  published by the Free Software Foundation, either version 3 of the
+  License, or (at your option) any later version.
+  
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+  
+  You should have received a copy of the GNU General Public
+  License along with this program.  If not, see
+  -> http://www.gnu.org/licenses/gpl-3.0.html
+  =========================LICENSE_END==================================
+  -->
+
+<html>
+<head>
+  <title>EOMasters Toolbox - EMIT Reader</title>
+   <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+  <link href="../../style/style.css" rel="stylesheet">
+  <link href="../../style/eomastersstyle.css" rel="stylesheet">
+</head>
+
+<body>
+<table class="header">
+  <tr class="header">
+    <td align="left" class="header" width="40"><a href="../Overview.html"><img border=0
+                                                                               src="../../images/EomToolbox_32.png"></a>
+    </td>
+    <td class="header">EOMasters Toolbox</td>
+    <td align="right" class="header"><a
+        href="nbdocs://org.esa.snap.snap.help/org/esa/snap/snap/help/docs/general/overview/SnapOverview.html"><img
+        border=0 src="../../images/snap_header.jpg"></a></td>
+  </tr>
+</table>
+
+<h1>EMIT Reader</h1>
+<p>These readers allow reading Level-1B and Level-2A data of the EMIT<sup>1</sup> mission. The Earth Surface Mineral
+  Dust Source Investigation (EMIT) instrument measures surface mineralogy, targeting the Earth's arid dust source
+  regions. EMIT is installed on the International Space Station (ISS) and uses imaging spectroscopy to take
+  mineralogical measurements of sunlit regions<sup>2</sup> between 52° N latitude and 52° S latitude.</p>
+
+<h2>Level-1B</h2>
+<p>The Level-1B reader (format: EMIT_L1B) reads a <code>EMIT_L1B_RAD_*.nc</code> file and the ancillary file <code>EMIT_L1B_OBS_*.nc</code>
+  if it is located next to the radiance file into one data product.</p>
+
+<h2>Level-2A</h2>
+<p>The Level-2A reader (format: EMIT_L2A) reads a <code>EMIT_L2A_RFL_*.nc</code> file. The mask file <code>EMIT_L2A_MASK_*.nc</code>
+  and the uncertainty file <code>EMIT_L2A_RFLUNCERT_*.nc</code> are optionally read into one data product. They must be
+  located in the same directory as the reflectance file.</p>
+
+<h2>Resources</h2>
+<p>Further EMIT data resources can be found here:</p>
+<ul>
+  <li>[1]&nbsp;
+    <object classid="java:eu.esa.snap.netbeans.javahelp.BrowserDisplayer">
+      <param name="content"
+             value="https://lpdaac.usgs.gov/data/get-started-data/collection-overview/missions/emit-overview/">
+      <param name="text" value="<html><u>EMIT Overview</u></html>">
+      <param name="textFontSize" value="bigger">
+    </object>
+  </li>
+  <li>[2]&nbsp;
+    <object classid="java:eu.esa.snap.netbeans.javahelp.BrowserDisplayer">
+      <param name="content" value="https://earth.jpl.nasa.gov/emit/instrument/operations/">
+      <param name="text" value="<html><u>EMIT Operations</u></html>">
+      <param name="textFontSize" value="bigger">
+    </object>
+  </li>
+  <li>[3]&nbsp;
+    <object classid="java:eu.esa.snap.netbeans.javahelp.BrowserDisplayer">
+      <param name="content" value="https://earth.jpl.nasa.gov/emit/data/data-products/">
+      <param name="text" value="<html><u>EMIT Data Products</u></html>">
+      <param name="textFontSize" value="bigger">
+    </object>
+  </li>
+  <li>[4]&nbsp;
+    <object classid="java:eu.esa.snap.netbeans.javahelp.BrowserDisplayer">
+      <param name="content" value="https://search.earthdata.nasa.gov/search?q=emit&fi=EMIT%2BImaging%2BSpectrometer">
+      <param name="text" value="<html><u>EMIT Data Access</u></html>">
+      <param name="textFontSize" value="bigger">
+    </object>
+  </li>
+</ul>
+
+<footer>
+  <hr>
+  <table class="eom_ft">
+    <tr>
+      <td width="60" rowspan="2" class="eom_ft">
+        <img alt="EOMasters Logo" src="../../images/EOMasters_50.png">
+      </td>
+      <td width="*" class="eom_ft">
+        <div class="eom_ft">EOMasters Toolbox<br></div>
+      </td>
+    </tr>
+    <tr>
+      <td class="eom_ft"> Provided by
+        <object classid="java:eu.esa.snap.netbeans.javahelp.BrowserDisplayer">
+          <param name="content" value="https://www.eomasters.org/">
+          <param name="text" value="<html><u>www.eomasters.org</u></html>">
+          <param name="textFontSize" value="bigger">
+        </object>
+      </td>
+    </tr>
+  </table>
+</footer>
+</body>
+</html>
+

@@ -1,0 +1,171 @@
+<!--
+  ========================LICENSE_START=================================
+  EOMTBX - EOMasters Toolbox for SNAP
+  -> https://www.eomasters.org/eomtbx
+  ======================================================================
+  Copyright (C) 2023 - 2026 Marco Peters
+  ======================================================================
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as
+  published by the Free Software Foundation, either version 3 of the
+  License, or (at your option) any later version.
+  
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+  
+  You should have received a copy of the GNU General Public
+  License along with this program.  If not, see
+  -> http://www.gnu.org/licenses/gpl-3.0.html
+  =========================LICENSE_END==================================
+  -->
+
+<html>
+<head>
+  <title>EOMasters Toolbox - S2 Geometry Up-scaling</title>
+   <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+  <link href="../../style/style.css" rel="stylesheet">
+  <link href="../../style/eomastersstyle.css" rel="stylesheet">
+</head>
+
+<body>
+<table class="header">
+  <tr class="header">
+    <td align="left" class="header" width="40"><a href="../Overview.html"><img border=0
+                                                                               src="../../images/EomToolbox_32.png"></a>
+    </td>
+    <td class="header">EOMasters Toolbox</td>
+    <td align="right" class="header"><a
+        href="nbdocs://org.esa.snap.snap.help/org/esa/snap/snap/help/docs/general/overview/SnapOverview.html"><img
+        border=0 src="../../images/snap_header.jpg"></a></td>
+  </tr>
+</table>
+
+<h1>S2 Geometry Up-scaling</h1>
+<h2>Introduction</h2>
+<p>The solar and view geometry angles for Sentinel-2 are provided on a coarse grid (23x23 samples) at a 5000-meter
+  resolution. When these angles at the resolution of the reflectance bands are needed they must be scaled up. For the
+  sun zenith and azimuth angles this is straight forward. Unfortunately this is not the case for the satellite view
+  angles. <br> The view zenith and azimuth angles are given for each sensor detector and the Sentinel-2 images are taken
+  by up to seven detectors. This means that the detector footprints need to be taken into account when up scaling the
+  angle grids and interpolation of the values should only be done within the bounds of the footprint.<br> This
+  implementation aims to resolve this issue like the S2 Resample but only generates the up-scaled geometry bands. The
+  benefit is that this implementation is faster, even when combined with the generic resampling operation. </p>
+
+<h2>Scaling of Geometry Angles</h2>
+<h3>Sun Geometries</h3>
+<p>As said before, the scaling of the sun zenith and azimuth angles is straight forward. The processor generates one
+  image for the three resolutions. The coarse grid is simply scaled and bi-linear interpolated to the respective
+  resolution and afterward cropped to scene image bounds. For the 20m resolution, the 23x23 grid is scaled up to
+  5750x5750 pixel image. This image is then cropped to the area [0, 0, 5490, 5490], because the upper-left corners of
+  the grid and the scene images are aligned. For the other resolutions it is done accordingly.</p>
+
+<h3>View Geometries</h3>
+<p>The view geometries are treated as follows. First, the values in the coarse grids for each band detector are
+  extrapolated. In the next step the result is up-scaled to the band resolution in the same way as it is done for the
+  solar geometry angels. This result is masked using the corresponding detector footprint. As final step the values
+  across the detectors are combined into one image.</p>
+
+<h3>Results</h3>
+<p>The result is demonstrated at the example of band B4 and the detector 8.</p>
+<div align="center">
+  <table>
+    <thead>
+    <tr>
+      <td><b>Angle</b></td>
+      <td>
+        <div align="center"><b>Source B4/Detector 8</b></div>
+      </td>
+      <td>
+        <div align="center"><b>Result B4</b></div>
+      </td>
+    </tr>
+    </thead>
+    <tr>
+      <td>Azimuth</td>
+      <td><img src="images/view_azimuth_b4_8_500px.png" height="300"/></td>
+      <td><img src="images/sat_azi_B4_upscaled_500px.png" height="300"/></td>
+    </tr>
+    <tr>
+      <td>Zenith</td>
+      <td><img src="images/view_zenith_b4_8_500px.png" height="300"/></td>
+      <td><img src="images/sat_zen_B4_upscaled_500px.png" height="300"/></td>
+    </tr>
+  </table>
+</div>
+
+<h2>Supported Data</h2>
+<p>This implementation supports the standard Sentinel-2 L2A data provided by Copernicus. Theoretically this can also
+  support L2A data from Theia in the Muscate format. Unfortunately it does not provide correct detector footprints for
+  the surface reflectance bands. This issue has already been <a
+      href="https://gitlab.orfeo-toolbox.org/maja/maja/-/issues/370">reported</a>.</p>
+
+<h2><a id="inputRequirements">Input Data Requirements</a></h2>
+<p>The input data must not be cropped or under-sampled beforehand. This would lead to incorrectly calculated angles.
+  Also, the band names should not be changed. But, it is possible to remove bands from the source product. Before the
+  processing starts a validation is performed and processing is refused if the input does not meet the requirements.</p>
+
+<h2>Known Issue</h2>
+<p>The S2 L2A product provides the B1 reflectance data at an up-sampled resolution of 20m and the specific masks, like
+  detector footprints, still at the native resolution of 60m. Due to this incompatibility and the reason that SNAP is
+  not correcting, the view geometry information for B1 is not usable. You might want to read the discussions I had about
+  this issue.
+<ul>
+  <li>
+    <object classid="java:eu.esa.snap.netbeans.javahelp.BrowserDisplayer">
+      <param name="content"
+             value="https://forum.dataspace.copernicus.eu/t/masks-not-at-same-resolution-for-b1-in-l2a/1388">
+      <param name="text" value="<html><u>Masks not at same resolution for B1 in L2A</u></html>">
+      <param name="textFontSize" value="bigger">
+    </object>
+  </li>
+  <li>
+    <object classid="java:eu.esa.snap.netbeans.javahelp.BrowserDisplayer">
+      <param name="content"
+             value="https://forum.step.esa.int/t/footprint-of-band-b1-not-correct-in-s2-l2a-products/40538">
+      <param name="text" value="<html><u>Footprint of band B1 not correct in S2 L2A products</u></html>">
+      <param name="textFontSize" value="bigger">
+    </object>
+  </li>
+  <li>
+    <object classid="java:eu.esa.snap.netbeans.javahelp.BrowserDisplayer">
+      <param name="content"
+             value="https://forum.step.esa.int/t/quality-masks-are-all-empty-for-sentinel-2/43547/7?u=marco_eom">
+      <param name="text" value="<html><u>Quality masks are all empty for Sentinel-2</u></html>">
+      <param name="textFontSize" value="bigger">
+    </object>
+  </li>
+</ul>
+
+<h2>Processor Usage</h2>
+<ul>
+  <li><a href="S2GeometryUpscalingGui.html">S2 Geometry Upscaling (GUI)</a></li>
+  <li><a href="S2GeometryUpscalingCli.html">S2 Geometry Upscaling (CLI)</a></li>
+</ul>
+
+<footer>
+  <hr>
+  <table class="eom_ft">
+    <tr>
+      <td class="eom_ft" rowspan="2" width="60">
+        <img alt="EOMasters Logo" src="../../images/EOMasters_50.png">
+      </td>
+      <td class="eom_ft" width="*">
+        <div class="eom_ft">EOMasters Toolbox<br></div>
+      </td>
+    </tr>
+    <tr>
+      <td class="eom_ft"> Provided by
+        <object classid="java:eu.esa.snap.netbeans.javahelp.BrowserDisplayer">
+          <param name="content" value="https://www.eomasters.org/">
+          <param name="text" value="<html><u>www.eomasters.org</u></html>">
+          <param name="textFontSize" value="bigger">
+        </object>
+      </td>
+    </tr>
+  </table>
+</footer>
+</body>
+</html>
+

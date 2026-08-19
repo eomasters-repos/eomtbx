@@ -1,0 +1,192 @@
+<!--
+  ========================LICENSE_START=================================
+  EOMTBX - EOMasters Toolbox for SNAP
+  -> https://www.eomasters.org/eomtbx
+  ======================================================================
+  Copyright (C) 2023 - 2026 Marco Peters
+  ======================================================================
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as
+  published by the Free Software Foundation, either version 3 of the
+  License, or (at your option) any later version.
+  
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+  
+  You should have received a copy of the GNU General Public
+  License along with this program.  If not, see
+  -> http://www.gnu.org/licenses/gpl-3.0.html
+  =========================LICENSE_END==================================
+  -->
+
+<html>
+<head>
+  <title>EOMasters Toolbox - S2 Super-Resolution (CLI)</title>
+   <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+  <link href="../../style/style.css" rel="stylesheet">
+  <link href="../../style/eomastersstyle.css" rel="stylesheet">
+</head>
+
+<body>
+<table class="header">
+  <tr class="header">
+    <td align="left" class="header" width="40"><a href="../Overview.html"><img border=0
+                                                                               src="../../images/EomToolbox_32.png"></a>
+    </td>
+    <td class="header">EOMasters Toolbox</td>
+    <td align="right" class="header"><a
+        href="nbdocs://org.esa.snap.snap.help/org/esa/snap/snap/help/docs/general/overview/SnapOverview.html"><img
+        border=0 src="../../images/snap_header.jpg"></a></td>
+  </tr>
+</table>
+
+<h1>S2 Super-Resolution (CLI)</h1>
+<h2>Overview</h2>
+<p>The S2 Super-Resolution processor can be used with the command line tool <code>gpt</code>. General information about
+  GPF and GPT can be found on their <a
+      href="nbdocs://org.esa.snap.snap.gpf.ui/org/esa/snap/core/gpf/docs/gpf/GpfOverview.html">help pages</a>. Specific
+  help for the S2 Super-Resolution processor can be obtained with: <code>${SNAP-INSTALL-DIR}/bin/gpt -h
+    S2SuperRes</code><br> This will show the following help:</p>
+
+<pre class="codenote">Usage:
+  gpt S2SuperRes [options] 
+
+Description:
+  Super-resolution of a Sentinel-2 product to 5m ground resolution.
+
+
+Source Options:
+  -SsourceProduct=&lt;file&gt;    The Sentinel-2 source product
+                            This is a mandatory source.
+
+Parameter Options:
+  -PrasterRegion=&lt;rectangle&gt;                        Pixel region at 10m to process. Use the following format: {x},{y},{width},{height}.
+  -Presample60mBands=&lt;boolean&gt;                      Whether to include 60m bands and resample them to 5m
+                                                    Default value is 'false'.
+  -PresampleGeometryBands=&lt;boolean&gt;                 Whether sun and view geometry bands shall be resampled to 5m.
+                                                    This option is not working when using Theia L2A products and it
+                                                    needs original sized Sentinel-2 products. Default value is 'false'.
+  -PresampleOtherBands=&lt;boolean&gt;                    Whether to include other remaining bands and resample them to 5m,
+                                                    like B_opaque_clouds, B_cirrus_clouds, B_snow_and_ice_areas.
+                                                    Default value is 'false'.
+  -Pshapefile=&lt;path&gt;                                An ESRI shapefile, providing the considered geographical region(s).
+  -PsuperResolveBands=&lt;string,string,string,...&gt;    Bands that will be super-resolved to 5m.
+                                                    Value must be one of 'B2', 'B3', 'B4', 'B5', 'B6', 'B7', 'B8', 'B8A', 'B11', 'B12'.
+                                                    Default value is 'B2,B3,B4,B5,B6,B7,B8,B8A,B11,B12'.
+                                                    This is a mandatory parameter.
+                                                    Value must not be empty.
+  -PwktRegion=&lt;geometry&gt;                            The considered geographical region as a geometry in well-known text format (WKT).
+
+Graph XML Format:
+  &lt;graph id="someGraphId"&gt;
+    &lt;version&gt;1.0&lt;/version&gt;
+    &lt;node id="someNodeId"&gt;
+      &lt;operator&gt;S2SuperRes&lt;/operator&gt;
+      &lt;sources&gt;
+        &lt;sourceProduct&gt;${sourceProduct}&lt;/sourceProduct&gt;
+      &lt;/sources&gt;
+      &lt;parameters&gt;
+        &lt;rasterRegion&gt;rectangle&lt;/pixelRegion&gt;
+        &lt;shapefile&gt;path&lt;/shapefile&gt;
+        &lt;wktRegion&gt;geometry&lt;/wktRegion&gt;
+        &lt;superResolveBands&gt;string,string,string,...&lt;/superResolveBands&gt;
+        &lt;resample60mBands&gt;boolean&lt;/resample60mBands&gt;
+        &lt;resampleGeometryBands&gt;boolean&lt;/resampleGeometryBands&gt;
+        &lt;resampleOtherBands&gt;boolean&lt;/resampleOtherBands&gt;
+      &lt;/parameters&gt;
+    &lt;/node&gt;
+  &lt;/graph&gt;
+</pre>
+
+<h2>Parameters</h2>
+<table>
+  <tr>
+    <td><b>sourceProduct</b></td>
+    <td>This defines the source product on which the processing is performed. Supported are standard Sentinel-2 products
+      of type L1C, L2A and L2A products provided by Theia.
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2">The specified region(s) will be used to select the pixels to be processed. Only one of <b>pixelRegion</b>,
+      <b>shapefile</b> and <b>wktRegion</b> must be specified: The specified region must not exceed a region of 4k
+      square pixels.<br/>To super-resolve the images it needs surrounding pixels. Therefore, the processor
+      might crop the specified region by 32 pixels if the region is to close to the edge of the image.
+    </td>
+  </tr>
+  <tr>
+    <td><b>rasterRegion</b></td>
+    <td>Specifies the pixel region at 10 m resolution to process. It should be in the format "{x},{y},{width},{height}"
+      where:
+      <ul>
+        <li><b>x</b> - The x-coordinate of the top-left corner of the region.</li>
+        <li><b>y</b> - The y-coordinate of the top-left corner of the region.</li>
+        <li><b>width</b> - The width of the region.</li>
+        <li><b>height</b> - The height of the region.</li>
+      </ul>
+
+    </td>
+  </tr>
+  <tr>
+    <td><b>shapefile</b></td>
+    <td>This parameter specifies the path to an ESRI shapefile which defines the geographical region(s) of interest.
+    </td>
+  </tr>
+  <tr>
+    <td><b>wktRegion</b></td>
+    <td>This parameter specifies the geographical region of interest as a geometry in well-known text format (WKT).
+    </td>
+  </tr>
+  <tr>
+    <td><b>superResolveBands</b></td>
+    <td>Select the bands which shall be super-resolved. Allowed bands are 'B2', 'B3', 'B4', 'B5', 'B6', 'B7', 'B8',
+      'B8A', 'B11', 'B12'. For Theia L2A products the band names are mapped to the respective bands of the
+      'Surface_Reflectance' and the 'Flat_Reflectance' groups.
+    </td>
+  </tr>
+  <tr>
+    <td><b>resample60mBands</b></td>
+    <td>Whether the 60 m bands shall be included in the target product, up-scaled using a bi-cubic interpolation.
+    </td>
+  </tr>
+  <tr>
+    <td><b>resampleGeometryBands</b></td>
+    <td>Whether the view and sun geometry bands shall be included in the target product, upscaled to the 5 m resolution.
+      The view geometry bands will only be included for the spectral bands that are processed. This option is not
+      working when using Theia L2A products.
+    </td>
+  </tr>
+  <tr>
+    <td><b>resampleOtherBands</b></td>
+    <td>Whether to include other source bands. If a band is ancillary for a spectral band, it
+      will only be included if the spectral band is part of the target too.
+    </td>
+  </tr>
+</table>
+
+<footer>
+  <hr>
+  <table class="eom_ft">
+    <tr>
+      <td class="eom_ft" rowspan="2" width="60">
+        <img alt="EOMasters Logo" src="../../images/EOMasters_50.png">
+      </td>
+      <td class="eom_ft" width="*">
+        <div class="eom_ft">EOMasters Toolbox<br></div>
+      </td>
+    </tr>
+    <tr>
+      <td class="eom_ft"> Provided by
+        <object classid="java:eu.esa.snap.netbeans.javahelp.BrowserDisplayer">
+          <param name="content" value="https://www.eomasters.org/">
+          <param name="text" value="<html><u>www.eomasters.org</u></html>">
+          <param name="textFontSize" value="bigger">
+        </object>
+      </td>
+    </tr>
+  </table>
+</footer>
+</body>
+</html>
+

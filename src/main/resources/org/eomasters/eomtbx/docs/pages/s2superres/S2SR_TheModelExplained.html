@@ -1,0 +1,203 @@
+<!--
+  ========================LICENSE_START=================================
+  EOMTBX - EOMasters Toolbox for SNAP
+  -> https://www.eomasters.org/eomtbx
+  ======================================================================
+  Copyright (C) 2023 - 2026 Marco Peters
+  ======================================================================
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as
+  published by the Free Software Foundation, either version 3 of the
+  License, or (at your option) any later version.
+  
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+  
+  You should have received a copy of the GNU General Public
+  License along with this program.  If not, see
+  -> http://www.gnu.org/licenses/gpl-3.0.html
+  =========================LICENSE_END==================================
+  -->
+
+<html>
+<head>
+  <title>EOMasters Toolbox - S2SR - The Model Explained</title>
+  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+  <link href="../../style/style.css" rel="stylesheet">
+  <link href="../../style/eomastersstyle.css" rel="stylesheet">
+</head>
+
+<body>
+<table class="header">
+  <tr class="header">
+    <td align="left" class="header" width="40">
+      <a href="../Overview.html"><img border="0" src="../../images/EomToolbox_32.png"></a>
+    </td>
+    <td class="header">EOMasters Toolbox</td>
+    <td align="right" class="header">
+      <a href="nbdocs://org.esa.snap.snap.help/org/esa/snap/snap/help/docs/general/overview/SnapOverview.html"> <img
+          border="0" src="../../images/snap_header.jpg"> </a>
+    </td>
+  </tr>
+</table>
+
+<h1>How the 5 m Super‑Resolution Model Works</h1>
+<p>
+  The super‑resolution model enhances Sentinel‑2 imagery by increasing its spatial resolution from 10 m or 20 m down to
+  5 m. Instead of using traditional interpolation methods (such as averaging or resampling), the model is trained to
+  predict what real 5 m structures look like based on examples from the SEN2VENµS dataset and an extended training
+  strategy for the SWIR bands. </p>
+
+<h2>Training Data</h2>
+<p>To learn this mapping, the model uses pairs of images that were:</p>
+<ul>
+  <li>captured on the same day,</li>
+  <li>within 30 minutes of each other,</li>
+  <li>and processed with the same atmospheric correction chain (MAJA).</li>
+</ul>
+
+<p>Each pair contains:</p>
+<ul>
+  <li>a low‑resolution Sentinel‑2 patch (10 m or 20 m), and</li>
+  <li>a corresponding 5 m VENµS patch of the same area for the bands that VENµS observes (VIS, red‑edge, NIR).</li>
+</ul>
+
+<p>
+  For these bands, the model learns a direct cross‑sensor mapping from Sentinel‑2 (10 m / 20 m) to VENµS (5 m). In
+  addition, the training data are complemented with Sentinel‑2 SWIR bands B11 and B12 at their native 20 m resolution,
+  for which no 5 m VENµS reference exists. </p>
+
+<h2>How the Model Generates 5 m Pixels</h2>
+<p>When upscaling, the model does not split or average the original pixels. Instead, it performs three steps:</p>
+
+<ol>
+  <li><b>Feature Extraction</b><br> <span>
+      The model analyzes the spatial and spectral patterns in the Sentinel‑2 input (edges, textures, gradients,
+      vegetation structure, etc.) across all bands.
+    </span>
+  </li>
+  <li><b>Detail Reconstruction</b><br> <span>
+      Using what it learned during training, the model infers the fine‑scale structures that typically exist inside each
+      10 m or 20 m pixel. For the VIS, red‑edge and NIR bands, these details are supervised directly by 5 m VENµS
+      observations. For the SWIR bands, the model reuses the learned spatial priors and is constrained to remain
+      consistent with the original 20 m SWIR signal (see below).
+    </span>
+  </li>
+  <li><b>Upsampling to 5 m</b><br> <span>
+      The final 5 m image is produced by applying learned upsampling layers that convert the internal feature
+      representation into a full‑resolution reflectance image for all supported bands.
+    </span>
+  </li>
+</ol>
+
+<div align="center">
+  <img src="images/S2SR_ModelDiagram.png" height="640" width="500"/>
+</div>
+
+<h2>Handling of SWIR Bands (B11, B12)</h2>
+<p>
+  VENµS does not include SWIR bands, so there is no true 5 m reference for Sentinel‑2 B11 and B12. To still provide
+  spatially enhanced SWIR outputs, the model uses a dual‑loss training strategy: </p>
+<ul>
+  <li>
+    a full‑resolution loss at 5 m for all bands that have a VENµS counterpart (B2, B3, B4, B8, B5, B6, B7, B8A),
+  </li>
+  <li>
+    and a lower‑resolution consistency loss for B11 and B12 based on the Wald protocol: the predicted 5 m SWIR is
+    downsampled back to 20 m and compared to the original Sentinel‑2 SWIR input.
+  </li>
+</ul>
+<p>
+  This ensures that the 5 m SWIR bands remain radiometrically consistent with the native 20 m Sentinel‑2 data, while
+  benefiting from the spatial structures learned from the other bands. The 5 m SWIR outputs are therefore spatially
+  enhanced and consistent, but they are not directly supervised by real 5 m SWIR measurements. </p>
+
+<h2>What This Means in Practice</h2>
+<ul>
+  <li>A single 10 m pixel becomes four 5 m pixels.</li>
+  <li>A single 20 m pixel becomes sixteen 5 m pixels.</li>
+  <li>The values of these new pixels are predicted, not averaged.</li>
+  <li>
+    For VIS, red‑edge and NIR bands, the output is designed to resemble what the VENµS satellite would have observed at
+    5 m resolution.
+  </li>
+  <li>
+    For SWIR bands (B11, B12), the output is a spatially enhanced 5 m product that is constrained to remain consistent
+    with the original 20 m Sentinel‑2 SWIR signal.
+  </li>
+</ul>
+
+<h2>Why This Approach Works</h2>
+<p>Because the model is trained on real cross‑sensor pairs and a SWIR‑specific consistency loss, it learns:</p>
+<ul>
+  <li>how Sentinel‑2 reflectance patterns translate to finer spatial structures,</li>
+  <li>how to reconstruct high‑frequency details for bands with 5 m VENµS supervision,</li>
+  <li>and how to maintain radiometric consistency for both supervised bands and SWIR bands.</li>
+</ul>
+<p>
+  This results in a 5 m product that is sharper and more detailed than interpolation, while remaining physically
+  meaningful for downstream analysis. For SWIR, users should keep in mind that the enhancement is constrained by
+  consistency with the 20 m input rather than by true 5 m SWIR measurements. </p>
+
+<h2>References</h2>
+<ul>
+  <li>
+    <object classid="java:eu.esa.snap.netbeans.javahelp.BrowserDisplayer">
+      <param name="content" value="https://github.com/Evoland-Land-Monitoring-Evolution/sentinel2_superresolution">
+      <param name="text" value="<html><u>Sentinel-2 Superresolution on GitHub</u></html>">
+      <param name="textFontSize" value="bigger">
+    </object>
+  </li>
+  <li>
+    <object classid="java:eu.esa.snap.netbeans.javahelp.BrowserDisplayer">
+      <param name="content" value="https://zenodo.org/records/14603764">
+      <param name="text"
+             value="<html><u>SEN2VEN&mu;S, a dataset for the training of Sentinel-2 super-resolution algorithms</u></html>">
+      <param name="textFontSize" value="bigger">
+    </object>
+  </li>
+  <li>
+    <object classid="java:eu.esa.snap.netbeans.javahelp.BrowserDisplayer">
+      <param name="content"
+             value="https://www.cesbio.cnrs.fr/multitemp/sentinel-2-enhance-button-5-meters-resolution-for-10-bands-at-your-fingertips">
+      <param name="text"
+             value="<html><u>Sentinel-2 Enhance button: 5-meters resolution for 10 bands at your fingertips</u></html>">
+      <param name="textFontSize" value="bigger">
+    </object>
+  </li>
+  <li>
+    <object classid="java:eu.esa.snap.netbeans.javahelp.BrowserDisplayer">
+      <param name="content" value="https://hal.science/hal-04723225v1">
+      <param name="text"
+             value="<html><u>Revisiting remote sensing cross-sensor Single Image Super-Resolution: the overlooked impact of geometric and radiometric distortion</u></html>">
+      <param name="textFontSize" value="bigger">
+    </object>
+  </li>
+</ul>
+
+<footer>
+  <hr>
+  <table class="eom_ft">
+    <tr>
+      <td class="eom_ft" rowspan="2" width="60">
+        <img alt="EOMasters Logo" src="../../images/EOMasters_50.png">
+      </td>
+      <td class="eom_ft" width="*">
+        <div class="eom_ft">EOMasters Toolbox<br></div>
+      </td>
+    </tr>
+    <tr>
+      <td class="eom_ft"> Provided by
+        <object classid="java:eu.esa.snap.netbeans.javahelp.BrowserDisplayer">
+          <param name="content" value="https://www.eomasters.org/">
+          <param name="text" value="<html><u>www.eomasters.org</u></html>">
+          <param name="textFontSize" value="bigger">
+        </object>
+      </td>
+    </tr>
+  </table>
+</footer>
+</body>
+</html>

@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>snap - SnapKit API Documentation</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="navigation">
+            <a href="index.html">← Back to Index</a>
+        </div>
+        
+        <h1>Module: snap</h1>
+        <div class="module-description"><pre>SNAP Desktop integration and control module.
+
+This module provides a Python interface for interacting with the SNAP (Sentinel Application
+Platform) Desktop application, enabling programmatic control of product management,
+visualisation operations, and GUI components from within Python scripts. It serves as
+a bridge between Python code and the SNAP Desktop environment, allowing seamless
+integration of custom processing workflows with SNAP&#x27;s powerful visualisation capabilities.
+
+The module provides a Snap class with static methods for checking SNAP Desktop availability, 
+managing products in the application&#x27;s product registry, opening raster visualisations, and
+accessing currently selected products. All operations require an active SNAP Desktop session 
+to function properly.
+
+Key Features:
+    - Check SNAP Desktop availability and running status
+    - Access the currently selected product from the Product Explorer
+    - Manage products through SNAP&#x27;s ProductManager interface
+    - Open individual rasters and RGB composites for visualisation
+    - Control scene view operations programmatically
+    - Integration with SNAP Desktop&#x27;s GUI components and windows
+
+Desktop Integration:
+    - Automatic detection of SNAP Desktop availability
+    - Access to Product Explorer selections and state
+    - Scene view control for raster and RGB visualisation
+    - Product registry management through SNAP&#x27;s framework
+    - Window and component management utilities
+
+Snap Class Methods:
+    SNAP.is_available: Check if SNAP Desktop is available and running
+    SNAP.selected_product: Get the currently selected product from the Product Explorer
+    SNAP.product_manager: Get the SNAP Desktop product manager
+    SNAP.view_raster: Open individual rasters for visualisation
+    SNAP.view_rgb: Open RGB composite visualisations
+
+Usage:
+    Basic SNAP Desktop interaction:
+
+    from snapkit.snap import SNAP
+    from snapkit import Product
+    
+    # Check if SNAP Desktop is available
+    if SNAP.is_available():
+        print(&quot;SNAP Desktop is running&quot;)
+    else:
+        print(&quot;SNAP Desktop not available&quot;)
+    
+    # Get currently selected product
+    current_product = SNAP.selected_product()
+    if current_product:
+        print(f&quot;Selected: {current_product.name}&quot;)
+    else:
+        print(&quot;No product selected&quot;)
+
+    Product management and visualization:
+
+    # Load and manage products
+    product = Product.read(&#x27;/path/to/sentinel2.dim&#x27;)
+    pm = SNAP.product_manager()
+    pm.add(product)
+    
+    # Open raster visualizations
+    SNAP.view_raster(&#x27;B4&#x27;, product)  # Open single band
+    SNAP.view_rgb(&#x27;B4&#x27;, &#x27;B3&#x27;, &#x27;B2&#x27;, product, &#x27;True Color&#x27;)  # RGB composite
+    
+    # Work with selected products
+    selected = SNAP.selected_product()
+    if selected:
+        SNAP.view_raster(&#x27;B8&#x27;, selected)
+
+    Error handling for headless environments:
+
+    try:
+        pm = SNAP.product_manager()
+        pm.add(product)
+    except RuntimeError as e:
+        print(f&quot;SNAP Desktop not available: {e}&quot;)
+        # Fall back to headless processing</pre></div>
+
+        <div class="class-section" id="SNAP">
+            <h2>Class: SNAP</h2>
+        <div class="module-description"><pre>SNAP Desktop integration and control utilities.
+
+This class provides static methods for SNAP Desktop integration functionality
+including availability checking, product management, and visualization operations.</pre></div>            <h3>Overview</h3>
+            <div class="overview-section">
+                <h4>Methods</h4>
+                <div class="overview-list">
+                    <span class="overview-item">&nbsp;<a href="#SNAP-is_available">is_available</a>&nbsp;</span>
+                    <span class="overview-item">&nbsp;<a href="#SNAP-selected_product">selected_product</a>&nbsp;</span>
+                    <span class="overview-item">&nbsp;<a href="#SNAP-product_manager">product_manager</a>&nbsp;</span>
+                    <span class="overview-item">&nbsp;<a href="#SNAP-view_raster">view_raster</a>&nbsp;</span>
+                    <span class="overview-item">&nbsp;<a href="#SNAP-view_rgb">view_rgb</a>&nbsp;</span>
+                </div>
+            </div>
+            <h3>Methods</h3>
+            <div class="methods-section">
+                <div class="function-item" id="SNAP-is_available">
+                    <h4 class="function-signature">is_available()</h4>
+                    <span class="function-type">static method</span>
+                    <div class="function-description">
+                        <div class="docstring-description">
+                            <pre>Check if SNAP Desktop is available and running.</pre>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Returns:</h5>
+                            <div class="returns-info">
+<pre>True if SNAP Desktop is available and the application window is showing, False if running in headless mode or if the application is not available.</pre>
+                            </div>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Example:</h5>
+                            <div class="section-content">
+                                <pre>    from snapkit.snap import SNAP
+    if SNAP.is_available():
+        print(&quot;SNAP Desktop is running and available&quot;)
+        # Proceed with SNAP operations
+    else:
+        print(&quot;SNAP Desktop is not available&quot;)
+        # Handle offline or headless mode</pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="function-item" id="SNAP-selected_product">
+                    <h4 class="function-signature">selected_product()</h4>
+                    <span class="function-type">static method</span>
+                    <div class="function-description">
+                        <div class="docstring-description">
+                            <pre>Get the currently selected product from SNAP Desktop&#x27;s Product Explorer.</pre>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Returns:</h5>
+                            <div class="returns-info">
+<pre>The currently selected Product object if a product is selected in the Product Explorer, None if no product is selected or if the Product Explorer is not accessible.</pre>
+                            </div>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Example:</h5>
+                            <div class="section-content">
+                                <pre>    from snapkit.snap import SNAP
+    # Check what product is currently selected
+    current_product = SNAP.selected_product()
+    if current_product:
+        print(f&quot;Selected product: {current_product.name}&quot;)
+        print(f&quot;Dimensions: {current_product.width}x{current_product.height}&quot;)
+    else:
+        print(&quot;No product is currently selected&quot;)</pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="function-item" id="SNAP-product_manager">
+                    <h4 class="function-signature">product_manager()</h4>
+                    <span class="function-type">static method</span>
+                    <div class="function-description">
+                        <div class="docstring-description">
+                            <pre>Get the SNAP Desktop product manager.</pre>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Returns:</h5>
+                            <div class="returns-info">
+<pre>The ProductManager instance for managing products in SNAP Desktop.</pre>
+                            </div>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Raises:</h5>
+                            <ul class="raises-list">
+                                <li>
+                                    <strong>RuntimeError</strong>: <pre>If SNAP Desktop is not available or running in headless mode.</pre>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="function-item" id="SNAP-view_raster">
+                    <h4 class="function-signature">view_raster(raster, product)</h4>
+                    <span class="function-type">static method</span>
+                    <div class="function-description">
+                        <div class="docstring-description">
+                            <pre>Opens a view on a raster in SNAP Desktop.
+
+Opens the specified raster in SNAP Desktop&#x27;s scene view for visualization.
+The raster can be specified either as a string (raster name) or as a Raster object.</pre>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Arguments:</h5>
+                            <ul class="args-list">
+                                <li>
+                                    <strong>raster (str | Raster)</strong>: <pre>The raster to open. Can be either a string specifying the raster name
+           or a Raster object directly.</pre>
+                                </li>
+                                <li>
+                                    <strong>product</strong>: <pre>The product containing the raster. Required if raster is specified
+            as a string, optional if raster is a Raster object.</pre>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Raises:</h5>
+                            <ul class="raises-list">
+                                <li>
+                                    <strong>RuntimeError</strong>: <pre>If SNAP Desktop is not available or running in headless mode.</pre>
+                                </li>
+                                <li>
+                                    <strong>ValueError</strong>: <pre>If product is None when raster is specified as a string, or if raster is neither a string nor a Raster object.</pre>
+                                </li>
+                                <li>
+                                    <strong>KeyError</strong>: <pre>If the specified raster name is not found in the product.</pre>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Example:</h5>
+                            <div class="section-content">
+                                <pre>    from snapkit.snap import SNAP
+    # Open raster by name
+    product = SNAP.selected_product()
+    SNAP.view_raster(&#x27;B1&#x27;, product)
+    
+    # Open raster object directly
+    raster_obj = product.rasters[&#x27;B2&#x27;]
+    SNAP.view_raster(raster_obj)</pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="function-item" id="SNAP-view_rgb">
+                    <h4 class="function-signature">view_rgb(raster_r, raster_g, raster_b, product, name)</h4>
+                    <span class="function-type">static method</span>
+                    <div class="function-description">
+                        <div class="docstring-description">
+                            <pre>Open an RGB composite view in SNAP Desktop.
+
+Creates an RGB composite from three rasters (red, green, blue channels) and opens
+it for visualization in SNAP Desktop&#x27;s scene view.</pre>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Arguments:</h5>
+                            <ul class="args-list">
+                                <li>
+                                    <strong>raster_r (str | Raster)</strong>: <pre>The raster or the raster name for the red channel.</pre>
+                                </li>
+                                <li>
+                                    <strong>raster_g (str | Raster)</strong>: <pre>The raster or the raster name for the green channel.</pre>
+                                </li>
+                                <li>
+                                    <strong>raster_b (str | Raster)</strong>: <pre>The raster or the raster name for the blue channel.</pre>
+                                </li>
+                                <li>
+                                    <strong>product (Product)</strong>: <pre>The product containing the rasters. Required if any raster is specified
+                       as a string.</pre>
+                                </li>
+                                <li>
+                                    <strong>name (str)</strong>: <pre>Optional name for the RGB composite. If None, a default name will be used.</pre>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Raises:</h5>
+                            <ul class="raises-list">
+                                <li>
+                                    <strong>RuntimeError</strong>: <pre>If SNAP Desktop is not available or running in headless mode.</pre>
+                                </li>
+                                <li>
+                                    <strong>ValueError</strong>: <pre>If product is None when raster names are specified as strings, or if raster parameters are of incorrect types.</pre>
+                                </li>
+                                <li>
+                                    <strong>KeyError</strong>: <pre>If any of the specified raster names are not found in the product.</pre>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Example:</h5>
+                            <div class="section-content">
+                                <pre>    from snapkit.snap import SNAP
+    # Create RGB composite using raster names
+    product = SNAP.selected_product()
+    SNAP.view_rgb(&#x27;B4&#x27;,&#x27;B3&#x27;,&#x27;B2&#x27;,product=product,name=&#x27;True Color&#x27;)
+    
+    # Create RGB composite with raster object for red channel
+    red_raster = product.rasters[&#x27;B8&#x27;]
+    SNAP.view_rgb(red_raster,&#x27;B4&#x27;,&#x27;B3&#x27;,product=product,name=&#x27;False Color&#x27;)</pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

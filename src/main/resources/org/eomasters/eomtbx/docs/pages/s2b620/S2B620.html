@@ -1,0 +1,115 @@
+<!--
+  ========================LICENSE_START=================================
+  EOMTBX - EOMasters Toolbox for SNAP
+  -> https://www.eomasters.org/eomtbx
+  ======================================================================
+  Copyright (C) 2023 - 2026 Marco Peters
+  ======================================================================
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as
+  published by the Free Software Foundation, either version 3 of the
+  License, or (at your option) any later version.
+  
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+  
+  You should have received a copy of the GNU General Public
+  License along with this program.  If not, see
+  -> http://www.gnu.org/licenses/gpl-3.0.html
+  =========================LICENSE_END==================================
+  -->
+
+<html>
+<head>
+  <title>EOMasters Toolbox - Estimate B620 for S2</title>
+   <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+  <link href="../../style/style.css" rel="stylesheet">
+  <link href="../../style/eomastersstyle.css" rel="stylesheet">
+</head>
+
+<body>
+<table class="header">
+  <tr class="header">
+    <td align="left" class="header" width="40"><a href="../Overview.html"><img border=0
+                                                                               src="../../images/EomToolbox_32.png"></a>
+    </td>
+    <td class="header">EOMasters Toolbox</td>
+    <td align="right" class="header"><a
+        href="nbdocs://org.esa.snap.snap.help/org/esa/snap/snap/help/docs/general/overview/SnapOverview.html"><img
+        border=0 src="../../images/snap_header.jpg"></a></td>
+  </tr>
+</table>
+
+<h1>Estimate B620 for S2</h1>
+<h2>Introduction</h2>
+<p>A band at a wavelength of 620 is often used for monitoring water quality, particularly for estimating the concentration
+  of total suspended solids in inland and coastal waters. Unfortunately, the Sentinel-2 MSI sensors do not provide
+  data at this wavelength. This tool uses a polynomial function to estimate data at 620 nm from the band at 665 nm.
+  This approach is described in 'Estimating the concentration of total suspended solids in inland and coastal waters
+  from Sentinel-2 MSI: A semi-analytical approach' by Dalin Jiang et al.<sup>1</sup><br> There are two ways to create
+  such a band. One in from the Product Explorer menu to add it to the selected product and the other is an operator to
+  create a new product and use it in your processing graph.</p>
+
+<h2>Overview</h2>
+<p>The polynomial function has been defined for Sentinel-2 data, but the usage of the tool is not limited to the
+  Sentinel-2. As long as your data has a channel at 665 nm wavelength you can derive the channel at 620 nm. But if you
+  use the tool outside its intended use, you should treat the results with caution.</p>
+<p>You can limit the calculation to certain areas of the scene by using an expression, a WKT geometry or a shapefile.
+  Because the polynomial function is only valid for water observations, the results are only reliable for a specific
+  value range. That's why by default, the inputs are limited to the range of 0 to 0.065.</p>
+<p>Special for the operator is that you have the choice to create only the 620 nm band or to include also all the source
+  bands.</p>
+
+<h2>Add Band 620 to a Product</h2>
+<p>From the context menu of a product in the Product Explorer you can invoke the action to add the band 620 to the
+  product.</p>
+<ul>
+  <li><a href="S2B620Band.html">Add Band B620 for S2</a></li>
+</ul>
+
+<h2>Processor Usage</h2>
+<p>You can invoke the corresponding operator from the main menu at <code>Optical / Preprocessing / Estimate B620 for
+  S2</code>. </p>
+<ul>
+  <li><a href="S2B620Gui.html">Estimate B620 for S2 (GUI)</a></li>
+  <li><a href="S2B620Cli.html">Estimate B620 for S2 (Cli)</a></li>
+</ul>
+<h2>References</h2>
+<ul>
+  <li>[1]
+    <object classid="java:eu.esa.snap.netbeans.javahelp.BrowserDisplayer">
+      <param name="content" value="https://doi.org/10.1016/j.isprsjprs.2023.09.020">
+      <param name="text"
+             value="<html><u>Estimating the concentration of total suspended solids in inland and coastal waters from Sentinel-2 MSI: A semi-analytical approach, Dalin Jiang et al.</u></html>">
+      <param name="textFontSize" value="bigger">
+    </object>
+  </li>
+</ul>
+
+<footer>
+  <hr>
+  <table class="eom_ft">
+    <tr>
+      <td class="eom_ft" rowspan="2" width="60">
+        <img alt="EOMasters Logo" src="../../images/EOMasters_50.png">
+      </td>
+      <td class="eom_ft" width="*">
+        <div class="eom_ft">EOMasters Toolbox<br></div>
+      </td>
+    </tr>
+    <tr>
+      <td class="eom_ft"> Provided by
+        <object classid="java:eu.esa.snap.netbeans.javahelp.BrowserDisplayer">
+          <param name="content" value="https://www.eomasters.org/">
+          <param name="text" value="<html><u>www.eomasters.org</u></html>">
+          <param name="textFontSize" value="bigger">
+        </object>
+      </td>
+    </tr>
+  </table>
+</footer>
+</body>
+</html>
+
