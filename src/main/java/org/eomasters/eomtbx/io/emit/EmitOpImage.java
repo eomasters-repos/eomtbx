@@ -25,6 +25,7 @@ package org.eomasters.eomtbx.io.emit;
 
 import java.awt.Dimension;
 import org.esa.snap.core.image.ResolutionLevel;
+import org.esa.snap.dataio.netcdf.util.ArrayConverter;
 import org.esa.snap.dataio.netcdf.util.NetcdfOpImage;
 import ucar.nc2.Variable;
 

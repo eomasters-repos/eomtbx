@@ -588,7 +588,7 @@ public abstract class S2L2AScaledB1FootprintOrthoProductReader extends Sentinel2
                                                                           defaultBandHeight, isMultiResolution());
         }
         if (!bandBounds.isEmpty()) {
-          Band band = buildBand(bandInfo, bandBounds.width, bandBounds.height, dataBufferType);
+          Band band = buildBand(bandInfo, bandBounds.width, bandBounds.height, dataBufferType, true);
           band.setDescription(bandInfo.getBandInformation().getDescription());
           band.setUnit(bandInfo.getBandInformation().getUnit());
 
@@ -879,7 +879,7 @@ public abstract class S2L2AScaledB1FootprintOrthoProductReader extends Sentinel2
           int resolutionCount = computeMatrixCellsResolutionCount(mosaicMatrix, false);
           productMaximumResolutionCount = Math.max(productMaximumResolutionCount, resolutionCount);
           int dataBufferType = computeMatrixCellsDataBufferType(mosaicMatrix);
-          Band band = buildBand(maskBandInfo, bandBounds.width, bandBounds.height, dataBufferType);
+          Band band = buildBand(maskBandInfo, bandBounds.width, bandBounds.height, dataBufferType, true);
           band.setDescription(maskBandInfo.getBandInformation().getDescription());
           band.setUnit("none");
           band.setValidPixelExpression(null);
@@ -961,7 +961,7 @@ public abstract class S2L2AScaledB1FootprintOrthoProductReader extends Sentinel2
             int dataBufferType = computeMatrixCellsDataBufferType(mosaicMatrix);
             int resolutionCount = computeMatrixCellsResolutionCount(mosaicMatrix, false);
             productMaximumResolutionCount = Math.max(productMaximumResolutionCount, resolutionCount);
-            band = buildBand(maskBandInfo, bandBounds.width, bandBounds.height, dataBufferType);
+            band = buildBand(maskBandInfo, bandBounds.width, bandBounds.height, dataBufferType, true);
             band.setDescription(maskInfo.getDescriptionForBand(bandName, i));
             band.setUnit("none");
             band.setValidPixelExpression(null);

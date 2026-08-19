@@ -26,8 +26,8 @@
 
 
   <properties>
-    <snap.version>13.0.0</snap.version>
-    <opttbx.version>13.0.0</opttbx.version>
+    <snap.version>14.0.0</snap.version>
+    <opttbx.version>14.0.0</opttbx.version>
     <netbeans.version>RELEASE210</netbeans.version>
     <eom-commons.version>0.4</eom-commons.version>
     <eom-commons-snap.version>0.3</eom-commons-snap.version>
@@ -206,6 +206,14 @@
       <groupId>org.netbeans.api</groupId>
       <artifactId>org-netbeans-api-annotations-common</artifactId>
       <version>${netbeans.version}</version>
+    </dependency>
+
+    <dependency>
+      <!-- used by SNAP-->
+      <groupId>org.jetbrains</groupId>
+      <artifactId>annotations</artifactId>
+      <version>24.1.0</version>
+      <scope>compile</scope>
     </dependency>
 
     <dependency>
