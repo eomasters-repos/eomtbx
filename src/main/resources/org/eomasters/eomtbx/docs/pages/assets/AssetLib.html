@@ -1,0 +1,113 @@
+<!--
+  ========================LICENSE_START=================================
+  EOMTBX - EOMasters Toolbox for SNAP
+  -> https://www.eomasters.org/eomtbx
+  ======================================================================
+  Copyright (C) 2023 - 2026 Marco Peters
+  ======================================================================
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as
+  published by the Free Software Foundation, either version 3 of the
+  License, or (at your option) any later version.
+  
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+  
+  You should have received a copy of the GNU General Public
+  License along with this program.  If not, see
+  -> http://www.gnu.org/licenses/gpl-3.0.html
+  =========================LICENSE_END==================================
+  -->
+
+<html>
+<head>
+  <title>EOMasters Toolbox - Asset Library</title>
+   <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+  <link href="../../style/style.css" rel="stylesheet">
+  <link href="../../style/eomastersstyle.css" rel="stylesheet">
+</head>
+
+<body>
+<table class="header">
+  <tr class="header">
+    <td align="left" class="header" width="40"><a href="../Overview.html"><img border=0
+                                                                               src="../../images/EomToolbox_32.png"></a>
+    </td>
+    <td class="header">EOMasters Toolbox</td>
+    <td align="right" class="header"><a
+        href="nbdocs://org.esa.snap.snap.help/org/esa/snap/snap/help/docs/general/overview/SnapOverview.html"><img
+        border=0 src="../../images/snap_header.jpg"></a></td>
+  </tr>
+</table>
+
+<h1><img class="vCenter" src="images/AssetLibrary_60.png">&nbsp;&nbsp;Asset Library</h1>
+<p>The Asset Library allows you to collect the resources you most often use and have them accessible at any time without
+  having to navigate through deeply nested directories in your file system or lookup the definition elsewhere. An asset
+  is defined by general properties like its name, a brief description, and tags. In addition, it has type specific
+  properties like a file path, a colour, or an expression. It is also possible to add notes to an asset. All the
+  information is used when searching within your growing library and the tags can be used to group your assets. For
+  example, if you have multiple assets tagged as water or urban, they are grouped together. The types of assets which
+  are currently supported are explained on the <a href="types/AssetTypes.html">Asset Types</a> page.</p><br>
+<h2>The User Interface</h2>
+<p>The Asset Library is split into three areas. The <font color="#B200FF">tree area on the left</font>, the <font
+    color="#267F00">button area on the right</font>, and the <font color="#0026ff">property area at the bottom</font>.
+</p>
+
+<div align="center"><img height="70%" src="images/AssetLibrary_Overview.png"/></div>
+
+<h3>The Tree Area</h3>
+<p>Within the tree area the assets are displayed. In the top-right you can switch between three types of grouping, by
+  type, by tag or nor grouping at all (plain). At the top-left it is possible to search for text occurrences in the
+  properties of the assets.<br> The plus-sign button allows you to add the asset to a data product opened in SNAP. A
+  selection panel will be shown if multiple products are currently opened in SNAP. It is omitted if there is only one.
+  If a product is selected, it is shown as the first option.</p>
+<div align="center"><img src="images/SelectProduct.png"/></div>
+After select the product to add the asset to am asset specific dialog is opened in which you can edit parameters
+depending on its type.
+<h3>The Button Area</h3>
+<p>In this area you can add or remove assets to your library. You can also import list of assets from a before exported
+  file. Great for sharing assets among your colleagues. And at there is also the help button which takes you here. </p>
+<p><b>Add</b><br>A menu is shown when you click on the Add-button from which you can select the type of the asset you
+  want to add. The upcoming dialog for adding the asset is depending on the selected type.</p>
+<div align="center"><img src="images/AddAsset.png"/></div>
+<p><b>Remove</b><br>This button simply removes the currently selected asset from the library.</p>
+<p><b>Import</b><br>Opens a file dialog to choose an Json Asset File (<b>*.jaf</b>). Its content will be added to the
+  current library. Assets with the same name will be omitted.</p>
+<p><b>Export</b><br>Opens a file dialog to export the content of the library into an Json Asset File (<b>*.jaf</b>).
+</p>
+<p><b>? - Help</b><br>Opens this help page. </p><br>
+<div class="inote"><b>Note</b>The Asset Library is regularly saved, latest when you close SNAP. However, it is
+  recommended that you regularly store an export of your assets to an external location as backup.
+</div>
+
+<h3>The Property Area</h3>
+<p>This are displays the properties of the selected asset and allows to modify them. These properties are the name, a
+  description text and the tags assigned to the asset. There is also a section for notes where you can add additional
+  information.</p>
+<footer>
+  <hr>
+  <table class="eom_ft">
+    <tr>
+      <td class="eom_ft" rowspan="2" width="60">
+        <img alt="EOMasters Logo" src="../../images/EOMasters_50.png">
+      </td>
+      <td class="eom_ft" width="*">
+        <div class="eom_ft">EOMasters Toolbox<br></div>
+      </td>
+    </tr>
+    <tr>
+      <td class="eom_ft"> Provided by
+        <object classid="java:eu.esa.snap.netbeans.javahelp.BrowserDisplayer">
+          <param name="content" value="https://www.eomasters.org/">
+          <param name="text" value="<html><u>www.eomasters.org</u></html>">
+          <param name="textFontSize" value="bigger">
+        </object>
+      </td>
+    </tr>
+  </table>
+</footer>
+</body>
+</html>
+

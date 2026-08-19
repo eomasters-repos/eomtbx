@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="100"
+   height="100"
+   viewBox="0 0 100 100"
+   version="1.1"
+   id="svg1"
+   inkscape:version="1.3 (0e150ed6c4, 2023-07-21)"
+   sodipodi:docname="Resources.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="px"
+     inkscape:zoom="9.7"
+     inkscape:cx="59.948454"
+     inkscape:cy="51.752577"
+     inkscape:window-width="2569"
+     inkscape:window-height="1360"
+     inkscape:window-x="862"
+     inkscape:window-y="0"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs1" />
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <g
+       id="g14"
+       transform="translate(-8.827538,-11.374134)">
+      <g
+         id="g9"
+         transform="translate(-2.9159043,-5.3308936)">
+        <rect
+           style="fill:#ffffff;stroke:#000000;stroke-width:6;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+           id="rect1"
+           width="40.289509"
+           height="35.011108"
+           x="16.425713"
+           y="76.916306" />
+        <path
+           style="fill:#ffffff;stroke:#000000;stroke-width:5;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+           d="m 27.303226,86.627076 h 18.03744"
+           id="path1" />
+        <rect
+           style="fill:#ffffff;stroke:#000000;stroke-width:4;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+           id="rect5-5-7"
+           width="45.661762"
+           height="9.7187452"
+           x="13.762887"
+           y="67.907219" />
+      </g>
+      <g
+         id="g11"
+         transform="translate(23.76462,-52.755471)">
+        <rect
+           style="fill:#ffffff;stroke:#000000;stroke-width:6;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+           id="rect10"
+           width="40.289509"
+           height="35.011108"
+           x="16.425713"
+           y="76.916306" />
+        <path
+           style="fill:#ffffff;stroke:#000000;stroke-width:5;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+           d="m 27.303226,86.627076 h 18.03744"
+           id="path10" />
+        <rect
+           style="fill:#ffffff;stroke:#000000;stroke-width:4;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+           id="rect11"
+           width="45.661762"
+           height="9.7187452"
+           x="13.762887"
+           y="67.907219" />
+      </g>
+      <g
+         id="g13"
+         transform="translate(47.383444,-5.3308936)">
+        <rect
+           style="fill:#ffffff;stroke:#000000;stroke-width:6;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+           id="rect12"
+           width="40.289509"
+           height="35.011108"
+           x="16.425713"
+           y="76.916306" />
+        <path
+           style="fill:#ffffff;stroke:#000000;stroke-width:5;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+           d="m 27.303226,86.627076 h 18.03744"
+           id="path12" />
+        <rect
+           style="fill:#ffffff;stroke:#000000;stroke-width:4;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+           id="rect13"
+           width="45.661762"
+           height="9.7187452"
+           x="13.762887"
+           y="67.907219" />
+      </g>
+    </g>
+  </g>
+</svg>

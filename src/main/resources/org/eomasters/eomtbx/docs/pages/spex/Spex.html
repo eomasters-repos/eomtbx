@@ -1,0 +1,97 @@
+<!--
+  ========================LICENSE_START=================================
+  EOMTBX - EOMasters Toolbox for SNAP
+  -> https://www.eomasters.org/eomtbx
+  ======================================================================
+  Copyright (C) 2023 - 2026 Marco Peters
+  ======================================================================
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as
+  published by the Free Software Foundation, either version 3 of the
+  License, or (at your option) any later version.
+  
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+  
+  You should have received a copy of the GNU General Public
+  License along with this program.  If not, see
+  -> http://www.gnu.org/licenses/gpl-3.0.html
+  =========================LICENSE_END==================================
+  -->
+
+<html>
+<head>
+  <title>EOMasters Toolbox - SpeX</title>
+   <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+  <link href="../../style/style.css" rel="stylesheet">
+  <link href="../../style/eomastersstyle.css" rel="stylesheet">
+</head>
+
+<body>
+<table class="header">
+  <tr class="header">
+    <td align="left" class="header" width="40"><a href="../Overview.html"><img border=0
+                                                                               src="../../images/EomToolbox_32.png"></a>
+    </td>
+    <td class="header">EOMasters Toolbox</td>
+    <td align="right" class="header"><a
+        href="nbdocs://org.esa.snap.snap.help/org/esa/snap/snap/help/docs/general/overview/SnapOverview.html"><img
+        border=0 src="../../images/snap_header.jpg"></a></td>
+  </tr>
+</table>
+
+<h1><img src="images/SpexOp.png" width="60"/>&nbsp;&nbsp;SpeX</h1>
+<p>SpeX (Spectral IndeX) allows you to easily manage and compute spectral indices. By default, more than 270 spectral
+  indices are available, and you can also add your own spectral indices to the database. The database can be maintained
+  by the <a href="SpexDatabase.html">SpeX Database Manager</a> and data can be processed by using the <a
+      href="SpexProcessor_GUI.html">SpeX Processor</a>. It allows to compute multiple spectral indices with general
+  masks (expression/WKT/shapefile) at once. In addition, it is possible to specify masks for each selected spectral
+  index. Both are accessible from the Optical menu in the main menu bar beneath the <b>SpeX</b> entry. The processing
+  can also be performed using the processor from the command line. The command line interface is described in the <a
+      href="SpexProcessor_CLI.html">SpeX Processor (CLI)</a> section.</p></p>
+
+<p>The predefined spectral indices are taken from the following sources:</p>
+<ul>
+  <li><a href="https://awesome-ee-spectral-indices.readthedocs.io/en/stable">Awesome Spectral Indices v0.7</a></li>
+  <li><a href="https://www.indexdatabase.de/">Index Database (August 2024)</a></li>
+</ul>
+<p>Some additional indices that are not included in one of the public databases have been added by EOMasters.</p>
+
+<p>Spectral indices are mathematical formulas that use different spectral band values of an image to highlight
+  some features or properties of the objects in the image. For example, spectral indices can be used to measure the
+  amount of vegetation, water, soil, snow, or fire in a given area. If you want to learn more about spectral indices and
+  their usage the following two articles from GEO University can be a good entry:</p>
+<ul>
+  <li><a href="https://www.geo.university/pages/spectral-indices-with-multispectral-satellite-data">Spectral Indices
+    with multispectral satellite data</a></li>
+  <li><a href="https://www.geo.university/pages/spectral-indices-in-remote-sensing-and-how-to-interpret-them">Spectral
+    Indices in Remote Sensing and how to interpret them</a></li>
+</ul>
+
+<footer>
+  <hr>
+  <table class="eom_ft">
+    <tr>
+      <td width="60" rowspan="2" class="eom_ft">
+        <img alt="EOMasters Logo" src="../../images/EOMasters_50.png">
+      </td>
+      <td width="*" class="eom_ft">
+        <div class="eom_ft">EOMasters Toolbox<br></div>
+      </td>
+    </tr>
+    <tr>
+      <td class="eom_ft"> Provided by
+        <object classid="java:eu.esa.snap.netbeans.javahelp.BrowserDisplayer">
+          <param name="content" value="https://www.eomasters.org/">
+          <param name="text" value="<html><u>www.eomasters.org</u></html>">
+          <param name="textFontSize" value="bigger">
+        </object>
+      </td>
+    </tr>
+  </table>
+</footer>
+</body>
+</html>
+

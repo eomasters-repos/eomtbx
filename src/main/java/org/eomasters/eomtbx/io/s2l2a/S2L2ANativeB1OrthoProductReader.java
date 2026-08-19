@@ -1,9 +1,9 @@
 /*-
  * ========================LICENSE_START=================================
- * EOMTBXP Toolbox Module - Toolbox Module for the EOMasters Pro Toolbox for SNAP
- * -> https://www.eomasters.org/eomtbx/modules/eomtbxp-toolbox
+ * EOMTBX - EOMasters Toolbox for SNAP
+ * -> https://www.eomasters.org/eomtbx
  * ======================================================================
- * Copyright (C) 2023 - 2025 Marco Peters
+ * Copyright (C) 2023 - 2026 Marco Peters
  * ======================================================================
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as
@@ -577,7 +577,7 @@ public abstract class S2L2ANativeB1OrthoProductReader extends Sentinel2ProductRe
                                                                                     defaultBandHeight, isMultiResolution());
                 }
                 if (!bandBounds.isEmpty()) {
-                    Band band = buildBand(bandInfo, bandBounds.width, bandBounds.height, dataBufferType);
+                    Band band = buildBand(bandInfo, bandBounds.width, bandBounds.height, dataBufferType, true);
                     band.setDescription(bandInfo.getBandInformation().getDescription());
                     band.setUnit(bandInfo.getBandInformation().getUnit());
 
@@ -851,7 +851,7 @@ public abstract class S2L2ANativeB1OrthoProductReader extends Sentinel2ProductRe
                     int resolutionCount = computeMatrixCellsResolutionCount(mosaicMatrix, false);
                     productMaximumResolutionCount = Math.max(productMaximumResolutionCount, resolutionCount);
                     int dataBufferType = computeMatrixCellsDataBufferType(mosaicMatrix);
-                    Band band = buildBand(maskBandInfo, bandBounds.width, bandBounds.height, dataBufferType);
+                    Band band = buildBand(maskBandInfo, bandBounds.width, bandBounds.height, dataBufferType, true);
                     band.setDescription(maskBandInfo.getBandInformation().getDescription());
                     band.setUnit("none");
                     band.setValidPixelExpression(null);
@@ -926,7 +926,7 @@ public abstract class S2L2ANativeB1OrthoProductReader extends Sentinel2ProductRe
                         int dataBufferType = computeMatrixCellsDataBufferType(mosaicMatrix);
                         int resolutionCount = computeMatrixCellsResolutionCount(mosaicMatrix, false);
                         productMaximumResolutionCount = Math.max(productMaximumResolutionCount, resolutionCount);
-                        band = buildBand(maskBandInfo, bandBounds.width, bandBounds.height, dataBufferType);
+                        band = buildBand(maskBandInfo, bandBounds.width, bandBounds.height, dataBufferType, true);
                         band.setDescription(maskInfo.getDescriptionForBand(bandName, i));
                         band.setUnit("none");
                         band.setValidPixelExpression(null);

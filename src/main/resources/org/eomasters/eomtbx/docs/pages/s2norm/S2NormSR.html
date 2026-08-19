@@ -1,0 +1,191 @@
+<!--
+  ========================LICENSE_START=================================
+  EOMTBX - EOMasters Toolbox for SNAP
+  -> https://www.eomasters.org/eomtbx
+  ======================================================================
+  Copyright (C) 2023 - 2026 Marco Peters
+  ======================================================================
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as
+  published by the Free Software Foundation, either version 3 of the
+  License, or (at your option) any later version.
+  
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+  
+  You should have received a copy of the GNU General Public
+  License along with this program.  If not, see
+  -> http://www.gnu.org/licenses/gpl-3.0.html
+  =========================LICENSE_END==================================
+  -->
+
+<html>
+<head>
+  <title>EOMasters Toolbox - Normalise SR for Sentinel-2</title>
+   <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+  <link href="../../style/style.css" rel="stylesheet">
+  <link href="../../style/eomastersstyle.css" rel="stylesheet">
+</head>
+
+<body>
+<table class="header">
+  <tr class="header">
+    <td align="left" class="header" width="40"><a href="../Overview.html"><img border=0
+                                                                               src="../../images/EomToolbox_32.png"></a>
+    </td>
+    <td class="header">EOMasters Toolbox</td>
+    <td align="right" class="header"><a
+        href="nbdocs://org.esa.snap.snap.help/org/esa/snap/snap/help/docs/general/overview/SnapOverview.html"><img
+        border=0 src="../../images/snap_header.jpg"></a></td>
+  </tr>
+</table>
+
+<h1>Normalise SR for Sentinel-2</h1>
+<h2>Introduction</h2>
+<p>Ensuring reliable comparisons of images over time and under different conditions is crucial in remote sensing. To
+  achieve this reliability, it is essential to simulate a nadir viewing perspective. This adjustment addresses the
+  anisotropic properties of surface reflectance and the variations in sun and observation angles. The c-factor method, a
+  straightforward yet effective technique, adjusts the measured surface reflectance using the MODIS BRDF model to
+  produce Nadir BRDF Adjusted Reflectance (NBAR).</p>
+<p>This implementation follows the general method developed by D.P. Roy et al. (see references below). It has originally
+  been developed for Landsat data and has been designed to give consistent view angle adjustments throughout the Landsat
+  collection. This same approach is also applicable to Sentinel-2 data.</p>
+<p>This c-factor method has already been implemented for Sentinel-2 MSI data in SEN2NBAR as a Python module and in
+  SentinelHub (see references below). But both implementations do not consider the detector footprints to calculate the
+  correct view angles. In case of SentinelHub the sun angles are not correctly interpolate too. This implementation uses
+  the <a
+      href="nbdocs://org.eomasters.eomtbx/org/eomasters/eomtbx/docs/pages/s2geom/S2GeometryUpscaling.html">S2
+    Geometry Up-Scaling</a> to get the correct view angles to normalise the surface reflectances.</p>
+
+<h2>Supported Data</h2>
+<p>This implementation supports the standard Sentinel-2 L2A data provided by Copernicus only. Theoretically it could
+  also support L2A data from Theia in the Muscate format. Unfortunately it does not provide the correct detector
+  footprints for the surface reflectance bands. This issue has already been
+  <object classid="java:eu.esa.snap.netbeans.javahelp.BrowserDisplayer">
+    <param name="content" value="https://gitlab.orfeo-toolbox.org/maja/maja/-/issues/370">
+    <param name="text" value="<html><u>reported</u></html>">
+    <param name="textFontSize" value="bigger">
+  </object>
+</p>
+
+<h2><a id="inputRequirements">Input Data Requirements</a></h2>
+<p>The input data must not be cropped or resampled beforehand. This would lead to incorrectly calculated angles. Also,
+  the band names should not be changed. But, it is possible to remove bands from the data product. Before the processing
+  starts a validation is performed and processing is refused if the input does not meet the requirements.</p>
+
+<h2>Corrected Bands</h2>
+<p>Not all Sentinel-2 bands can be corrected, because not for all MODIS Model Parameters exist. The bands which are
+  corrected are <b>B2</b>, <b>B3</b>, <b>B4</b>, <b>B5</b>, <b>B6</b>, <b>B7</b>, <b>B8</b>, <b>B11</b> and <b>B12</b>.
+  Those bands which are not corrected are included in the output anyway to keep the full S2 spectrum.</p>
+
+<h2>Results</h2>
+<p>The example below shows surface reflectance RGB images over the Australian desert of the original and the normalised
+  L2A scene. The areas where the visible detector edges are reduced or almost removed at all are highlighted.
+<div align="center">
+  <table>
+    <thead>
+    <tr>
+      <td>
+        <div align="center"><b>Original Surface Reflectance RGB</b></div>
+      </td>
+      <td>
+        <div align="center"><b>Normalised Surface Reflectance RGB</b></div>
+      </td>
+    </tr>
+    </thead>
+    <tr>
+      <td><img src="images/orig_withMarks.png" height="500"/></td>
+      <td><img src="images/normalised_withMarks.png" height="500"/></td>
+    </tr>
+  </table>
+</div>
+
+<h2>Processor Usage</h2>
+<ul>
+  <li><a href="S2NormSROpGui.html">Normalise SR for Sentinel-2 (GUI)</a></li>
+  <li><a href="S2NormSROpCli.html">Normalise SR for Sentinel-2 (CLI)</a></li>
+</ul>
+<h2>References</h2>
+<ul>
+  <li>
+    <object classid="java:eu.esa.snap.netbeans.javahelp.BrowserDisplayer">
+      <param name="content" value="https://doi.org/10.1016/j.rse.2016.01.023">
+      <param name="text"
+             value="<html><u>A general method to normalize Landsat reflectance data to nadir BRDF adjusted reflectance</u></html>">
+      <param name="textFontSize" value="bigger">
+    </object>
+  </li>
+  <li>
+    <object classid="java:eu.esa.snap.netbeans.javahelp.BrowserDisplayer">
+      <param name="content" value="https://doi.org/10.5194/isprs-archives-XLVIII-4-W12-2024-105-2024">
+      <param name="text"
+             value="<html><u>Facilitating advanced Sentinel-2 analysis through a simplified computation of Nadir BRDF Adjusted Reflectance</u></html>">
+      <param name="textFontSize" value="bigger">
+    </object>
+  </li>
+  <li>
+    <object classid="java:eu.esa.snap.netbeans.javahelp.BrowserDisplayer">
+      <param name="content" value="https://github.com/ESDS-Leipzig/sen2nbar">
+      <param name="text" value="<html><u>SEN2NBAR - C-Factor Python implementation on GitHub</u></html>">
+      <param name="textFontSize" value="bigger">
+    </object>
+  </li>
+  <li>
+    <object classid="java:eu.esa.snap.netbeans.javahelp.BrowserDisplayer">
+      <param name="content" value="https://custom-scripts.sentinel-hub.com/custom-scripts/sentinel-2/brdf/">
+      <param name="text" value="<html><u>Sentinel Hub: BRDF Normalisation Script - Sentinel 2</u></html>">
+      <param name="textFontSize" value="bigger">
+    </object>
+  </li>
+  <li>
+    <object classid="java:eu.esa.snap.netbeans.javahelp.BrowserDisplayer">
+      <param name="content" value="https://github.com/maximlamare/s2-normalisation">
+      <param name="text" value="<html><u>S2-Normalisation at GitHub</u></html>">
+      <param name="textFontSize" value="bigger">
+    </object>
+  </li>
+  <li>
+    <object classid="java:eu.esa.snap.netbeans.javahelp.BrowserDisplayer">
+      <param name="content" value="https://www.theia-land.fr/en/product/sentinel-2-surface-reflectance/">
+      <param name="text" value="<html><u>Theia - Sentinel-2 Surface Reflectance</u></html>">
+      <param name="textFontSize" value="bigger">
+    </object>
+  </li>
+  <li>
+    <object classid="java:eu.esa.snap.netbeans.javahelp.BrowserDisplayer">
+      <param name="content" value="https://www.cesbio.cnrs.fr/maja/">
+      <param name="text"
+             value="<html><u>MAJA - The Multi-Temporal Cloud Screening and Atmospheric Correction Software</u></html>">
+      <param name="textFontSize" value="bigger">
+    </object>
+  </li>
+
+</ul>
+
+<footer>
+  <hr>
+  <table class="eom_ft">
+    <tr>
+      <td class="eom_ft" rowspan="2" width="60">
+        <img alt="EOMasters Logo" src="../../images/EOMasters_50.png">
+      </td>
+      <td class="eom_ft" width="*">
+        <div class="eom_ft">EOMasters Toolbox<br></div>
+      </td>
+    </tr>
+    <tr>
+      <td class="eom_ft"> Provided by
+        <object classid="java:eu.esa.snap.netbeans.javahelp.BrowserDisplayer">
+          <param name="content" value="https://www.eomasters.org/">
+          <param name="text" value="<html><u>www.eomasters.org</u></html>">
+          <param name="textFontSize" value="bigger">
+        </object>
+      </td>
+    </tr>
+  </table>
+</footer>
+</body>
+</html>
+

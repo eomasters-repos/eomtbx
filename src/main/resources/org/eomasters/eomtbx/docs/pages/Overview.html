@@ -1,9 +1,9 @@
 <!--
   ========================LICENSE_START=================================
-  EOMTBX - EOMasters Toolbox Basic for SNAP
-  -> https://www.eomasters.org/sw/EOMTBX
+  EOMTBX - EOMasters Toolbox for SNAP
+  -> https://www.eomasters.org/eomtbx
   ======================================================================
-  Copyright (C) 2023 - 2025 Marco Peters
+  Copyright (C) 2023 - 2026 Marco Peters
   ======================================================================
   This program is free software: you can redistribute it and/or modify
   it under the terms of the GNU General Public License as
@@ -23,7 +23,7 @@
 
 <html>
 <head>
-  <title>EOMasters Toolbox Basic - Overview</title>
+  <title>EOMasters Toolbox - Overview</title>
    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
   <link href="../style/style.css" rel="stylesheet">
   <link href="../style/eomastersstyle.css" rel="stylesheet">
@@ -34,7 +34,7 @@
   <tr class="header">
     <td align="left" class="header" width="40"><a
         href="Overview.html"><img border=0 src="../images/EomToolbox_32.png"></a></td>
-    <td class="header">EOMasters Toolbox Basic</td>
+    <td class="header">EOMasters Toolbox</td>
     <td align="right" class="header"><a
         href="nbdocs://org.esa.snap.snap.help/org/esa/snap/snap/help/docs/general/overview/SnapOverview.html"><img
         border=0 src="../images/snap_header.jpg"></a></td>
@@ -43,7 +43,7 @@
 
 <h1><img class="vCenter" src="../images/EomToolbox_60.png">&nbsp;&nbsp;Overview</h1>
 
-<p>The EOMasters Toolbox Basic is a collection of various tools which help to ease the daily work and to save valuable time
+<p>The EOMasters Toolbox is a collection of various tools which help to ease the daily work and to save valuable time
   while working with SNAP. The toolbox comprises the following tools, features and options:</p>
 <ul>
   <li><a href="QuickMenu.html">Quick Menu</a><br>
@@ -62,6 +62,36 @@
     Allows to edit the wavelength properties of multiple bands and apply the changes to compatible
     products.
   </li>
+  <li><img src="assets/images/AssetLibrary_16.png">&nbsp;<a href="assets/AssetLib.html">Asset Library</a><br>
+    Stores frequently used sites, geometries, masks, and other resources for quick access.
+  </li>
+  <li><img src="spex/images/SpexOp_16.png">&nbsp;<a href="spex/Spex.html">SpeX - Spectral Index Database</a><br>
+    Provides hundreds of spectral indices and supports custom definitions.
+  </li>
+  <li><img src="pyeditor/images/PyEditor_16.png">&nbsp;<a href="pyeditor/PyEditor.html">PyEditor</a><br>
+    Edits and executes Python scripts directly in SNAP.
+  </li>
+  <li><img src="cmap/images/CoastalMap_16.png">&nbsp;<a href="cmap/CoastalMap.html">Coastal Map</a><br>
+    Provides land-water, coastline, tidal-flat, and land/water-vicinity indicators.
+  </li>
+  <li><a href="s2geom/S2GeometryUpscaling.html">Sentinel-2 Geometry Up-scaling</a><br>
+    Scales view and sun geometry grids to band resolution while respecting detector footprints.
+  </li>
+  <li><a href="s2superres/S2SuperResolution.html">Sentinel-2 5 m Super-Resolution</a><br>
+    Increases the resolution of 10- and 20-metre bands to 5 metres and can use a GPU for acceleration.
+  </li>
+  <li><a href="s2norm/S2NormSR.html">Sentinel-2 Surface Reflectance Normalisation</a><br>
+    Produces Nadir BRDF Adjusted Reflectance using the c-factor method.
+  </li>
+  <li><a href="s2b620/S2B620.html">Estimate a 620 nm band for Sentinel-2 over water</a><br>
+    Estimates data at 620 nm from the 665 nm band.
+  </li>
+  <li><a href="io/AsterReader.html">ASTER L1T Reader</a><br>
+    Reads ASTER Level 1 Precision Terrain Corrected Registered At-Sensor Radiance products.
+  </li>
+  <li><a href="io/EmitReader.html">EMIT L1B/L2A Reader</a><br>
+    Imports EMIT radiance and reflectance products, including optional ancillary files.
+  </li>
   <li><a href="actions/CloseProductNoView.html">Close Product Without a View</a><br>
     Simply closes all products which are not used by a Scene View.
   </li>
@@ -75,10 +105,10 @@
   <li><a href="actions/Eoddb.html">EO Data Database</a><br>
     The database provides information about sources of EO satellite data.
   </li>
-  <li><img src="images/CoastalMap_16.png"><a href="actions/CoastalMap.html">Coastal Map</a><br>
-    The Coastal Map provides data that is essential for processing coastal areas.
+  <li><img src="images/CoastalMap_16.png"><a href="actions/CoastalMap.html">Coastal Map Data Portal</a><br>
+    Opens the supporting Coastal Map data and documentation.
   </li>
-  <li><a href="OptionsFree.html">Options</a><br>
+  <li><a href="Options.html">Options</a><br>
     Allows to change the settings of the tools and to export them into a separate file, which can later be
     imported.
   </li>
@@ -86,7 +116,7 @@
     In the unfortunate event of an error, this tool helps to create an error report and to send it to the developers.
   </li>
   <li><a href="About.html">Credits</a><br>
-    Credits - resources and tools used to build the EOMasters Toolbox Basic.
+    Credits for resources and tools used to build the EOMasters Toolbox.
   </li>
 </ul>
 
@@ -111,16 +141,6 @@
           <param name="textFontSize" value="bigger">
         </object>
       </td>
-    </tr>
-    <tr>
-      <td class="borderless"><img src="../images/socials/twitter.png" width="30"/></td>
-      <td class="borderless">
-        <object classid="java:eu.esa.snap.netbeans.javahelp.BrowserDisplayer">
-          <param name="content" value="https://twitter.com/eomasters">
-          <param name="text" value="<html><u>X (Twitter)</u></html>">
-          <param name="textFontSize" value="bigger">
-        </object>
-      </td>
       <td class="borderless"><img src="../images/socials/youtube.png" width="30"/></td>
       <td class="borderless">
         <object classid="java:eu.esa.snap.netbeans.javahelp.BrowserDisplayer">
@@ -131,12 +151,10 @@
       </td>
     </tr>
   </table>
-  <p>Alternatively, you can <a href="https://www.eomasters.org/#newsletter">subscribe to the EOMasters Newsletter</a>.
-    It contains a hand-picked selection of news from the field of EO and RS, and it is sent out every fortnight.</p>
 </div>
 
 <h1>Open Source</h1>
-<p>The EOMasters Toolbox Basic is open source and developed under the
+<p>The EOMasters Toolbox is open source and developed under the
   <object classid="java:eu.esa.snap.netbeans.javahelp.BrowserDisplayer">
     <param name="content" value="http://www.gnu.org/licenses/gpl-3.0.html">
     <param name="text" value="<html><u>GPL v3 licence</u></html>">
@@ -158,8 +176,8 @@
   </object>
   or post on the
   <object classid="java:eu.esa.snap.netbeans.javahelp.BrowserDisplayer">
-    <param name="content" value="https://www.eomasters.org/forum">
-    <param name="text" value="<html><u>EOMasters forum</u>.</html>">
+    <param name="content" value="https://www.eomasters.org/groups">
+    <param name="text" value="<html><u>EOMasters Groups</u>.</html>">
     <param name="textFontSize" value="bigger">
   </object>
 </p>
@@ -173,7 +191,7 @@
         <img alt="EOMasters Logo" src="../images/EOMasters_50.png">
       </td>
       <td width="*" class="eom_ft">
-        <div class="eom_ft">EOMasters Toolbox Basic<br></div>
+        <div class="eom_ft">EOMasters Toolbox<br></div>
       </td>
     </tr>
     <tr>

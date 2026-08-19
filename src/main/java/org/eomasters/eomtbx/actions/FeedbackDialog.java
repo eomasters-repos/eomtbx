@@ -1,9 +1,9 @@
 /*-
  * ========================LICENSE_START=================================
- * EOMTBX Basic - EOMasters Toolbox Basic for SNAP
+ * EOMTBX - EOMasters Toolbox for SNAP
  * -> https://www.eomasters.org/eomtbx
  * ======================================================================
- * Copyright (C) 2023 - 2025 Marco Peters
+ * Copyright (C) 2023 - 2026 Marco Peters
  * ======================================================================
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as
@@ -39,8 +39,6 @@ import org.eomasters.gui.Dialogs;
 import org.eomasters.icons.Icon;
 import org.eomasters.icons.Icons;
 import org.esa.snap.rcp.SnapApp;
-import org.openide.modules.ModuleInfo;
-import org.openide.modules.Modules;
 
 public class FeedbackDialog {
 
@@ -63,11 +61,8 @@ public class FeedbackDialog {
                                          "You must have a GitHub account. Your are asked to login or to create one.<br>"
                                          + "You can either report a bug or request a feature:<br></html>");
 
-    // predefining combo boxes is not working at the moment, but this might be fixed. Let's keep it.
-    String toolboxType = "Basic%20Toolbox";
-    if (isProToolboxInstalled()) {
-      toolboxType = "Pro%20Toolbox";
-    }
+    // Predefining combo boxes is not working at the moment, but this might be fixed. Keep the parameter.
+    String toolboxType = "EOMTBX";
 
     // Buttons for bug report and feature request
     JButton bugButton = new JButton("Report a Bug");
@@ -88,11 +83,6 @@ public class FeedbackDialog {
     contentPane.add(buttonPanel, BorderLayout.SOUTH);
 
     dialog.setVisible(true);
-  }
-
-  private static boolean isProToolboxInstalled() {
-    ModuleInfo codeNameBase = Modules.getDefault().findCodeNameBase("org.eomasters.eomtbxp.eomtbxp-kit");
-    return codeNameBase != null && codeNameBase.isEnabled();
   }
 
   // Helper class to open URLs in the default browser

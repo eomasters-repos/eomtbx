@@ -1,0 +1,4 @@
+org.eomasters.eomtbx.assets.type.site.AddSitesGuiService
+org.eomasters.eomtbx.assets.type.geometry.AddGeometryGuiService
+org.eomasters.eomtbx.assets.type.mask.AddMaskGuiService
+org.eomasters.eomtbx.assets.type.bmaths.AddBandMathsGuiService

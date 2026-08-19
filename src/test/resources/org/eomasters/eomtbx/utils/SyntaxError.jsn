@@ -1,0 +1,13 @@
+{
+  "type": {
+    "name": "PLACEMARK",
+    "attributes"_:_ {
+      "Stroke": "255,255,255",
+      "Fill": "0,0,255,128",
+      "Symbol": "",
+      "Label": "",
+      "Name": "",
+      "Location": "N/A"
+    }
+  }
+}

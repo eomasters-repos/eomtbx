@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>sampleCoding - SnapKit API Documentation</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="navigation">
+            <a href="index.html">← Back to Index</a>
+        </div>
+        
+        <h1>Module: sampleCoding</h1>
+        <div class="module-description"><pre>Sample coding support for flag bands and index bands in remote sensing data.
+
+This module provides Python interfaces for working with SNAP&#x27;s sample coding functionality,
+which maps integer values in raster data to meaningful names and descriptions. Sample codings
+are essential components for interpreting flag bands (quality indicators,
+cloud masks) and index bands (classification results, land cover categories).
+
+The module centers around the SampleCoding class, which serves as a unified wrapper around
+SNAP&#x27;s Java FlagCoding and IndexCoding classes. It automatically detects the coding type
+and provides consistent Python access to sample definitions regardless of the underlying
+Java implementation.
+
+Key Features:
+    - Unified interface for both FlagCoding and IndexCoding
+    - Automatic detection of coding type (flag vs index)
+    - Dictionary-based access to sample definitions
+    - Integration with Raster class for flag and index bands
+    - Type-safe construction through factory pattern
+    - Support for both flag masks and index values
+
+Sample Coding Types:
+    - FlagCoding: Maps bit patterns to flag names (e.g., cloud detection, quality flags)
+    - IndexCoding: Maps integer indices to category names (e.g., land cover classes)
+
+Usage:
+    Accessing sample coding from flag bands:
+
+    from snapkit import Product
+    
+    # Load product and access flag band
+    product = Product.read(&#x27;/path/to/sentinel2.dim&#x27;)
+    flag_band = product[&#x27;quality_flags&#x27;]
+    
+    # Get sample coding information
+    coding = flag_band.sample_coding()
+    if coding:
+        print(f&quot;Coding type: {&#x27;Flag&#x27; if coding.isFlagCoding else &#x27;Index&#x27;}&quot;)
+        print(f&quot;Coding name: {coding.name}&quot;)
+        print(f&quot;Description: {coding.description}&quot;)
+
+    Working with flag definitions:
+
+    # Get all sample definitions
+    samples = coding.samples()
+    print(f&quot;Available samples: {list(samples.keys())}&quot;)
+    
+    # Access specific flag masks
+    cloud_mask = samples.get(&#x27;CLOUD&#x27;, 0)
+    water_mask = samples.get(&#x27;WATER&#x27;, 0)
+    print(f&quot;Cloud flag mask: {cloud_mask:08b}&quot;)  # Binary representation
+    print(f&quot;Water flag mask: {water_mask:08b}&quot;)
+
+    Working with index bands:
+
+    # Access classification band
+    class_band = product[&#x27;classification&#x27;]
+    class_coding = class_band.sample_coding()
+    
+    if class_coding and not class_coding.isFlagCoding:
+        # Get classification categories
+        categories = class_coding.samples()
+        print(&quot;Land cover classes:&quot;)
+        for name, index in categories.items():
+            print(f&quot;  {index}: {name}&quot;)
+
+    Checking pixel values against sample coding:
+
+    # Sample a pixel and interpret its meaning
+    pixel_value = flag_band.sample(100, 200)
+    samples = coding.samples()
+    
+    # For flag coding - check which flags are set
+    if coding.isFlagCoding:
+        active_flags = []
+        for flag_name, flag_mask in samples.items():
+            if pixel_value &amp; flag_mask:  # Bitwise AND operation
+                active_flags.append(flag_name)
+        print(f&quot;Active flags at pixel (100,200): {active_flags}&quot;)
+    
+    # For index coding - find category name
+    else:
+        category_name = next((name for name, idx in samples.items() if idx == pixel_value), &quot;Unknown&quot;)
+        print(f&quot;Category at pixel (100,200): {category_name}&quot;)</pre></div>
+
+        <div class="class-section" id="SampleCoding">
+            <h2>Class: SampleCoding</h2>
+        <div class="module-description"><pre>Wrapper for SNAP&#x27;s sample coding functionality providing access to flag and index definitions.
+
+This class serves as a Python wrapper around SNAP&#x27;s Java sample coding classes
+(FlagCoding and IndexCoding), providing convenient access to sample definitions
+that map integer values to meaningful names and descriptions. Sample codings are
+commonly used in remote sensing for flag bands (quality indicators, cloud masks)
+and index bands (classification results, land cover types).
+
+The class automatically detects whether the underlying Java object is a FlagCoding
+or IndexCoding instance and provides unified access to their sample definitions
+through a common Python interface.
+
+Example:
+    # Access sample coding from a flag band
+    flag_band = product[&#x27;quality_flags&#x27;]
+    coding = flag_band.sample_coding()
+    
+    # Check coding type and get samples
+    if coding.isFlagCoding:
+        print(&quot;This is flag coding&quot;)
+    else:
+        print(&quot;This is index coding&quot;)
+    
+    # Get all sample definitions
+    samples = coding.samples()
+    print(f&quot;Available samples: {list(samples.keys())}&quot;)
+    print(f&quot;Cloud flag mask: {samples.get(&#x27;CLOUD&#x27;, &#x27;Not found&#x27;)}&quot;)</pre></div>            <h3>Overview</h3>
+            <div class="overview-section">
+                <h4>Properties</h4>
+                <div class="overview-list">
+                    <span class="overview-item">&nbsp;<a href="#SampleCoding-name">name</a>&nbsp;</span>
+                    <span class="overview-item">&nbsp;<a href="#SampleCoding-description">description</a>&nbsp;</span>
+                </div>
+                <h4>Methods</h4>
+                <div class="overview-list">
+                    <span class="overview-item">&nbsp;<a href="#SampleCoding-__init__">__init__</a>&nbsp;</span>
+                    <span class="overview-item">&nbsp;<a href="#SampleCoding-samples">samples</a>&nbsp;</span>
+                </div>
+            </div>
+            <h3>Properties</h3>
+            <div class="properties-section">
+                <div class="function-item" id="SampleCoding-name">
+                    <h4 class="function-signature">name</h4>
+                    <span class="function-type">property</span>
+                    <div class="function-description">
+                        <div class="docstring-description">
+                            <pre>Get the name of the sample coding.</pre>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Returns:</h5>
+                            <div class="returns-info">
+                                <strong>str</strong>: <pre>The name identifier of the sample coding as defined in the product.</pre>
+                            </div>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Example:</h5>
+                            <div class="section-content">
+                                <pre>    coding = band.sample_coding()
+    print(f&quot;Coding name: {coding.name}&quot;)</pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="function-item" id="SampleCoding-description">
+                    <h4 class="function-signature">description</h4>
+                    <span class="function-type">property</span>
+                    <div class="function-description">
+                        <div class="docstring-description">
+                            <pre>Get the description text of the sample coding.</pre>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Returns:</h5>
+                            <div class="returns-info">
+                                <strong>str</strong>: <pre>Optional description text for the sample coding, or empty string if not set.</pre>
+                            </div>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Example:</h5>
+                            <div class="section-content">
+                                <pre>    coding = band.sample_coding()
+    print(f&quot;Coding description: {coding.description}&quot;)</pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <h3>Methods</h3>
+            <div class="methods-section">
+                <div class="function-item" id="SampleCoding-__init__">
+                    <h4 class="function-signature">__init__(jsample_coding)</h4>
+                    <span class="function-type">constructor</span>
+                    <div class="function-description">
+                        <div class="docstring-description">
+                            <pre>This is not intended to be called directly. Get sample-coding from a raster.
+
+This constructor creates a Python wrapper around an existing SNAP Java
+sample coding object (either FlagCoding or IndexCoding), automatically
+detecting the type and providing unified access to sample definitions.</pre>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Arguments:</h5>
+                            <ul class="args-list">
+                                <li>
+                                    <strong>jsample_coding (org.esa.snap.core.datamodel.FlagCoding | org.esa.snap.core.datamodel.IndexCoding)</strong>: <pre>        The Java sample coding object to wrap. Must be either a FlagCoding
+        or IndexCoding instance from SNAP&#x27;s data model.</pre>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Raises:</h5>
+                            <ul class="raises-list">
+                                <li>
+                                    <strong>ValueError</strong>: <pre>If the provided object is neither a FlagCoding nor IndexCoding instance.</pre>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="function-item" id="SampleCoding-samples">
+                    <h4 class="function-signature">samples()</h4>
+                    <span class="function-type">method</span>
+                    <div class="function-description">
+                        <div class="docstring-description">
+                            <pre>Get all sample definitions as a dictionary mapping names to values.
+
+This method retrieves all sample definitions from the underlying sample coding
+and returns them as a convenient dictionary structure. For FlagCoding, values
+are flag masks (bit patterns), while for IndexCoding, values are simple indices.</pre>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Returns:</h5>
+                            <div class="returns-info">
+                                <strong>dict[str, int]</strong>: <pre>A dictionary where keys are sample names (str) and values are their corresponding flag masks (for FlagCoding) or index values (for IndexCoding).</pre>
+                            </div>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Example:</h5>
+                            <div class="section-content">
+                                <pre>    coding = flag_band.sample_coding()
+    samples = coding.samples()
+    print(f&quot;Available samples: {list(samples.keys())}&quot;)
+    # For flag coding
+    print(f&quot;Cloud mask: {samples.get(&#x27;CLOUD&#x27;, 0):08b}&quot;)  # Binary representation
+    # For index coding
+    print(f&quot;Water class index: {samples.get(&#x27;WATER&#x27;, -1)}&quot;)</pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

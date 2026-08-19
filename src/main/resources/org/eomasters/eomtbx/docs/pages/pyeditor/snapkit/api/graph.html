@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>graph - SnapKit API Documentation</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="navigation">
+            <a href="index.html">← Back to Index</a>
+        </div>
+        
+        <h1>Module: graph</h1>
+        <div class="module-description"><pre>SNAP Graph Processing Module.
+
+This module provides functionality for creating, configuring, and executing
+SNAP (Sentinel Application Platform) processing graphs. It offers a Python
+interface to SNAP&#x27;s Java-based graph processing capabilities, allowing users
+to build complex remote sensing data processing workflows programmatically.
+
+The main component is the Graph class, which enables:
+- Building processing graphs by adding operators
+- Connecting operators to create processing chains
+- Executing graphs and retrieving results
+- Importing/exporting graphs from/to XML format
+- Integration with SNAP&#x27;s extensive operator library
+
+This module is part of the snapkit package, which provides Python bindings
+for SNAP functionality in the EOMasters EOMTBX environment.
+
+Example:
+    Basic usage for creating a processing chain:
+
+    def progress_callback(progress):
+        print(f&quot;Processing: {progress}%&quot;)
+    from snapkit.graph import Graph
+    graph = Graph()
+    read_op = graph.read(&#x27;/path/to/input.dim&#x27;)
+    calib_op = graph.add_operator(&#x27;calib&#x27;, &#x27;Calibration&#x27;, {&#x27;outputSigmaBand&#x27;: True})
+    write_op = graph.write(&#x27;/path/to/output.dim&#x27;)
+    graph.connect(read_op, calib_op, write_op)
+    result = graph.execute(progress_callback=progress_callback, callback_interval=10)</pre></div>
+
+        <div class="class-section" id="Graph">
+            <h2>Class: Graph</h2>
+        <div class="module-description"><pre>Creates and executes processing graphs using SNAP operators.
+
+This class provides an interface for building and executing
+SNAP processing graphs. It allows you to add operators, connect them,
+and execute the entire processing chain.
+
+Example:
+    Basic usage example:
+
+    def progress_callback(progress):
+        print(f&quot;Processing: {progress}%&quot;)
+    graph = Graph()
+    read_id = graph.read(&#x27;/path/to/input.dim&#x27;)
+    calib_id = graph.add_operator(&#x27;calib&#x27;, &#x27;Calibration&#x27;, {&#x27;outputSigmaBand&#x27;: True})
+    write_id = graph.write(&#x27;/path/to/output.dim&#x27;)
+    graph.connect(read_id, calib_id, write_id)
+    result = graph.execute(progress_callback=progress_callback, callback_interval=10)</pre></div>            <h3>Overview</h3>
+            <div class="overview-section">
+                <h4>Methods</h4>
+                <div class="overview-list">
+                    <span class="overview-item">&nbsp;<a href="#Graph-__init__">__init__</a>&nbsp;</span>
+                    <span class="overview-item">&nbsp;<a href="#Graph-add_operator">add_operator</a>&nbsp;</span>
+                    <span class="overview-item">&nbsp;<a href="#Graph-connect">connect</a>&nbsp;</span>
+                    <span class="overview-item">&nbsp;<a href="#Graph-clear_connections">clear_connections</a>&nbsp;</span>
+                    <span class="overview-item">&nbsp;<a href="#Graph-read">read</a>&nbsp;</span>
+                    <span class="overview-item">&nbsp;<a href="#Graph-write">write</a>&nbsp;</span>
+                    <span class="overview-item">&nbsp;<a href="#Graph-export_xml">export_xml</a>&nbsp;</span>
+                    <span class="overview-item">&nbsp;<a href="#Graph-execute">execute</a>&nbsp;</span>
+                    <span class="overview-item">&nbsp;<a href="#Graph-execute_xml">execute_xml</a>&nbsp;</span>
+                </div>
+            </div>
+            <h3>Methods</h3>
+            <div class="methods-section">
+                <div class="function-item" id="Graph-__init__">
+                    <h4 class="function-signature">__init__(graph_name, java_graph)</h4>
+                    <span class="function-type">constructor</span>
+                    <div class="function-description">
+                        <div class="docstring-description">
+                            <pre>Initialize a new graph processor.</pre>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Arguments:</h5>
+                            <ul class="args-list">
+                                <li>
+                                    <strong>graph_name (str, optional)</strong>: <pre>Name of the graph. Defaults to &quot;graph&quot;.</pre>
+                                </li>
+                                <li>
+                                    <strong>java_graph (JGraph, optional)</strong>: <pre>Existing JGraph object to initialize from.
+        If provided, the graph will be initialized from this existing Java graph
+        object, extracting operators and connections. Defaults to None.</pre>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="function-item" id="Graph-add_operator">
+                    <h4 class="function-signature">add_operator(operator_id, operator_name, parameters)</h4>
+                    <span class="function-type">method</span>
+                    <div class="function-description">
+                        <div class="docstring-description">
+                            <pre>Add an operator to the graph.</pre>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Arguments:</h5>
+                            <ul class="args-list">
+                                <li>
+                                    <strong>operator_id (str)</strong>: <pre>Unique ID for this operator in the graph.</pre>
+                                </li>
+                                <li>
+                                    <strong>operator_name (str)</strong>: <pre>Name of the operator (e.g., &#x27;Read&#x27;, &#x27;Write&#x27;, &#x27;Calibration&#x27;).</pre>
+                                </li>
+                                <li>
+                                    <strong>parameters (dict, optional)</strong>: <pre>Dictionary of parameters for the operator.
+        Defaults to None, which creates an empty parameter dictionary.</pre>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Returns:</h5>
+                            <div class="returns-info">
+                                <strong>str</strong>: <pre>The operator ID for chaining operations.</pre>
+                            </div>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Raises:</h5>
+                            <ul class="raises-list">
+                                <li>
+                                    <strong>ValueError</strong>: <pre>If operator_id is already in use.</pre>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Example:</h5>
+                            <div class="section-content">
+                                <pre>    graph = Graph()
+    op_id = graph.add_operator(&#x27;calib1&#x27;, &#x27;Calibration&#x27;, {&#x27;outputSigmaBand&#x27;: True})
+    print(op_id)
+    calib1</pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="function-item" id="Graph-connect">
+                    <h4 class="function-signature">connect()</h4>
+                    <span class="function-type">method</span>
+                    <div class="function-description">
+                        <div class="docstring-description">
+                            <pre>Connect operators in the graph.
+
+Can be used to connect two specific operators or chain multiple operators in a sequence.
+Each consecutive pair of node IDs will be connected.</pre>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Arguments:</h5>
+                            <ul class="args-list">
+                                <li>
+                                    <strong>*node_ids (str)</strong>: <pre>Variable number of node IDs to connect. Minimum 2 required.
+        The operators will be connected in the order they are provided.</pre>
+                                </li>
+                                <li>
+                                    <strong>source_name (str, optional)</strong>: <pre>Name of the source product parameter used for
+        connections. Defaults to &#x27;sourceProduct&#x27;.</pre>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Raises:</h5>
+                            <ul class="raises-list">
+                                <li>
+                                    <strong>ValueError</strong>: <pre>If less than 2 node IDs are provided.</pre>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Examples:</h5>
+                            <div class="section-content">
+                                <pre>    # Connect two operators:
+    graph.connect(&#x27;read_op&#x27;, &#x27;calib_op&#x27;)
+    # Connect multiple operators in sequence:
+    graph.connect(&#x27;read_op&#x27;, &#x27;calib_op&#x27;, &#x27;filter_op&#x27;, &#x27;write_op&#x27;)
+    # Connect with custom source name:
+    graph.connect(&#x27;source&#x27;, &#x27;target&#x27;, source_name=&#x27;inputProduct&#x27;)</pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="function-item" id="Graph-clear_connections">
+                    <h4 class="function-signature">clear_connections()</h4>
+                    <span class="function-type">method</span>
+                    <div class="function-description">
+                        <div class="docstring-description">
+                            <pre>Clear all stored connections.
+
+This method resets the connection list to an empty list, ensuring that
+any previously stored connections are removed.</pre>
+                        </div>
+                    </div>
+                </div>
+                <div class="function-item" id="Graph-read">
+                    <h4 class="function-signature">read(file_path)</h4>
+                    <span class="function-type">method</span>
+                    <div class="function-description">
+                        <div class="docstring-description">
+                            <pre>Add a Read operator to the graph.
+
+Creates and adds a Read operator to the graph with the specified input file path.
+The file path will be converted to an absolute path.</pre>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Arguments:</h5>
+                            <ul class="args-list">
+                                <li>
+                                    <strong>file_path (str)</strong>: <pre>Path to the input file to be read.</pre>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Returns:</h5>
+                            <div class="returns-info">
+                                <strong>str</strong>: <pre>The automatically generated operator ID for this Read operation. The ID follows the pattern &#x27;read_N&#x27; where N is the current number of operators.</pre>
+                            </div>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Example:</h5>
+                            <div class="section-content">
+                                <pre>    graph = Graph()
+    read_op = graph.read(&#x27;/path/to/input.dim&#x27;)
+    print(read_op)
+    read_0</pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="function-item" id="Graph-write">
+                    <h4 class="function-signature">write(file_path, format_name)</h4>
+                    <span class="function-type">method</span>
+                    <div class="function-description">
+                        <div class="docstring-description">
+                            <pre>Add a Write operator to the graph.
+
+Creates and adds a Write operator to the graph with the specified output file path
+and optional format. The file path will be converted to an absolute path.</pre>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Arguments:</h5>
+                            <ul class="args-list">
+                                <li>
+                                    <strong>file_path (str)</strong>: <pre>Path to the output file to be written.</pre>
+                                </li>
+                                <li>
+                                    <strong>format_name (str, optional)</strong>: <pre>Format name for the output file (e.g., &#x27;BEAM-DIMAP&#x27;,
+        &#x27;GeoTIFF&#x27;, &#x27;NetCDF&#x27;). If not specified, SNAP will determine the format
+        from the file extension. Defaults to None.</pre>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Returns:</h5>
+                            <div class="returns-info">
+                                <strong>str</strong>: <pre>The automatically generated operator ID for this Write operation. The ID follows the pattern &#x27;write_N&#x27; where N is the current number of operators.</pre>
+                            </div>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Example:</h5>
+                            <div class="section-content">
+                                <pre>    graph = Graph()
+    write_op = graph.write(&#x27;/path/to/output.dim&#x27;, &#x27;BEAM-DIMAP&#x27;)
+    print(write_op)
+    write_0</pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="function-item" id="Graph-export_xml">
+                    <h4 class="function-signature">export_xml(file_path)</h4>
+                    <span class="function-type">method</span>
+                    <div class="function-description">
+                        <div class="docstring-description">
+                            <pre>Export the graph data to an XML file.
+
+This method generates an internal representation of the graph and writes
+it to the specified location as an XML file. The file will be created or
+overwritten in the provided path. The file path will be converted to an
+absolute path.</pre>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Arguments:</h5>
+                            <ul class="args-list">
+                                <li>
+                                    <strong>file_path (str)</strong>: <pre>The absolute or relative file path where the XML
+        file will be written. Must be a valid path string.</pre>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Example:</h5>
+                            <div class="section-content">
+                                <pre>    graph = Graph()
+    # Add operators and connections...
+    graph.export_xml(&#x27;/path/to/graph.xml&#x27;)</pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="function-item" id="Graph-execute">
+                    <h4 class="function-signature">execute(progress_callback, callback_interval)</h4>
+                    <span class="function-type">method</span>
+                    <div class="function-description">
+                        <div class="docstring-description">
+                            <pre>Execute the graph and return the result.
+
+Processes the constructed graph by building the internal SNAP graph representation
+and executing it through the GraphProcessor. Returns the output product(s) from
+the last operator in the graph.</pre>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Arguments:</h5>
+                            <ul class="args-list">
+                                <li>
+                                    <strong>progress_callback (callable)</strong>: <pre>Optional callback function that receives
+        progress updates during graph execution. The callback should accept a single
+        parameter (progress percentage as float). Defaults to None.</pre>
+                                </li>
+                                <li>
+                                    <strong>callback_interval (int)</strong>: <pre>Interval in percentage points for progress
+        callback notifications. Only calls the callback when progress increases by
+        this amount or more. Defaults to 5.</pre>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Returns:</h5>
+                            <div class="returns-info">
+                                <strong>Product or list[Product]</strong>: <pre>The output product from the last operator in the graph. Returns a single Product if one output, a list of Products if multiple outputs, or None if no outputs are produced.</pre>
+                            </div>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Raises:</h5>
+                            <ul class="raises-list">
+                                <li>
+                                    <strong>PyRunnerException</strong>: <pre>If graph execution fails during processing.</pre>
+                                </li>
+                                <li>
+                                    <strong>ValueError</strong>: <pre>If no operators are defined in the graph.</pre>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Example:</h5>
+                            <div class="section-content">
+                                <pre>    def my_callback(progress):
+        print(f&quot;Progress: {progress}%&quot;)
+    graph = Graph()
+    # Add operators and connections...
+    result = graph.execute(progress_callback=my_callback)
+    print(result.getName())</pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="function-item" id="Graph-execute_xml">
+                    <h4 class="function-signature">execute_xml(file_path, progress_callback, callback_interval)</h4>
+                    <span class="function-type">static method</span>
+                    <div class="function-description">
+                        <div class="docstring-description">
+                            <pre>Execute an XML-based graph file.
+
+This method takes the file path of an XML graph file, reads the contents, converts it
+into a Graph object, and then processes the graph. The file path will be converted
+to an absolute path.</pre>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Arguments:</h5>
+                            <ul class="args-list">
+                                <li>
+                                    <strong>file_path (str)</strong>: <pre>The file path of the XML graph file to be executed.</pre>
+                                </li>
+                                <li>
+                                    <strong>progress_callback (callable)</strong>: <pre>Optional callback function that receives
+        progress updates during graph execution. The callback should accept a single
+        float parameter (progress percentage as float). Defaults to None.</pre>
+                                </li>
+                                <li>
+                                    <strong>callback_interval (int)</strong>: <pre>Interval in percentage points for progress
+        callback notifications. Only calls the callback when progress increases by
+        this amount or more. Defaults to 5.</pre>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Returns:</h5>
+                            <div class="returns-info">
+                                <strong>Product or list[Product]</strong>: <pre>The processed product(s) from the graph execution. Returns a single Product if one output, a list of Products if multiple outputs, or None if no outputs are produced.</pre>
+                            </div>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Example:</h5>
+                            <div class="section-content">
+                                <pre>    def my_callback(progress):
+        print(f&quot;Progress: {progress}%&quot;)
+    result = Graph.execute_xml(&#x27;/path/to/graph.xml&#x27;, progress_callback=my_callback)
+    print(result.getName())</pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

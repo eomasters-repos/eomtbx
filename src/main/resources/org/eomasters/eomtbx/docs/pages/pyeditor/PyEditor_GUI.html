@@ -1,0 +1,321 @@
+<!--
+  ========================LICENSE_START=================================
+  EOMTBX - EOMasters Toolbox for SNAP
+  -> https://www.eomasters.org/eomtbx
+  ======================================================================
+  Copyright (C) 2023 - 2026 Marco Peters
+  ======================================================================
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as
+  published by the Free Software Foundation, either version 3 of the
+  License, or (at your option) any later version.
+  
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+  
+  You should have received a copy of the GNU General Public
+  License along with this program.  If not, see
+  -> http://www.gnu.org/licenses/gpl-3.0.html
+  =========================LICENSE_END==================================
+  -->
+
+<html>
+<head>
+  <title>EOMasters Toolbox - PyEditor GUI</title>
+  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+  <link href="../../style/style.css" rel="stylesheet">
+  <link href="../../style/eomastersstyle.css" rel="stylesheet">
+</head>
+
+<body>
+<table class="header">
+  <tr class="header">
+    <td align="left" class="header" width="40"><a href="../Overview.html"><img border=0
+                                                                               src="../../images/EomToolbox_32.png"></a>
+    </td>
+    <td class="header">EOMasters Toolbox</td>
+    <td align="right" class="header"><a
+        href="nbdocs://org.esa.snap.snap.help/org/esa/snap/snap/help/docs/general/overview/SnapOverview.html"><img
+        border=0 src="../../images/snap_header.jpg"></a></td>
+  </tr>
+</table>
+
+<h1>&nbsp;&nbsp;PyEditor GUI</h1>
+<p>The editor consists of a toolbar on the left, an editing area on the right, and in between the project file tree.
+  Below the editing a console area is opened when a script is executed.</p>
+
+<div align="center"><img src="images/Editor.png" width="800"/></div>
+
+<h2>Toolbar</h2>
+
+<!--<div align="left"><img src="images/Toolbar.png"/></div>-->
+<p><img src="images/icons/FILE_CABINET-icon.png"/>&nbsp;<b>Open and Manage Projects</b> - This opens a new dialog where
+  you can open or create new projects. </p>
+<p><img src="images/icons/CLOSE_BOX_OUTLINE-icon.png"/>&nbsp;<b>Close Project</b> - Simply closes the current project.
+</p>
+<p><img src="images/icons/WRENCH_OUTLINE-icon.png"/>&nbsp;<b>Configure Project</b> - This opens a dialog where you can
+  configure the project. </p>
+<p><img src="images/icons/FILE_PLUS-icon.png"/>&nbsp;<b>Add File</b> - Allows adding a new file to the project. </p>
+<p><img src="images/icons/FOLDER_PLUS-icon.png"/>&nbsp;<b>Add Directory</b> - Allows adding a new directory to the
+  project. </p>
+<p><img src="images/icons/DELETE_CIRCLE-icon.png"/>&nbsp;<b>Delete</b> - Deletes the selected file or directory. </p>
+<p><img src="images/icons/CONTENT_SAVE-icon.png"/>&nbsp;<b>Save File</b> - Saves the selected file. </p>
+<p><img src="images/icons/CONTENT_SAVE_ALL-icon.png"/>&nbsp;<b>Save All</b> - Saves all modified files in the project.
+</p>
+<p><img src="images/icons/PLAY-icon.png"/>/<img src="images/icons/STOP-icon.png"/>&nbsp;<b>Execute/Stop</b> - Executes
+  the selected script. </p>
+<p><img src="images/icons/CONSOLE-icon.png"/>&nbsp;<b>Toggle Console Visibility</b> - Opens or closes the console. </p>
+<p><img src="images/icons/DELETE_SWEEP_OUTLINE-icon.png"/>&nbsp;<b>Clean Console</b> - Clears the console. </p>
+<p><img src="images/icons/HELP-icon.png"/>&nbsp;<b>Help</b> - Opens the help page. </p>
+<h3>Open and Manage Projects</h3>
+<div align="center"><img src="images/ManageProjects.png" width="550"/></div>
+<p>In the Manage Projects dialogue your projects are listed, and you can open and delete them. Also, you can create new
+  projects.</p>
+<div align="center"><img src="images/CreateNewProject_1.png"/>&nbsp;&nbsp;&nbsp;<img
+    src="images/CreateNewProject_2.png"/></div>
+<p><b>(1)</b> First, you can set the project name and select the theme for the editor. </p>
+<p><b>(2)</b> On the next page the directories used for the sources and the virtual environment are displayed and can be
+  modified. When using an exising virtual environment, the initialisation of the environment can be disabled. By
+  default, the working directory used by the project is the source directory. The Graal Python home directory can be
+  selected. It is initialised by default with the home set in the options. </p>
+<h3>Configure Project</h3>
+<div align="center"><img src="images/ConfigureProject.png" width="550"/></div>
+<p>Here some information about the project is displayed, and you can change the editor theme. To display the installed
+  Python packages, you need to refresh the table first.</p>
+<p>You can install new packages.</p>
+<div align="center"><img src="images/InstallPackage_Input.png"/>&nbsp;&nbsp;&nbsp;<img
+    src="images/InstallPackage_Process.png" width="650"/></div>
+<p>For the installation process of a package, the Python pip tool is used. The entered package name is passed to the pip
+  <code>install</code> option. This means that you can also specify versions e.g., as <code>numpy==2.0.2</code></p>
+<div class="attention">
+  <div class="note">Limited package support on Windows</div>
+  GraalPy is a relatively new technology. It is still in development, and installation of all packages is yet not fully
+  supported on Windows. The developers of GraalPy are working on this. Unfortunately, this affects important packages
+  like numpy, matplotlib, or scipy. This is one reason why this is released as a beta version.
+</div>
+
+<h2>Project Tree</h2>
+<p>The project tree displays the files in the source directory. Opened files are rendered bold, and if a file has been
+  edited in the editor area, it is marked green. A context menu with access to file operations can be opened.</p>
+<div align="center"><img src="images/ProjectFileTree.png"/></div>
+
+<h2>Editing Area</h2>
+<p>The editing area supports several themes which you can select in the project configuration. Python files are parsed
+  automatically and syntax errors are highlighted.</p>
+<div align="center"><img src="images/SyntaxError.png"/></div>
+
+<h3>Syntax Highlighting</h3>
+Syntax highlighting is based supported for the following file types:<br>
+<ul>
+  <li>Python file (*.py)</li>
+  <li>Comma-separated values file (*.csv)</li>
+  <li>Properties file (*.properties)</li>
+  <li>XML file (*.xml)</li>
+  <li>JSON file (*.json)</li>
+  <li>HTML file (*.html)</li>
+  <li>CSS file (*.css)</li>
+</ul>
+<h3>Shortcuts</h3>
+<p>The following shortcuts are available:</p>
+<table border="1">
+  <thead>
+  <tr>
+    <th>Action</th>
+    <th>Behavior</th>
+    <th>Windows Shortcut</th>
+    <th>Mac Shortcut</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+    <td><b>Save File</b></td>
+    <td>Saves the file currently active</td>
+    <td><code>CTRL + S</code></td>
+    <td><code>CMD + S</code></td>
+  </tr>
+  <tr>
+    <td><b>Save All Files</b></td>
+    <td>Saves all modified files</td>
+    <td><code>CTRL + SHIFT + S</code></td>
+    <td><code>CMD + SHIFT + S</code></td>
+  </tr>
+  <tr>
+    <td><b>Decrease Indent</b></td>
+    <td>Decreases the indentation of the selected lines</td>
+    <td><code>SHIFT + TAB</code></td>
+    <td><code>SHIFT + TAB</code></td>
+  </tr>
+  <tr>
+    <td><b>Collapse Code Block</b></td>
+    <td>Collapses the current code block</td>
+    <td><code>CTRL + - (NUMPAD)</code></td>
+    <td><code>CMD + - (NUMPAD)</code></td>
+  </tr>
+  <tr>
+    <td><b>Expand Code Block</b></td>
+    <td>Expands the current code block</td>
+    <td><code>CTRL + + (NUMPAD)</code></td>
+    <td><code>CMD + + (NUMPAD)</code></td>
+  </tr>
+  <tr>
+    <td><b>Collapse All Folds</b></td>
+    <td>Collapses all folds in the editor</td>
+    <td><code>CTRL + / (NUMPAD)</code></td>
+    <td><code>CMD + / (NUMPAD)</code></td>
+  </tr>
+  <tr>
+    <td><b>Expand All Folds</b></td>
+    <td>Expands all folds in the editor</td>
+    <td><code>CTRL + * (NUMPAD)</code></td>
+    <td><code>CMD + * (NUMPAD)</code></td>
+  </tr>
+  <tr>
+    <td><b>Start of Line</b></td>
+    <td>Go to the start of the current line</td>
+    <td><code>HOME</code></td>
+    <td><code>CMD + LEFT</code></td>
+  </tr>
+  <tr>
+    <td><b>Select to Start of Line</b></td>
+    <td>Select to the start of the current line</td>
+    <td><code>SHIFT + HOME</code></td>
+    <td><code>CMD + SHIFT + LEFT</code></td>
+  </tr>
+  <tr>
+    <td><b>End of Line</b></td>
+    <td>Go to the end of the current line</td>
+    <td><code>END</code></td>
+    <td><code>CMD + RIGHT</code></td>
+  </tr>
+  <tr>
+    <td><b>Select to End of Line</b></td>
+    <td>Select to the end of the current line</td>
+    <td><code>SHIFT + END</code></td>
+    <td><code>CMD + SHIFT + RIGHT</code></td>
+  </tr>
+  <tr>
+    <td><b>Top of Editor</b></td>
+    <td>Go to the top of the editor</td>
+    <td><code>CTRL + HOME</code></td>
+    <td><code>CMD + HOME</code></td>
+  </tr>
+  <tr>
+    <td><b>Select to Top of Editor</b></td>
+    <td>Select to the top of the editor</td>
+    <td><code>CTRL + SHIFT + HOME</code></td>
+    <td><code>CMD + SHIFT + HOME</code></td>
+  </tr>
+  <tr>
+    <td><b>End of Editor</b></td>
+    <td>Go to the end of the editor</td>
+    <td><code>CTRL + END</code></td>
+    <td><code>CMD + END</code></td>
+  </tr>
+  <tr>
+    <td><b>Select to End of Editor</b></td>
+    <td>Select to the end of the editor</td>
+    <td><code>CTRL + SHIFT + END</code></td>
+    <td><code>CMD + SHIFT + END</code></td>
+  </tr>
+  <tr>
+    <td><b>Move Lines Down</b></td>
+    <td>Move the selected lines down</td>
+    <td><code>ALT + DOWN</code></td>
+    <td><code>ALT + DOWN</code></td>
+  </tr>
+  <tr>
+    <td><b>Move Lines Up</b></td>
+    <td>Move the selected lines up</td>
+    <td><code>ALT + UP</code></td>
+    <td><code>ALT + UP</code></td>
+  </tr>
+  <tr>
+    <td><b>Cut</b></td>
+    <td>Cuts selected text</td>
+    <td><code>CTRL + X</code></td>
+    <td><code>CMD + X</code></td>
+  </tr>
+  <tr>
+    <td><b>Copy</b></td>
+    <td>Copies selected text</td>
+    <td><code>CTRL + C</code></td>
+    <td><code>CMD + C</code></td>
+  </tr>
+  <tr>
+    <td><b>Paste</b></td>
+    <td>Pastes selected text</td>
+    <td><code>CTRL + V</code></td>
+    <td><code>CMD + V</code></td>
+  </tr>
+  <tr>
+    <td><b>Paste Clipboard</b></td>
+    <td>Displays a popup of recent pasted values</td>
+    <td><code>CTRL + SHIFT + V</code></td>
+    <td><code>CMD + SHIFT + V</code></td>
+  </tr>
+  <tr>
+    <td><b>Toggle Mode</b></td>
+    <td>Toggles between insert and overwrite mode</td>
+    <td><code>INSERT</code></td>
+    <td><code>INSERT</code></td>
+  </tr>
+  <tr>
+    <td><b>Delete Line</b></td>
+    <td>Deletes the current or selected lines</td>
+    <td><code>CTRL + D</code></td>
+    <td><code>CMD + D</code></td>
+  </tr>
+  <tr>
+    <td><b>Join Line</b></td>
+    <td>Concatenates the current line with the next</td>
+    <td><code>CTRL + J</code></td>
+    <td><code>CMD + J</code></td>
+  </tr>
+  <tr>
+    <td><b>Complete Word</b></td>
+    <td>Completes the current word</td>
+    <td><code>CTRL + ENTER</code></td>
+    <td><code>CMD + ENTER</code></td>
+  </tr>
+  <tr>
+    <td><b>Undo</b></td>
+    <td>Undoes the last action</td>
+    <td><code>CTRL + Z</code></td>
+    <td><code>CMD + Z</code></td>
+  </tr>
+  <tr>
+    <td><b>Redo</b></td>
+    <td>Redoes the last action</td>
+    <td><code>CTRL + Y</code></td>
+    <td><code>CMD + Y</code></td>
+  </tr>
+  </tbody>
+</table>
+
+<footer>
+  <hr>
+  <table class="eom_ft">
+    <tr>
+      <td class="eom_ft" rowspan="2" width="60">
+        <img alt="EOMasters Logo" src="../../images/EOMasters_50.png">
+      </td>
+      <td class="eom_ft" width="*">
+        <div class="eom_ft">EOMasters Toolbox<br></div>
+      </td>
+    </tr>
+    <tr>
+      <td class="eom_ft"> Provided by
+        <object classid="java:eu.esa.snap.netbeans.javahelp.BrowserDisplayer">
+          <param name="content" value="https://www.eomasters.org/">
+          <param name="text" value="<html><u>www.eomasters.org</u></html>">
+          <param name="textFontSize" value="bigger">
+        </object>
+      </td>
+    </tr>
+  </table>
+</footer>
+</body>
+</html>
+

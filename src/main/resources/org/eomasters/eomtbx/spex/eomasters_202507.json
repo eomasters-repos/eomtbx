@@ -1,0 +1,38 @@
+{
+  "CARI": {
+    "name": "CARI",
+    "domain": "Vegetation",
+    "formula": "(bnd(710:730) / B) - 1",
+    "description": "Detects leaf carotenoid content",
+    "reference": "https://doi.org/10.1016/j.jag.2016.12.005",
+    "sourceName": "EOMasters",
+    "sourceUrl": "https://www.eomasters.org"
+  },
+  "LAI": {
+    "name": "LAI",
+    "domain": "Vegetation",
+    "formula": "3.618 * (g * (N - R) / (N + C1 * R - C2 * B + L)) - 0.118",
+    "description": "Utilized to estimate foliage cover and to forecast crop growth and yield",
+    "reference": "https://kaflekrishna.com.np/blog-detail/retrieving-leaf-area-index-lai-sentinel-2-image-google-earth-engine-gee",
+    "sourceName": "EOMasters",
+    "sourceUrl": "https://www.eomasters.org"
+  },
+  "WQI": {
+    "name": "WQI",
+    "domain": "Water",
+    "formula": "((G + (B - R)) - S1) / ((G + (B - R)) + S1)",
+    "description": "Utilized to estimate and compare river water clarity and pollution levels",
+    "reference": "https://doi.org/10.1016/j.envadv.2021.100097",
+    "sourceName": "EOMasters",
+    "sourceUrl": "https://www.eomasters.org"
+  },
+  "ISMI": {
+    "name": "ISMI",
+    "domain": "Mineralogy",
+    "formula": "(B/A) - (N/R)",
+    "description": "Iron Sulfate Mineral Index",
+    "reference": "https://pubs.usgs.gov/sim/3466/sim3466_pamphlet.pdf",
+    "sourceName": "EOMasters",
+    "sourceUrl": "https://www.eomasters.org"
+  }
+}

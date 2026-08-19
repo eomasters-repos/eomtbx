@@ -1,0 +1,94 @@
+<!--
+  ========================LICENSE_START=================================
+  EOMTBX - EOMasters Toolbox for SNAP
+  -> https://www.eomasters.org/eomtbx
+  ======================================================================
+  Copyright (C) 2023 - 2026 Marco Peters
+  ======================================================================
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as
+  published by the Free Software Foundation, either version 3 of the
+  License, or (at your option) any later version.
+  
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+  
+  You should have received a copy of the GNU General Public
+  License along with this program.  If not, see
+  -> http://www.gnu.org/licenses/gpl-3.0.html
+  =========================LICENSE_END==================================
+  -->
+
+<html>
+<head>
+  <title>EOMasters Toolbox - Add Coastal Map Band</title>
+   <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+  <link href="../../style/style.css" rel="stylesheet">
+  <link href="../../style/eomastersstyle.css" rel="stylesheet">
+</head>
+
+<body>
+<table class="header">
+  <tr class="header">
+    <td align="left" class="header" width="40"><a href="../Overview.html"><img border=0
+                                                                               src="../../images/EomToolbox_32.png"></a>
+    </td>
+    <td class="header">EOMasters Toolbox</td>
+    <td align="right" class="header"><a
+        href="nbdocs://org.esa.snap.snap.help/org/esa/snap/snap/help/docs/general/overview/SnapOverview.html"><img
+        border=0 src="../../images/snap_header.jpg"></a></td>
+  </tr>
+</table>
+
+<h1><img class="vCenter" src="images/CoastalMap_60.png">&nbsp;&nbsp;Add Coastal Map Band</h1>
+<p>You can add a Coastal Map band to a product by selecting the corresponding action from the context menu.
+<div align="center"><img src="images/ContextMenu.png"/></div>
+</p>
+
+<h2>Options</h2>
+<p>The creation of the Coastal Map band can be configured in the upcoming dialog:</p>
+<div align="center"><img src="images/BandConfig.png"/></div>
+
+<div class="attention">
+  <div class="note">Note:</div>
+  It is recommended to utilize the <b>ZNAP data format</b> when saving the product to disk. The coding of the flags is
+  incorrectly retained because of a SNAP bug. This problem has no effect on the data in the band. You can therefore use
+  other data formats if you are only interested in the flag data and don't care how SNAP interprets it. The issue is
+  already
+  <object classid="java:eu.esa.snap.netbeans.javahelp.BrowserDisplayer">
+    <param name="content" value="https://forum.step.esa.int/t/bug-when-writing-flags-to-dimap-netcdf-and-other-formats">
+    <param name="text" value="<html><u>reported to the SNAP Team</u>.</html>">
+    <param name="textFontSize" value="bigger">
+  </object>
+</div>
+
+<p><b>Select sampling type:</b><br> You can select between the two sampling types <b>Nearest Neighbour</b> and <b>Aggregate</b>.
+  The types are explained in more detail on the <a href="SamplingTypes.html">Sampling Types</a> page.</p>
+<p><b>Add masks to the product:</b><br> If you only want to have the flags added to the product you can disable the
+  addition of masks.</p>
+<footer>
+  <hr>
+  <table class="eom_ft">
+    <tr>
+      <td class="eom_ft" rowspan="2" width="60">
+        <img alt="EOMasters Logo" src="../../images/EOMasters_50.png">
+      </td>
+      <td class="eom_ft" width="*">
+        <div class="eom_ft">EOMasters Toolbox<br></div>
+      </td>
+    </tr>
+    <tr>
+      <td class="eom_ft"> Provided by
+        <object classid="java:eu.esa.snap.netbeans.javahelp.BrowserDisplayer">
+          <param name="content" value="https://www.eomasters.org/">
+          <param name="text" value="<html><u>www.eomasters.org</u></html>">
+          <param name="textFontSize" value="bigger">
+        </object>
+      </td>
+    </tr>
+  </table>
+</footer>
+</body>
+</html>

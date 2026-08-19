@@ -1,0 +1,7 @@
+org.eomasters.eomtbx.spex.SpexOperator$Spi
+org.eomasters.eomtbx.cmap.CoastalMapOp$Spi
+org.eomasters.eomtbx.ciop.CyanoIndexOperator$Spi
+org.eomasters.eomtbx.s2norm.S2NormSROperator$Spi
+org.eomasters.eomtbx.s2geom.S2GeometryUpscalerOp$Spi
+org.eomasters.eomtbx.s2superres.S2SuperResOp$Spi
+org.eomasters.eomtbx.s2b620.S2B620Operator$Spi

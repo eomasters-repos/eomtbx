@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>gpf - SnapKit API Documentation</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="navigation">
+            <a href="index.html">← Back to Index</a>
+        </div>
+        
+        <h1>Module: gpf</h1>
+        <div class="module-description"><pre>Graph Processing Framework (GPF) module for SNAP integration.
+
+This module provides Python wrappers for SNAP&#x27;s Graph Processing Framework (GPF),
+enabling Python scripts to interact with SNAP operators and product management.
+The module provides a GPF class with static methods for accessing registered operators and their descriptors.
+
+Key Features:
+    - List all available GPF operators from the registry
+    - Get detailed operator descriptors with parameters and metadata
+    - Access GPF product manager for product operations
+    - Integration with SNAP&#x27;s Graph Processing Framework
+
+GPF Class Methods:
+    GPF.operators: List all available operators from the GPF registry
+    GPF.describe_operator: Get detailed information about a specific operator
+    GPF.product_manager: Get the GPF product manager for product operations
+
+Usage:
+    Basic GPF operations:
+
+    from snapkit.gpf import GPF
+    
+    # List all available operators
+    operators = GPF.operators()
+    print(f&quot;Found {len(operators)} operators&quot;)
+    
+    # Get operator information
+    reproject_desc = GPF.describe_operator(&#x27;Reproject&#x27;)
+    print(f&quot;Operator: {reproject_desc.name}&quot;)
+    
+    # Access product manager
+    pm = GPF.product_manager()
+
+Example:
+    Working with GPF operators and product manager:
+
+    from snapkit.gpf import GPF
+    from snapkit import ProductIO
+    
+    # Get list of all operators
+    all_ops = GPF.operators()
+    print(f&quot;Available operators: {len(all_ops)}&quot;)
+    
+    # Get detailed operator information
+    calib_desc = GPF.describe_operator(&#x27;Calibration&#x27;)
+    print(f&quot;Parameters: {len(calib_desc.parameters)}&quot;)
+    
+    # Use GPF product manager
+    pm = GPF.product_manager()
+    product = ProductIO.read(&#x27;/path/to/product.dim&#x27;)
+    pm.add(product)</pre></div>
+
+        <div class="class-section" id="GPF">
+            <h2>Class: GPF</h2>
+        <div class="module-description"><pre>Graph Processing Framework (GPF) utilities for SNAP integration.
+
+This class provides static methods for GPF functionality for SNAP operators 
+and product management through SNAP&#x27;s Java GPF API.</pre></div>            <h3>Overview</h3>
+            <div class="overview-section">
+                <h4>Methods</h4>
+                <div class="overview-list">
+                    <span class="overview-item">&nbsp;<a href="#GPF-operators">operators</a>&nbsp;</span>
+                    <span class="overview-item">&nbsp;<a href="#GPF-describe_operator">describe_operator</a>&nbsp;</span>
+                    <span class="overview-item">&nbsp;<a href="#GPF-product_manager">product_manager</a>&nbsp;</span>
+                </div>
+            </div>
+            <h3>Methods</h3>
+            <div class="methods-section">
+                <div class="function-item" id="GPF-operators">
+                    <h4 class="function-signature">operators()</h4>
+                    <span class="function-type">static method</span>
+                    <div class="function-description">
+                        <div class="docstring-description">
+                            <pre>List all available operators from the GPF registry.</pre>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Returns:</h5>
+                            <div class="returns-info">
+<pre>A sorted list of operator aliases available in the GPF registry.</pre>
+                            </div>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Example:</h5>
+                            <div class="section-content">
+                                <pre>    from snapkit.gpf import GPF
+    operators = GPF.operators()
+    print(f&quot;Found {len(operators)} operators&quot;)
+    print(operators[:5])  # Show first 5 operators</pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="function-item" id="GPF-describe_operator">
+                    <h4 class="function-signature">describe_operator(operator)</h4>
+                    <span class="function-type">static method</span>
+                    <div class="function-description">
+                        <div class="docstring-description">
+                            <pre>Get the descriptor of a specific operator.</pre>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Arguments:</h5>
+                            <ul class="args-list">
+                                <li>
+                                    <strong>operator</strong>: <pre>The operator alias/name to describe. Must be a valid
+        operator name registered in the GPF registry.</pre>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Returns:</h5>
+                            <div class="returns-info">
+<pre>The operator descriptor containing detailed information about the operator including parameters, inputs, and outputs.</pre>
+                            </div>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Raises:</h5>
+                            <ul class="raises-list">
+                                <li>
+                                    <strong>ValueError</strong>: <pre>If the specified operator is not found in the GPF registry or if the operator name is invalid.</pre>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Example:</h5>
+                            <div class="section-content">
+                                <pre>    from snapkit.gpf import GPF
+    desc = GPF.describe_operator(&#x27;Reproject&#x27;)
+    print(f&quot;Operator: {desc.name}&quot;)
+    print(f&quot;Parameters: {len(desc.parameters)}&quot;)</pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="function-item" id="GPF-product_manager">
+                    <h4 class="function-signature">product_manager()</h4>
+                    <span class="function-type">static method</span>
+                    <div class="function-description">
+                        <div class="docstring-description">
+                            <pre>Get the GPF product manager.</pre>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Returns:</h5>
+                            <div class="returns-info">
+<pre>The ProductManager instance for managing products in GPF.</pre>
+                            </div>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Example:</h5>
+                            <div class="section-content">
+                                <pre>    from snapkit.gpf import GPF
+    from snapkit import ProductIO
+    pm = GPF.product_manager()
+    product = ProductIO.read(&#x27;/path/to/product.dim&#x27;)
+    pm.add(product)</pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

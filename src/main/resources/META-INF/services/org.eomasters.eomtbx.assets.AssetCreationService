@@ -1,0 +1,6 @@
+org.eomasters.eomtbx.assets.type.site.PlacemarkFileCreationService
+org.eomasters.eomtbx.assets.type.site.CsvFileCreationService
+org.eomasters.eomtbx.assets.type.geometry.WktGeometryCreationService
+org.eomasters.eomtbx.assets.type.geometry.FileGeometryCreationService
+org.eomasters.eomtbx.assets.type.mask.MaskCreationService
+org.eomasters.eomtbx.assets.type.bmaths.BandMathsCreationService

@@ -1,0 +1,124 @@
+<!--
+  ========================LICENSE_START=================================
+  EOMTBX - EOMasters Toolbox for SNAP
+  -> https://www.eomasters.org/eomtbx
+  ======================================================================
+  Copyright (C) 2023 - 2026 Marco Peters
+  ======================================================================
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as
+  published by the Free Software Foundation, either version 3 of the
+  License, or (at your option) any later version.
+  
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+  
+  You should have received a copy of the GNU General Public
+  License along with this program.  If not, see
+  -> http://www.gnu.org/licenses/gpl-3.0.html
+  =========================LICENSE_END==================================
+  -->
+
+<html>
+<head>
+  <title>EOMasters Toolbox - Geometry Type</title>
+   <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+  <link href="../../../../style/style.css" rel="stylesheet">
+  <link href="../../../../style/eomastersstyle.css" rel="stylesheet">
+</head>
+
+<body>
+<table class="header">
+  <tr class="header">
+    <td align="left" class="header" width="40"><a href="../../../Overview.html"><img border=0
+                                                                                     src="../../../../images/EomToolbox_32.png"></a>
+    </td>
+    <td class="header">EOMasters Toolbox</td>
+    <td align="right" class="header"><a
+        href="nbdocs://org.esa.snap.snap.help/org/esa/snap/snap/help/docs/general/overview/SnapOverview.html"><img
+        border=0 src="../../../../images/snap_header.jpg"></a></td>
+  </tr>
+</table>
+
+<h1>Geometry Type</h1>
+<p>This type holds geometries covering areas on Earth. Geometries can be points, lines, polygons or even
+  multi-polygons.</p>
+
+<a id="addGeometryToLibrary"><h2>Add Geometry to the Asset Library</h2></a>
+
+<a id="addGeometryFile"><h3>Add Geometry from Geometry File</h3></a>
+<p>Geometries can be added to the library from geometry files. These can be ESRI Shapefiles or simple text files
+  containing WKT.</p>
+<div align="center"><img src="images/AddGeometryFile.png"></div>
+<p>When selecting a Shapefile (*.shp) then the CRS information from this file is taken, if provided. Otherwise, the
+  reference system for the geometry will be created using the CRS code.</p>
+<p>When selecting a file containing WKT formatted text, the reference system for the geometry will be created using the
+  CRS code. The extension of the selected file is not important, it must only be different to the shapefile
+  extension.</p>
+<a id="addWktText"><h3>Add Geometry from WKT Text</h3></a>
+<p>Here the WKT formatted text can be directly provided. The coordinate reference system used for the geometry will be
+  created using the CRS code.</p>
+<div align="center"><img src="images/AddGeometryWkt.png"/></div>
+
+<a id="addToProducts"><h2>Add Geometry to a Product</h2></a>
+<p>When adding a geometry to a product you have some options how this is done.</p>
+<ul>
+  <li>Crop to product bounds&nbsp;-&nbsp;The geometry will be cropped to the bounds of the product.</li>
+  <li>Add to a vector node&nbsp;-&nbsp;The geometry will be added to the select node.
+    <ul>
+      <li>Vector node&nbsp;-&nbsp;The geometry will be added to the node selected.</li>
+    </ul>
+  </li>
+  <li>Create a new vector node&nbsp;-&nbsp;A new node with the specified name will be created and the geometry added.
+    <ul>
+      <li>Name of node&nbsp;-&nbsp;Specify the name of the new node.</li>
+    </ul>
+  </li>
+</ul>
+<div align="center"><img src="images/AddToProduct.png"/></div>
+
+<a id="references"><h2>References</h2></a>
+<ul>
+  <li>
+    <object classid="java:eu.esa.snap.netbeans.javahelp.BrowserDisplayer">
+      <param name="content" value="https://en.wikipedia.org/wiki/Well-known_text_representation_of_geometry">
+      <param name="text" value="<html><u>WKT Format (Wikipedia)</u></html>">
+      <param name="textFontSize" value="bigger">
+    </object>
+  </li>
+  <li>
+    <object classid="java:eu.esa.snap.netbeans.javahelp.BrowserDisplayer">
+      <param name="content" value="https://epsg.org/home.html">
+      <param name="text" value="<html><u>EPSG Database</u></html>">
+      <param name="textFontSize" value="bigger">
+    </object>
+  </li>
+</ul>
+
+<footer>
+  <hr>
+  <table class="eom_ft">
+    <tr>
+      <td class="eom_ft" rowspan="2" width="60">
+        <img alt="EOMasters Logo" src="../../../../images/EOMasters_50.png">
+      </td>
+      <td class="eom_ft" width="*">
+        <div class="eom_ft">EOMasters Toolbox<br></div>
+      </td>
+    </tr>
+    <tr>
+      <td class="eom_ft"> Provided by
+        <object classid="java:eu.esa.snap.netbeans.javahelp.BrowserDisplayer">
+          <param name="content" value="https://www.eomasters.org/">
+          <param name="text" value="<html><u>www.eomasters.org</u></html>">
+          <param name="textFontSize" value="bigger">
+        </object>
+      </td>
+    </tr>
+  </table>
+</footer>
+</body>
+</html>
+

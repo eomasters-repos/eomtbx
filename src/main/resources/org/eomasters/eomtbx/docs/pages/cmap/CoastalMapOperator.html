@@ -1,0 +1,169 @@
+<!--
+  ========================LICENSE_START=================================
+  EOMTBX - EOMasters Toolbox for SNAP
+  -> https://www.eomasters.org/eomtbx
+  ======================================================================
+  Copyright (C) 2023 - 2026 Marco Peters
+  ======================================================================
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as
+  published by the Free Software Foundation, either version 3 of the
+  License, or (at your option) any later version.
+  
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+  
+  You should have received a copy of the GNU General Public
+  License along with this program.  If not, see
+  -> http://www.gnu.org/licenses/gpl-3.0.html
+  =========================LICENSE_END==================================
+  -->
+
+<html>
+<head>
+  <title>EOMasters Toolbox - Coastal Map Operator</title>
+   <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+  <link href="../../style/style.css" rel="stylesheet">
+  <link href="../../style/eomastersstyle.css" rel="stylesheet">
+</head>
+
+<body>
+<table class="header">
+  <tr class="header">
+    <td align="left" class="header" width="40"><a href="../Overview.html"><img border=0
+                                                                               src="../../images/EomToolbox_32.png"></a>
+    </td>
+    <td class="header">EOMasters Toolbox</td>
+    <td align="right" class="header"><a
+        href="nbdocs://org.esa.snap.snap.help/org/esa/snap/snap/help/docs/general/overview/SnapOverview.html"><img
+        border=0 src="../../images/snap_header.jpg"></a></td>
+  </tr>
+</table>
+
+<h1><img class="vCenter" src="images/CoastalMap_60.png">&nbsp;&nbsp;Coastal Map Operator</h1>
+<p>The operator can be used to create a new product which contains the Coastal Map band. It can be used within SNAP
+  Desktop and invoked from the menu at <code>Raster / Masks</code>, included in a graph in the Graph Builder or invoked
+  from the command line. </p>
+
+<h2>Operator GUI</h2>
+<h3>I/O Parameters</h3>
+<p>The <code>I/O Parameters</code> tab allows to specify the input and output parameters.</p>
+<div align="center"><img src="images/CoastalMapIOParameters.png"/></div>
+<h4>Source Product</h4>
+<p>This defines the source product on which the coastal map processing is performed. Either select one of the products
+  already opened in the application or select a new one by opening a product selection dialog.</p>
+
+<h4>Target Product</h4>
+<p><b>Name</b> - Used to specify the name of the target product. By default, it is set to the name of the source product
+  with the suffix '_spex' appended.</p>
+
+<p><b>Save as</b> - Used to specify whether the target product should be saved to the file system. The dropdown list
+  provides a list of available file formats. The text field shows the path to the directory where the processing result
+  will be saved. You can edit the text field directly or select a directory via the '...' button.</p></p>
+
+<div class="attention">
+  <div class="note">Note:</div>
+  It is recommended to utilize the <b>ZNAP data format</b> when saving the product to disk. The coding of the flags is
+  incorrectly retained because of a SNAP bug. This problem has no effect on the data in the band. You can therefore use
+  different data formats if you are simply concerned with the flag data and don't care how SNAP interprets it. The issue
+  is already
+  <object classid="java:eu.esa.snap.netbeans.javahelp.BrowserDisplayer">
+    <param name="content" value="https://forum.step.esa.int/t/bug-when-writing-flags-to-dimap-netcdf-and-other-formats">
+    <param name="text" value="<html><u>reported to the SNAP Team</u>.</html>">
+    <param name="textFontSize" value="bigger">
+  </object>
+</div>
+
+<p><b>Open in SNAP</b> - Used to specify whether the target product should be opened in SNAP. If the target product is
+  not saved, it is opened in SNAP automatically.</p>
+
+<h3>Processing Parameters</h3>
+<p>The <code>Processing Parameters</code> tab allows to specify parameters for the creation of the Coastal Map.</p>
+<div align="center"><img src="images/CoastalMapProcessingParameters.png"/></div>
+<h4>Include Source Product Data</h4>
+<p>If enabled the data from the source product will be included in the target product. Otherwise, only the Coastal Map
+  flag band and necessary supplemental data will be added to the target. </p>
+
+<h4>Use Aggregation</h4>
+<p>Lets you enable the aggregation <a href="SamplingTypes.html">sampling type</a>. If not enabled Nearest Neighbour is
+  used.</p>
+
+<h4>Add Masks</h4>
+<p>By default, masks are added to the target product. This behaviour can be disabled.</p>
+
+<h2>Operator CLI</h2>
+<p>The Coastal Map operator makes use of the Graph Processing Framework, thus it can be used from the command line by
+  the gpt tool. General information about GPF and GPT can be found on their <a
+      href="nbdocs://org.esa.snap.snap.gpf.ui/org/esa/snap/core/gpf/docs/gpf/GpfOverview.html">help pages</a>. Specific
+  help for the Coastal Map Operator can be obtained with: <br><code>${SNAP-INSTALL-DIR}/bin/gpt -h EOM_CoastalMap</code><br>
+  This will show the following help:</p>
+<pre class="codenote">Usage:
+gpt EOM_CoastalMap [options]
+
+Description:
+  Generates a map which provides indicators for coastal areas.
+
+
+Source Options:
+  -SsourceProduct=&lt;file&gt;    A geo-coded source product.
+                            This is a mandatory source.
+
+Parameter Options:
+  -PaddMasks=&lt;boolean&gt;         Beside the flag data, for easier usage, masks are added to the product too.
+                               Default value is 'true'.
+  -Paggregate=&lt;boolean&gt;        If true, the operator will use aggregation to compute the coastal map,
+                               instead of nearest neighbour interpolation. This is useful if the resolution of the
+                               source product is significantly lower then the resolution of the coastal map.
+                               Default value is 'false'.
+  -PincludeSource=&lt;boolean&gt;    If true, the operator will include the source data in the target product.
+                               Default value is 'false'.
+
+Graph XML Format:
+  &lt;graph id="someGraphId"&gt;
+    &lt;version&gt;1.0&lt;/version&gt;
+    &lt;node id="someNodeId"&gt;
+      &lt;operator&gt;EOM_CoastalMap&lt;/operator&gt;
+      &lt;sources&gt;
+        &lt;sourceProduct&gt;${sourceProduct}&lt;/sourceProduct&gt;
+      &lt;/sources&gt;
+      &lt;parameters&gt;
+        &lt;includeSource&gt;boolean&lt;/includeSource&gt;
+        &lt;aggregate&gt;boolean&lt;/aggregate&gt;
+        &lt;addMasks&gt;boolean&lt;/addMasks&gt;
+      &lt;/parameters&gt;
+    &lt;/node&gt;
+  &lt;/graph&gt;
+</pre>
+
+<h3>CLI Example</h3>
+
+<p>The following shows an example how the operator can be invoked from the commandline</p>
+<code>gpt EOM_CoastalMap -PincludeSource=false -aggregate=true -t coast.znap.zip -SsourceProduct=source.dim</code>
+
+<footer>
+  <hr>
+  <table class="eom_ft">
+    <tr>
+      <td width="60" rowspan="2" class="eom_ft">
+        <img alt="EOMasters Logo" src="../../images/EOMasters_50.png">
+      </td>
+      <td width="*" class="eom_ft">
+        <div class="eom_ft">EOMasters Toolbox<br></div>
+      </td>
+    </tr>
+    <tr>
+      <td class="eom_ft"> Provided by
+        <object classid="java:eu.esa.snap.netbeans.javahelp.BrowserDisplayer">
+          <param name="content" value="https://www.eomasters.org/">
+          <param name="text" value="<html><u>www.eomasters.org</u></html>">
+          <param name="textFontSize" value="bigger">
+        </object>
+      </td>
+    </tr>
+  </table>
+</footer>
+</body>
+</html>
+

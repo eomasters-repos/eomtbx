@@ -1,0 +1,114 @@
+<!--
+  ========================LICENSE_START=================================
+  EOMTBX - EOMasters Toolbox for SNAP
+  -> https://www.eomasters.org/eomtbx
+  ======================================================================
+  Copyright (C) 2023 - 2026 Marco Peters
+  ======================================================================
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as
+  published by the Free Software Foundation, either version 3 of the
+  License, or (at your option) any later version.
+  
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+  
+  You should have received a copy of the GNU General Public
+  License along with this program.  If not, see
+  -> http://www.gnu.org/licenses/gpl-3.0.html
+  =========================LICENSE_END==================================
+  -->
+
+<html>
+<head>
+  <title>EOMasters Toolbox - PyEditor Overview</title>
+  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+  <link href="../../style/style.css" rel="stylesheet">
+  <link href="../../style/eomastersstyle.css" rel="stylesheet">
+</head>
+
+<body>
+<table class="header">
+  <tr class="header">
+    <td align="left" class="header" width="40"><a href="../Overview.html"><img border=0
+                                                                               src="../../images/EomToolbox_32.png"></a>
+    </td>
+    <td class="header">EOMasters Toolbox</td>
+    <td align="right" class="header"><a
+        href="nbdocs://org.esa.snap.snap.help/org/esa/snap/snap/help/docs/general/overview/SnapOverview.html"><img
+        border=0 src="../../images/snap_header.jpg"></a></td>
+  </tr>
+</table>
+
+<h1><img class="vCenter" src="images/PyEditor_48.png">&nbsp;&nbsp;PyEditor Overview</h1>
+
+<p>PyEditor is an editor to edit and execute Python code. The intention is to lower the barrier to developing scientific
+  code using SNAP. PyEditor is easy to setup and always at hand when you work with SNAP. Also, a specialized Python
+  package, named SnapKit, is provided. It makes the access to SNAP functionalities easy.</p>
+<div class="attention">
+  <div class="note">Beta Release</div>
+  I mark this as Beta release. The SnapKit API is not final and a also the Editor can further be improved. Even though
+  it has been thoroughly tested it is still possible that bugs are present. Also, the API can be further enhanced and
+  extended. Let me know if you find any bugs or if you have any suggestions. Please report them in the <a
+    href="#issueTracker">EOMasters issue tracker<sup>[1]</sup></a>. On Linux native packages like numpy, scipy or matplotlib can be used. On Windows
+  currently not. The developers of GraalPy are working on this.
+</div>
+<h2>Setup</h2>
+<p>The PyEditor only needs a <a href="#graalpy">GraalPy<sup>[2]</sup></a> installation. GraalPy is a Python runtime (v3.11) embeddable
+  into a Java environment. On first use you are asked for the installation directory, and the download and installation
+  start automatically.</p>
+<h2>SnapKit API</h2>
+<p>To make use of the SNAP Java API the Python SnapKit provides a pythonic wrapper. The wrapper does not cover the full Java
+  API yet. But building processing graphs, reading and writing products, setting computed data to rasters is already
+  possible. The API documentation can be found <a href="snapkit/api/index.html">here</a>. Also, several <a href="snapkit/examples/SnapKit_Examples.html">examples</a> show the
+  usage of the API.</p>
+
+<h2>References</h2>
+<ul>
+  <li>[1]&nbsp;
+    <a id="issueTracker">
+      <object classid="java:eu.esa.snap.netbeans.javahelp.BrowserDisplayer">
+        <param name="content" value="https://github.com/eomasters-repos/eomtbx-issues/blob/main/README.md">
+        <param name="text" value="<html><u>EOMasters Issue Tracker</u></html>">
+        <param name="textFontSize" value="bigger">
+      </object>
+    </a>
+  </li>
+  <li>[2]&nbsp;
+    <a id="graalpy">
+      <object classid="java:eu.esa.snap.netbeans.javahelp.BrowserDisplayer">
+        <param name="content" value="https://www.graalvm.org/python/">
+        <param name="text" value="<html><u>GraalPy</u></html>">
+        <param name="textFontSize" value="bigger">
+      </object>
+    </a>
+  </li>
+</ul>
+
+<footer>
+  <hr>
+  <table class="eom_ft">
+    <tr>
+      <td class="eom_ft" rowspan="2" width="60">
+        <img alt="EOMasters Logo" src="../../images/EOMasters_50.png">
+      </td>
+      <td class="eom_ft" width="*">
+        <div class="eom_ft">EOMasters Toolbox<br></div>
+      </td>
+    </tr>
+    <tr>
+      <td class="eom_ft"> Provided by
+        <object classid="java:eu.esa.snap.netbeans.javahelp.BrowserDisplayer">
+          <param name="content" value="https://www.eomasters.org/">
+          <param name="text" value="<html><u>www.eomasters.org</u></html>">
+          <param name="textFontSize" value="bigger">
+        </object>
+      </td>
+    </tr>
+  </table>
+</footer>
+</body>
+</html>
+

@@ -1,0 +1,251 @@
+{
+  "CRSWIR": {
+    "comment": "Lammbda variables are not yet supported",
+    "name": "CRSWIR",
+    "domain": "Vegetation",
+    "formula": "S1 / (N2 + ((S2 - N2) / (lambdaS2 - lambdaN2)) * (lambdaS1 - lambdaN2))",
+    "description": "Continuum Removal SWIR",
+    "reference": "https://www.onf.fr/onf/+/cec::les-rendez-vous-techniques-de-lonf-no69-70.html",
+    "sourceName": "Awesome Spectral Indices",
+    "sourceUrl": "https://awesome-ee-spectral-indices.readthedocs.io/en/stable/"
+  },
+  "DVIplus": {
+    "application_domain": "Vegetation",
+    "bands": [
+      "lambdaN",
+      "lambdaR",
+      "lambdaG",
+      "G",
+      "N",
+      "R"
+    ],
+    "contributor": "https://github.com/davemlz",
+    "date_of_addition": "2022-01-20",
+    "formula": "((lambdaN - lambdaR)/(lambdaN - lambdaG)) * G + (1.0 - ((lambdaN - lambdaR)/(lambdaN - lambdaG))) * N - R",
+    "long_name": "Difference Vegetation Index Plus",
+    "platforms": [
+      "Sentinel-2",
+      "Landsat-OLI",
+      "Landsat-TM",
+      "Landsat-ETM+",
+      "MODIS",
+      "Planet-Fusion"
+    ],
+    "reference": "https://doi.org/10.1016/j.rse.2019.03.028",
+    "short_name": "DVIplus"
+  },
+  "FAI": {
+    "application_domain": "water",
+    "bands": [
+      "N",
+      "R",
+      "S1",
+      "lambdaN",
+      "lambdaR",
+      "lambdaS1"
+    ],
+    "contributor": "https://github.com/emanuelcastanho",
+    "date_of_addition": "2024-05-03",
+    "formula": "N - (R + (S1 - R)*((lambdaN - lambdaR)/(lambdaS1 - lambdaR)))",
+    "long_name": "Floating Algae Index",
+    "platforms": [
+      "Sentinel-2",
+      "Landsat-OLI",
+      "Landsat-TM",
+      "Landsat-ETM+",
+      "MODIS"
+    ],
+    "reference": "https://doi.org/10.1016/j.rse.2009.05.012",
+    "short_name": "FAI"
+  },
+  "NDGI": {
+    "application_domain": "Vegetation",
+    "bands": [
+      "lambdaN",
+      "lambdaR",
+      "lambdaG",
+      "G",
+      "N",
+      "R"
+    ],
+    "contributor": "https://github.com/davemlz",
+    "date_of_addition": "2022-01-20",
+    "formula": "(((lambdaN - lambdaR)/(lambdaN - lambdaG)) * G + (1.0 - ((lambdaN - lambdaR)/(lambdaN - lambdaG))) * N - R)/(((lambdaN - lambdaR)/(lambdaN - lambdaG)) * G + (1.0 - ((lambdaN - lambdaR)/(lambdaN - lambdaG))) * N + R)",
+    "long_name": "Normalized Difference Greenness Index",
+    "platforms": [
+      "Sentinel-2",
+      "Landsat-OLI",
+      "Landsat-TM",
+      "Landsat-ETM+",
+      "MODIS",
+      "Planet-Fusion"
+    ],
+    "reference": "https://doi.org/10.1016/j.rse.2019.03.028",
+    "short_name": "NDGI"
+  },
+  "NIRvH2": {
+    "application_domain": "Vegetation",
+    "bands": [
+      "N",
+      "R",
+      "k",
+      "lambdaN",
+      "lambdaR"
+    ],
+    "contributor": "https://github.com/davemlz",
+    "date_of_addition": "2022-01-17",
+    "formula": "N - R - k * (lambdaN - lambdaR)",
+    "long_name": "Hyperspectral Near-Infrared Reflectance of Vegetation",
+    "platforms": [
+      "Sentinel-2",
+      "Landsat-OLI",
+      "Landsat-TM",
+      "Landsat-ETM+",
+      "MODIS",
+      "Planet-Fusion"
+    ],
+    "reference": "https://doi.org/10.1016/j.rse.2021.112723",
+    "short_name": "NIRvH2"
+  },
+
+  "COMMENT" : "Down below the index uses PAR this value need to be set by user or retrieved from a band or computed. Variables are necessary",
+  "NIRvP": {
+    "application_domain": "Vegetation",
+    "bands": [
+      "N",
+      "R",
+      "PAR"
+    ],
+    "contributor": "https://github.com/davemlz",
+    "date_of_addition": "2021-11-18",
+    "formula": "((N - R) / (N + R)) * N * PAR",
+    "long_name": "Near-Infrared Reflectance of Vegetation and Incoming PAR",
+    "platforms": [
+      "Sentinel-2",
+      "Landsat-OLI",
+      "Landsat-TM",
+      "Landsat-ETM+",
+      "MODIS",
+      "Planet-Fusion"
+    ],
+    "reference": "https://doi.org/10.1016/j.rse.2021.112763",
+    "short_name": "NIRvP"
+  },
+
+  "COMMENT" : "Down below are kernel indices which are not yet supported",
+  "kEVI": {
+    "application_domain": "Kernel",
+    "bands": [
+      "g",
+      "kNN",
+      "kNR",
+      "C1",
+      "C2",
+      "kNB",
+      "kNL"
+    ],
+    "contributor": "https://github.com/davemlz",
+    "date_of_addition": "2021-05-10",
+    "formula": "g * (kNN - kNR) / (kNN + C1 * kNR - C2 * kNB + kNL)",
+    "long_name": "Kernel Enhanced Vegetation Index",
+    "platforms": [
+      "Sentinel-2",
+      "Landsat-OLI",
+      "Landsat-TM",
+      "Landsat-ETM+",
+      "MODIS",
+      "Planet-Fusion"
+    ],
+    "reference": "https://doi.org/10.1126/sciadv.abc7447",
+    "short_name": "kEVI"
+  },
+  "kIPVI": {
+    "application_domain": "Kernel",
+    "bands": [
+      "kNN",
+      "kNR"
+    ],
+    "contributor": "https://github.com/davemlz",
+    "date_of_addition": "2022-04-08",
+    "formula": "kNN/(kNN + kNR)",
+    "long_name": "Kernel Infrared Percentage Vegetation Index",
+    "platforms": [
+      "Sentinel-2",
+      "Landsat-OLI",
+      "Landsat-TM",
+      "Landsat-ETM+",
+      "MODIS",
+      "Planet-Fusion"
+    ],
+    "reference": "https://doi.org/10.1126/sciadv.abc7447",
+    "short_name": "kIPVI"
+  },
+  "kNDVI": {
+    "application_domain": "Kernel",
+    "bands": [
+      "kNN",
+      "kNR"
+    ],
+    "contributor": "https://github.com/davemlz",
+    "date_of_addition": "2021-04-07",
+    "formula": "(kNN - kNR)/(kNN + kNR)",
+    "long_name": "Kernel Normalized Difference Vegetation Index",
+    "platforms": [
+      "Sentinel-2",
+      "Landsat-OLI",
+      "Landsat-TM",
+      "Landsat-ETM+",
+      "MODIS",
+      "Planet-Fusion"
+    ],
+    "reference": "https://doi.org/10.1126/sciadv.abc7447",
+    "short_name": "kNDVI"
+  },
+  "kRVI": {
+    "application_domain": "Kernel",
+    "bands": [
+      "kNN",
+      "kNR"
+    ],
+    "contributor": "https://github.com/davemlz",
+    "date_of_addition": "2021-04-07",
+    "formula": "kNN / kNR",
+    "long_name": "Kernel Ratio Vegetation Index",
+    "platforms": [
+      "Sentinel-2",
+      "Landsat-OLI",
+      "Landsat-TM",
+      "Landsat-ETM+",
+      "MODIS",
+      "Planet-Fusion"
+    ],
+    "reference": "https://doi.org/10.1126/sciadv.abc7447",
+    "short_name": "kRVI"
+  },
+  "kVARI": {
+    "application_domain": "Kernel",
+    "bands": [
+      "kGG",
+      "kGR",
+      "kGB"
+    ],
+    "contributor": "https://github.com/davemlz",
+    "date_of_addition": "2021-05-10",
+    "formula": "(kGG - kGR) / (kGG + kGR - kGB)",
+    "long_name": "Kernel Visible Atmospherically Resistant Index",
+    "platforms": [
+      "Sentinel-2",
+      "Landsat-OLI",
+      "Landsat-TM",
+      "Landsat-ETM+",
+      "MODIS",
+      "Planet-Fusion"
+    ],
+    "reference": "https://doi.org/10.1126/sciadv.abc7447",
+    "short_name": "kVARI"
+  },
+
+  "not_yet_added": "https://github.com/awesome-spectral-indices/awesome-spectral-indices/issues/57",
+  "not_yet_added": "https://github.com/awesome-spectral-indices/awesome-spectral-indices/issues/58",
+  "not_yet_added": "https://github.com/awesome-spectral-indices/awesome-spectral-indices/issues/61"
+}
