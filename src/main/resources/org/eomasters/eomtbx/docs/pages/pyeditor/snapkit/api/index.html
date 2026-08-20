@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SnapKit API Documentation</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>SnapKit API Documentation</h1>
+        <div class="package-description"><pre>SNAPKIT - A Python Package for SNAP (Sentinel Application Platform) Integration.
+
+This package provides a comprehensive Python interface for working with SNAP&#x27;s
+remote sensing data processing capabilities. It offers convenient access to
+SNAP&#x27;s Graph Processing Framework (GPF), product I/O operations, and various
+data manipulation tools for satellite imagery and geospatial data analysis.
+
+Key Features:
+    - Product I/O operations for various remote sensing formats
+    - Graph Processing Framework (GPF) integration for automated processing chains
+    - Raster data access and manipulation
+    - Product metadata and georeferencing utilities
+    - Integration with SNAP Desktop application when available
+
+Main Classes and Functions:
+    Graph: Building and executing SNAP processing graphs
+    Product: Remote sensing product representation with raster data and metadata
+    ProductManager: Management of products within SNAP application context
+    Raster: Access to raster data nodes within products
+    SampleCoding: Sample coding and flag interpretation utilities
+    
+    Graph Processing Framework Functions (via GPF class):
+    GPF.operators: List all available operators from the GPF registry
+    GPF.describe_operator: Get detailed information about a specific operator
+    GPF.product_manager: Get the GPF product manager for product operations
+    
+    Product I/O Functions (via ProductIO class):
+    ProductIO.read: Read a product from a file using ProductIO
+    ProductIO.save: Save a product to a file in the specified format
+    ProductIO.input_formats: Get all available input formats and their file extensions
+    ProductIO.output_formats: Get all available output formats and their file extensions
+
+    SNAP Desktop Integration Functions (via Snap class):
+    Snap.is_available: Check if SNAP Desktop is available and running
+    Snap.selected_product: Get currently selected product from Product Explorer
+    Snap.product_manager: Get SNAP Desktop product manager
+    Snap.view_raster: Open raster visualization in SNAP Desktop
+    Snap.view_rgb: Open RGB composite visualization in SNAP Desktop
+
+Example:
+    Basic usage for reading and processing a satellite product:
+    
+    &gt;&gt;&gt; from snapkit import Product, Graph, product_io
+    &gt;&gt;&gt; 
+    &gt;&gt;&gt; # Read a product from file
+    &gt;&gt;&gt; product = product_io.read(&#x27;/path/to/sentinel2.zip&#x27;)
+    &gt;&gt;&gt; print(f&quot;Product: {product.name}, Size: {product.width}x{product.height}&quot;)
+    &gt;&gt;&gt; 
+    &gt;&gt;&gt; # Create a processing graph
+    &gt;&gt;&gt; graph = Graph()
+    &gt;&gt;&gt; read_id = graph.read(&#x27;/path/to/input.zip&#x27;)
+    &gt;&gt;&gt; calib_id = graph.add_operator(&#x27;calib&#x27;, &#x27;Calibration&#x27;, {&#x27;outputSigmaBand&#x27;: True})
+    &gt;&gt;&gt; write_id = graph.write(&#x27;/path/to/output.dim&#x27;)
+    &gt;&gt;&gt; graph.connect(read_id, calib_id, write_id)
+    &gt;&gt;&gt; result = graph.execute()
+
+Requirements:
+    - SNAP Desktop application or SNAP Engine installation
+    - Java runtime environment
+    - Graalpython environment for Python-Java integration
+
+Note:
+    This package is designed to work within a the SNAP application and using Graalpython environment.
+    Some functionality may require an active SNAP Desktop session.
+
+Version: 0.5
+Author: Marco Peters
+Email: info@eomasters.org</pre></div>
+        
+        <h2>Modules</h2>
+        <div class="module-list">
+            <div class="module-item">
+                <a href="gpf.html"><span class="module-name">gpf</span> - <span class="module-short-description">Graph Processing Framework (GPF) module for SNAP integration.</span></a>
+            </div>
+            <div class="module-item">
+                <a href="graph.html"><span class="module-name">graph</span> - <span class="module-short-description">SNAP Graph Processing Module.</span></a>
+            </div>
+            <div class="module-item">
+                <a href="placemark.html"><span class="module-name">placemark</span> - <span class="module-short-description">SNAP Placemark Module for representing geographic points of interest.</span></a>
+            </div>
+            <div class="module-item">
+                <a href="product.html"><span class="module-name">product</span> - <span class="module-short-description">Remote sensing product management and manipulation module.</span></a>
+            </div>
+            <div class="module-item">
+                <a href="product_io.html"><span class="module-name">product_io</span> - <span class="module-short-description">Product Input/Output utilities for remote sensing data.</span></a>
+            </div>
+            <div class="module-item">
+                <a href="product_manager.html"><span class="module-name">product_manager</span> - <span class="module-short-description">SNAP Product Manager interface for centralized product management.</span></a>
+            </div>
+            <div class="module-item">
+                <a href="raster.html"><span class="module-name">raster</span> - <span class="module-short-description">Raster data management and manipulation module.</span></a>
+            </div>
+            <div class="module-item">
+                <a href="sampleCoding.html"><span class="module-name">sampleCoding</span> - <span class="module-short-description">Sample coding support for flag bands and index bands in remote sensing data.</span></a>
+            </div>
+            <div class="module-item">
+                <a href="snap.html"><span class="module-name">snap</span> - <span class="module-short-description">SNAP Desktop integration and control module.</span></a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

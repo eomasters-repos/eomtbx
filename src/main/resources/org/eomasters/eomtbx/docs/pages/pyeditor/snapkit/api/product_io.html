@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>product_io - SnapKit API Documentation</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="navigation">
+            <a href="index.html">← Back to Index</a>
+        </div>
+        
+        <h1>Module: product_io</h1>
+        <div class="module-description"><pre>Product Input/Output utilities for remote sensing data.
+
+This module provides I/O functionality for remote sensing products through SNAP&#x27;s
+Java ProductIO API. It serves as a bridge between Python and SNAP&#x27;s comprehensive
+file format support, enabling reading from and writing to various remote sensing
+data formats including BEAM-DIMAP, GeoTIFF, NetCDF, HDF5, and many others.
+
+The module provides a ProductIO class with static methods for product I/O operations. 
+It abstracts SNAP&#x27;s complex Java I/O system into simple Python class methods while 
+maintaining full access to format-specific capabilities and metadata.
+
+Key Features:
+    - Read products from 50+ supported formats (Sentinel, Landsat, MODIS, etc.)
+    - Write products to various output formats with format-specific options
+    - Automatic format detection based on file content and extensions
+    - Query available input/output formats and their file extensions
+    - Seamless integration with Product class for data manipulation workflows
+
+Supported Formats (examples):
+    Input formats: BEAM-DIMAP (.dim), GeoTIFF (.tif/.tiff), NetCDF (.nc),
+                   HDF5 (.h5/.hdf5), Sentinel SAFE (.zip), Landsat (.tar.gz),
+                   ENVISAT (.N1), MODIS (.hdf), and many more
+    Output formats: BEAM-DIMAP (.dim), GeoTIFF (.tif), NetCDF (.nc),
+                    PNG (.png), JPEG (.jpg), BigGeoTIFF (.btf), and others
+
+ProductIO Class Methods:
+    ProductIO.read: Read a product from a file using ProductIO
+    ProductIO.save: Save a product to a file in the specified format
+    ProductIO.input_formats: Get all available input formats and their file extensions
+    ProductIO.output_formats: Get all available output formats and their file extensions
+
+Usage:
+    Reading products from various formats:
+
+    from snapkit import ProductIO
+    
+    # Read different format types
+    sentinel2 = ProductIO.read(&#x27;/path/to/S2A_MSIL1C_product.zip&#x27;)
+    landsat = ProductIO.read(&#x27;/path/to/landsat_scene.tar.gz&#x27;)
+    geotiff = ProductIO.read(&#x27;/path/to/raster_data.tif&#x27;)
+    dimap = ProductIO.read(&#x27;/path/to/product.dim&#x27;)
+    
+    print(f&quot;Loaded: {sentinel2.name}&quot;)
+
+    Saving products in different formats:
+
+    # Save in various formats
+    ProductIO.saveAs(product, &#x27;/output/product.dim&#x27;)  # Default BEAM-DIMAP
+    ProductIO.saveAs(product, &#x27;/output/raster.tif&#x27;, &#x27;GeoTIFF&#x27;)
+    ProductIO.saveAs(product, &#x27;/output/data.nc&#x27;, &#x27;NetCDF&#x27;)
+    ProductIO.saveAs(product, &#x27;/output/image.png&#x27;, &#x27;PNG&#x27;)
+
+    Querying available formats:
+
+    # Check supported input formats
+    input_formats = ProductIO.input_formats()
+    print(&quot;GeoTIFF extensions:&quot;, input_formats.get(&#x27;GeoTIFF&#x27;, []))
+    
+    # Check supported output formats
+    output_formats = ProductIO.output_formats()
+    available = list(output_formats.keys())
+    print(f&quot;Available output formats: {len(available)}&quot;)
+
+Example:
+    Working with Product I/O functions:
+
+    from snapkit import ProductIO
+    
+    # Read a product
+    product = ProductIO.read(&#x27;/path/to/product.dim&#x27;)
+    print(f&quot;Product: {product.name}, Size: {product.width}x{product.height}&quot;)
+    
+    # Query available formats
+    formats = ProductIO.output_formats()
+    print(f&quot;Available output formats: {len(formats)}&quot;)
+    
+    # Save product in different formats
+    ProductIO.saveAs(product, &#x27;/path/to/output.tif&#x27;, &#x27;GeoTIFF&#x27;)</pre></div>
+
+        <div class="class-section" id="ProductIO">
+            <h2>Class: ProductIO</h2>
+        <div class="module-description"><pre>Product Input/Output utilities for remote sensing data.
+
+This class provides static methods for I/O functionality for remote sensing 
+products through SNAP&#x27;s Java ProductIO API.</pre></div>            <h3>Overview</h3>
+            <div class="overview-section">
+                <h4>Methods</h4>
+                <div class="overview-list">
+                    <span class="overview-item">&nbsp;<a href="#ProductIO-read">read</a>&nbsp;</span>
+                    <span class="overview-item">&nbsp;<a href="#ProductIO-save">save</a>&nbsp;</span>
+                    <span class="overview-item">&nbsp;<a href="#ProductIO-input_formats">input_formats</a>&nbsp;</span>
+                    <span class="overview-item">&nbsp;<a href="#ProductIO-output_formats">output_formats</a>&nbsp;</span>
+                </div>
+            </div>
+            <h3>Methods</h3>
+            <div class="methods-section">
+                <div class="function-item" id="ProductIO-read">
+                    <h4 class="function-signature">read(file_path)</h4>
+                    <span class="function-type">static method</span>
+                    <div class="function-description">
+                        <div class="docstring-description">
+                            <pre>Read a product from a file using ProductIO.
+
+This static method reads a remote sensing product from the specified file path using
+SNAP&#x27;s IO functionality. The file path is automatically converted to an
+absolute path before processing.</pre>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Arguments:</h5>
+                            <ul class="args-list">
+                                <li>
+                                    <strong>file_path (str)</strong>: <pre>Path to the product file to be read.</pre>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Returns:</h5>
+                            <div class="returns-info">
+                                <strong>Product</strong>: <pre>A new Product instance wrapping the loaded Java product.</pre>
+                            </div>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Raises:</h5>
+                            <ul class="raises-list">
+                                <li>
+                                    <strong>FileNotFoundError</strong>: <pre>If the product file cannot be read or does not exist.</pre>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Example:</h5>
+                            <div class="section-content">
+                                <pre>    from snapkit import ProductIO
+    product = ProductIO.read(&#x27;/path/to/product.nc&#x27;)
+    print(product.name)</pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="function-item" id="ProductIO-save">
+                    <h4 class="function-signature">save(product, file_path, format_name)</h4>
+                    <span class="function-type">static method</span>
+                    <div class="function-description">
+                        <div class="docstring-description">
+                            <pre>Save a product to a file in the specified format.
+
+This static method saves a Product instance to the specified file path using the given
+format. The file path is automatically converted to an absolute path before
+processing.
+Which output formats are supported depends on the installed SNAP plugins. You can get the
+available formats using the output_formats() static method.</pre>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Arguments:</h5>
+                            <ul class="args-list">
+                                <li>
+                                    <strong>product (Product)</strong>: <pre>The Product instance to be saved.</pre>
+                                </li>
+                                <li>
+                                    <strong>file_path (str)</strong>: <pre>Path where the output file will be written.</pre>
+                                </li>
+                                <li>
+                                    <strong>format_name (str, optional)</strong>: <pre>Format name for the output file (e.g., &#x27;BEAM-DIMAP&#x27;,
+        &#x27;GeoTIFF&#x27;, &#x27;NetCDF&#x27;). Defaults to &quot;BEAM-DIMAP&quot;.</pre>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Example:</h5>
+                            <div class="section-content">
+                                <pre>    from snapkit import ProductIO
+    product = ProductIO.read(&#x27;/path/to/input.dim&#x27;)
+    ProductIO.saveAs(product, &#x27;/path/to/output.dim&#x27;, &#x27;BEAM-DIMAP&#x27;)</pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="function-item" id="ProductIO-input_formats">
+                    <h4 class="function-signature">input_formats()</h4>
+                    <span class="function-type">static method</span>
+                    <div class="function-description">
+                        <div class="docstring-description">
+                            <pre>Get all available input formats and their associated file extensions.
+
+This static method queries SNAP&#x27;s ProductIOPlugInManager to retrieve all registered
+reader plugins and returns their format names along with supported file extensions
+as a dictionary.</pre>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Returns:</h5>
+                            <div class="returns-info">
+                                <strong>dict[str, list[str]]</strong>: <pre>A dictionary mapping format names to lists of supported file extensions. The keys are format names (e.g., &#x27;BEAM-DIMAP&#x27;, &#x27;GeoTIFF&#x27;) and values are lists of file extensions (e.g., [&#x27;.dim&#x27;, &#x27;.data&#x27;]).</pre>
+                            </div>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Example:</h5>
+                            <div class="section-content">
+                                <pre>    from snapkit import ProductIO
+    formats = ProductIO.input_formats()
+    print(formats[&#x27;BEAM-DIMAP&#x27;])
+    [&#x27;.dim&#x27;]</pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="function-item" id="ProductIO-output_formats">
+                    <h4 class="function-signature">output_formats()</h4>
+                    <span class="function-type">static method</span>
+                    <div class="function-description">
+                        <div class="docstring-description">
+                            <pre>Get all available output formats and their associated file extensions.
+
+This static method queries SNAP&#x27;s ProductIOPlugInManager to retrieve all registered
+writer plugins and returns their format names along with supported file extensions
+as a dictionary.</pre>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Returns:</h5>
+                            <div class="returns-info">
+                                <strong>dict[str, list[str]]</strong>: <pre>A dictionary mapping format names to lists of supported file extensions. The keys are format names (e.g., &#x27;BEAM-DIMAP&#x27;, &#x27;GeoTIFF&#x27;) and values are lists of file extensions (e.g., [&#x27;.dim&#x27;, &#x27;.data&#x27;]).</pre>
+                            </div>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Example:</h5>
+                            <div class="section-content">
+                                <pre>    from snapkit import ProductIO
+    formats = ProductIO.output_formats()
+    print(formats[&#x27;GeoTIFF&#x27;])
+    [&#x27;.tif&#x27;, &#x27;.tiff&#x27;, &#x27;.gtif&#x27;, &#x27;.btf&#x27;, &#x27;.zip&#x27;]</pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

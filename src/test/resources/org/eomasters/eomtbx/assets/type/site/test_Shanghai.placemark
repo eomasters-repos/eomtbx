@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<Placemarks>
+    <Placemark name="Shanghai">
+        <LABEL>Shanghai_POI</LABEL>
+        <DESCRIPTION />
+        <LATITUDE>31.233334</LATITUDE>
+        <LONGITUDE>121.45</LONGITUDE>
+        <PIXEL_X>784.75543</PIXEL_X>
+        <PIXEL_Y>179.50432</PIXEL_Y>
+        <FillColor>
+            <COLOR red="128" green="128" blue="255" alpha="255" />
+        </FillColor>
+        <OutlineColor>
+            <COLOR red="0" green="0" blue="64" alpha="255" />
+        </OutlineColor>
+    </Placemark>
+</Placemarks>

@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>product_manager - SnapKit API Documentation</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="navigation">
+            <a href="index.html">← Back to Index</a>
+        </div>
+        
+        <h1>Module: product_manager</h1>
+        <div class="module-description"><pre>SNAP Product Manager interface for centralized product management.
+
+This module provides a Python interface to SNAP&#x27;s ProductManager functionality,
+enabling centralized management of remote sensing products within the SNAP
+application environment. The ProductManager serves as a registry for all loaded
+products, making them accessible for processing operations and visualization.
+
+The module centers around the ProductManager class, which wraps SNAP&#x27;s Java
+ProductManager and provides Pythonic access to product management operations.
+It maintains a centralized collection of Product instances that can be shared
+across different components of the SNAP application.
+
+Key Features:
+    - Add and remove products from the centralized registry
+    - Query the number of products currently managed
+    - Retrieve all managed products as a list
+    - Access specific products by reference number (index)
+    - Integration with SNAP&#x27;s GUI and processing framework
+    - Thread-safe product management operations
+
+Usage:
+    Basic product management operations:
+
+    from snapkit import Product, snap
+    
+    # Get the product manager instance
+    pm = snap.product_manager()
+    
+    # Load and add a product to the manager
+    product = Product.read(&#x27;/path/to/product.dim&#x27;)
+    pm.add(product)
+    print(f&quot;Managing {pm.count} products&quot;)
+    
+    # Access all managed products
+    all_products = pm.products
+    for product in all_products:
+        print(f&quot;Product: {product.name}&quot;)
+    
+    # Get specific product by index
+    if pm.count &gt; 0:
+        first_product = pm.get_product(0)
+        print(f&quot;First product: {first_product.name}&quot;)
+    
+    # Remove product from manager
+    pm.remove(product)
+
+    Working with multiple products:
+
+    # Add multiple products
+    product_files = [&#x27;/path/to/prod1.dim&#x27;, &#x27;/path/to/prod2.dim&#x27;]
+    for file_path in product_files:
+        product = Product.read(file_path)
+        pm.add(product)
+    
+    print(f&quot;Total products managed: {pm.count}&quot;)
+    
+    # Process all managed products
+    for i in range(pm.count):
+        product = pm.get_product(i)
+        print(f&quot;Processing product {i}: {product.name}&quot;)
+        # ... perform operations on product ...
+    
+    # Clear all products from manager
+    for product in pm.products:
+        pm.remove(product)
+    assert pm.count == 0
+
+Note:
+    The ProductManager cannot be instantiated directly. It must be obtained through
+    the SNAP or GPF interfaces which provide properly initialized instances connected
+    to SNAP&#x27;s application framework.</pre></div>
+
+        <div class="class-section" id="ProductManager">
+            <h2>Class: ProductManager</h2>
+        <div class="module-description"><pre>Utility class for managing SNAP products in the application.
+
+This class provides static methods for managing Product instances within SNAP&#x27;s
+ProductManager. It acts as a wrapper around SNAP&#x27;s Java ProductManager functionality.
+If SNAP is not available, it falls back to an empty ProductManager disconnected from SNAP.
+
+The ProductManager maintains a centralized registry of all products that are currently
+loaded and available for processing within the SNAP application. Products managed by
+this class are accessible across different parts of the application for visualization
+and processing operations.
+
+Note:
+    This class should not be instantiated directly. All methods are static and should be
+    called directly on the class. The Java ProductManager instance is managed internally
+    through the global _JPM variable.
+
+Examples:
+    from snapkit import Product, product_manager, ProductManager
+    product = Product.read(&#x27;/path/to/product.dim&#x27;)
+    pm = product_manager()
+    pm.add(product)
+    print(f&quot;Managing {ProductManager.count} products&quot;)
+    ProductManager.remove(product)
+
+    # Get all managed products
+    all_products = ProductManager.products
+    for product in all_products:
+        print(f&quot;Product: {product.name}&quot;)
+
+    # Get a specific product by reference number
+    first_product = ProductManager.get_product(0)
+    print(f&quot;First product: {first_product.name}&quot;)</pre></div>            <h3>Overview</h3>
+            <div class="overview-section">
+                <h4>Properties</h4>
+                <div class="overview-list">
+                    <span class="overview-item">&nbsp;<a href="#ProductManager-products">products</a>&nbsp;</span>
+                    <span class="overview-item">&nbsp;<a href="#ProductManager-count">count</a>&nbsp;</span>
+                </div>
+                <h4>Methods</h4>
+                <div class="overview-list">
+                    <span class="overview-item">&nbsp;<a href="#ProductManager-__init__">__init__</a>&nbsp;</span>
+                    <span class="overview-item">&nbsp;<a href="#ProductManager-add">add</a>&nbsp;</span>
+                    <span class="overview-item">&nbsp;<a href="#ProductManager-remove">remove</a>&nbsp;</span>
+                    <span class="overview-item">&nbsp;<a href="#ProductManager-get_product">get_product</a>&nbsp;</span>
+                </div>
+            </div>
+            <h3>Properties</h3>
+            <div class="properties-section">
+                <div class="function-item" id="ProductManager-products">
+                    <h4 class="function-signature">products</h4>
+                    <span class="function-type">property</span>
+                    <div class="function-description">
+                        <div class="docstring-description">
+                            <pre>Get all products currently managed by the ProductManager.
+
+This method retrieves all Product instances that are currently registered with
+SNAP&#x27;s ProductManager. Each Product is wrapped in a Python Product object for
+convenient access to SNAP functionality.</pre>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Returns:</h5>
+                            <div class="returns-info">
+                                <strong>List[Product]</strong>: <pre>A list of all Product instances currently managed by the ProductManager. Returns an empty list if no products are managed or if the ProductManager is not initialized.</pre>
+                            </div>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Examples:</h5>
+                            <div class="section-content">
+                                <pre>    from snapkit import ProductManager
+    managed_products = ProductManager.products()
+    print(f&quot;Number of products: {len(managed_products)}&quot;)
+
+    # Iterate through all managed products
+    for product in ProductManager.products():
+        print(f&quot;Product: {product.name}, Size: {product.scene_raster_width}x{product.scene_raster_height}&quot;)
+
+    # Check if any products are managed
+    if ProductManager.products():
+        print(&quot;Products are available for processing&quot;)
+    else:
+        print(&quot;No products currently managed&quot;)</pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="function-item" id="ProductManager-count">
+                    <h4 class="function-signature">count</h4>
+                    <span class="function-type">property</span>
+                    <div class="function-description">
+                        <div class="docstring-description">
+                            <pre>Get the number of products currently managed by the ProductManager.
+
+This method returns the total count of Product instances that are currently
+registered and managed by SNAP&#x27;s ProductManager.</pre>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Returns:</h5>
+                            <div class="returns-info">
+                                <strong>int</strong>: <pre>The number of products currently managed by the ProductManager. Returns 0 if no products are managed or if the ProductManager is not initialized.</pre>
+                            </div>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Examples:</h5>
+                            <div class="section-content">
+                                <pre>    from snapkit import ProductManager
+    product_count = ProductManager.count()
+    print(f&quot;Currently managing {product_count} products&quot;)
+
+    # Check if products are available before processing
+    if ProductManager.count() &gt; 0:
+        print(f&quot;Processing {ProductManager.count()} products&quot;)
+        products = ProductManager.products()
+    else:
+        print(&quot;No products available for processing&quot;)
+
+    # Monitor product count changes
+    initial_count = ProductManager.count()
+    # ... add products ...
+    final_count = ProductManager.count()
+    print(f&quot;Added {final_count - initial_count} products&quot;)</pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <h3>Methods</h3>
+            <div class="methods-section">
+                <div class="function-item" id="ProductManager-__init__">
+                    <h4 class="function-signature">__init__(jpm)</h4>
+                    <span class="function-type">constructor</span>
+                    <div class="function-description">
+                        <div class="docstring-description">
+                            <pre>Initialize the ProductManager with a Java ProductManager instance. Not Intended for public use.</pre>
+                        </div>
+                    </div>
+                </div>
+                <div class="function-item" id="ProductManager-add">
+                    <h4 class="function-signature">add(product)</h4>
+                    <span class="function-type">method</span>
+                    <div class="function-description">
+                        <div class="docstring-description">
+                            <pre>Add a product to the manager.
+
+This method adds a Product instance to SNAP&#x27;s ProductManager, making it available
+for processing operations and visualization within the SNAP application.</pre>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Arguments:</h5>
+                            <ul class="args-list">
+                                <li>
+                                    <strong>product (Product)</strong>: <pre>The Product instance to be added to the manager.
+                     Must be a valid Product object with an internal _product attribute.</pre>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Raises:</h5>
+                            <ul class="raises-list">
+                                <li>
+                                    <strong>AttributeError</strong>: <pre>If the product parameter doesn&#x27;t have a _product attribute.</pre>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Examples:</h5>
+                            <div class="section-content">
+                                <pre>    from snapkit import Product, ProductManager
+    product = Product.read(&#x27;/path/to/product.dim&#x27;)
+    ProductManager.add(product)
+
+    # Adding multiple products
+    products = [Product.read(f&#x27;/path/to/product{i}.dim&#x27;) for i in range(3)]
+    for product in products:
+        ProductManager.add(product)</pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="function-item" id="ProductManager-remove">
+                    <h4 class="function-signature">remove(product)</h4>
+                    <span class="function-type">method</span>
+                    <div class="function-description">
+                        <div class="docstring-description">
+                            <pre>Remove a product from the manager.
+
+This method removes a Product instance from SNAP&#x27;s ProductManager, making it no longer
+available for processing operations within the SNAP application. The product object
+itself remains valid but is no longer managed by the ProductManager.</pre>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Arguments:</h5>
+                            <ul class="args-list">
+                                <li>
+                                    <strong>product (Product)</strong>: <pre>The Product instance to be removed from the manager.
+                     Must be a valid Product object that is currently managed.</pre>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Raises:</h5>
+                            <ul class="raises-list">
+                                <li>
+                                    <strong>AttributeError</strong>: <pre>If the product parameter doesn&#x27;t have a _product attribute.</pre>
+                                </li>
+                                <li>
+                                    <strong>ValueError</strong>: <pre>If the product is not currently managed by the ProductManager.</pre>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Examples:</h5>
+                            <div class="section-content">
+                                <pre>    from snapkit import Product, ProductManager
+    product = Product.read(&#x27;/path/to/product.dim&#x27;)
+    ProductManager.add(product)
+    ProductManager.remove(product)
+
+    # Remove multiple products
+    products = ProductManager.products()
+    for product in products:
+        ProductManager.remove(product)
+    assert ProductManager.count() == 0</pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="function-item" id="ProductManager-get_product">
+                    <h4 class="function-signature">get_product(ref_number)</h4>
+                    <span class="function-type">method</span>
+                    <div class="function-description">
+                        <div class="docstring-description">
+                            <pre>Get a product by its reference number.
+
+This method retrieves a specific Product instance from SNAP&#x27;s ProductManager
+using its reference number (index). Reference numbers are assigned sequentially
+starting from 0 for the first product added to the manager.</pre>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Arguments:</h5>
+                            <ul class="args-list">
+                                <li>
+                                    <strong>ref_number (int)</strong>: <pre>The reference number (index) of the product to retrieve.
+                    Must be a non-negative integer within the range [0, count()-1].</pre>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Returns:</h5>
+                            <div class="returns-info">
+                                <strong>Product</strong>: <pre>The Product instance corresponding to the specified reference number. The returned Product is wrapped for convenient Python access to SNAP functionality.</pre>
+                            </div>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Raises:</h5>
+                            <ul class="raises-list">
+                                <li>
+                                    <strong>IndexError</strong>: <pre>If the reference number is out of range (negative or &gt;= count()).</pre>
+                                </li>
+                                <li>
+                                    <strong>TypeError</strong>: <pre>If ref_number is not an integer.</pre>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Examples:</h5>
+                            <div class="section-content">
+                                <pre>    from snapkit import ProductManager
+    # Get the first product (if any exist)
+    if ProductManager.count() &gt; 0:
+        product = ProductManager.get_product(0)
+        print(f&quot;First product: {product.name}&quot;)
+
+    # Get all products by reference number
+    for i in range(ProductManager.count()):
+        product = ProductManager.get_product(i)
+        print(f&quot;Product {i}: {product.name}&quot;)
+
+    # Safe product retrieval with error handling
+    try:
+        product = ProductManager.get_product(5)
+        print(f&quot;Product at index 5: {product.name}&quot;)
+    except IndexError:
+        print(&quot;No product found at index 5&quot;)</pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

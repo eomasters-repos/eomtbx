@@ -1,0 +1,281 @@
+{
+  "ARVI2": {
+    "name": "ARVI2",
+    "domain": "Vegetation",
+    "formula": "-0.18 + 1.17 * ((N − R) / (N + R))",
+    "description": "The Atmospherically Resistant Vegetation Index is more resistant to atmospheric effects compared to the NDVI",
+    "reference": "https://doi.org/10.1109/36.134076",
+    "sourceName": "Index DataBase (IDB)",
+    "sourceUrl": "https://www.indexdatabase.de"
+  },
+  "BRI": {
+    "name": "BRI",
+    "domain": "Vegetation",
+    "formula": "(1 / G - 1 / RE1) / N",
+    "description": "Browning Reflectance Index - For the quantification of tissue browning",
+    "reference": "http://dx.doi.org/10.1023/A:1025608728405",
+    "sourceName": "Index DataBase (IDB)",
+    "sourceUrl": "https://www.indexdatabase.de"
+  },
+  "CCCI": {
+    "name": "CCCI",
+    "domain": "Vegetation",
+    "formula": "((N-RE1) / (N+RE1)) / ((N-R) / (N+R))",
+    "description": "Canopy Chlorophyll Content Index",
+    "reference": "https://doi.org/10.1016/j.fcr.2010.01.010",
+    "sourceName": "Index DataBase (IDB)",
+    "sourceUrl": "https://www.indexdatabase.de"
+  },
+  "Chlgreen": {
+    "name": "Chlgreen",
+    "domain": "Vegetation",
+    "formula": "pow(N / G, -1)",
+    "description": "Chlorophyll Green",
+    "reference": "http://dx.doi.org/10.1029/2006GL026457",
+    "sourceName": "Index DataBase (IDB)",
+    "sourceUrl": "https://www.indexdatabase.de"
+  },
+  "CIgreen": {
+    "name": "CIgreen",
+    "domain": "Vegetation",
+    "formula": "(N / G) - 1",
+    "description": "Chlorophyll Index Green",
+    "reference": "https://doi.org/10.1029/2002GL016450",
+    "sourceName": "Index DataBase (IDB)",
+    "sourceUrl": "https://www.indexdatabase.de"
+  },
+  "CI": {
+    "name": "CI",
+    "domain": "Vegetation",
+    "formula": "(R - B) / R",
+    "description": "Coloration Index",
+    "reference": "https://isprs-archives.copernicus.org/articles/XLI-B2/43/2016/isprs-archives-XLI-B2-43-2016.pdf",
+    "sourceName": "Index DataBase (IDB)",
+    "sourceUrl": "https://www.indexdatabase.de"
+  },
+  "CTVI": {
+    "name": "CTVI",
+    "domain": "Vegetation",
+    "formula": "(((N - R)/(N + R) + 0.5) /abs((N - R)/(N + R)+0.5)) * sqrt(abs((N - R)/(N + R) + 0.5))",
+    "description": "Corrected Transformed Vegetation Index",
+    "reference": "http://dx.doi.org/10.1016/0034-4257%2884%2990013-0",
+    "sourceName": "Index DataBase (IDB)",
+    "sourceUrl": "https://www.indexdatabase.de"
+  },
+  "FR": {
+    "name": "FR",
+    "domain": "Vegetation",
+    "formula": "R / RE2",
+    "description": "Simple Fluorescence Ratio",
+    "reference": "https://doi.org/10.1016/S0176-1617(96)80070-8",
+    "sourceName": "Index DataBase (IDB)",
+    "sourceUrl": "https://www.indexdatabase.de"
+  },
+  "FIR": {
+    "name": "FIR",
+    "domain": "Mineralogy",
+    "formula": "R/B",
+    "description": "Ferric Iron 'Redness'",
+    "reference": "https://doi.org/10.1016/S0034-4257(02)00127-X",
+    "sourceName": "Index DataBase (IDB)",
+    "sourceUrl": "https://www.indexdatabase.de"
+  },
+  "FIO": {
+    "name": "FE3+O3",
+    "domain": "Mineralogy",
+    "formula": "bnd(1600/1700) / bnd(760:860)",
+    "description": "Ferric Iron Oxides",
+    "reference": "https://doi.org/10.1016/S0034-4257(02)00127-X",
+    "sourceName": "Index DataBase (IDB)",
+    "sourceUrl": "https://www.indexdatabase.de"
+  },
+  "FI": {
+    "name": "FI",
+    "domain": "Mineralogy",
+    "formula": "(R/B) * ((R+S1) / N)",
+    "description": "Ferric Iron",
+    "reference": "https://doi.org/10.1016/S0034-4257(02)00127-X",
+    "sourceName": "Index DataBase (IDB)",
+    "sourceUrl": "https://www.indexdatabase.de"
+  },
+  "FI2": {
+    "name": "FI2",
+    "domain": "Mineralogy",
+    "formula": "(bnd(2145:2185) / bnd(760:860)) + (bnd(520:600) / bnd(630:690))",
+    "description": "Ferrous iron",
+    "reference": "https://doi.org/10.1016/S0034-4257(02)00127-X",
+    "sourceName": "Index DataBase (IDB)",
+    "sourceUrl": "https://www.indexdatabase.de"
+  },
+  "CLAY": {
+    "name": "CLAY",
+    "domain": "Mineralogy",
+    "formula": "(bnd(2145:2185) * bnd(2235:2365)) / (bnd(2185:2225) * bnd(2185:2225))",
+    "description": "Clay, sulphate, mica, marble",
+    "reference": "https://www.ga.gov.au/bigobj/GA7833.pdf",
+    "sourceName": "Index DataBase (IDB)",
+    "sourceUrl": "https://www.indexdatabase.de"
+  },
+  "AI": {
+    "name": "AI",
+    "domain": "Mineralogy",
+    "formula": "S1 / S2",
+    "description": "Alteration Index",
+    "reference": "http://dx.doi.org/10.1007/s00531-023-02323-4",
+    "sourceName": "Index DataBase (IDB)",
+    "sourceUrl": "https://www.indexdatabase.de"
+  },
+  "MUSCOVITE": {
+    "name": "MUSCOVITE",
+    "domain": "Mineralogy",
+    "formula": "bnd(2235:2365) / bnd(2185:2225)",
+    "description": "Muscovite",
+    "reference": "https://www.ga.gov.au/bigobj/GA7833.pdf",
+    "sourceName": "Index DataBase (IDB)",
+    "sourceUrl": "https://www.indexdatabase.de"
+  },
+  "AMPHIBOLE": {
+    "name": "AMPHIBOLE",
+    "domain": "Mineralogy",
+    "formula": "bnd(2185:2225) / bnd(2295:2365)",
+    "description": "Amphibole",
+    "reference": "https://www.ga.gov.au/bigobj/GA7833.pdf",
+    "sourceName": "Index DataBase (IDB)",
+    "sourceUrl": "https://www.indexdatabase.de"
+  },
+  "KAOLINITIC": {
+    "name": "Kaolinitic",
+    "domain": "Mineralogy",
+    "formula": "bnd(2235:2365) / bnd(2145:2185)",
+    "description": "Kaolinitic",
+    "reference": "https://www.ga.gov.au/bigobj/GA7833.pdf",
+    "sourceName": "Index DataBase (IDB)",
+    "sourceUrl": "https://www.indexdatabase.de"
+  },
+  "LATERITE": {
+    "name": "Laterite",
+    "domain": "Mineralogy",
+    "formula": "bnd(1600:1700) / bnd(2145:2185)",
+    "description": "Laterite",
+    "reference": "https://www.ga.gov.au/bigobj/GA7833.pdf",
+    "sourceName": "Index DataBase (IDB)",
+    "sourceUrl": "https://www.indexdatabase.de"
+  },
+  "PHENGITIC": {
+    "name": "Phengitic",
+    "domain": "Mineralogy",
+    "formula": "bnd(2145:2185) / bnd(2185:2225)",
+    "description": "Phengitic",
+    "reference": "https://www.ga.gov.au/bigobj/GA7833.pdf",
+    "sourceName": "Index DataBase (IDB)",
+    "sourceUrl": "https://www.indexdatabase.de"
+  },
+  "AKP": {
+    "name": "AKP",
+    "domain": "Mineralogy",
+    "formula": "bnd(2185:2225) / bnd(2295:2365)",
+    "description": "Alunite/Kaolinite/Pyrophylite",
+    "reference": "https://doi.org/10.1016/S0034-4257(02)00127-X",
+    "sourceName": "Index DataBase (IDB)",
+    "sourceUrl": "https://www.indexdatabase.de"
+  },
+  "CCE": {
+    "name": "CCE",
+    "domain": "Mineralogy",
+    "formula": "(bnd(2235:2365) + bnd(2360:2430)) / bnd(2295:2365)",
+    "description": "Carbonate/Chlorite/Epidote",
+    "reference": "https://doi.org/10.1016/S0034-4257(02)00127-X",
+    "sourceName": "Index DataBase (IDB)",
+    "sourceUrl": "https://www.indexdatabase.de"
+  },
+  "ECA": {
+    "name": "ECA",
+    "domain": "Mineralogy",
+    "formula": "(bnd(2185:2225) + bnd(2360:2430)) / (bnd(2235:2365) + bnd(2295:2365))",
+    "description": "Epidote/Chlorite/Amphibole",
+    "reference": "https://www.ga.gov.au/bigobj/GA7833.pdf",
+    "sourceName": "Index DataBase (IDB)",
+    "sourceUrl": "https://www.indexdatabase.de"
+  },
+  "AM": {
+    "name": "AM",
+    "domain": "Mineralogy",
+    "formula": "(bnd(2185:2225) + bnd(2360:2430)) / bnd(2295:2365)",
+    "description": "Amphibole/Magnesiumhydroxide MgOH",
+    "reference": "https://www.ga.gov.au/bigobj/GA7833.pdf",
+    "sourceName": "Index DataBase (IDB)",
+    "sourceUrl": "https://www.indexdatabase.de"
+  },
+  "SMIS": {
+    "name": "SMIS",
+    "domain": "Mineralogy",
+    "formula": "(bnd(2145:22185) + bnd(2235:2365)) / bnd(2185:2225)",
+    "description": "Sericite/Muscovite/Illite/Smecite",
+    "reference": "https://doi.org/10.1016/S0034-4257(02)00127-X",
+    "sourceName": "Index DataBase (IDB)",
+    "sourceUrl": "https://www.indexdatabase.de"
+  },
+  "HR": {
+    "name": "HR",
+    "domain": "Mineralogy",
+    "formula": "bnd(2145:2185) / bnd(2185:2225)",
+    "description": "Host Rock",
+    "reference": "https://www.ga.gov.au/bigobj/GA7833.pdf",
+    "sourceName": "Index DataBase (IDB)",
+    "sourceUrl": "https://www.indexdatabase.de"
+  },
+  "QRR": {
+    "name": "QRR",
+    "domain": "Mineralogy",
+    "formula": "bnd(10950:11650) / bnd(8925:9275)",
+    "description": "Quartz Rich Rocks",
+    "reference": "https://www.ga.gov.au/bigobj/GA7833.pdf",
+    "sourceName": "Index DataBase (IDB)",
+    "sourceUrl": "https://www.indexdatabase.de"
+  },
+  "SILICA1": {
+    "name": "SILICA1",
+    "domain": "Mineralogy",
+    "formula": "bnd(8475:8825) / bnd(8125:8475)",
+    "description": "Silica",
+    "reference": "https://www.ga.gov.au/bigobj/GA7833.pdf",
+    "sourceName": "Index DataBase (IDB)",
+    "sourceUrl": "https://www.indexdatabase.de"
+  },
+  "SILICA2": {
+    "name": "SILICA2",
+    "domain": "Mineralogy",
+    "formula": "bnd(8475:8825) / bnd(8925:9275)",
+    "description": "Silica",
+    "reference": "https://www.ga.gov.au/bigobj/GA7833.pdf",
+    "sourceName": "Index DataBase (IDB)",
+    "sourceUrl": "https://www.indexdatabase.de"
+  },
+  "SILICA3": {
+    "name": "SILICA3",
+    "domain": "Mineralogy",
+    "formula": "bnd(10250:10950) / bnd(8125:8475)",
+    "description": "Silica",
+    "reference": "https://www.ga.gov.au/bigobj/GA7833.pdf",
+    "sourceName": "Index DataBase (IDB)",
+    "sourceUrl": "https://www.indexdatabase.de"
+  },
+  "SILICA4": {
+    "name": "SILICA4",
+    "domain": "Mineralogy",
+    "formula": "bnd(8925:9275) / bnd(10250:10950)",
+    "description": "Silica",
+    "reference": "https://www.ga.gov.au/bigobj/GA7833.pdf",
+    "sourceName": "Index DataBase (IDB)",
+    "sourceUrl": "https://www.indexdatabase.de"
+  },
+  "BDI": {
+    "name": "BDI",
+    "domain": "Mineralogy",
+    "formula": "bnd(8475:8825) * bnd(8475:8825) / (bnd(8125:8475) / bnd(8925:9275)) )",
+    "description": "Basic degree index - SIO2",
+    "reference": "https://www.ga.gov.au/bigobj/GA7833.pdf",
+    "sourceName": "Index DataBase (IDB)",
+    "sourceUrl": "https://www.indexdatabase.de"
+  }
+}

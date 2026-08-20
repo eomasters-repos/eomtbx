@@ -1,0 +1,37 @@
+{
+  "resources": [
+    {
+      "name": "item1",
+      "description": "",
+      "type": "DUMMY_Type",
+      "attributes": {
+        "Abc": "123",
+        "Second": "Something",
+        "3": "true"
+      },
+      "userProperties": {}
+    },
+    {
+      "name": "item2",
+      "description": "",
+      "type": "DUMMY_Type",
+      "attributes": {
+        "Abc": "123",
+        "Second": "notLast",
+        "3": "true"
+      },
+      "userProperties": {
+        "Project": "ProjectName"
+      }
+    },
+    {
+      "name": "item3",
+      "description": "",
+      "type": "ANOTHER_Type",
+      "attributes": {
+        "Color": "0,0,255"
+      },
+      "userProperties": {}
+    }
+  ]
+}

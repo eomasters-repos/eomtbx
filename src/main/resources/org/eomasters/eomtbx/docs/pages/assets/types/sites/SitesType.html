@@ -1,0 +1,149 @@
+<!--
+  ========================LICENSE_START=================================
+  EOMTBX - EOMasters Toolbox for SNAP
+  -> https://www.eomasters.org/eomtbx
+  ======================================================================
+  Copyright (C) 2023 - 2026 Marco Peters
+  ======================================================================
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as
+  published by the Free Software Foundation, either version 3 of the
+  License, or (at your option) any later version.
+  
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+  
+  You should have received a copy of the GNU General Public
+  License along with this program.  If not, see
+  -> http://www.gnu.org/licenses/gpl-3.0.html
+  =========================LICENSE_END==================================
+  -->
+
+<html>
+<head>
+  <title>EOMasters Toolbox - Sites Type</title>
+   <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+  <link href="../../../../style/style.css" rel="stylesheet">
+  <link href="../../../../style/eomastersstyle.css" rel="stylesheet">
+</head>
+
+<body>
+<table class="header">
+  <tr class="header">
+    <td align="left" class="header" width="40"><a href="../../../Overview.html"><img border=0
+                                                                                     src="../../../../images/EomToolbox_32.png"></a>
+    </td>
+    <td class="header">EOMasters Toolbox</td>
+    <td align="right" class="header"><a
+        href="nbdocs://org.esa.snap.snap.help/org/esa/snap/snap/help/docs/general/overview/SnapOverview.html"><img
+        border=0 src="../../../../images/snap_header.jpg"></a></td>
+  </tr>
+</table>
+
+<h1>Sites Type</h1>
+<p>This type holds a list of locations on Earth. The sites can be defined in different coordinates reference systems
+  (CRS). They are converted into the destination CRS when added to a product.</p>
+
+<a id="addSitesToLibrary"><h2>Add Sites to the Asset Library</h2></a> <a id="addPlacemark"><h3>Add Sites from Placemark
+  File</h3></a>
+<p>Sites can be imported from the placemark files SNAP uses. Either the text or the XMl files. The styling of the
+  placemarks is stored with sites and applied when added to a product later.</p>
+<div align="center"><img src="images/AddPlacemarkFile.png"/></div>
+<a id="addCsv"><h3>Add Sites from CSV File</h3></a>
+<p>A CSV file can be used to import Sites into the Asset Library too.</p>
+<div align="center"><img src="images/AddCsvFile.png"/></div>
+<p>This CSV file has only minimal requirements to the content format. Each line of the file represents a site. Each site
+  must provide the following columns in this order:</p>
+<ul>
+  <li>Name: The name of the site.</li>
+  <li>X coordinate: The X coordinate of the site.</li>
+  <li>Y coordinate: The Y coordinate of the site.</li>
+</ul>
+<p>Lines can be marked as comment by starting this line with the # character and thus be ignored. The columns must be
+  separated by one of four separator characters.</p>
+<ul>
+  <li>comma ','</li>
+  <li>tab '\t'</li>
+  <li>space ' '</li>
+  <li>semi-colon ';'</li>
+</ul>
+<p>It is configurable when importing the sites which separator is used. <b>If the CSV separator is used within one of
+  the column values, then it must be enclosed in double quotes.</b></p>
+<p>Optionally each site can be amended with additional information. Additionally, a description, the CRS and the styling
+  can be provided as fourth, fifth and sixth column.<br> The description provides a short descriptive text, the CRS
+  column provides the coordinate reference system in which the coordinates are given. The CRS must be specified as EPSG
+  code (e.g., EPSG:32645). If the CRS is not explicitly defined, then WGS-84 is assumed. The style column can be used to
+  change how the sites are displayed.</p>
+<p>The styling follows a CSS format. There are 6 attributes available.</p>
+<ul>
+  <li>symbol - The symbol to mark the coordinate. Can be one of <code>plus</code>, <code>cross</code>, <code>star</code>,
+    <code>square</code>, <code>circle</code> or <code>pin</code>.
+  </li>
+  <li>fill - Defines the fill color of the symbol. The color can be provided in hexadecimal format (e.g., "#FFFFFF") or
+    given by comma-separated values, such as "255,255,255".
+  </li>
+  <li>fill-opacity - Defines the opacity of the fill color. Between 0 an 1.0.</li>
+  <li>stroke - The color of the outline. The color can be provided in hexadecimal format (e.g., "#FFFFFF") or given by
+    comma-separated values, such as "255,255,255".
+  </li>
+  <li>stroke-opacity - Defines the opacity of the stroke color. Between 0 an 1.0.</li>
+  <li>stroke-width - Defines the width of the outline stroke.</li>
+</ul>
+<p>Example of a CSV file using a comma as separator:</p>
+<pre class="code" style="font-size:16px">
+#name,x,y,description,crs,style
+Google,37.4220,-122.0841,Large tech company,EPSG:4326,"stroke:255,0,0;fill:200,0,20;symbol:cross"
+Facebook,37.4842,-122.1484,Social media giant
+Amazon,47.6062,-122.3321
+Netflix,4121447,592047,Streaming service,EPSG:32610,"stroke:127,127,0;fill:0,0,255;symbol:cross"
+Apple,37.3229,-122.0322,Consumer electronics company,EPSG:4326,"stroke:255,0,0;fill:0,0,255;symbol:star"
+</pre>
+
+<a id="addToProducts"><h2>Add Sites to a Product</h2></a>
+<p>When adding sites to a product you have several options on how these are added.</p>
+<ul>
+  <li>Only include within bounds&nbsp;-&nbsp;Only sites in the geographical bounds of the product will be included.</li>
+  <li>Add to pins&nbsp;-&nbsp;This will add the sites to the pins of the product.</li>
+  <li>Add to GCPs&nbsp;-&nbsp;This will add the sites to the GCPs of the product.</li>
+  <li>Add to a vector node&nbsp;-&nbsp;This will add the sites an existing vector node. You can choose which one from
+    selection box.
+    <ul>
+      <li>Vector node&nbsp;-&nbsp; The sites will be added to the node selected.</li>
+    </ul>
+  </li>
+  <li>Create a new vector node&nbsp;-&nbsp;This will create a new node and add the sites to it. You can specify the name
+    of the new node.
+    <ul>
+      <li>Name of node&nbsp;-&nbsp;Specify the name of the new node.</li>
+    </ul>
+  </li>
+
+</ul>
+<div align="center"><img src="images/AddToProduct.png"/></div>
+<footer>
+  <hr>
+  <table class="eom_ft">
+    <tr>
+      <td class="eom_ft" rowspan="2" width="60">
+        <img alt="EOMasters Logo" src="../../../../images/EOMasters_50.png">
+      </td>
+      <td class="eom_ft" width="*">
+        <div class="eom_ft">EOMasters Toolbox<br></div>
+      </td>
+    </tr>
+    <tr>
+      <td class="eom_ft"> Provided by
+        <object classid="java:eu.esa.snap.netbeans.javahelp.BrowserDisplayer">
+          <param name="content" value="https://www.eomasters.org/">
+          <param name="text" value="<html><u>www.eomasters.org</u></html>">
+          <param name="textFontSize" value="bigger">
+        </object>
+      </td>
+    </tr>
+  </table>
+</footer>
+</body>
+</html>
+

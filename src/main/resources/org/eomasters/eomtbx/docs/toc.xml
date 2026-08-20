@@ -3,16 +3,86 @@
   "http://java.sun.com/products/javahelp/toc_2_0.dtd">
 
 <toc categoryclosedimage="folder" categoryopenimage="folder" topicimage="doc" version="2.0">
-  <tocitem target="eomtbx.overview.free" text="EOMasters Toolbox Basic" image="eomtbx.icon">
-    <tocitem target="eomtbx.overview.free" text="Overview"/>
+  <tocitem target="eomtbx.overview" text="EOMasters Toolbox" image="eomtbx.icon">
+    <tocitem target="eomtbx.overview" text="Overview"/>
     <tocitem target="eomtbx.quickMenu" text="Quick Menu"/>
     <tocitem target="eomtbx.loopGPT" text="Loop GPT"/>
     <tocitem target="eomtbx.ioFormats" text="IO-Formats Listing"/>
-    <tocitem target="eomtbx.mathsExtensions" text="BandMaths Extension"/>
+    <tocitem target="eomtbx.mathsExtensions" text="Band Maths Extensions"/>
     <tocitem target="eomtbx.wvlEditor" text="Wavelength Editor"/>
-    <tocitem target="eomtbx.io.s2l2aB1Reader" text="S2-MSI L2A Reader - Fixed B1 Footprint"/>
     <tocitem target="eomtbx.errorHandler" text="Error Handler"/>
-    <tocitem target="eomtbx.options.free" text="Options"/>
+
+    <tocitem target="eomtbx.assetLibrary" text="Asset Library">
+      <tocitem target="eomtbx.assetLibrary.type" text="Asset Types">
+        <tocitem target="eomtbx.assetLibrary.type.sites" text="Sites"/>
+        <tocitem target="eomtbx.assetLibrary.type.geometry" text="Geometry"/>
+        <tocitem target="eomtbx.assetLibrary.type.mask" text="Mask"/>
+      </tocitem>
+    </tocitem>
+
+    <tocitem target="eomtbx.spex" text="SpeX - Spectral Indices">
+      <tocitem target="eomtbx.spex.processor.gui" text="SpeX Processor (GUI)"/>
+      <tocitem target="eomtbx.spex.processor.cli" text="SpeX Processor (CLI)"/>
+      <tocitem target="eomtbx.spex.formula" text="Formula Symbols"/>
+      <tocitem target="eomtbx.spex.options" text="Manage SpeX Database"/>
+    </tocitem>
+
+    <tocitem target="eomtbx.pyeditor" text="PyEditor">
+      <tocitem target="eomtbx.pyeditor.gui" text="PyEditor GUI"/>
+      <tocitem target="eomtbx.pyeditor.options" text="PyEditor Options"/>
+      <tocitem target="eomtbx.pyeditor.pyrunner" text="PyRunner"/>
+      <tocitem text="SnapKit">
+        <tocitem target="eomtbx.pyeditor.snapkit.api" text="API"/>
+        <tocitem target="eomtbx.pyeditor.snapkit.examples" text="Examples"/>
+      </tocitem>
+    </tocitem>
+
+    <tocitem target="eomtbx.cmap" text="Coastal Map">
+      <tocitem target="eomtbx.cmap.operator" text="Coastal Map Operator"/>
+      <tocitem target="eomtbx.cmap.band" text="Add Coastal Map Band"/>
+      <tocitem target="eomtbx.cmap.samplingTypes" text="Sampling Types"/>
+      <tocitem target="eomtbx.cmap.options" text="Coastal Map Options"/>
+    </tocitem>
+
+    <tocitem target="eomtbx.ciop" text="Cyanobacteria Index (CI)">
+      <tocitem target="eomtbx.ciop.processor.gui" text="CI Operator (GUI)"/>
+      <tocitem target="eomtbx.ciop.processor.cli" text="CI Operator (CLI)"/>
+    </tocitem>
+
+    <tocitem target="eomtbx.s2geom" text="S2 Geometry Up-scaling">
+      <tocitem target="eomtbx.s2geom.processor.gui" text="S2 Geometry Up-scaling (GUI)"/>
+      <tocitem target="eomtbx.s2geom.processor.cli" text="S2 Geometry Up-scaling (CLI)"/>
+    </tocitem>
+
+    <tocitem target="eomtbx.s2norm" text="Normalise SR for Sentinel-2">
+      <tocitem target="eomtbx.s2norm.processor.gui" text="Normalise SR for Sentinel-2 (GUI)"/>
+      <tocitem target="eomtbx.s2norm.processor.cli" text="Normalise SR for Sentinel-2 (CLI)"/>
+    </tocitem>
+
+    <tocitem target="eomtbx.s2superres" text="S2 Super-Resolution">
+      <tocitem target="eomtbx.s2superres.model" text="The S2SR Model Explained"/>
+      <tocitem target="eomtbx.s2superres.processor.gui" text="S2 Super-Resolution (GUI)"/>
+      <tocitem target="eomtbx.s2superres.processor.cli" text="S2 Super-Resolution (CLI)"/>
+    </tocitem>
+
+    <tocitem target="eomtbx.s2b620" text="Estimate B620 for S2">
+      <tocitem target="eomtbx.s2b620.band" text="Add Band B620 for S2"/>
+      <tocitem target="eomtbx.s2b620.processor.gui" text="Estimate B620 for S2 (GUI)"/>
+      <tocitem target="eomtbx.s2b620.processor.cli" text="Estimate B620 for S2 (CLI)"/>
+    </tocitem>
+
+    <tocitem text="Readers">
+      <tocitem target="eomtbx.io.s2l2aB1Reader" text="S2-MSI L2A - Fixed B1 Footprint"/>
+      <tocitem target="eomtbx.io.aster" text="ASTER L1T"/>
+      <tocitem target="eomtbx.io.emit" text="EMIT L1B/L2A"/>
+    </tocitem>
+
+    <tocitem target="eomtbx.options" text="Options">
+      <tocitem target="eomtbx.options.spex" text="SpeX Options"/>
+      <tocitem target="eomtbx.options.cmap" text="Coastal Map Options"/>
+      <tocitem target="eomtbx.pyeditor.options" text="PyEditor Options"/>
+    </tocitem>
+
     <tocitem text="Menu Actions">
       <tocitem target="eomtbx.closeProductNoView" text="Close Products without a View"/>
       <tocitem target="eomtbx.systemReport" text="Create System Report"/>
@@ -20,6 +90,6 @@
       <tocitem target="eomtbx.coastalMap" text="Coastal Map Data"/>
       <tocitem target="eomtbx.crsWkt" text="Copy CRS WKT to Clipboard"/>
     </tocitem>
-    <tocitem target="eomtbx.about.free" text="About"/>
+    <tocitem target="eomtbx.about" text="About"/>
   </tocitem>
 </toc>

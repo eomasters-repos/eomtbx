@@ -1,0 +1,7 @@
+#name,x,y,description,crs,style
+Google,37.4220,-122.0841,Large tech company,EPSG:4326,"stroke:255,0,0;fill:200,0,20;symbol:cross"
+Facebook,37.4842,-122.1484,Social media giant
+Amazon,47.6062,-122.3321
+Netflix_WGS,37.2350,-121.9623,Streaming service,EPSG:4326,"stroke:127,127,0;fill:0,0,255;symbol:circle"
+Netflix_UTM,4121447,592047,Streaming service,EPSG:32610,"stroke:127,127,0;fill:0,0,255;symbol:cross"
+Apple,37.3229,-122.0322,Consumer electronics company,EPSG:4326,"stroke:255,0,0;fill:0,0,255;symbol:star"

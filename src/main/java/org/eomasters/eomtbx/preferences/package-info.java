@@ -1,7 +1,7 @@
 /*-
  * ========================LICENSE_START=================================
- * EOMTBX PRO - EOMasters Toolbox Basic for SNAP
- * -> https://www.eomasters.org/sw/EOMTBX
+ * EOMTBX - EOMasters Toolbox for SNAP
+ * -> https://www.eomasters.org/eomtbx
  * ======================================================================
  * Copyright (C) 2023 - 2026 Marco Peters
  * ======================================================================

@@ -4,19 +4,25 @@ AutoUpdate-Essential-Module: false
 OpenIDE-Module-Java-Dependencies: Java > 21
 OpenIDE-Module-Layer: layer.xml
 OpenIDE-Module-Display-Category: SNAP Community Plugins
-OpenIDE-Module-Long-Description: The EOMasters Toolbox Basic for SNAP provides several tools to ease the daily work.<br>
+OpenIDE-Module-Long-Description: The EOMasters Toolbox for SNAP provides tools, readers, processors, and workflow enhancements for Earth observation work.<br>
  Among other things:
  <ul>
  <li>Quick Menu</li>
  <li>Loop GPT</li>
  <li>Band Maths Extensions</li>
  <li>Wavelength Editor</li>
+ <li>Asset Library</li>
+ <li>SpeX spectral index database</li>
+ <li>PyEditor and SnapKit</li>
+ <li>Coastal Map and Cyanobacteria Index processors</li>
+ <li>Sentinel-2 geometry, normalisation, and super-resolution processors</li>
+ <li>ASTER and EMIT readers</li>
  <li>Generate System Report</li>
  </ul>
  <p>
  <b>Vendor: </b>EOMasters<br>
  <b>Web: </b><a href="https://www.eomasters.org">www.eomasters.org</a><br>
  <b>Contact Address: </b> <a href="mailto:info@eomasters.org">info@eomasters.org</a><br>
- <b>Copyright:</b> (C) 2023-2024 Marco Peters<br>
+ <b>Copyright:</b> (C) 2023-2026 Marco Peters<br>
  <b>License:</b> http://www.gnu.org/licenses/gpl.html<br>
  </p>

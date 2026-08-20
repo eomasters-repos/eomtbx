@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>placemark - SnapKit API Documentation</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="navigation">
+            <a href="index.html">← Back to Index</a>
+        </div>
+        
+        <h1>Module: placemark</h1>
+        <div class="module-description"><pre>SNAP Placemark Module for representing geographic points of interest.
+
+This module provides the Placemark class for representing geographic points of interest
+in SNAP (Sentinel Application Platform). Placemarks are used to mark specific locations on Earth observation data,
+combining both raster coordinates and geographic coordinates for precise location reference.
+
+Example:
+    Creating a ground control point from a product location:
+    
+    product = Product.read(&#x27;/path/to/product.dim&#x27;)
+    gcp = product.gcps[&quot;GCP_1&quot;]
+    print(f&quot;GCP: {gcp.name} - {gcp.label} at {gcp.x}, {gcp.y} / {gcp.lat}, {gcp.lon} &quot;)
+    pin = product.gcps[&quot;PIN_1&quot;]
+    print(f&quot;PIN: {pin.name} - {pin.label} at {pin.x}, {pin.y} / {pin.lat}, {pin.lon}&quot;)
+    product.</pre></div>
+
+        <div class="class-section" id="Placemark">
+            <h2>Class: Placemark</h2>
+        <div class="module-description"><pre>Represents a placemark with geographic and display information.
+
+This class is used to represent pins and gcps of a SNAP product. It defines a point of interest or location,
+including its name, coordinates on a 2D plane, geographic latitude and longitude, and an optional label.
+
+Attributes:
+    name (str): The name of the placemark.
+    x (float): The x-coordinate of the placemark in a raster.
+    y (float): The y-coordinate of the placemark in a raster.
+    lat (float): The latitude of the placemark in geographic coordinates.
+    lon (float): The longitude of the placemark in geographic coordinates.
+    label (str): The label associated with the placemark.</pre></div>            <h3>Overview</h3>
+            <div class="overview-section">
+                <h4>Methods</h4>
+                <div class="overview-list">
+                    <span class="overview-item">&nbsp;<a href="#Placemark-__init__">__init__</a>&nbsp;</span>
+                </div>
+            </div>
+            <h3>Methods</h3>
+            <div class="methods-section">
+                <div class="function-item" id="Placemark-__init__">
+                    <h4 class="function-signature">__init__(name, x, y, lat, lon, label)</h4>
+                    <span class="function-type">constructor</span>
+                    <div class="function-description">
+                        <div class="docstring-description">
+                            <pre>This is not intended to be called directly. Get pins and gcps as placemark from a product.</pre>
+                        </div>
+                        <div class="docstring-section">
+                            <h5>Arguments:</h5>
+                            <ul class="args-list">
+                                <li>
+                                    <strong>name (str)</strong>: <pre>The name of the placemark.</pre>
+                                </li>
+                                <li>
+                                    <strong>x (float)</strong>: <pre>The x-coordinate of the placemark in a raster.</pre>
+                                </li>
+                                <li>
+                                    <strong>y (float)</strong>: <pre>The y-coordinate of the placemark in a raster.</pre>
+                                </li>
+                                <li>
+                                    <strong>lat (float)</strong>: <pre>The latitude of the placemark in geographic coordinates.</pre>
+                                </li>
+                                <li>
+                                    <strong>lon (float)</strong>: <pre>The longitude of the placemark in geographic coordinates.</pre>
+                                </li>
+                                <li>
+                                    <strong>label (str)</strong>: <pre>The label associated with the placemark.</pre>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

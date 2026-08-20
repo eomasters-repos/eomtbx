@@ -1,0 +1,237 @@
+<!--
+  ========================LICENSE_START=================================
+  EOMTBX - EOMasters Toolbox for SNAP
+  -> https://www.eomasters.org/eomtbx
+  ======================================================================
+  Copyright (C) 2023 - 2026 Marco Peters
+  ======================================================================
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as
+  published by the Free Software Foundation, either version 3 of the
+  License, or (at your option) any later version.
+  
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+  
+  You should have received a copy of the GNU General Public
+  License along with this program.  If not, see
+  -> http://www.gnu.org/licenses/gpl-3.0.html
+  =========================LICENSE_END==================================
+  -->
+
+<html>
+<head>
+  <title>EOMasters Toolbox - S2 Super-Resolution</title>
+  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+  <link href="../../style/style.css" rel="stylesheet">
+  <link href="../../style/eomastersstyle.css" rel="stylesheet">
+</head>
+
+<body>
+<table class="header">
+  <tr class="header">
+    <td align="left" class="header" width="40"><a href="../Overview.html"><img border=0
+                                                                               src="../../images/EomToolbox_32.png"></a>
+    </td>
+    <td class="header">EOMasters Toolbox</td>
+    <td align="right" class="header"><a
+        href="nbdocs://org.esa.snap.snap.help/org/esa/snap/snap/help/docs/general/overview/SnapOverview.html"><img
+        border=0 src="../../images/snap_header.jpg"></a></td>
+  </tr>
+</table>
+
+<h1>S2 Super-Resolution</h1>
+<h2>Introduction</h2>
+<p>The Earth observation community is always looking for satellite images with higher spatial resolution. Earth
+  observation satellites provide invaluable data for monitoring environmental changes, urban development, agricultural
+  practices, and more. However, factors such as orbital distance, sensor limitations, and cost constraints often
+  restrict the achievable spatial resolution. High-resolution imagery can provide more detailed, accurate insights, but
+  these high-resolution sensors are costly, and frequently capturing imagery at such resolutions is not always possible.
+  Super-resolution offers a way to overcome these limitations.</p>
+<p>This implementation uses a single image super-resolution model trained in the frame of the EVOLAND Horizon Europe
+  project. The network has been trained using the Sen2Ven&mu;s dataset, complimented with patches for B11 and B12. On
+  GitHub you can find a Python implementation which is using this model. But this only supports standard Level 1C and
+  Theia L2A images. Also, it processes only the spectral bands and does not include the geometry and other bands.</p>
+<p>This SNAP operator super-resolves the 10- and 20- meter bands, namely B2, B3, B4, B5, B6, B7, B8, B8A, B11, B12. In
+  addition, the 60-meter bands can be included. But they are only resampled using a bicubic interpolation. The geometry
+  bands and all other bands can also be included in the output.</p>
+
+<h3>The Model in a Nutshell</h3>
+<p>
+  Super‑resolution enhances Sentinel‑2 imagery by increasing its spatial resolution from 10 m or 20 m down to 5 m. The
+  model is trained using paired Sentinel‑2 and VENµS observations acquired on the same day, allowing it to learn how
+  real 5 m structures correspond to coarser Sentinel‑2 pixels.
+<br>
+<br>
+  Unlike interpolation, the model does not average or split pixels. Instead, it analyzes spatial and spectral patterns
+  in the Sentinel‑2 input and uses learned relationships to predict the fine‑scale details that typically exist within
+  each pixel. The result is a 5 m reflectance image that resembles what the VENµS satellite would have observed,
+  providing sharper, more detailed, and physically meaningful outputs for downstream analysis. </p>
+
+<h4>Model-Based Super-Resolution</h4>
+<p>Deep learning models offer several advantages over interpolation techniques, for increasing the spatial resolution of
+  remote sensing images, even if the differences might not always be immediately noticeable.</p>
+<ul>
+  <li><b>Feature Preservation</b>: Deep learning models are better at preserving intricate features and textures in
+    images. They can learn complex patterns and structures, which helps in maintaining the quality of fine details.
+  </li>
+  <li><b>Edge Sharpness</b>: These models tend to produce sharper edges compared to bicubic interpolation, which can
+    result in smoother and more visually appealing images.
+  </li>
+  <li><b>Adaptive Learning</b>: Deep learning models can adapt to different types of images and learn from a large
+    dataset, making them more versatile and capable of handling various image characteristics.
+  </li>
+</ul>
+<p>While the differences might not always be significant in every scenario, especially if the images are not highly
+  complex, these advantages can be crucial for specific applications in remote sensing where details and accuracy are
+  paramount.</p>
+<p>
+  More about the model and its capabilities can be found in <a href="S2SR_TheModelExplained.html">The Model Explained</a>.
+</p>
+
+<h2>Example RGB Images</h2>
+<p>The following images show the input and output of the S2 Super-Resolution operator. The input images are 10 m
+  resolution, and the output images are 5 m resolution. <br/> The first row shows the images at the original resolution;
+  the second shows the images zoomed to a level that 1 pixel matches 1 m. </p>
+<table>
+  <thead>
+  <tr>
+    <th>
+      <div align="center">10m Input</div>
+    </th>
+    <th>
+      <div align="center">5m Output</div>
+    </th>
+  </tr>
+  </thead>
+  <tr>
+    <td>
+      <div align="center"><img src="images/S2B_MSIL2A_subset_RGB.png"></div>
+    </td>
+    <td>
+      <div align="center"><img src="images/S2B_MSIL2A_superres_RGB.png"></div>
+    </td>
+  </tr>
+  <tr>
+    <td><img src="images/S2B_MSIL2A_subset_RGB_1to1_cut.png"></td>
+    <td><img src="images/S2B_MSIL2A_superres_RGB_1to1_cut.png"></td>
+  </tr>
+</table>
+
+<h2>Requirements and Limitations</h2>
+<p>As input the operator requires the standard Sentinel-2 products of type L1C, L2A in SAFE format from e.g., from
+  Copernicus CDSE (<a href="https://dataspace.copernicus.eu/">Copernicus Browser</a>), and L2A data products from Theia
+  (<a href="https://www.theia-land.fr/en/blog/product/sentinel-2-surface-reflectance">Sentinel-2 Surface Reflectance –
+    Theia</a>). The actual data format is not important. BEAM-DIMAP, ZNAP, NetCDF or the original SAFE or MUSCATE
+  formats will work. But there are requirements on the content.
+<ul>
+  <li>They must not be resampled before</li>
+  <li>If the geometry bands shall be included, the original sized Sentinel-2 product is needed.</li>
+  <li>The following metadata elements need to be accessible</li>
+  <ul>
+    <li>For Copernicus L1C: <i>Level-1C_DataStrip_ID/General_Info/Processing_Info/PROCESSING_BASELINE</i>. The processing
+      baseline needs to be >= 4.0
+    </li>
+    <li>For Copernicus L2A: <i>Level-2A_DataStrip_ID/General_Info/Processing_Info/PROCESSING_BASELINE</i>. The processing
+      baseline needs to be >= 4.0
+    </li>
+    <li>For Theia L2A: <i>Metadata/Dataset_Identification/IDENTIFIER</i> and this either need to contain “SENTINEL2" or "L2A”
+    </li>
+  </ul>
+</ul>
+<p>
+  The processing of S2 super-resolved imagery is very memory-intensive. Due to this you should have a computer with at
+  least 32 GB of RAM. The operator already increases the tile cache size dynamically, but this couldn't resolve all
+  limitations. Also, the memory handling limitations of SNAP made it necessary to limit the region you can process to a
+  maximum of <b>16 million pixels</b> or 1600 km<sup>2</sup>. But please note, the bounding box of the region is used.<br>
+  The algorithm requires a 25-pixel boundary around the ROI to work properly. If the ROI is located near the edge of the
+  scene, the ROI will be shrunk to ensure a 25-pixel boundary.<br>
+</p>
+
+<h2>Using the Graphics Card</h2>
+<p>You can install the NVIDIA CUDA software package. This allows the use of the graphics card for the processing. This
+  is unfortunately only usable for NVIDIA cards. AMD graphics cards are not supported. How this can be installed is
+  explained on the <a href="LeverageGraphicsCards.html">Leverage Graphics Cards</a> page. After installation the
+  model-based up-scaling is automatically done on the graphics card.</p>
+
+<h2>Processor Usage</h2>
+<ul>
+  <li><a href="S2SuperResolutionGui.html">S2 Super-Resolution (GUI)</a></li>
+  <li><a href="S2SuperResolutionCli.html">S2 Super-Resolution (CLI)</a></li>
+</ul>
+
+<h2>References</h2>
+<ul>
+  <li>
+    <object classid="java:eu.esa.snap.netbeans.javahelp.BrowserDisplayer">
+      <param name="content" value="https://www.evo-land.eu">
+      <param name="text" value="<html><u>EVOLAND Horizon Europe</u></html>">
+      <param name="textFontSize" value="bigger">
+    </object>
+  </li>
+  <li>
+    <object classid="java:eu.esa.snap.netbeans.javahelp.BrowserDisplayer">
+      <param name="content" value="https://github.com/Evoland-Land-Monitoring-Evolution/sentinel2_superresolution">
+      <param name="text" value="<html><u>Sentinel-2 Superresolution on GitHub</u></html>">
+      <param name="textFontSize" value="bigger">
+    </object>
+  </li>
+  <li>
+    <object classid="java:eu.esa.snap.netbeans.javahelp.BrowserDisplayer">
+      <param name="content" value="https://zenodo.org/records/14603764">
+      <param name="text"
+             value="<html><u>SEN2VEN&mu;S, a dataset for the training of Sentinel-2 super-resolution algorithms</u></html>">
+      <param name="textFontSize" value="bigger">
+    </object>
+  </li>
+  <li>
+    <object classid="java:eu.esa.snap.netbeans.javahelp.BrowserDisplayer">
+      <param name="content" value="https://hal.science/hal-04723225v1">
+      <param name="text"
+             value="<html><u>Revisiting remote sensing cross-sensor Single Image Super-Resolution: the overlooked impact of geometric and radiometric distortion</u></html>">
+      <param name="textFontSize" value="bigger">
+    </object>
+  </li>
+  <li>
+    <object classid="java:eu.esa.snap.netbeans.javahelp.BrowserDisplayer">
+      <param name="content" value="https://www.cesbio.cnrs.fr/multitemp/sentinel-2-enhance-button-5-meters-resolution-for-10-bands-at-your-fingertips">
+      <param name="text" value="<html><u>Sentinel-2 Enhance button: 5-meters resolution for 10 bands at your fingertips</u></html>">
+      <param name="textFontSize" value="bigger">
+    </object>
+  </li>
+  <li>
+    <object classid="java:eu.esa.snap.netbeans.javahelp.BrowserDisplayer">
+      <param name="content" value="https://www.theia-land.fr/en/blog/ceslist/surface-reflectance-sec/">
+      <param name="text" value="<html><u>Theia - Sentinel-2 Surface Reflectance</u></html>">
+      <param name="textFontSize" value="bigger">
+    </object>
+  </li>
+</ul>
+
+<footer>
+  <hr>
+  <table class="eom_ft">
+    <tr>
+      <td class="eom_ft" rowspan="2" width="60">
+        <img alt="EOMasters Logo" src="../../images/EOMasters_50.png">
+      </td>
+      <td class="eom_ft" width="*">
+        <div class="eom_ft">EOMasters Toolbox<br></div>
+      </td>
+    </tr>
+    <tr>
+      <td class="eom_ft"> Provided by
+        <object classid="java:eu.esa.snap.netbeans.javahelp.BrowserDisplayer">
+          <param name="content" value="https://www.eomasters.org/">
+          <param name="text" value="<html><u>www.eomasters.org</u></html>">
+          <param name="textFontSize" value="bigger">
+        </object>
+      </td>
+    </tr>
+  </table>
+</footer>
+</body>
+</html>
+

@@ -1,0 +1,124 @@
+<!--
+  ========================LICENSE_START=================================
+  EOMTBX - EOMasters Toolbox for SNAP
+  -> https://www.eomasters.org/eomtbx
+  ======================================================================
+  Copyright (C) 2023 - 2026 Marco Peters
+  ======================================================================
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as
+  published by the Free Software Foundation, either version 3 of the
+  License, or (at your option) any later version.
+  
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+  
+  You should have received a copy of the GNU General Public
+  License along with this program.  If not, see
+  -> http://www.gnu.org/licenses/gpl-3.0.html
+  =========================LICENSE_END==================================
+  -->
+
+<html>
+<head>
+  <title>EOMasters Toolbox - Cyanobacteria Index (CI)</title>
+   <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+  <link href="../../style/style.css" rel="stylesheet">
+  <link href="../../style/eomastersstyle.css" rel="stylesheet">
+</head>
+
+<body>
+<table class="header">
+  <tr class="header">
+    <td align="left" class="header" width="40"><a href="../Overview.html"><img border=0
+                                                                               src="../../images/EomToolbox_32.png"></a>
+    </td>
+    <td class="header">EOMasters Toolbox</td>
+    <td align="right" class="header"><a
+        href="nbdocs://org.esa.snap.snap.help/org/esa/snap/snap/help/docs/general/overview/SnapOverview.html"><img
+        border=0 src="../../images/snap_header.jpg"></a></td>
+  </tr>
+</table>
+
+<h1>Cyanobacteria Index (CI)</h1>
+<p>The Cyanobacteria Index (CI) is a tool used for the satellite detection of cyanobacteria blooms in water bodies.
+  Cyanobacteria-dominated blooms are harmful due to their toxicity and impact on marine ecosystems, thus it is important
+  to monitor them. CI uses bands near 680 nm, and relies on the weak Chl-a fluorescence of cyanobacteria. The
+  Cyanobacteria Index is particularly useful because it does not require comprehensive atmospheric correction, making it
+  effective even in challenging conditions. But it is suggested to provide reflectance values and correct the data for
+  the Rayleigh scattering.</p>
+<p>CI is based on the reflectance spectral shape, focusing on wavelengths around 680 nm. It uses the relative depth of
+  the local minimum of the reflectance curve caused by cyanobacteria blooms.<br/>
+</p>
+<h2><a id="inputRequirements">Input Requirements</a></h2>
+<p>The source product must provide one band in each of the three spectral ranges. A center band, a lower band, and an
+  upper band.</p>
+<div align="center">
+  <table>
+    <thead>
+    <td>Band</td>
+    <td>Min. Wvl</td>
+    <td>Max. Wvl</td>
+    </thead>
+    <tr>
+      <td>Center</td>
+      <td>675 nm</td>
+      <td>685 nm</td>
+    </tr>
+    <tr>
+      <td>Lower</td>
+      <td>660 nm</td>
+      <td>670 nm</td>
+    </tr>
+    <tr>
+      <td>Upper</td>
+      <td>700 nm</td>
+      <td>750 nm</td>
+    </tr>
+  </table>
+</div>
+
+<h2>Processor Usage</h2>
+<ul>
+  <li><a href="CyanoIndexOpGui.html">Cyanobacteria Index (GUI)</a></li>
+  <li><a href="CyanoIndexOpCli.html">Cyanobacteria Index (CLI)</a></li>
+</ul>
+<h2>References</h2>
+<ul>
+  <li>
+    <object classid="java:eu.esa.snap.netbeans.javahelp.BrowserDisplayer">
+      <param name="content" value="https://www.mdpi.com/2072-4292/15/6/1601">
+      <param name="text"
+             value="<html><u>Cyanobacteria Index as a Tool for the Satellite Detection of Cyanobacteria Blooms in the Baltic Sea</u></html>">
+      <param name="textFontSize" value="bigger">
+    </object>
+  </li>
+</ul>
+
+<footer>
+  <hr>
+  <table class="eom_ft">
+    <tr>
+      <td class="eom_ft" rowspan="2" width="60">
+        <img alt="EOMasters Logo" src="../../images/EOMasters_50.png">
+      </td>
+      <td class="eom_ft" width="*">
+        <div class="eom_ft">EOMasters Toolbox<br></div>
+      </td>
+    </tr>
+    <tr>
+      <td class="eom_ft"> Provided by
+        <object classid="java:eu.esa.snap.netbeans.javahelp.BrowserDisplayer">
+          <param name="content" value="https://www.eomasters.org/">
+          <param name="text" value="<html><u>www.eomasters.org</u></html>">
+          <param name="textFontSize" value="bigger">
+        </object>
+      </td>
+    </tr>
+  </table>
+</footer>
+</body>
+</html>
+
