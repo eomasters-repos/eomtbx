@@ -26,18 +26,18 @@ package org.eomasters.eomtbx.bandmathsext;
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.Predicate;
-import java.util.stream.Collectors;
 import java.util.stream.DoubleStream;
 import org.esa.snap.core.datamodel.RasterDataNode;
 import org.esa.snap.core.dataop.barithm.RasterDataEvalEnv;
 import org.esa.snap.core.jexp.EvalEnv;
+import org.esa.snap.core.jexp.EvalException;
 import org.esa.snap.core.jexp.Function;
 import org.esa.snap.core.jexp.Term;
 import org.esa.snap.core.jexp.impl.AbstractFunction;
 
 /**
- * Implements various functions for which can take a variable length of arguments. Currently, these are MIN, MAX and
- * MEAN. All implementations exclude invalid pixels from the calculation.
+ * Implements functions that take a variable number of arguments, including MIN, MAX, MEAN, and MEDIAN.
+ * All implementations exclude invalid pixels from the calculation.
  *
  * @author Marco Peters
  */
@@ -76,7 +76,7 @@ class MultiInputFunctions {
 
     public int evalI(final EvalEnv env, final Term[] args) {
       List<Double> valueList = Arrays.stream(args).map(new ReplaceInvalidTermsByNaN(env)).
-                                     map(term -> term.evalD(env)).collect(Collectors.toList());
+                                     map(term -> term.evalD(env)).toList();
 
       int minIndex = -1;
       for (int i = 0; i < valueList.size(); i++) {
@@ -94,7 +94,7 @@ class MultiInputFunctions {
   static final Function INDEX_OF_MAX = new AbstractFunction.I("indexOfMax", -1) {
     public int evalI(final EvalEnv env, final Term[] args) {
       List<Double> valueList = Arrays.stream(args).map(new ReplaceInvalidTermsByNaN(env)).
-                                     map(term -> term.evalD(env)).collect(Collectors.toList());
+                                     map(term -> term.evalD(env)).toList();
       int maxIndex = -1;
       for (int i = 0; i < valueList.size(); i++) {
         if (!Double.isNaN(valueList.get(i)) && (maxIndex == -1 || valueList.get(i) > valueList.get(maxIndex))) {
@@ -121,6 +121,53 @@ class MultiInputFunctions {
         return Double.NaN;
       }
       return DoubleStream.of(values).sum() / values.length;
+    }
+  };
+
+  /**
+   * Function that returns the median value of the arguments. An optional trailing "average" (the default),
+   * "lower", or "upper" string controls how the two middle values are handled for even counts.
+   */
+  static final Function MEDIAN = new AbstractFunction.D("medianOf", -1) {
+
+    public double evalD(final EvalEnv env, final Term[] args) {
+      int valueCount = args.length;
+      String mode = "average";
+      if (valueCount > 0 && args[valueCount - 1].isS()) {
+        mode = args[--valueCount].evalS(env);
+        if (!"average".equals(mode) && !"lower".equals(mode) && !"upper".equals(mode)) {
+          throw new EvalException(
+              "The optional final argument of medianOf() must be \"average\", \"lower\", or \"upper\"");
+        }
+      }
+      if (valueCount == 0) {
+        throw new EvalException("medianOf() requires at least one numeric input");
+      }
+      for (int i = 0; i < valueCount; i++) {
+        if (!args[i].isN()) {
+          throw new EvalException(
+              "Inputs to medianOf() must be numeric, followed by an optional \"average\", \"lower\", or \"upper\"");
+        }
+      }
+      double[] values = Arrays.stream(args, 0, valueCount)
+                              .filter(new RemoveInvalidPixels(env))
+                              .mapToDouble(term -> term.evalD(env))
+                              .filter(Double::isFinite)
+                              .sorted()
+                              .toArray();
+      if (values.length == 0) {
+        return Double.NaN;
+      }
+      int middle = values.length / 2;
+      if (values.length % 2 != 0 || "upper".equals(mode)) {
+        return values[middle];
+      }
+      if ("lower".equals(mode)) {
+        return values[middle - 1];
+      }
+      double sum = values[middle - 1] + values[middle];
+      // Avoid overflow when averaging two large finite values.
+      return Double.isFinite(sum) ? sum / 2 : values[middle - 1] / 2 + values[middle] / 2;
     }
   };
 

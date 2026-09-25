@@ -53,6 +53,7 @@ public class BandMathsExtender implements ProductNamespaceExtender {
     namespace.registerFunction(MultiInputFunctions.MIN);
     namespace.registerFunction(MultiInputFunctions.MAX);
     namespace.registerFunction(MultiInputFunctions.MEAN);
+    namespace.registerFunction(MultiInputFunctions.MEDIAN);
     namespace.registerFunction(MultiInputFunctions.INDEX_OF_MIN);
     namespace.registerFunction(MultiInputFunctions.INDEX_OF_MAX);
   }
